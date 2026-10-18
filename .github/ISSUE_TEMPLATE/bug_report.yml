@@ -1,0 +1,23 @@
+name: Reportar error
+description: Describe un fallo reproducible de la plantilla.
+title: "[Bug]: "
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Problema y comportamiento esperado
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Pasos y comando exacto para reproducir
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Entorno
+      description: Incluye versión de Python, uv, sistema operativo y extras/grupos seleccionados.
+    validations:
+      required: true

@@ -1,0 +1,57 @@
+{
+  "tipo_muestra": "provisional_estructural",
+  "advertencia": "NO ES EL MODELO NI SON DECISIONES. Solo part_2009..part_2024 son datos reales. Todo lo de 2027 (escenarios, intervención, niveles nacionales, umbrales y colores del semáforo) es de ejemplo para probar la interfaz; la definición real se hará después del análisis (22-25 oct).",
+  "generado": "2026-10-17T01:55:18",
+  "version_resultados": "muestra-0.3",
+  "fuente": "INE, Conteos Censales de Participación Ciudadana 2009-2024 (datos abiertos DECEyEC)",
+  "clave": "cvegeo (INEGI) es el identificador estable entre años y la clave de unión con la geometría. clave_ine_2024 es solo referencia: el INE renumera municipios entre años.",
+  "lectura": "Leer cvegeo, clave_ine_2024 y motivo como texto, sin inferir tipos (cvegeo conserva ceros iniciales). historia_completa es true/false.",
+  "unidades": {
+    "part_*": "proporción 0-1 sobre votaron+no votaron (sin NS), redondeada a 4 decimales",
+    "desv_base": "proporción; desviación estimada contra el nivel nacional, sin intervención",
+    "efecto_interv": "proporción; aumento por la intervención de esa fila (0 si no aplica)",
+    "ns_2024": "proporción de la lista nominal",
+    "peso_jov_2024": "proporción de votaron+no votaron de 18 a 34 años",
+    "n_jov_2024": "personas de 18 a 34 que votaron o no votaron",
+    "nv_jov_2024": "personas de 18 a 34 que no votaron",
+    "votos_adicionales": "personas"
+  },
+  "nulos": "Celda vacía = sin dato o sin estimación. Nunca equivale a cero.",
+  "regla_faltante": "Una elección cuenta como faltante en un municipio si votaron+no votaron = 0 o NS > 50% de la lista nominal.",
+  "motivos": {
+    "sin_dato_2024": "Sin dato suficiente en 2024",
+    "ln_menor_5000": "Menos de 5,000 electores",
+    "historia_incompleta": "Sin dato en alguna de las seis elecciones"
+  },
+  "motivo_formato": "Uno o varios códigos separados por '|'",
+  "niveles_nacionales_2027": {
+    "bajo": 0.48,
+    "medio": 0.52,
+    "alto": 0.56
+  },
+  "formula": "part_pred = min(1, nivel_nacional + desv_base + efecto_interv)",
+  "intervencion": {
+    "poblacion": "electores de 18 a 34 años",
+    "municipios": "riesgo alto en el escenario sin intervención",
+    "cobertura": 0.3,
+    "efecto_por_contactado": {
+      "ninguna": 0.0,
+      "baja": 0.01,
+      "media": 0.02,
+      "alta": 0.03
+    },
+    "formula": "efecto_interv = efecto * cobertura * peso_jov_2024; votos_adicionales = efecto * cobertura * n_jov_2024. Para recalcular en el navegador partir de desv_base, nunca de una fila que ya tenga intervención."
+  },
+  "semaforo": {
+    "variable": "round(desv_base + efecto_interv, 4)",
+    "umbral_alto": -0.0623,
+    "umbral_medio": 0.0256,
+    "regla": "Sumar desv_base + efecto_interv y redondear a 4 decimales ANTES de comparar (evita errores de punto flotante). alto si ese valor <= umbral_alto; medio si <= umbral_medio; bajo en otro caso. Umbrales calculados una sola vez en el escenario sin intervención y aplicados igual a todos los escenarios.",
+    "etiquetas": [
+      "bajo",
+      "medio",
+      "alto",
+      "sin_estimacion"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "elections": {
+    "2009": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2009.zip",
+    "2012": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2012.zip",
+    "2015": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2015.zip",
+    "2018": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2018.zip",
+    "2021": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2021.zip",
+    "2024": "https://ine.mx/wp-content/uploads/2025/08/DatosAbiertos_DECEyEC_ConteosCensales2024.zip"
+  },
+  "geometry": {
+    "edition": "Captura del servicio oficial del Marco Geoestadístico; corte histórico no informado",
+    "snapshot_date": "2026-10-16",
+    "documentation": "https://www.inegi.org.mx/servicios/catalogounico.html",
+    "url_template": "https://gaia.inegi.org.mx/wscatgeo/v2/geo/mgem/{state}"
+  }
+}

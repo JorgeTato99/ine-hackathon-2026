@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-10-17T07:39:44.084369+00:00",
+  "geometry_snapshot": "2026-10-16",
+  "ine_municipalities_2024": 2477,
+  "eligible_2024": 2465,
+  "mapped_2024": 2477,
+  "pending_after_crosswalk": 0,
+  "different_ine_inegi_keys": 1369,
+  "reviewed_name_correspondences": 33,
+  "normalized_name_differences": 31,
+  "ine_keys_absent_in_raw_direct_join": 3,
+  "geometries_without_usable_observation": 13,
+  "matching_methods": {
+    "clave_y_nombre": 1082,
+    "nombre_unico_en_entidad": 1362,
+    "revision_documentada": 33
+  },
+  "note": "Correspondencia operativa de identidad municipal para la captura INEGI del 16 de octubre de 2026; no acredita armonización histórica de límites. Ver data/README.md."
+}

@@ -1,0 +1,16 @@
+name: Proponer mejora
+description: Explica la necesidad y el beneficio para proyectos derivados.
+title: "[Propuesta]: "
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Necesidad
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Propuesta y alternativas
+    validations:
+      required: true

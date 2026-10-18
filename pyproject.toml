@@ -1,0 +1,92 @@
+[build-system]
+requires = ["uv_build==0.13.1"]
+build-backend = "uv_build"
+
+[project]
+name = "ine-hackathon-2026"
+version = "0.1.0"
+description = "Preparación de datos agregados y análisis territorial para el Reto 2 del INE"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.14,<3.15"
+classifiers = ["Programming Language :: Python :: 3.14", "Typing :: Typed"]
+# El perfil de datos seleccionado es la base; uv run conserva sus dependencias.
+dependencies = [
+    "polars==2.0.0", "pyarrow==26.0.0", "numpy==2.5.4", "scipy==1.18.1",
+    "scikit-learn==1.9.1", "statsmodels==0.15.0", "geopandas==1.2.0",
+    "shapely==2.2.0", "pyogrio==0.13.0", "pandera[polars]==0.34.1",
+    "matplotlib==3.11.2", "libpysal==4.15.0", "esda==2.10.0",
+]
+
+[project.scripts]
+ine-hackathon-2026 = "ine_hackathon_2026.__main__:main"
+
+[dependency-groups]
+dev = [{include-group = "test"}, {include-group = "lint"}, {include-group = "typing"}, {include-group = "security"}]
+test = ["pytest==9.1.1", "pytest-cov==7.1.0", "coverage[toml]==7.16.2"]
+lint = ["ruff==0.17.1"]
+typing = ["mypy==2.4.0"]
+security = ["bandit[toml]==1.9.4", "pip-audit==2.10.1"]
+notebooks = ["ipykernel==7.4.0", "jupyterlab==4.6.4"]
+hooks = ["prek==0.5.5"]
+verify = ["duckdb==1.5.6"]
+async = ["pytest-asyncio==1.4.0"]
+parallel = ["pytest-xdist==3.8.0"]
+performance = ["pytest-benchmark==5.3.0"]
+property = ["hypothesis==6.170.1"]
+mock = ["pytest-mock==3.16.0"]
+random = ["pytest-randomly==5.0.0"]
+timeout = ["pytest-timeout==2.4.0"]
+watch = ["pytest-watcher==0.6.3"]
+tools = ["PyYAML==6.0.3"]
+
+[tool.uv]
+required-version = ">=0.13.1,<0.14"
+default-groups = ["dev", "notebooks"]
+
+[tool.uv.build-backend]
+source-include = ["tests/**", "scripts/**", "config/**", "docs/**", "data/reference/**", "data/samples/**", "data/README.md", "notebooks/**", ".python-version", ".pre-commit-config.yaml", "Makefile", "uv.lock"]
+source-exclude = ["/temp", "/.venv*", "/dist", "/build", "/artifacts", "/output", "/data/raw", "/data/processed", "/data/geo", "/privado"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+extend-exclude = ["temp", "dist", "build", ".venv*", "notebooks"]
+force-exclude = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "C4", "PIE"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ine_hackathon_2026", "scripts"]
+
+[tool.mypy]
+python_version = "3.14"
+files = ["src"]
+strict = true
+warn_unreachable = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers", "-ra"]
+filterwarnings = ["error"]
+markers = ["integration: Integración con recursos preparados."]
+
+[tool.coverage.run]
+source = ["ine_hackathon_2026"]
+branch = true
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+precision = 2
+# Umbral inicial de ingeniería, ajustable explícitamente; notebooks fuera del gate.
+fail_under = 90
+
+[tool.bandit]
+targets = ["src", "scripts"]
+exclude_dirs = ["tests", "temp", ".venv"]

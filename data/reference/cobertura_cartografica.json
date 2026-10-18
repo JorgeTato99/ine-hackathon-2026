@@ -1,0 +1,97 @@
+{
+  "generated_at_utc": "2026-10-17T07:28:40.719935+00:00",
+  "geometry_edition": "captura_servicio_2026-10-16",
+  "years": [
+    {
+      "anio": 2009,
+      "municipios_ine": 2458,
+      "mapeados": 2458,
+      "pendientes": 0,
+      "elegibles": 2451,
+      "elegibles_mapeados": 2451,
+      "cobertura_elegibles_pct": 100.0,
+      "metodos": {
+        "clave_y_nombre": 1087,
+        "nombre_unico_en_entidad": 1351,
+        "revision_documentada": 20
+      },
+      "geometrias_sin_datos": 20
+    },
+    {
+      "anio": 2012,
+      "municipios_ine": 2455,
+      "mapeados": 2455,
+      "pendientes": 0,
+      "elegibles": 2454,
+      "elegibles_mapeados": 2454,
+      "cobertura_elegibles_pct": 100.0,
+      "metodos": {
+        "clave_y_nombre": 1086,
+        "nombre_unico_en_entidad": 1349,
+        "revision_documentada": 20
+      },
+      "geometrias_sin_datos": 23
+    },
+    {
+      "anio": 2015,
+      "municipios_ine": 2458,
+      "mapeados": 2458,
+      "pendientes": 0,
+      "elegibles": 2428,
+      "elegibles_mapeados": 2428,
+      "cobertura_elegibles_pct": 100.0,
+      "metodos": {
+        "clave_y_nombre": 1087,
+        "nombre_unico_en_entidad": 1351,
+        "revision_documentada": 20
+      },
+      "geometrias_sin_datos": 20
+    },
+    {
+      "anio": 2018,
+      "municipios_ine": 2463,
+      "mapeados": 2463,
+      "pendientes": 0,
+      "elegibles": 2450,
+      "elegibles_mapeados": 2450,
+      "cobertura_elegibles_pct": 100.0,
+      "metodos": {
+        "clave_y_nombre": 1088,
+        "nombre_unico_en_entidad": 1355,
+        "revision_documentada": 20
+      },
+      "geometrias_sin_datos": 15
+    },
+    {
+      "anio": 2021,
+      "municipios_ine": 2468,
+      "mapeados": 2468,
+      "pendientes": 0,
+      "elegibles": 2458,
+      "elegibles_mapeados": 2458,
+      "cobertura_elegibles_pct": 100.0,
+      "metodos": {
+        "clave_y_nombre": 1091,
+        "nombre_unico_en_entidad": 1359,
+        "revision_documentada": 18
+      },
+      "geometrias_sin_datos": 10
+    },
+    {
+      "anio": 2024,
+      "municipios_ine": 2477,
+      "mapeados": 2477,
+      "pendientes": 0,
+      "elegibles": 2465,
+      "elegibles_mapeados": 2465,
+      "cobertura_elegibles_pct": 100.0,
+      "metodos": {
+        "clave_y_nombre": 1082,
+        "nombre_unico_en_entidad": 1362,
+        "revision_documentada": 33
+      },
+      "geometrias_sin_datos": 1
+    }
+  ],
+  "note": "Correspondencias operativas derivadas; no son una tabla oficial de equivalencia histórica."
+}

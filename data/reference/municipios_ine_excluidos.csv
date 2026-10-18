@@ -1,0 +1,74 @@
+anio,cve_ent_ine,cve_mun_ine,entidad_ine,municipio_ine,nombres_ine,variantes_nombre,filas_origen,ln,sv,nv,ns,clave_ine,elegible
+2009,07,055,CHIAPAS,Metapa,Metapa,1,286,4026,0,0,4026,07055,False
+2009,08,055,CHIHUAHUA,Rosales,Rosales,1,2184,13054,0,0,13054,08055,False
+2009,11,008,GUANAJUATO,Manuel Doblado,Manuel Doblado,1,5566,30635,0,0,30635,11008,False
+2009,19,044,NUEVO LEON,Rayones,Rayones,1,657,2421,0,0,2421,19044,False
+2009,20,048,OAXACA,Magdalena Ocotlán,Magdalena Ocotlán,1,141,769,0,0,769,20048,False
+2009,20,346,OAXACA,San Sebastián Teitipac,San Sebastián Teitipac,1,156,1654,0,0,1654,20346,False
+2009,20,510,OAXACA,Santo Domingo Ixcatlán,Santo Domingo Ixcatlán,1,144,564,0,0,564,20510,False
+2012,20,247,OAXACA,San Mateo del Mar,San Mateo del Mar,1,707,8027,0,0,8027,20247,False
+2015,19,031,NUEVO LEON,Iturbide,Iturbide,1,550,2915,0,0,2915,19031,False
+2015,20,015,OAXACA,Chahuites,Chahuites,1,981,7586,0,0,7586,20015,False
+2015,20,029,OAXACA,Eloxochitlán de Flores Magón,Eloxochitlán de Flores Magón,1,476,2545,0,0,2545,20029,False
+2015,20,038,OAXACA,Huautepec,Huautepec,1,531,3706,0,0,3706,20038,False
+2015,20,047,OAXACA,Magdalena Mixtepec,Magdalena Mixtepec,1,133,699,0,0,699,20047,False
+2015,20,058,OAXACA,Mazatlán Villa de Flores,Mazatlán Villa de Flores,1,1413,8073,0,0,8073,20058,False
+2015,20,109,OAXACA,San Baltazar Chichicápam,San Baltazar Chichicápam,1,298,2293,0,0,2293,20109,False
+2015,20,127,OAXACA,San Dionisio del Mar,San Dionisio del Mar,1,424,3721,0,0,3721,20127,False
+2015,20,129,OAXACA,San Dionisio Ocotlán,San Dionisio Ocotlán,1,147,918,0,0,918,20129,False
+2015,20,135,OAXACA,San Francisco Cajonos,San Francisco Cajonos,1,136,356,0,0,356,20135,False
+2015,20,138,OAXACA,San Francisco del Mar,San Francisco del Mar,1,658,4895,0,0,4895,20138,False
+2015,20,139,OAXACA,San Francisco Huehuetlán,San Francisco Huehuetlán,1,155,727,0,0,727,20139,False
+2015,20,140,OAXACA,San Francisco Ixhuatán,San Francisco Ixhuatán,1,1027,6725,0,0,6725,20140,False
+2015,20,142,OAXACA,San Francisco Lachigoló,San Francisco Lachigoló,1,149,2233,0,0,2233,20142,False
+2015,20,160,OAXACA,San Jerónimo Tecóatl,San Jerónimo Tecóatl,1,237,1102,0,0,1102,20160,False
+2015,20,228,OAXACA,San Lorenzo Cuaunecuiltitla,San Lorenzo Cuaunecuiltitla,1,137,471,0,0,471,20228,False
+2015,20,271,OAXACA,San Miguel Panixtlahuaca,San Miguel Panixtlahuaca,1,280,3762,0,0,3762,20271,False
+2015,20,277,OAXACA,San Miguel Suchixtepec,San Miguel Suchixtepec,1,276,1958,0,0,1958,20277,False
+2015,20,287,OAXACA,San Nicolás,San Nicolás,1,152,888,0,0,888,20287,False
+2015,20,311,OAXACA,San Pedro Jocotipac,San Pedro Jocotipac,1,145,641,0,0,641,20311,False
+2015,20,317,OAXACA,San Pedro Mixtepec,San Pedro Mixtepec,1,146,732,0,0,732,20317,False
+2015,20,354,OAXACA,Santa Ana Ateixtlahuaca,Santa Ana Ateixtlahuaca,1,126,321,0,0,321,20354,False
+2015,20,370,OAXACA,Santa Catarina Quioquitani,Santa Catarina Quioquitani,1,119,312,0,0,312,20370,False
+2015,20,375,OAXACA,Santa Cruz Acatepec,Santa Cruz Acatepec,1,139,903,0,0,903,20375,False
+2015,20,435,OAXACA,Santa María Teopoxco,Santa María Teopoxco,1,285,2800,0,0,2800,20435,False
+2015,20,437,OAXACA,Santa María Texcatitlán,Santa María Texcatitlán,1,145,779,0,0,779,20437,False
+2015,20,467,OAXACA,Santiago Ixtayutla,Santiago Ixtayutla,1,884,7335,0,0,7335,20467,False
+2015,20,489,OAXACA,Santiago Tepetlapa,Santiago Tepetlapa,1,75,95,0,0,95,20489,False
+2015,26,033,SONORA,San Felipe de Jesús,San Felipe de Jesús,1,136,508,0,0,508,26033,False
+2015,31,039,YUCATAN,Ixil,Ixil,1,285,2821,0,0,2821,31039,False
+2018,07,086,CHIAPAS,Soyaló,Soyaló,1,550,7087,0,0,7087,07086,False
+2018,13,004,HIDALGO,Agua Blanca de Iturbide,Agua Blanca de Iturbide,1,1419,7073,0,0,7073,13004,False
+2018,13,027,HIDALGO,Huehuetla,Huehuetla,1,2215,16429,0,0,16429,13027,False
+2018,13,052,HIDALGO,San Bartolo Tutotepec,San Bartolo Tutotepec,1,2207,12797,0,0,12797,13052,False
+2018,13,056,HIDALGO,Santiago Tulantepec de Lugo Guerrero,Santiago Tulantepec de Lugo Guerrero,1,1605,25028,0,0,25028,13056,False
+2018,20,166,OAXACA,San José Estancia Grande,San José Estancia Grande,1,141,749,0,0,749,20166,False
+2018,20,224,OAXACA,San Juan Yucuita,San Juan Yucuita,1,150,570,0,0,570,20224,False
+2018,20,257,OAXACA,San Miguel Achiutla,San Miguel Achiutla,1,147,537,0,0,537,20257,False
+2018,20,357,OAXACA,Santa Ana Tavela,Santa Ana Tavela,1,148,626,0,0,626,20357,False
+2018,20,396,OAXACA,Santa Magdalena Jicotlán,Santa Magdalena Jicotlán,1,59,72,0,0,72,20396,False
+2018,21,047,PUEBLA,Chapulco,Chapulco,1,433,4888,0,0,4888,21047,False
+2018,31,064,YUCATAN,Sanahcat,Sanahcat,1,152,1377,0,0,1377,31064,False
+2018,31,103,YUCATAN,Xocchel,Xocchel,1,286,2590,0,0,2590,31103,False
+2021,07,064,CHIAPAS,Oxchuc,Oxchuc,1,2699,37899,0,0,37899,07064,False
+2021,07,081,CHIAPAS,Siltepec,Siltepec,1,1605,17646,0,0,17646,07081,False
+2021,07,106,CHIAPAS,Venustiano Carranza,Venustiano Carranza,1,3732,46800,0,0,46800,07106,False
+2021,07,124,CHIAPAS,Honduras de la Sierra,Honduras de la Sierra,1,737,8171,0,0,8171,07124,False
+2021,20,072,OAXACA,Reforma de Pineda,Reforma de Pineda,1,305,2308,0,0,2308,20072,False
+2021,20,247,OAXACA,San Mateo del Mar,San Mateo del Mar,1,730,10221,0,0,10221,20247,False
+2021,20,422,OAXACA,Santa María Mixtequilla,Santa María Mixtequilla,1,448,3570,0,0,3570,20422,False
+2021,20,442,OAXACA,Santa María Xadani,Santa María Xadani,1,554,6748,0,0,6748,20442,False
+2021,21,134,PUEBLA,San Martín Totoltepec,San Martín Totoltepec,1,144,611,0,0,611,21134,False
+2021,31,105,YUCATAN,Yaxkukul,Yaxkukul,1,152,2707,0,0,2707,31105,False
+2024,07,030,CHIAPAS,Chicomuselo,Chicomuselo,1,2442,26330,0,0,26330,07030,False
+2024,07,066,CHIAPAS,Pantelhó,Pantelhó,1,1140,15256,0,0,15256,07066,False
+2024,16,112,MICHOACAN,Ziracuaretiro,Ziracuaretiro,1,1151,14251,0,0,14251,16112,False
+2024,19,029,NUEVO LEON,Higueras,Higueras,1,282,1541,0,0,1541,19029,False
+2024,20,073,OAXACA,La Reforma,La Reforma,1,420,2523,0,0,2523,20073,False
+2024,20,280,OAXACA,San Miguel Tenango,San Miguel Tenango,1,139,637,0,0,637,20280,False
+2024,20,357,OAXACA,Santa Ana Tavela,Santa Ana Tavela,1,154,654,0,0,654,20357,False
+2024,20,559,OAXACA,Capulálpam de Méndez,Capulálpam de Méndez,1,147,1215,0,0,1215,20559,False
+2024,26,006,SONORA,Atil,Atil,1,144,747,0,0,747,26006,False
+2024,26,016,SONORA,Cucurpe,Cucurpe,1,145,1009,0,0,1009,26016,False
+2024,26,031,SONORA,Oquitoa,Oquitoa,1,137,446,0,0,446,26031,False
+2024,26,043,SONORA,Tubutama,Tubutama,1,437,1381,0,0,1381,26043,False

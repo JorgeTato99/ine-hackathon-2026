@@ -1,0 +1,4 @@
+anio,cve_ent_ine,cve_mun_ine,entidad_ine,municipio_ine,nombres_ine,variantes_nombre,filas_origen,ln,sv,nv,ns,clave_ine,elegible,cvegeo,municipio_inegi,metodo,evidencia_adicional,nombre_inegi_misma_clave,clave_directa_coincide
+2024,03,004,BAJA CALIFORNIA SUR,Los Cabos,Los Cabos,1,21170,268426,127692,125876,14858,03004,True,03008,Los Cabos,nombre_unico_en_entidad,,,False
+2024,03,005,BAJA CALIFORNIA SUR,Loreto,Loreto,1,1348,13530,8853,4200,477,03005,True,03009,Loreto,nombre_unico_en_entidad,,,False
+2024,07,095,CHIAPAS,Teopisca,Teopisca,1,1976,31881,20510,11371,0,07095,True,07094,Teopisca,nombre_unico_en_entidad,,,False

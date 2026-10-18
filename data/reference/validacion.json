@@ -1,0 +1,13 @@
+{
+  "validated_at_utc": "2026-10-17T07:28:51.100431+00:00",
+  "status": "ok",
+  "election_count": 6,
+  "csv_count": 192,
+  "extracted_files_crc_checked": 198,
+  "source_row_count": 54872712,
+  "municipality_years": 14779,
+  "excluded_zero_denominator": 73,
+  "map_ready_rows": 14706,
+  "geometry_count": 2478,
+  "pending_correspondences": 0
+}

@@ -1,0 +1,28 @@
+{
+  "generated_at_utc": "2026-10-17T07:39:44.409590+00:00",
+  "sources": {
+    "elections": {
+      "2009": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2009.zip",
+      "2012": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2012.zip",
+      "2015": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2015.zip",
+      "2018": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2018.zip",
+      "2021": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2021.zip",
+      "2024": "https://ine.mx/wp-content/uploads/2025/08/DatosAbiertos_DECEyEC_ConteosCensales2024.zip"
+    },
+    "geometry": {
+      "edition": "Captura del servicio oficial del Marco Geoestadístico; corte histórico no informado",
+      "snapshot_date": "2026-10-16",
+      "documentation": "https://www.inegi.org.mx/servicios/catalogounico.html",
+      "url_template": "https://gaia.inegi.org.mx/wscatgeo/v2/geo/mgem/{state}"
+    }
+  },
+  "sha256": {
+    "equivalencias_ine_inegi.csv": "0bdf1cdc02ffc51a016ca1e3a7ecf86a838231f7638cd874bda6ecb1f0b035a2",
+    "municipios_para_mapa.csv": "305b38383c2a0878349e49c70843787d7cf4a5b511ecb2121ac129894f55a037",
+    "municipios_inegi.csv": "7b0e9f1c24b223adfaa35cd321c8358dbba5dad18717acb922ccd42b6b040dae",
+    "municipios_ine_excluidos.csv": "96171f12ba0c0f4dce88e0b8689594a24dcd49d9effb589c86b1d6878b8f980b",
+    "cobertura_cartografica.json": "80439c538015b633a2dad3c5bb07c6267ecad2a95114d66a3cb93e1352324f63",
+    "validacion.json": "80ec25c743be8350dba07feaa7c4be5b1ceb840a9805192b3e6afa404156d8ef",
+    "geometry_geojson_sha256": "40716aac8df1f67b31839174beb1b73d226a412f3f2ab79c9e2f493bb210bfef"
+  }
+}
