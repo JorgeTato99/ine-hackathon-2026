@@ -56,6 +56,47 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 - En 2012 faltan partes de la lista sin aviso.
 - Las causas de los casos raros se investigan en el paso 2; hasta entonces son hipótesis.
 
+---
+
+## 2026-10-19 · Paso 2: ¿qué hay detrás de los datos raros?
+
+**Evidencia:**
+
+- [`notebooks/02_investigacion_datos_raros.ipynb`](../notebooks/02_investigacion_datos_raros.ipynb), que cruza nuestros datos con las actas oficiales de 2024.
+- Los reportes de investigación en [`docs/investigacion/`](investigacion/) (A a F), con todas sus fuentes.
+
+### Hallazgos principales
+
+- **El "no sabemos" tiene tres orígenes:**
+  - **A. No hubo casilla**, por decisión de la comunidad, conflicto o violencia. Es abstención real.
+  - **B. Se votó, pero el paquete no llegó.**
+  - **C. Se votó, pero el cuadernillo no se capturó.**
+- **En 2024, de los 38 municipios con más de la mitad en "no sabemos":** 10 son de origen A, 5 de origen B y 23 de origen C.
+- **Ejemplo de origen A, Cherán:** la fórmula da 47.1 %, pero solo votó el 7.1 % de su lista, porque solo hubo casillas para una parte.
+- **2012:** el INE no pudo capturar 5,485 cuadernillos y los quitó de la base (*Estudio censal 2012*). Nuestra lista de 2012 coincide exactamente con su cifra: 76,490,962.
+- **2015:** el "no sabemos" coincide con el boicot magisterial en Oaxaca y Guerrero, pero solo el 25 % está en los estados del boicot.
+- **Actas oficiales:** en general nuestros datos coinciden con las actas (mediana 0.99). Hay 359 secciones donde nuestros datos marcan bastante más "votó" que los votos del acta.
+- **San Miguel Totolapan** coincide exacto con su acta: su participación alta es real.
+- **Personas de 110 años o más:** el INE ya las revisó (COTEPE 2023-2024). Son sobre todo edades exageradas en registros antiguos.
+- **Crecimiento atípico de la lista:** casi todo es expansión urbana. Solo Las Minas (Veracruz, 2021) combina crecimiento atípico con salto de participación.
+
+### Decisiones propuestas (pendientes de confirmar por Sofía)
+
+| # | Decisión | Propuesta | Por qué |
+| --- | --- | --- | --- |
+| D3 (ajustada) | Qué hacer cuando hay mucho "no sabemos" | Distinguir el origen con las actas. **A:** participación calculada con las actas sobre toda la lista, más la marca "no participación comunitaria o por conflicto". **B:** participación de las actas, más una marca de conflicto. **C:** participación de las actas; si no hay actas, "sin dato" | Con la regla anterior, los municipios con más abstención real (Cherán, Chicomuselo, Pantelhó) habrían quedado en gris |
+| D9 | Actas oficiales como segunda fuente | Incorporar las actas por casilla de 2018, 2021 y 2024 | Permiten separar los tres orígenes y validar los datos |
+| D10 | Secciones donde nuestros datos y el acta no coinciden | Si nuestros datos marcan más de 10 % (y al menos 50) más "votó" que votos el acta, la sección queda "sin dato" | Dos fuentes oficiales no coinciden |
+| D11 | Crecimiento atípico de la lista | No mostrarlo como "sospecha" en el mapa; usarlo como variable continua en el modelo | Casi todo es crecimiento urbano |
+
+### Cómo se comunica
+
+- **Decir** "participación atípica" o "dos fuentes oficiales no coinciden". **Nunca** "fraude", "voto de muertos" ni "turismo electoral".
+- **No nombrar** a personas.
+
 ### Siguiente paso
 
-**Paso 2:** investigar las causas de los datos raros (municipios sin dato, participación sospechosa, 2012, edades extremas y movimientos atípicos de electores) con noticias, fuentes oficiales y los propios datos.
+**Paso 3 · Exploración:**
+
+- verificar las pistas para el modelo: elección local el mismo día, crecimiento de la lista y credencialización de los jóvenes;
+- conseguir el calendario de elecciones locales de 2027.
