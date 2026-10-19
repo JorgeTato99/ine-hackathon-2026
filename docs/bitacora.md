@@ -45,7 +45,7 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 - **Municipios sin ningún registro:** 73 casos municipio-elección, 44 de ellos en Oaxaca.
 - **Paracho y Parácuaro:** en 2021 los nombres vienen cruzados. Corregido en el notebook; falta corregir la tabla de equivalencias del repositorio.
 - **Pistas para el modelo:**
-  - La elección inmediata anterior predice mejor a cada municipio: 2018 explica el 72 % de las diferencias entre municipios en 2021, y 2015 solo el 30 %.
+  - Las presidenciales anticipan bien qué municipios quedan por debajo del resto; las intermedias, mucho menos. 2018 explica el 72 % de las diferencias entre municipios en 2021, y 2015 solo el 30 %. Para 2024, 2018 explica el 73 % y 2021 el 67 %. Para 2027, la base es 2024 junto con 2021, más qué elecciones locales coinciden ese día.
   - Los que menos votan son los hombres de 20 a 29 años (35.7 % en 2021).
   - Lo rural vota más que lo urbano, sobre todo en las intermedias (de 5 a 10 pp).
 
