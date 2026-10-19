@@ -1,40 +1,44 @@
-# G · Elecciones del 6 de junio de 2027
+# G · Elecciones locales el mismo día que la federal
 
-Consultado el 19 de octubre de 2026. Es la variable "elección local el mismo día" para el modelo de 2027.
+Consultado el 19 de octubre de 2026. Sirve para la variable del modelo "¿se elige gobernador el mismo día?".
 
-## Qué se elige
+## 2027: qué se elige el 6 de junio
 
 - **Federal:** las 500 diputaciones federales. No se renueva el Senado.
-- **Local:** 19,609 cargos en 31 entidades:
+- **Local:** 19,609 cargos:
   - 17 gubernaturas;
-  - 1,098 diputaciones locales;
-  - 18,057 cargos de ayuntamientos;
-  - 437 cargos más.
-- **Casillas previstas:** 176,741.
+  - diputaciones locales en 31 entidades (todas menos Coahuila);
+  - ayuntamientos o alcaldías en 30 entidades (todas menos Durango y Veracruz).
+- **El INE organiza elecciones concurrentes con las 32 entidades.**
+- **Estados con gobernador (17):** Aguascalientes, Baja California, Baja California Sur, Campeche, Chihuahua, Colima, Guerrero, Michoacán, Nayarit, Nuevo León, Querétaro, Quintana Roo, San Luis Potosí, Sinaloa, Sonora, Tlaxcala y Zacatecas.
 
-## Estados con elección de gobernador (17)
+**Fuentes:**
 
-Aguascalientes, Baja California, Baja California Sur, Campeche, Chihuahua, Colima, Guerrero, Michoacán, Nayarit, Nuevo León, Querétaro, Quintana Roo, San Luis Potosí, Sinaloa, Sonora, Tlaxcala y Zacatecas.
+- INE, página oficial del Proceso Electoral Federal 2026-2027: https://ine.mx/voto-y-elecciones/elecciones-2027/
+- INE, Central Electoral, 30 de julio de 2026, "Perfila INE organizar el Proceso Electoral Federal y 32 Concurrentes 2026-2027": https://centralelectoral.ine.mx/2026/07/30/perfila-ine-organizar-el-proceso-electoral-federal-y-32-concurrentes-2026-2027/
+- Uno TV: https://www.unotv.com/nacional/elecciones-2027-ine-inicia-proceso-10-septiembre-500-diputados-19609-cargos-locales/
+- Expansión, 30 de septiembre de 2026: https://politica.expansion.mx/mexico/2026/09/30/guia-electoral-2027-fechas-y-ruta-por-estado
 
-Esta lista aparece igual en las dos fuentes consultadas (ver al final).
+**Pendiente:** las fuentes citan tres números distintos para el acuerdo del plan integral (INE/CG478/2026, INE/CG479/2026 e INE/CG480/2026). Hay que verificarlo en la Gaceta Electoral si se va a citar.
 
-## Otras elecciones locales
+## Intermedias anteriores: estados con gobernador
 
-Según la guía de Expansión:
+| Elección | Estados | Fuentes |
+| --- | --- | --- |
+| 2009 (6) | Campeche, Colima, Nuevo León, Querétaro, San Luis Potosí y Sonora | CIDOB, "Las elecciones del 5 de julio de 2009 en México": https://www.cidob.org/en/publications/elecciones-del-5-julio-2009-mexico-administracion-calderon-prueba · El Siglo de Torreón, 2009: https://www.elsiglodetorreon.com.mx/noticia/2009/se-queda-tricolor-con-cinco-gubernaturas.html |
+| 2015 (9) | Baja California Sur, Campeche, Colima, Guerrero, Michoacán, Nuevo León, Querétaro, San Luis Potosí y Sonora | El Siglo de Torreón, 2015: https://www.elsiglodetorreon.com.mx/noticia/2015/donde-cuando-y-que-se-votara-este-2015.html · Ejecentral: https://www.ejecentral.com.mx/elecciones-2015-la-recta-final |
+| 2021 (15) | Baja California, Baja California Sur, Campeche, Chihuahua, Colima, Guerrero, Michoacán, Nayarit, Nuevo León, Querétaro, San Luis Potosí, Sinaloa, Sonora, Tlaxcala y Zacatecas | Uno TV: https://www.unotv.com/nacional/elecciones-2021-en-mexico-cargos-a-elegir-del-proceso-electoral/ · El Financiero: https://www.elfinanciero.com.mx/elecciones-2021/que-se-elige-en-las-elecciones-2021-en-mexico |
+| 2027 (17) | Los 15 de 2021, más Aguascalientes y Quintana Roo | INE (arriba) |
 
-- **Diputaciones locales:** se eligen en 31 entidades. La excepción es Coahuila, que las eligió en 2026.
-- **Ayuntamientos:** se eligen en 30 entidades. Las excepciones son Durango y Veracruz. En la Ciudad de México se eligen las 16 alcaldías.
-- **Todas las entidades** tienen al menos una elección local ese día.
+## Efecto en la participación
 
-El cuadro por estado se dedujo de esas excepciones. **Hay que confirmarlo con el calendario oficial del INE y de cada instituto electoral local** antes de usarlo en el modelo.
+**Verificado por nosotros con los conteos censales y las listas de arriba.** Cambio promedio de la participación estatal, de la presidencial a la intermedia siguiente:
 
-## Para el modelo
+| Periodo | Estados con gobernador | Estados sin gobernador | Prueba de diferencia |
+| --- | --- | --- | --- |
+| 2012 → 2015 | −4.3 pp (9 estados) | −17.6 pp (23 estados) | Mann-Whitney p = 0.00003 |
+| 2018 → 2021 | −7.3 pp (15 estados) | −11.7 pp (17 estados) | Mann-Whitney p = 0.0065 |
 
-- **En las intermedias anteriores**, los estados con gobernador el mismo día cayeron mucho menos respecto de la presidencial (reporte F, por verificar).
-- **2021 frente a 2027:** en 2021 hubo 15 gubernaturas. En 2027 son esas mismas 15, más Aguascalientes y Quintana Roo, que eligieron gobernador en 2022.
-- **Cómo usarlo:** se puede usar como variable por estado (gobernador sí o no) para 2009, 2015, 2021 y 2027. Las listas de 2009 y 2015 están pendientes de verificar.
+En 2009, la participación promedio fue de 56.0 % en los estados con gobernador y de 41.1 % en los demás.
 
-## Fuentes
-
-- Uno TV, "Elecciones 2027: INE inicia proceso el 10 de septiembre; 500 diputados y 19,609 cargos locales": https://www.unotv.com/nacional/elecciones-2027-ine-inicia-proceso-10-septiembre-500-diputados-19609-cargos-locales/
-- Expansión, "Guía electoral 2027: fechas y ruta por estado", 30 de septiembre de 2026: https://politica.expansion.mx/mexico/2026/09/30/guia-electoral-2027-fechas-y-ruta-por-estado
+**Qué significa para 2027:** se eligen gobernadores en 17 estados. Es probablemente la variable más importante para predecir el **nivel** de participación de cada estado en la intermedia.

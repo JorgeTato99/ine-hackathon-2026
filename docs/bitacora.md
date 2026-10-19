@@ -80,9 +80,14 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 - **Personas de 110 años o más:** el INE ya las revisó (COTEPE 2023-2024). Son sobre todo edades exageradas en registros antiguos.
 - **Crecimiento atípico de la lista:** casi todo es expansión urbana. Solo Las Minas (Veracruz, 2021) combina crecimiento atípico con salto de participación.
 
-### Decisiones propuestas (pendientes de confirmar por Sofía)
+- **Elegir gobernador el mismo día:** entre 2012 y 2015 la participación cayó −4.3 pp en los estados que eligieron gobernador y −17.6 pp en los demás; entre 2018 y 2021, −7.3 pp contra −11.7 pp. En 2027 se eligen 17 gubernaturas ([G](investigacion/G-calendario-2027.md)). Es una variable para el modelo.
+- **Búsquedas sin resultado y pendientes** (como la lista de municipios de Oaxaca por usos y costumbres): ver [H](investigacion/H-busquedas-pendientes.md).
 
-| # | Decisión | Propuesta | Por qué |
+### Decisiones
+
+**Decidió:** Sofía Ordaz, el 19 de octubre de 2026.
+
+| # | Decisión | Qué se decidió | Por qué |
 | --- | --- | --- | --- |
 | D3 (ajustada) | Qué hacer cuando hay mucho "no sabemos" | Distinguir el origen con las actas. **A:** participación calculada con las actas sobre toda la lista, más la marca "no participación comunitaria o por conflicto". **B:** participación de las actas, más una marca de conflicto. **C:** participación de las actas; si no hay actas, "sin dato" | Con la regla anterior, los municipios con más abstención real (Cherán, Chicomuselo, Pantelhó) habrían quedado en gris |
 | D9 | Actas oficiales como segunda fuente | Incorporar las actas por casilla de 2018, 2021 y 2024 | Permiten separar los tres orígenes y validar los datos |
@@ -98,5 +103,5 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 
 **Paso 3 · Exploración:**
 
-- verificar las pistas para el modelo: elección local el mismo día, crecimiento de la lista y credencialización de los jóvenes;
-- conseguir el calendario de elecciones locales de 2027.
+- verificar las pistas para el modelo: elección municipal el mismo día, crecimiento de la lista y credencialización de los jóvenes;
+- armar la variable "gobernador el mismo día" para 2009, 2015, 2021 y 2027.
