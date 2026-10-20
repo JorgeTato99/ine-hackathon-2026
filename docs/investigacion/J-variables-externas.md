@@ -108,9 +108,9 @@ Script: `scratchpad/p3b/espacial.py`. Usa las fronteras municipales del INEGI y 
 
 - **Índice de Moran de la desviación:** 0.52 (2018), 0.53 (2021) y 0.55 (2024), con p = 0.001. Es un agrupamiento fuerte: los municipios se parecen a sus vecinos.
 - **Lo que la historia no anticipa también se agrupa** (0.42). Eso apunta a efectos regionales o estatales, como las elecciones locales, más que a contagio entre vecinos: agregar el promedio de los vecinos en 2018 casi no mejora la predicción de 2021 (R² de 0.715 a 0.717).
-- **Zonas frías de 2024** (LISA bajo-bajo: municipios de baja participación rodeados de baja participación, p < 0.05): 372 municipios. Oaxaca tiene 231; Michoacán, 38; Durango, 24; Chihuahua, 16; Jalisco, 15; y Guanajuato, 13.
-- **Zonas calientes de 2024** (alto-alto): 328 municipios. Yucatán tiene 101; Puebla, 65; Tlaxcala, 40; Chiapas, 25; y Sonora, 23.
-- **Rezago persistente:** 264 municipios votaron por debajo del país en las seis elecciones. 702 lo hicieron en cuatro o más, y 344 quedaron 5 o más puntos por debajo en cuatro o más.
+- **Zonas frías de 2024** (LISA bajo-bajo: municipios de baja participación rodeados de baja participación, p < 0.05): 372 municipios en la primera versión, y 371 después de integrar las actas de 2009–2015 (notebook 03b). Oaxaca tiene 231; Michoacán, 38; Durango, 24; Chihuahua, 16; Jalisco, 15; y Guanajuato, 13 (cifras de la primera versión).
+- **Zonas calientes de 2024** (alto-alto): 328 municipios en la primera versión y 337 en la final. Yucatán tiene 101; Puebla, 65; Tlaxcala, 40; Chiapas, 25; y Sonora, 23 (primera versión).
+- **Rezago persistente:** 264 municipios votaron por debajo del país en las seis elecciones en la primera versión, y **285** en la final. Son más porque, con las actas de 2009–2015, más municipios tienen las seis elecciones con dato. En la primera versión, 702 lo hicieron en cuatro o más y 344 quedaron 5 o más puntos por debajo en cuatro o más.
 
 ### R6 · Oaxaca: elegir ayuntamiento el mismo día sube la participación federal — indicio fuerte
 
@@ -118,12 +118,14 @@ Participación federal (ponderada por lista) de los municipios de Oaxaca, según
 
 | Elección | Municipios de partidos | Municipios de usos y costumbres | Brecha | ¿Los de partidos eligen ayuntamiento ese día? |
 | --- | ---: | ---: | ---: | --- |
-| 2009 | 42.4 % | 37.8 % | 4.6 | no |
-| 2012 | 63.1 % | 55.3 % | 7.8 | no |
-| 2015 | 41.3 % | 39.6 % | 1.7 | no |
+| 2009 | 42.4 % | 37.7 % | 4.7 | no |
+| 2012 | 63.1 % | 55.6 % | 7.5 | no |
+| 2015 | 41.4 % | 39.6 % | 1.8 | no |
 | 2018 | 69.9 % | 57.8 % | 12.1 | sí |
-| 2021 | 62.8 % | 42.1 % | 20.6 | sí |
-| 2024 | 64.3 % | 48.2 % | 16.2 | sí |
+| 2021 | 62.8 % | 42.1 % | 20.7 | sí |
+| 2024 | 64.3 % | 48.2 % | 16.1 | sí |
+
+(Cifras finales del notebook 03b, con las actas de 2009–2015 integradas; cambian en décimas respecto de la primera versión.)
 
 - **Mientras ningún municipio de Oaxaca elegía ayuntamiento el mismo día que la federal, la brecha era de 2 a 8 puntos.** Desde 2018, cuando los de partidos empezaron a hacerlo, subió a 12–21 puntos. La más grande fue en la intermedia de 2021.
 - **Es una comparación antes y después dentro de un mismo estado**, la evidencia más limpia que tenemos del efecto de la elección municipal. No es un experimento: pudieron cambiar otras cosas en esos años.
@@ -316,3 +318,33 @@ Script: `scratchpad/p3b/primerizos.py`. Sigue a la generación nacida en 1998–
 
 1. Aplicar la regla de origen A, B y C a 2009, 2012 y 2015. Por ejemplo, el "no sabemos" de 2015 en el boicot magisterial.
 2. Hacer la validación fuera de tiempo del paso 4 con más variables.
+
+### R14 · Qué se sostiene en las dos transiciones pasadas — verificado
+
+**Notebook:** `notebooks/03b_variables_externas_y_patrones.ipynb`, sección 5. Para cada variable medimos su correlación con lo que la presidencial no anticipa de la intermedia, en 2012 → 2015 y en 2018 → 2021. Cada transición usa solo información disponible antes de su elección. "Estable" significa mismo signo e IC 95 % sin el 0 en las dos.
+
+| Variable | 2012 → 2015 | 2018 → 2021 | ¿Estable? |
+| --- | ---: | ---: | --- |
+| Elige ayuntamiento el mismo día | 0.66 | 0.43 | sí |
+| Elige gobernador el mismo día | 0.53 | 0.24 | sí |
+| Usos y costumbres (Oaxaca) | −0.08 | −0.34 | sí |
+| Cobertura de la lista | 0.29 | 0.20 | sí |
+| % hombres | 0.22 | 0.29 | sí |
+| % con rezago educativo | 0.22 | 0.20 | sí |
+| % que vivía en otra entidad hace 5 años | −0.25 | −0.13 | sí |
+| % de 65 años o más | 0.23 | 0.13 | sí |
+| Escolaridad promedio | −0.20 | −0.16 | sí |
+| Crecimiento de la lista | −0.19 | −0.16 | sí |
+| % rural | 0.14 | 0.18 | sí |
+| % que habla lengua indígena | −0.09 | −0.16 | sí |
+| Margen presidencial | 0.01 | −0.33 | **no** |
+| Número efectivo de partidos | −0.14 | 0.27 | **no** (cambia de signo) |
+| % de viviendas que reciben remesas | 0.25 | 0.03 | **no** |
+| % de viviendas con emigrantes | 0.17 | −0.00 | **no** |
+| % en pobreza | 0.01 | −0.01 | **no** |
+
+- **Lo más fuerte y estable es lo que se elige localmente el mismo día.** Su fuerza baja en 2021, cuando casi todo el país eligió algo local.
+- **Las variables sociales estables son débiles** (|ρ| de 0.1 a 0.3) y redundantes entre sí: 11 pares con |ρ| ≥ 0.8.
+- **La migración anticipó bien 2015 y nada en 2021.** Por eso no se debe confiar en ella para 2027.
+
+**Actualización de R9 con las actas de 2009–2015:** al contar los antecedentes de falta de casillas desde 2009, repitió el 20.8 % de los municipios con antecedente en 2021 y el 16.2 % en 2024, contra el 0.5 % y el 0.3 % del resto. La violencia sigue sin anticiparlo: AUC de 0.58 (p = 0.18) y 0.49.

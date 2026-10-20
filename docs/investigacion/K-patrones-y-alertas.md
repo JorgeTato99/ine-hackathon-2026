@@ -2,6 +2,8 @@
 
 Documento vivo. Cada patrón encontrado en el proyecto que pueda servir al INE como **vista del mapa** o **alerta** por zona. Se indica de dónde sale, qué tan firme es y cómo se mostraría.
 
+**Datos para el mapa:** `data/processed/indicadores_mapa.parquet` (notebook 03b, sección 8).
+
 **Firmeza:** **verificado** (datos o fuente oficial) · **indicio** (lo muestran los datos, con límites) · **hipótesis** (por comprobar).
 
 | # | Indicador | Qué muestra | Fuente | Firmeza | Vista o alerta propuesta |
@@ -9,7 +11,7 @@ Documento vivo. Cada patrón encontrado en el proyecto que pueda servir al INE c
 | K1 | **Riesgo de abstención 2027** | Participación esperada sin intervención | Modelo (paso 4) | Pendiente | Vista principal: semáforo por municipio |
 | K2 | **Participación histórica** | Participación por municipio y elección, 2009–2024 | Conteos censales, actas | Verificado | Vista con selector de año |
 | K3 | **Desviación frente al país** | Municipios que votan siempre por debajo del promedio | Panel municipal | Verificado | Vista "rezago persistente" (por debajo del país en 4 o más de 6 elecciones) |
-| K4 | **Parte de la lista sin casilla** | Gente que no tuvo dónde votar (36 municipios; 12 recurrentes) | Actas vs. conteos | Verificado | **Alerta "sin casilla"**: recurrente (2+ elecciones) o antecedente (1) |
+| K4 | **Parte de la lista sin casilla** | Gente que no tuvo dónde votar (75 municipios de 2009 a 2024; 16 recurrentes) | Actas vs. conteos | Verificado | **Alerta "sin casilla"**: recurrente (2+ elecciones) o antecedente (1) |
 | K5 | **Paquete no recibido** | Paquetes perdidos o quemados (27 municipio-elección) | Actas | Verificado | Alerta de conflicto electoral |
 | K6 | **Secciones que no cuadran con el acta** | Dos fuentes oficiales no coinciden | Actas vs. conteos | Verificado | Capa de calidad del dato (no es acusación) |
 | K7 | **Crecimiento atípico de la lista** | Crecimiento muy por encima del normal; casi todo urbano | Conteos censales (paso 2, reporte E) | Verificado | Vista de crecimiento; alerta solo si además hay salto de participación |
@@ -24,8 +26,8 @@ Documento vivo. Cada patrón encontrado en el proyecto que pueda servir al INE c
 | K16 | **Violencia** | Homicidios, extorsión y delitos electorales por 100 mil habitantes | INEGI / SESNSP | Verificado: **no** anticipa la falta de casillas (AUC ≈ 0.5); la extorsión y los delitos electorales anticipan un poco menos participación | Capa de contexto; no sirve como alerta de casillas |
 | K17 | **Marginación, pobreza y escolaridad** | Contexto social | CONAPO, CONEVAL, INEGI | Pendiente | Capas de contexto para explicar el porqué |
 | K18 | **Intensidad migratoria** | Hogares con emigrantes o remesas; donde hay más, se vota menos (−0.27) | CONAPO, Banxico | Verificado | Capa de contexto que explica parte del rezago |
-| K19 | **Zonas frías y calientes** | Clusters LISA de baja o alta participación (372 bajo-bajo y 328 alto-alto en 2024) | Panel + fronteras INEGI | Verificado | Vista "zonas frías": regiones, no municipios aislados |
-| K20 | **Rezago persistente** | Por debajo del país en las 6 elecciones (264 municipios) | Panel | Verificado | Vista y filtro "siempre por debajo" |
+| K19 | **Zonas frías y calientes** | Clusters LISA de baja o alta participación (371 bajo-bajo y 337 alto-alto en 2024) | Panel + fronteras INEGI | Verificado | Vista "zonas frías": regiones, no municipios aislados |
+| K20 | **Rezago persistente** | Por debajo del país en las 6 elecciones (285 municipios) | Panel | Verificado | Vista y filtro "siempre por debajo" |
 | K21 | **Municipios sin elección municipal el mismo día en 2027** | Usos y costumbres (418 en Oaxaca), Durango y Veracruz | IEEPCO + INE | Verificado; su efecto es un indicio fuerte (R6) | Capa de riesgo de contexto |
 | K22 | **Jóvenes sin credencial** | % de la generación de 18 y 19 años que no está en la lista (31 % en el municipio típico) | Lista INE + Censo 2020 | Verificado | **Vista de intervención: credencialización antes de 2027** |
 | K23 | **Caída de las ciudades escolarizadas en 2021** | Municipios grandes y con más escolaridad que cayeron más de lo esperado | Censo + panel | Indicio (un periodo) | Capa analítica para el reporte |

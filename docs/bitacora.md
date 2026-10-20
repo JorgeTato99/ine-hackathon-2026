@@ -143,7 +143,9 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
   - En el municipio típico votan 9.9 puntos menos que el total, en el 97.5 % de los municipios.
   - Los hombres de 20 a 29 años votan 43.1 % en el municipio típico.
 
-### Propuestas de decisión (pendientes de Sofía)
+### Decisiones
+
+**Decidió:** Sofía Ordaz, el 19 de octubre de 2026. Se adoptan todas las propuestas.
 
 | # | Propuesta | Por qué |
 | --- | --- | --- |
@@ -155,6 +157,17 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 | D14 | Modelo simple: historia más nivel de elección local el mismo día; otras variables solo si mejoran la validación | Las variables de la lista casi no aportan por sí solas |
 | D15 | Validar entrenando con 2012 → 2015 y probando en 2018 → 2021. Medir error, coincidencia en el 10 % de mayor riesgo y resultado ponderado por la lista. Comparar contra la regla simple justa | Simula predecir una intermedia que el modelo no ha visto, respetando el orden del tiempo |
 
+### Ampliación del 19 de octubre de 2026: actas de 2009, 2012 y 2015
+
+- **D9 ampliada.** Se agregan las actas oficiales por casilla de 2009, 2012 y 2015 (SICEEF del INE). Ver `docs/fuentes-externas.md` y el reporte J (R13). Con ellas se aplican D3 y D10 a las seis elecciones.
+- **Resultado:** ya no queda ningún municipio "sin dato" por "no sabemos" sin actas ni por lista incompleta. Quedan 39 municipio-elección "sin dato": 31 por paquete perdido, 3 sin registros y 5 por la regla 4.
+- **Boicot de 2015:** 39 municipios con parte de la lista sin casilla, 34 en Oaxaca. Las cifras coinciden con las del reporte A (Huautla 93.5 % contra 94 %; San José Tenango 84.1 % contra 84 %; Chilchotla 55.9 % contra 56 %).
+- **De 2009 a 2024:** 75 municipios con parte de la lista sin casilla en alguna elección; 16 recurrentes y 8 en tres o más elecciones.
+
+| # | Propuesta | Por qué |
+| --- | --- | --- |
+| D16 (nueva, **pendiente de confirmar**) | Municipios con lista incompleta en los conteos: usar la participación de todas sus actas, en lugar de dejarlos "sin dato" | Recupera 108 municipios de 2012. Las secciones que faltan en los conteos se ubican con el mismo número de sección en la elección más cercana |
+
 ### Siguiente paso
 
-**Paso 4 · Modelo y validación**, con primer resultado el 22 de octubre, una vez decididas estas propuestas.
+**Paso 3b · Variables externas** (reportes [J](investigacion/J-variables-externas.md) y [K](investigacion/K-patrones-y-alertas.md)) y **paso 4 · Modelo y validación**, con primer resultado el 22 de octubre.
