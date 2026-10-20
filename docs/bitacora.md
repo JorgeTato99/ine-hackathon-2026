@@ -105,3 +105,56 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 
 - verificar las pistas para el modelo: elección municipal el mismo día, crecimiento de la lista y credencialización de los jóvenes;
 - armar la variable "gobernador el mismo día" para 2009, 2015, 2021 y 2027.
+
+---
+
+## 2026-10-19 · Paso 3: la historia de cada municipio y las variables
+
+**Evidencia:**
+
+- [`notebooks/03_historia_y_variables.ipynb`](../notebooks/03_historia_y_variables.ipynb), que genera `data/processed/panel_municipal.parquet` (municipio × elección, con el territorio de 2024).
+- Reporte [I](investigacion/I-elecciones-concurrentes.md): elecciones locales el mismo día, de 2009 a 2027, y municipios de Oaxaca por sistemas normativos indígenas.
+- Revisado por dos revisores independientes, que recalcularon las cifras clave. Sus hallazgos ya están corregidos en el notebook.
+
+### Hallazgos principales
+
+- **Historia por territorio de 2024 (D6):**
+  - Entre 4.9 % y 6.5 % de la lista de cada elección vive en secciones que el INE dividió. Se asignan al municipio de su año.
+  - Hay duda real solo en 13 municipios, marcados como "territorio aproximado".
+  - Los 19 municipios creados después de 2009 recuperan su historia; 15 la tienen completa.
+- **Actas de 2018, 2021 y 2024 (D9):** son las descargas oficiales del INE. La sección típica cuadra al 99 %.
+- **Corrección al paso 2:** la falta de casillas era más amplia de lo que vimos.
+  - 36 municipios tuvieron al menos 10 % de la lista sin casilla en alguna elección de 2018 a 2024.
+  - 12 repiten; Tila, Cherán, Charapan, Nahuatzen, Quiroga y Tingambato, en las tres elecciones.
+  - La fórmula de los conteos les inflaba la participación: 15 puntos en el caso típico.
+- **Corrección al paso 2:** el efecto de 2012 → 2015 (−4.3 contra −17.6 puntos) no era solo del gobernador.
+  - Lo explica sobre todo tener o no tener alguna elección local ese día.
+  - En 2021, cuando casi todo el país eligió algo local, el gobernador pesó menos.
+  - Los estados con elecciones locales sin gobernador en 2018 y 2021 casi no se movieron (+0.8 puntos; +1.9 sin Oaxaca).
+- **2027 se parece a 2021:**
+  - La transición de 2024 a 2027 tiene los mismos grupos que la de 2018 a 2021.
+  - No eligen gobernador ni en 2024 ni en 2027: Coahuila, Durango, Hidalgo, Estado de México, Oaxaca y Tamaulipas.
+  - La elección judicial se movió a 2028 (reforma publicada en el DOF el 2 de junio de 2026), así que no coincide con 2027.
+- **Variables:**
+  - La historia anticipa dos tercios de las diferencias entre municipios (2018 → 2021).
+  - % jóvenes y crecimiento de la lista casi no aportan.
+  - % hombres y % rural aportan poco. Lo de % hombres, como señal de migración, es una hipótesis.
+- **Jóvenes de 20 a 29 años (2021):**
+  - En el municipio típico votan 9.9 puntos menos que el total, en el 97.5 % de los municipios.
+  - Los hombres de 20 a 29 años votan 43.1 % en el municipio típico.
+
+### Propuestas de decisión (pendientes de Sofía)
+
+| # | Propuesta | Por qué |
+| --- | --- | --- |
+| D2 (ajustada) | Regla 3 solo con elección antes y después, y con media geométrica | Con la regla anterior, municipios que crecieron de verdad (García, Juárez, Solidaridad, Pesquería) quedaban como "lista incompleta" |
+| D3 (ajustada otra vez) | Usar la participación de las actas también cuando 10 % o más de la lista se queda sin casilla, aunque el "no sabemos" sea menor a la mitad | Si no, 36 municipios donde parte de la gente no tuvo dónde votar aparecen votando más que el país |
+| D10 (ajustada) | Secciones que no cuadran con el acta, en los dos sentidos | Marcar "votó" de menos fabrica abstención falsa |
+| D12 | Alerta propia para municipios con parte de la lista sin casilla, calculada solo con elecciones anteriores ("recurrente" o "antecedente"). En el entrenamiento se excluye solo el año sin casilla, no el municipio | Su problema es distinto (no hubo dónde votar) y una campaña no lo resuelve. No es riesgo máximo automático |
+| D13 (ajustada) | "Territorio aproximado" solo si quien recibió territorio no lo tiene completo ese año; se marca a los dos | Si no, se marcaba a municipios cuya historia es exacta |
+| D14 | Modelo simple: historia más nivel de elección local el mismo día; otras variables solo si mejoran la validación | Las variables de la lista casi no aportan por sí solas |
+| D15 | Validar entrenando con 2012 → 2015 y probando en 2018 → 2021. Medir error, coincidencia en el 10 % de mayor riesgo y resultado ponderado por la lista. Comparar contra la regla simple justa | Simula predecir una intermedia que el modelo no ha visto, respetando el orden del tiempo |
+
+### Siguiente paso
+
+**Paso 4 · Modelo y validación**, con primer resultado el 22 de octubre, una vez decididas estas propuestas.

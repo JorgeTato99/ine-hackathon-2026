@@ -21,6 +21,8 @@ Consultado el 19 de octubre de 2026. Sirve para la variable del modelo "¿se eli
 
 **Pendiente:** las fuentes citan tres números distintos para el acuerdo del plan integral (INE/CG478/2026, INE/CG479/2026 e INE/CG480/2026). Hay que verificarlo en la Gaceta Electoral si se va a citar.
 
+**Actualización del 19-10-2026:** las excepciones (Coahuila sin congreso; Durango y Veracruz sin ayuntamientos) están confirmadas en el mapa por entidad de la página oficial del INE. Ver [I](I-elecciones-concurrentes.md).
+
 ## Intermedias anteriores: estados con gobernador
 
 | Elección | Estados | Fuentes |
@@ -41,4 +43,6 @@ Consultado el 19 de octubre de 2026. Sirve para la variable del modelo "¿se eli
 
 En 2009, la participación promedio fue de 56.0 % en los estados con gobernador y de 41.1 % en los demás.
 
-**Qué significa para 2027:** se eligen gobernadores en 17 estados. Es probablemente la variable más importante para predecir el **nivel** de participación de cada estado en la intermedia.
+**Qué significa para 2027:** se eligen gobernadores en 17 estados.
+
+**Corrección (paso 3, 19-10-2026):** con el calendario completo ([I](I-elecciones-concurrentes.md)) vimos que este contraste no era solo efecto del gobernador. En 2015, 15 estados no tuvieron **ninguna** elección local ese día, y eso pesa más. Cuando casi todo el país elige algo local, como en 2021 y en 2027, el gobernador agrega menos. Ver el notebook 03, sección 5.
