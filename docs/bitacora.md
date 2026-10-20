@@ -258,6 +258,9 @@ validación (`data/processed/validacion_modelo.parquet`); el riesgo 2027 no camb
 
 ### Hallazgos principales
 
+> **Cifras superadas.** Son anteriores a la corrección de usos y costumbres fuera de Oaxaca y al ensamble
+> (D21). Las vigentes están en la entrada "Modelo final (ensamble) y prueba en elecciones presidenciales".
+
 - **Rojo:** 495 municipios con 26.2 millones de personas en la lista. 281 son "rojos firmes"
   (probabilidad de rojo de 70 % o más).
 - **Dos historias en el rojo:**
@@ -378,6 +381,8 @@ está en el notebook 03 y en `data/reference/municipios_sni_fuera_oaxaca.csv`.
   - rojo: 495 municipios con 23.8 millones de personas; 287 rojos firmes;
   - 413 sin elección municipal ese día (6.3 millones de personas);
   - 82 con elección municipal pero participación baja de siempre (17.5 millones de personas).
+  - personas en juego en rojo: 583 mil primerizos de 2024, 2.9 millones de jóvenes de 21 a 29 años que no
+    votaron, 1.1 millones de nuevos votantes en 2027 y 319 mil de ellos sin credencial si se repite 2021.
 - **Prueba en presidenciales (2012, 2018 y 2024), además de las intermedias:**
   - solo elegir ayuntamiento el mismo día y usos y costumbres son estables en las 5 elecciones;
   - 10 variables son estables con signo opuesto: miden qué tan sensible es el municipio al ciclo, por ejemplo
@@ -392,3 +397,22 @@ está en el notebook 03 y en `data/reference/municipios_sni_fuera_oaxaca.csv`.
 - ~~**Archivos del mapa para Jorge**~~ **Decidido (20 de octubre):** `data/processed/mapa/resultados-1.0/` se
   sube al repo (excepción en `.gitignore`), para que la aplicación use siempre la versión que generan los
   notebooks y cada cambio quede en el historial. Son resultados por municipio, sin datos crudos ni de personas.
+
+---
+
+## 2026-10-20 · Estructura del mapa y escenario con intervención
+
+**Hallazgo:** las bases piden comparar al menos un escenario sin intervención y otro con intervención
+hipotética (ver `docs/requisitos.md`). `resultados-1.0` solo trae `intervencion = "ninguna"` (D19).
+
+### Decisiones (Sofía Ordaz, 20 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D22 | Escenario con intervención | Sí, como cálculo aritmético en los municipios en rojo, con la etiqueta "supuesto, no efecto medido". No cambia D19: no se estima el efecto de una campaña. Supuestos por elegir |
+| D23 | Estructura del mapa | Dos pestañas separadas: **Pronóstico 2027** (semáforo, escenario nacional, sin/con intervención y ficha con intervalo y probabilidad de rojo) e **Indicadores y contexto** (qué se elige en 2027, rezago persistente, zonas frías y calientes, personas en juego, alerta "sin casilla", seguridad e historia). Los filtros son comunes; cada pestaña tiene sus propias tarjetas |
+
+Fuera del mapa: paquetes perdidos (pocos casos y fácil de leer como acusación), brecha de género (va al
+reporte como gráfica nacional) y calidad del dato (marcas en la ficha, no vista).
+
+Guía para Jorge, con columnas, categorías, cifras de control y reglas de lectura: `docs/vistas-mapa.md`.
