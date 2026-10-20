@@ -350,9 +350,44 @@ está en el notebook 03 y en `data/reference/municipios_sni_fuera_oaxaca.csv`.
 - **Redes sociales:** no existe dato municipal (la ENDUTIH es estatal; la publicidad política de Meta da
   rangos y requiere token; la de Google existe para México desde 2024).
 
-### Pendiente de decisión
+### Decisiones (Sofía Ordaz, 20 de octubre de 2026)
 
-| # | Decisión | Opciones | Recomendación |
-| --- | --- | --- | --- |
-| D20 (actualizada) | ¿Agregar densidad, ocupantes por vivienda o % de católicos? | (a) no; (b) sí | **(a).** Mejoran menos de 1 % |
-| D21 | ¿Cambiar el modelo de Huber al ensamble Huber + random forest? | (a) seguir con Huber; (b) cambiar al ensamble y volver a correr los notebooks 04 y 05 | **(b).** Gana con la regla de selección fijada antes y mejora en las dos validaciones; Huber sigue sirviendo para explicar qué pesa |
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D20 (actualizada) | ¿Agregar densidad, ocupantes por vivienda o % de católicos? | **No.** Mejoran menos de 1 % |
+| D21 | ¿Cambiar el modelo de Huber al ensamble Huber + random forest? | **Sí.** Gana con la regla de selección fijada antes y mejora en las dos validaciones; Huber sigue sirviendo para explicar qué pesa |
+
+---
+
+## 2026-10-20 · Modelo final (ensamble) y prueba en elecciones presidenciales
+
+**Evidencia:** `notebooks/04_modelo_riesgo_2027.ipynb` (ahora con el ensamble), `notebooks/04b_fuentes_adicionales_e_importancia.ipynb`
+(sección 10) y `notebooks/05_semaforo_y_mapa.ipynb`.
+
+- **D21 aplicada.** El notebook 04 agrega random forest y el ensamble a los candidatos; con la misma regla de
+  selección gana el ensamble. Aprendiendo de 2015 y prediciendo 2021:
+  - error centrado de 5.32 pp (Huber 5.49; regla simple 6.03);
+  - ponderado por personas, 4.30 (Huber 4.68; regla simple 6.80);
+  - acierto en el 20 % de mayor riesgo, 70 % (Huber 72 %; regla simple 67 %).
+
+  Al predecir 2015 el error baja 35 % frente a la regla simple. El orden de riesgo casi coincide con el de
+  Huber (correlación de rangos de 0.997); 54 municipios cambian de estar o no en rojo.
+- **Probabilidad de rojo con el ensamble:** razonable en el rango medio, optimista en los extremos (al
+  predecir 2021, cuando dice 80 % fue 71 %). Se documenta que 80 % o más se lee como "probable".
+- **Semáforo 2027 con el ensamble:**
+  - rojo: 495 municipios con 23.8 millones de personas; 287 rojos firmes;
+  - 413 sin elección municipal ese día (6.3 millones de personas);
+  - 82 con elección municipal pero participación baja de siempre (17.5 millones de personas).
+- **Prueba en presidenciales (2012, 2018 y 2024), además de las intermedias:**
+  - solo elegir ayuntamiento el mismo día y usos y costumbres son estables en las 5 elecciones;
+  - 10 variables son estables con signo opuesto: miden qué tan sensible es el municipio al ciclo, por ejemplo
+    densidad, % de 65 años o más y % católicos;
+  - 19 funcionan solo en intermedias y 4 solo en presidenciales (migración y remesas);
+  - 9 no son estables.
+
+  Confirma las variables que usa el modelo; no se quita ni se agrega ninguna.
+
+### Pendiente
+
+- **Archivos del mapa para Jorge** (`data/processed/mapa/resultados-1.0/`): queda pendiente cómo se le
+  entregan (subirlos al repo o pasárselos por fuera).
