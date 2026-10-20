@@ -32,3 +32,15 @@ repos:
         language: system
         pass_filenames: false
         types: [python]
+      - id: frontend-lint
+        name: Frontend ESLint
+        entry: npm --prefix frontend run lint
+        language: system
+        pass_filenames: false
+        files: ^frontend/.*\.[cm]?[jt]sx?$
+      - id: frontend-format
+        name: Frontend Prettier
+        entry: npm --prefix frontend run format:check
+        language: system
+        pass_filenames: false
+        files: ^frontend/.*\.(json|md|css|[cm]?[jt]sx?)$
