@@ -1,19 +1,21 @@
 # Vistas del mapa
 
-Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.0/`
+Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.1/`
 (formato de [contrato-datos.md](contrato-datos.md); unidades y significado de cada columna en
 `metadatos.json`). Decisiones D18, D19, D22 y D23 de la [bitácora](bitacora.md).
 
 ## Estado
 
-- **`resultados-1.0` ya sirve para construir las dos pestañas.** Reemplaza a `muestra-0.3`.
-- **Llegará `resultados-1.1`** con dos cambios. Las columnas actuales no cambian de nombre ni de significado.
-  1. Escenario **con intervención** (D22): filas nuevas en `escenarios_2027.csv` con `intervencion` distinto
-     de `"ninguna"`, `efecto_interv` y `votos_adicionales` llenos. Los supuestos están por definirse.
-  2. Una columna de usos y costumbres que incluya a los 7 municipios fuera de Oaxaca. Hoy `es_sni` solo
-     marca a los 418 de Oaxaca.
-- Mientras tanto, el selector "sin / con intervención" se puede armar con `escenario_id`, aunque por ahora
-  solo exista `int-ninguna`.
+**`resultados-1.1` es la versión vigente.** Reemplaza a `resultados-1.0` y a `muestra-0.3`. Respecto a la 1.0:
+
+- **Escenario con intervención (D22):** `escenarios_2027.csv` pasa de 3 a 6 filas por municipio. Se agrega
+  `intervencion = "dirigida_rojos"` para cada nivel nacional.
+- **Cinco columnas nuevas en `municipios.csv`:**
+  - `interv_votos_retener_primerizos`, `interv_votos_brecha_joven`, `interv_votos_credencializar` e
+    `interv_nuevos_en_lista`: lo que suma cada supuesto;
+  - `usos_y_costumbres`: 425 municipios, que son los 418 de Oaxaca (`es_sni`) más 7 fuera de Oaxaca.
+- **Lo demás no cambia:** las columnas que ya existían y los escenarios sin intervención son idénticos a los
+  de la 1.0. Lo comprobé.
 
 ## Estructura: dos pestañas (D23)
 
@@ -52,14 +54,23 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
    | `medio` | 47.1 % | como 2015 |
    | `alto` | 51.8 % | como 2021 |
 
-2. **Sin o con intervención** (`intervencion`). Con `resultados-1.1`.
+2. **Sin o con intervención** (`intervencion`: `ninguna` o `dirigida_rojos`). Siempre se compara con el
+   **mismo** nivel nacional: `nac-medio_int-ninguna` contra `nac-medio_int-dirigida_rojos`.
+   - **Con intervención solo cambian los rojos.** Fuera del rojo, `efecto_interv` = 0 y `votos_adicionales` = 0.
+   - `riesgo` con intervención se compara contra la línea fija del semáforo sin intervención. Así se ve
+     cuántos salen del rojo: en el nivel medio, 88 de 495 (407 siguen en rojo).
+   - **Etiqueta obligatoria:** "Supuesto, no efecto medido". Es una cuenta, no una predicción de lo que
+     lograría una campaña.
 
 **Tarjetas:**
 
 - **Municipios en rojo:** conteo de `semaforo == "rojo"`. Valor actual: 495.
 - **Personas en rojo:** suma de `ln_2024` en los rojos. Valor actual: 23.8 millones.
 - **Participación nacional del escenario:** `niveles_nacionales_2027` de `metadatos.json`.
-- **Con intervención** (`resultados-1.1`): votos adicionales y municipios que saldrían del rojo.
+- **Con intervención:**
+  - votos adicionales: suma de `votos_adicionales`, 505,007;
+  - municipios que salen del rojo: los que pasan de `riesgo` `alto` a otro valor; en el nivel medio son 88,
+    con 4.7 M de personas.
 
 **Ficha del municipio:**
 
@@ -69,27 +80,38 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
 - **Posición de riesgo:** `posicion_riesgo`, de 0 a 100, donde 100 es el mayor riesgo.
 - **Probabilidad de quedar en rojo:** `probabilidad_rojo`. Si es 0.8 o más, decir **"probable"**, no
   "seguro"; los metadatos explican por qué.
-- **Qué se elige ese día:** `ayuntamiento_mismo_dia_2027`, `gobernador_mismo_dia_2027` y `es_sni`. Es lo
+- **Qué se elige ese día:** `ayuntamiento_mismo_dia_2027`, `gobernador_mismo_dia_2027` y `usos_y_costumbres`. Es lo
   que más explica el rojo.
 - **Aviso** si `alerta_sin_casilla` no es `"sin antecedente"`: ese riesgo va aparte del semáforo.
+- **Si el municipio está en rojo, desglose de la intervención:** cuánto suma cada supuesto.
+  - S1 · Retener a los primerizos: `interv_votos_retener_primerizos`.
+  - S2 · Cerrar la mitad de la brecha joven: `interv_votos_brecha_joven`.
+  - S3 · Credencializar a los nuevos: `interv_votos_credencializar`. Agrega `interv_nuevos_en_lista`
+    personas a la lista, así que suma votos pero casi no sube el porcentaje.
+
+  Las columnas existen para todos los municipios, pero el escenario solo las aplica en los rojos. Vacío =
+  sin dato para calcularlo.
 - **Leyenda fija:** "El modelo ordena bien a los municipios, pero no predice el nivel nacional. El intervalo
   es ancho (de ±8 a ±15 pp); la posición es más confiable que la cifra."
 
 ## Pestaña 2 · Indicadores y contexto
 
 Selector de vista. Cada una pinta el mapa con su propia columna y tiene sus propias tarjetas. Las cifras
-son de `resultados-1.0` y sirven para comprobar que la aplicación suma bien.
+son de `resultados-1.1` y sirven para comprobar que la aplicación suma bien.
 
 ### 1. Qué se elige el 6 de junio de 2027
 
-Categorías que se arman con `ayuntamiento_mismo_dia_2027`, `gobernador_mismo_dia_2027` y `es_sni`:
+Categorías que se arman con `ayuntamiento_mismo_dia_2027`, `gobernador_mismo_dia_2027` y `usos_y_costumbres`:
 
 | Categoría | Regla | Municipios | Lista 2024 |
 | --- | --- | ---: | ---: |
 | Ayuntamiento y gubernatura | los dos `true` | 676 | 33.5 M |
 | Ayuntamiento, sin gubernatura | solo ayuntamiento `true` | 1,125 | 56.1 M |
-| Sin elección municipal: usos y costumbres (Oaxaca) | `es_sni` `true` | 418 | 1.1 M |
-| Sin elección municipal: otros | ayuntamiento `false` y `es_sni` `false` | 258 | 7.6 M |
+| Sin elección municipal: usos y costumbres | `usos_y_costumbres` `true` | 425 | 1.2 M |
+| Sin elección municipal: otros (Durango y Veracruz) | ayuntamiento `false` y `usos_y_costumbres` `false` | 251 | 7.5 M |
+
+Con `es_sni` (solo Oaxaca) eran 418 y 258: los 7 municipios de fuera de Oaxaca pasan al grupo de usos y
+costumbres.
 
 - **Tarjeta:** 676 municipios sin elección municipal ese día.
 - **Mensaje:** de los 495 rojos, 413 no eligen ayuntamiento (6.3 M de personas) y 82 sí lo eligen pero
@@ -168,7 +190,7 @@ Se aplican en las dos pestañas y recalculan las tarjetas.
 | Color del semáforo | `semaforo` |
 | Tamaño de la lista | `ln_2024`: menos de 5 mil, de 5 a 20 mil, de 20 a 100 mil, 100 mil o más (los mismos cortes del intervalo) |
 | Elección municipal en 2027 | `ayuntamiento_mismo_dia_2027` |
-| Usos y costumbres | `es_sni` (en `resultados-1.1`, la columna que incluye a los 7 fuera de Oaxaca) |
+| Usos y costumbres | `usos_y_costumbres` |
 | Con alerta "sin casilla" | `alerta_sin_casilla` distinto de `"sin antecedente"` |
 | Búsqueda | `nombre_mpio` y `nombre_edo` |
 

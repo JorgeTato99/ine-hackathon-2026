@@ -409,10 +409,41 @@ hipotética (ver `docs/requisitos.md`). `resultados-1.0` solo trae `intervencion
 
 | # | Decisión | Qué se adoptó |
 | --- | --- | --- |
-| D22 | Escenario con intervención | Sí, como cálculo aritmético en los municipios en rojo, con la etiqueta "supuesto, no efecto medido". No cambia D19: no se estima el efecto de una campaña. Supuestos por elegir |
+| D22 | Escenario con intervención | Sí, como cálculo aritmético en los municipios en rojo, con la etiqueta "supuesto, no efecto medido". No cambia D19: no se estima el efecto de una campaña. En el mapa se compara sin intervención contra los tres supuestos juntos (ver abajo) |
 | D23 | Estructura del mapa | Dos pestañas separadas: **Pronóstico 2027** (semáforo, escenario nacional, sin/con intervención y ficha con intervalo y probabilidad de rojo) e **Indicadores y contexto** (qué se elige en 2027, rezago persistente, zonas frías y calientes, personas en juego, alerta "sin casilla", seguridad e historia). Los filtros son comunes; cada pestaña tiene sus propias tarjetas |
 
 Fuera del mapa: paquetes perdidos (pocos casos y fácil de leer como acusación), brecha de género (va al
 reporte como gráfica nacional) y calidad del dato (marcas en la ficha, no vista).
 
 Guía para Jorge, con columnas, categorías, cifras de control y reglas de lectura: `docs/vistas-mapa.md`.
+
+### Escenario con intervención aplicado: `resultados-1.1`
+
+**Evidencia:** `notebooks/05_semaforo_y_mapa.ipynb`, sección 5b.
+
+Tres supuestos, solo en los 495 municipios en rojo. La participación con intervención es (votos previstos
++ votos adicionales) / (lista 2024 + nuevos en la lista). Para contar quién sale del rojo se usa la línea
+fija del semáforo sin intervención.
+
+| Supuesto | Qué suponemos | Votos adicionales | Rojos que salen (nivel medio) |
+| --- | --- | ---: | ---: |
+| S1 · Retener a los primerizos | La generación de 18 a 20 años de 2024 no cae más que su municipio (en 2021 cayó 6.1 pp más) | 80 mil | 20 |
+| S2 · Cerrar la mitad de la brecha joven | Los de 20 a 29 años recortan a la mitad su brecha de 2021 con el municipio | 295 mil | 66 |
+| S3 · Credencializar a los nuevos | Los nuevos sin credencial la tramitan y votan como los de 18 y 19 años de su municipio en 2021 | 130 mil | 8 |
+| **Los tres juntos (escenario del mapa)** | | **505 mil** | **88 (4.7 M de personas)** |
+
+- **Con los tres supuestos, 407 de los 495 rojos siguen en rojo.** El rojo típico sube 1.65 pp, y está
+  5.5 pp por debajo de la línea.
+- **Credencializar suma votos, pero no sube la tasa** (+0.03 pp), porque las personas nuevas también entran
+  a la lista. Sirve para incluir a más gente.
+- **En el país, el efecto es de +0.36 pp.**
+- **Mensaje para el reporte:** las campañas para jóvenes ayudan, pero no compensan la falta de elección
+  municipal en la mayoría de los rojos.
+
+**Lo nuevo en `resultados-1.1`:**
+- 6 escenarios por municipio: 3 niveles nacionales, sin y con intervención;
+- columnas `interv_*` con lo que suma cada supuesto en cada municipio;
+- columna `usos_y_costumbres` (425 municipios: 418 de Oaxaca y 7 fuera).
+
+Las columnas y los escenarios sin intervención son idénticos a los de la 1.0. La carpeta
+`resultados-1.0` se quita del repo; queda en el historial de git.

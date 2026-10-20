@@ -1,7 +1,7 @@
 {
-  "version_resultados": "resultados-1.0",
-  "generado": "2026-10-20T11:22:02",
-  "tipo": "resultados del análisis (reemplaza a muestra-0.3)",
+  "version_resultados": "resultados-1.1",
+  "generado": "2026-10-20T13:21:36",
+  "tipo": "resultados del análisis (reemplaza a resultados-1.0 y muestra-0.3)",
   "pregunta": "¿Qué zonas podrían presentar mayor abstención en el futuro si no se interviene? Intermedia del 6 de junio de 2027.",
   "clave": "cvegeo (INEGI, 5 caracteres con ceros) es la clave estable y de unión con la geometría. clave_ine_2024 es solo referencia.",
   "lectura": "Leer cvegeo, clave_ine_2024 y motivo como texto. Celda vacía = sin dato o no aplica; nunca equivale a cero.",
@@ -29,7 +29,20 @@
     "validacion": "aprendiendo de 2015 y prediciendo 2021, el 70 % de los municipios del 20 % de mayor riesgo previsto quedaron en el 20 % real (regla simple: 67 %)"
   },
   "intervalo": "errores de la validación (las dos direcciones), centrados, cuantiles 5 y 95 por tamaño de lista: <5 mil, 5-20 mil, 20-100 mil, 100 mil+. Probado de una elección a otra cubrió entre 85 % y 90 %",
-  "intervencion": "No se estiman efectos de campañas (D19). efecto_interv = 0 y votos_adicionales vacío. Las columnas de personas en juego dicen a quién dirigirla.",
+  "intervencion": {
+    "ninguna": "pronóstico sin intervención",
+    "dirigida_rojos": "supuesto, no efecto medido (D22): en los municipios en rojo se suman S1 + S2 + S3 (columnas interv_* de municipios.csv); fuera del rojo no cambia nada. No se estima el efecto de una campaña (D19)",
+    "pareja_canonica": "comparar nac-X_int-ninguna con nac-X_int-dirigida_rojos con el mismo nivel nacional X",
+    "formula": "part_pred con = (part_pred sin × ln_2024 + votos_adicionales) / (ln_2024 + interv_nuevos_en_lista)"
+  },
+  "escenarios": [
+    "nac-alto_int-dirigida_rojos",
+    "nac-alto_int-ninguna",
+    "nac-bajo_int-dirigida_rojos",
+    "nac-bajo_int-ninguna",
+    "nac-medio_int-dirigida_rojos",
+    "nac-medio_int-ninguna"
+  ],
   "motivos": {
     "territorio_aproximado": "territorio reconstruido de forma aproximada en algún año (D13)",
     "antecedente_sin_casilla": "parte de su lista se quedó sin casilla en alguna elección de 2009 a 2024 (D12): revisar aparte del semáforo"
@@ -61,6 +74,11 @@
     "ayuntamiento_mismo_dia_2027": "true si el municipio elige ayuntamiento el 6 de junio de 2027 (calendario a octubre de 2026)",
     "gobernador_mismo_dia_2027": "true si el estado elige gubernatura ese día",
     "es_sni": "true si es municipio de Oaxaca que elige autoridades por sistemas normativos indígenas (IEEPCO 2025)",
+    "usos_y_costumbres": "true si el municipio elige autoridades por sistemas normativos indígenas: los de es_sni más 7 fuera de Oaxaca que en 2027 no eligen ayuntamiento por partidos (data/reference/municipios_sni_fuera_oaxaca.csv)",
+    "interv_votos_retener_primerizos": "votos; supuesto S1 (D22): generación de 18 a 20 años de 2024 que votó o no votó × 6.1 % (caída extra típica de la generación primeriza 2018 → 2021)",
+    "interv_votos_brecha_joven": "votos; supuesto S2 (D22): personas de 20 a 29 años de 2024 que votaron o no votaron × la mitad de su brecha con el municipio en 2021 (0 si no había brecha); vacío sin dato de 2021",
+    "interv_votos_credencializar": "votos; supuesto S3 (D22): nuevos_sin_credencial_2027_si_se_repite_2021 × participación de 18 y 19 años del municipio en 2021; vacío sin dato",
+    "interv_nuevos_en_lista": "personas que S3 suma a la lista (igual a nuevos_sin_credencial_2027_si_se_repite_2021); vacío sin dato",
     "homicidios_2022_2024": "defunciones por homicidio, INEGI, por municipio de ocurrencia; vacío si la clave falta algún año",
     "tasa_homicidios_2022_2024": "homicidios por 100 mil habitantes al año (población CONAPO 2023)",
     "percentil_homicidios_2022_2024": "de 0 a 100; 100 = la tasa más alta",
@@ -71,11 +89,11 @@
     "policias_municipales_por_10mil_habitantes": "policías municipales (incluye titular) por 10 mil habitantes (CONAPO 2024)",
     "justicia_civica": "categoría del INEGI (CNGMD 2025)",
     "desv_base": "proporción; participación prevista menos el nivel nacional del escenario",
-    "efecto_interv": "siempre 0: no se estiman efectos de intervención (D19)",
+    "efecto_interv": "proporción; participación con intervención menos sin intervención. 0 en intervencion = \"ninguna\" y fuera del rojo",
     "part_pred": "proporción de 0 a 1; nivel nacional + desviación prevista, ajustada para que el promedio ponderado por la lista sea el nivel",
     "part_pred_inf, part_pred_sup": "proporción; intervalo de 90 % dado el escenario, con los errores de la validación por tamaño de municipio",
-    "riesgo": "alto = rojo, medio = amarillo, bajo = verde; igual en los tres escenarios",
-    "votos_adicionales": "vacío: no se estiman (D19)"
+    "riesgo": "alto = rojo, medio = amarillo, bajo = verde. Sin intervención es igual en los tres niveles. Con intervención se compara contra la línea fija del semáforo sin intervención de ese nivel",
+    "votos_adicionales": "votos; suma de los tres supuestos (D22) en los municipios en rojo; 0 fuera del rojo; vacío sin intervención"
   },
   "fuentes": [
     "INE, Conteos Censales de Participación Ciudadana 2009-2024",
@@ -93,6 +111,7 @@
     "La probabilidad de rojo es optimista en los extremos: 80 % o más se lee como \"probable\", no como \"seguro\".",
     "El calendario local de 2027 puede cambiar; elegir ayuntamiento el mismo día es la variable que más pesa.",
     "La violencia y la presencia de policía son contexto: no entran al semáforo porque no mejoraron la predicción.",
+    "El escenario con intervención es una cuenta con supuestos explícitos, no un efecto medido de una campaña.",
     "No se nombran personas ni se atribuyen causas individuales a ningún municipio."
   ],
   "modelo": "ensamble: promedio de una regresión robusta (Huber) y un random forest, 34 variables (D21); validado aprendiendo de una transición presidencial-intermedia y prediciendo la otra",
