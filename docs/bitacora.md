@@ -229,12 +229,53 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
   `justicia_civica`, `policias_municipales_por_10mil_habitantes`, `comparacion_homicidios_inegi_sesnsp` y
   `cifra_oculta_estatal_2025`. Las columnas que ya existían no cambiaron.
 
-### Pendiente de decisión
+### Decisión
 
-| # | Decisión | Opciones | Recomendación |
+| # | Decisión | Opciones | Recomendación (adoptada por Sofía Ordaz el 20 de octubre de 2026) |
 | --- | --- | --- | --- |
 | D17 (nueva) | Dato de violencia para el mapa y aviso por estado | (a) carpetas del SESNSP; (b) homicidios del INEGI, con una etiqueta por estado: "una fuente cuenta más" si en al menos 5 de los 6 años (2019-2024) supera a la otra por más de 5 % | **(b).** El INEGI no depende de la denuncia y es el que se usó en el modelo. Con la regla, el INEGI cuenta más en 5 estados (Guanajuato, Yucatán, Hidalgo, Estado de México y Tlaxcala) y el SESNSP en otros 5 (Veracruz, Oaxaca, Jalisco, Coahuila y Durango). Extorsión y secuestro solo existen en el SESNSP: van con el aviso |
 
 ### Siguiente paso
 
 **Paso 5 · Semáforo y escenarios**, con la capa de contexto de seguridad.
+
+---
+
+## 2026-10-20 · Paso 5: semáforo, personas en juego y archivos para el mapa
+
+**Evidencia:** `notebooks/05_semaforo_y_mapa.ipynb`. Archivos para el mapa en
+`data/processed/mapa/resultados-1.0/` (`municipios.csv`, `escenarios_2027.csv` y `metadatos.json`, con
+el formato de `docs/contrato-datos.md`). El notebook 04 ahora guarda además las predicciones de su
+validación (`data/processed/validacion_modelo.parquet`); el riesgo 2027 no cambió.
+
+### Decisiones (Sofía Ordaz, 20 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D17 | Dato de violencia | Homicidios del INEGI 2022-2024 por municipio, con la etiqueta por estado (ver arriba). Es contexto: no entra al semáforo |
+| D18 | Cortes del semáforo | Rojo = 20 % de municipios de mayor riesgo; amarillo = el 20 % siguiente; verde = el resto |
+| D19 | Escenario "con campaña dirigida" | No se estiman efectos de campañas. Se muestran las personas en juego: primerizos de 2024, jóvenes de 21 a 29 años que no votaron y nuevos votantes de 2027 |
+
+### Hallazgos principales
+
+- **Rojo:** 495 municipios con 26.2 millones de personas en la lista. 281 son "rojos firmes"
+  (probabilidad de rojo de 70 % o más).
+- **Dos historias en el rojo:**
+  - 408 municipios sin elección local ese día (Oaxaca de usos y costumbres, Veracruz y Durango), con
+    6.7 millones de personas;
+  - 87 que sí eligen ayuntamiento pero votan poco siempre (Tijuana, Juárez, Mexicali, Reynosa,
+    Hermosillo y otras), con 19.5 millones de personas.
+- **Personas en juego en rojo:** 650 mil primerizos de 2024, 3.1 millones de jóvenes de 21 a 29 años
+  que no votaron y 1.2 millones de nuevos votantes en 2027.
+- **Incertidumbre honesta:**
+  - el intervalo de cada municipio usa los errores reales de la validación, no solo el bootstrap;
+  - probado de una elección a otra, cubrió entre 85 % y 92 %;
+  - la probabilidad de rojo está bien calibrada al predecir 2021 y es optimista al predecir 2015, por
+    eso se simula con los errores de las dos validaciones.
+- **Corrección de lectura:** en `riesgo_2027.parquet`, `percentil_riesgo` = 0 es el de **mayor**
+  riesgo. Para el mapa se usa `posicion_riesgo` = 100 − percentil (100 = mayor riesgo).
+
+### Siguiente paso
+
+**Paso 6 · Mapa y prueba con Jorge (26 a 28 de octubre):** cargar `resultados-1.0` en la aplicación.
+Los cambios frente a la muestra 0.3 están en el notebook 05, sección 6.
