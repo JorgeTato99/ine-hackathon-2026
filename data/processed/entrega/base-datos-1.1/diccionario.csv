@@ -1,0 +1,83 @@
+archivo,columna,tipo,vacios,descripcion
+historia_municipal.csv,cvegeo,String,0,"clave INEGI del municipio (texto de 5 caracteres, con ceros); territorio de 2024"
+historia_municipal.csv,estado,String,0,nombre de la entidad
+historia_municipal.csv,municipio,String,0,nombre del municipio
+historia_municipal.csv,anio,Int16,0,"año de la elección federal (2009, 2015 y 2021 intermedias; 2012, 2018 y 2024 presidenciales)"
+historia_municipal.csv,tipo_eleccion,String,0,presidencial o intermedia
+historia_municipal.csv,lista_nominal,Int64,3,personas en la lista nominal de las secciones del municipio (Conteos Censales de Participación del INE)
+historia_municipal.csv,votaron,Int64,3,"personas que votaron, según los Conteos Censales"
+historia_municipal.csv,no_votaron,Int64,3,"personas que no votaron, según los Conteos Censales"
+historia_municipal.csv,no_sabemos,Int64,3,personas de las que el registro no dice si votaron
+historia_municipal.csv,participacion,Float64,39,porcentaje (0 a 100): votaron / (votaron + no votaron); sale de las actas cuando los conteos no bastan (ver fuente_participacion)
+historia_municipal.csv,fuente_participacion,String,0,de dónde sale la participación: conteos censales o actas oficiales por casilla (decisión D3)
+historia_municipal.csv,participacion_nacional,Float64,0,"porcentaje nacional de esa elección, con la misma fórmula"
+historia_municipal.csv,desviacion,Float64,39,puntos porcentuales: participación del municipio menos la nacional; negativa = votó menos que el país
+historia_municipal.csv,sin_casilla,Boolean,0,true si al menos 10 % de la lista se quedó sin casilla en esa elección (decisión D12)
+historia_municipal.csv,pct_sin_casilla,Float64,3,porcentaje de la lista en secciones sin casilla
+historia_municipal.csv,territorio_aproximado,Boolean,0,true si el territorio de 2024 no se pudo reconstruir completo ese año (decisión D13)
+historia_municipal.csv,gobernador_mismo_dia,Boolean,0,true si el estado eligió gubernatura el mismo día
+historia_municipal.csv,diputacion_local_mismo_dia,Boolean,0,true si el estado eligió congreso local el mismo día
+historia_municipal.csv,ayuntamiento_mismo_dia,Boolean,0,true si el municipio eligió ayuntamiento el mismo día
+historia_municipal.csv,usos_y_costumbres,Boolean,0,"true si el municipio elegía autoridades por sistemas normativos indígenas en esa elección (Oaxaca y, según el año, hasta 7 municipios fuera de Oaxaca)"
+municipios_2027.csv,cvegeo,String,0,"clave INEGI del municipio (texto de 5 caracteres, con ceros); clave de unión con la geometría"
+municipios_2027.csv,clave_ine_2024,String,12,"clave del INE en 2024 (texto); solo referencia, el INE renumera municipios entre años"
+municipios_2027.csv,nombre_mpio,String,0,nombre del municipio
+municipios_2027.csv,nombre_edo,String,0,nombre de la entidad
+municipios_2027.csv,ln_2024,Int64,0,personas en la lista nominal de 2024
+municipios_2027.csv,part_2009,Float64,0,"participación observada en 2009: proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024"
+municipios_2027.csv,part_2012,Float64,7,"participación observada en 2012: proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024"
+municipios_2027.csv,part_2015,Float64,15,"participación observada en 2015: proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024"
+municipios_2027.csv,part_2018,Float64,8,"participación observada en 2018: proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024"
+municipios_2027.csv,part_2021,Float64,7,"participación observada en 2021: proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024"
+municipios_2027.csv,part_2024,Float64,2,"participación observada en 2024: proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024"
+municipios_2027.csv,ns_2024,Float64,0,"proporción de la lista nominal de 2024 con dato ""no sabemos"""
+municipios_2027.csv,historia_completa,Boolean,0,true si hay participación en las seis elecciones
+municipios_2027.csv,territorio_aproximado_2024,Boolean,0,true si el territorio del municipio no se pudo reconstruir completo en algún año (D13)
+municipios_2027.csv,posicion_riesgo,Float64,0,de 0 a 100; 100 = el municipio que se prevé más por debajo del país en 2027
+municipios_2027.csv,semaforo,String,0,"rojo (posición ≥ 80), amarillo (60 a < 80), verde (< 60) (D18)"
+municipios_2027.csv,probabilidad_rojo,Float64,0,"proporción de 2,000 simulaciones en que el municipio queda en rojo, sumando errores de la validación del modelo"
+municipios_2027.csv,peso_jov_2024,Float64,0,proporción de la lista 2024 de 18 a 34 años que votó o no votó (mismo concepto que la muestra 0.3)
+municipios_2027.csv,n_jov_2024,Int64,0,personas de 18 a 34 años que votaron o no votaron en 2024
+municipios_2027.csv,nv_jov_2024,Int64,0,personas de 18 a 34 años que no votaron en 2024
+municipios_2027.csv,primerizos_votaron_2024,Int64,0,personas de 18 a 20 años que votaron en 2024 (su primera elección federal)
+municipios_2027.csv,jovenes_21_29_lista_2024,Int64,0,personas de 21 a 29 años en la lista nominal de 2024
+municipios_2027.csv,jovenes_21_29_no_votaron_2024,Int64,0,personas de 21 a 29 años que no votaron en 2024
+municipios_2027.csv,nuevos_votantes_2027,Int64,8,"personas que tendrán 18 o 19 años el 6 de junio de 2027, estimadas con el censo 2020 (0.25 × edad 10 + edad 11 + 0.75 × edad 12)"
+municipios_2027.csv,credencializacion_18_19_2021,Float64,245,proporción de la generación de 18 y 19 años en la lista nominal de 2021 (puede pasar de 1)
+municipios_2027.csv,nuevos_sin_credencial_2027_si_se_repite_2021,Int64,245,"personas; escenario aritmético: nuevos_votantes_2027 × (1 − credencialización 2021, tope 1)"
+municipios_2027.csv,interv_votos_retener_primerizos,Int64,0,votos; supuesto S1 (D22): generación de 18 a 20 años de 2024 que votó o no votó × 6.1 % (caída extra típica de la generación primeriza 2018 → 2021)
+municipios_2027.csv,interv_votos_brecha_joven,Int64,11,votos; supuesto S2 (D22): personas de 20 a 29 años de 2024 que votaron o no votaron × la mitad de su brecha con el municipio en 2021 (0 si no había brecha); vacío sin dato de 2021
+municipios_2027.csv,interv_votos_credencializar,Int64,254,votos; supuesto S3 (D22): nuevos_sin_credencial_2027_si_se_repite_2021 × participación de 18 y 19 años del municipio en 2021; vacío sin dato
+municipios_2027.csv,interv_nuevos_en_lista,Int64,245,personas que S3 suma a la lista (igual a nuevos_sin_credencial_2027_si_se_repite_2021); vacío sin dato
+municipios_2027.csv,alerta_sin_casilla,String,0,"recurrente (2 o más elecciones con parte de la lista sin casilla), antecedente (1) o sin antecedente (D12); va aparte del modelo"
+municipios_2027.csv,ultima_eleccion_sin_casilla,String,2402,año
+municipios_2027.csv,elecciones_por_debajo_del_pais,Int64,0,número de elecciones de 2009 a 2024 con participación menor a la nacional
+municipios_2027.csv,zona_participacion_2024,String,53,"agrupamiento territorial de la participación 2024 (LISA, vecindad Queen)"
+municipios_2027.csv,brecha_jovenes_2024,Float64,0,"puntos porcentuales: participación de 20 a 29 años menos la del municipio, 2024"
+municipios_2027.csv,ayuntamiento_mismo_dia_2027,Boolean,0,true si el municipio elige ayuntamiento el 6 de junio de 2027 (calendario a octubre de 2026)
+municipios_2027.csv,gobernador_mismo_dia_2027,Boolean,0,true si el estado elige gubernatura ese día
+municipios_2027.csv,es_sni,Boolean,0,true si es municipio de Oaxaca que elige autoridades por sistemas normativos indígenas (IEEPCO 2025)
+municipios_2027.csv,usos_y_costumbres,Boolean,0,true si el municipio elige autoridades por sistemas normativos indígenas: los de es_sni más 7 fuera de Oaxaca que en 2027 no eligen ayuntamiento por partidos (data/reference/municipios_sni_fuera_oaxaca.csv)
+municipios_2027.csv,homicidios_2022_2024,Int64,7,"defunciones por homicidio, INEGI, por municipio de ocurrencia; vacío si la clave falta algún año"
+municipios_2027.csv,tasa_homicidios_2022_2024,Float64,7,homicidios por 100 mil habitantes al año (población CONAPO 2023)
+municipios_2027.csv,percentil_homicidios_2022_2024,Float64,7,de 0 a 100; 100 = la tasa más alta
+municipios_2027.csv,comparacion_homicidios_inegi_sesnsp,String,0,etiqueta del estado (D17): qué fuente cuenta más homicidios de 2019 a 2024
+municipios_2027.csv,cifra_oculta_estatal_2025,Float64,0,"porcentaje de delitos no denunciados o sin carpeta en el estado, ENVIPE 2026"
+municipios_2027.csv,quien_ejerce_seguridad,String,0,"categoría del INEGI (CNGMD 2025, situación al 31 de diciembre de 2024)"
+municipios_2027.csv,tiene_policia_municipal,Boolean,64,true / false; vacío si no aplica o no identificado
+municipios_2027.csv,policias_municipales_por_10mil_habitantes,Float64,584,policías municipales (incluye titular) por 10 mil habitantes (CONAPO 2024)
+municipios_2027.csv,justicia_civica,String,0,categoría del INEGI (CNGMD 2025)
+escenarios_2027.csv,cvegeo,String,0,"clave INEGI del municipio (texto de 5 caracteres, con ceros); clave de unión con la geometría"
+escenarios_2027.csv,anio,Int64,0,año de la elección (2027)
+escenarios_2027.csv,nivel_nacional,String,0,"escenario nacional: bajo (44.1 %), medio (47.1 %) o alto (51.8 %)"
+escenarios_2027.csv,intervencion,String,0,ninguna o dirigida_rojos (supuestos S1 + S2 + S3 en los municipios en rojo; decisión D22)
+escenarios_2027.csv,escenario_id,String,0,nac-<nivel>_int-<intervención>
+escenarios_2027.csv,desv_base,Float64,0,proporción; participación prevista menos el nivel nacional del escenario
+escenarios_2027.csv,efecto_interv,Float64,0,"proporción; participación con intervención menos sin intervención. 0 en intervencion = ""ninguna"" y fuera del rojo"
+escenarios_2027.csv,part_pred,Float64,0,"proporción de 0 a 1; nivel nacional + desviación prevista, ajustada para que el promedio ponderado por la lista sea el nivel"
+escenarios_2027.csv,part_pred_inf,Float64,0,"proporción; intervalo de 90 % dado el escenario, con los errores de la validación por tamaño de municipio"
+escenarios_2027.csv,part_pred_sup,Float64,0,"proporción; intervalo de 90 % dado el escenario, con los errores de la validación por tamaño de municipio"
+escenarios_2027.csv,estado_estimacion,String,0,estimado o sin_estimacion
+escenarios_2027.csv,motivo,String,14412,"códigos separados por '|': territorio_aproximado, antecedente_sin_casilla"
+escenarios_2027.csv,riesgo,String,0,"alto = rojo, medio = amarillo, bajo = verde. Sin intervención es igual en los tres niveles. Con intervención se compara contra la línea fija del semáforo sin intervención de ese nivel"
+escenarios_2027.csv,votos_adicionales,Int64,7431,votos; suma de los tres supuestos (D22) en los municipios en rojo; 0 fuera del rojo; vacío sin intervención

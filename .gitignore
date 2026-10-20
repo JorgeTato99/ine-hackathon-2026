@@ -32,6 +32,7 @@ data/samples/*
 !data/processed/
 data/processed/*
 !data/processed/mapa/
+!data/processed/entrega/
 artifacts/
 *.log
 .vscode/*

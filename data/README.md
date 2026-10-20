@@ -9,6 +9,7 @@
 | `raw/` | Seis ZIP, CSV y diccionarios originales del INE, sin modificar. | No |
 | `geo/` | Respuestas geográficas originales del INEGI y manifiesto. | No |
 | `processed/mapa/resultados-1.1/` | Resultados para el mapa: semáforo 2027, escenarios sin y con intervención, y metadatos (notebook 05). Guía: `docs/vistas-mapa.md`. | Sí |
+| `processed/entrega/base-datos-1.1/` | Base de datos de la entrega: historia municipal, resultados 2027, diccionario y LEEME (`scripts/entrega_base_datos.py`). | Sí |
 | `processed/` (resto) | Parquet tipados, tablas agregadas y GeoJSON nacional. | No |
 
 Los archivos grandes se generan localmente. Las fuentes y URLs están declaradas en

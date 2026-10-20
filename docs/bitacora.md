@@ -447,3 +447,33 @@ fija del semáforo sin intervención.
 
 Las columnas y los escenarios sin intervención son idénticos a los de la 1.0. La carpeta
 `resultados-1.0` se quita del repo; queda en el historial de git.
+
+---
+
+## 2026-10-20 · Prueba de reproducibilidad y base de datos para la entrega
+
+**Prueba:** se corrieron de nuevo, de principio a fin, los notebooks 03 → 03b → 04 → 05 y el 04b, y se
+compararon todas las cifras de sus salidas y todos los archivos generados.
+
+- **Los cinco notebooks corren sin errores.** El 04 tarda unos 3 minutos y el 04b unos 4; los demás, segundos.
+- **03, 03b, 04 y 05 dan exactamente las mismas cifras.** `municipios.csv` sale idéntico byte por byte. En
+  los archivos intermedios del modelo solo hay diferencias de 0.00000000000003, ruido de redondeo al usar
+  varios procesadores, que no llega a los 4 decimales publicados.
+- **Dos detalles corregidos:**
+  - **04b:** 19 límites de intervalos por bootstrap cambiaban en 0.01 entre corridas, porque el remuestreo
+    dependía del orden de las filas. Ahora la tabla base se ordena y el bootstrap ordena sus datos; dos
+    corridas seguidas dan lo mismo. Ninguna estimación ni ninguna conclusión cambia.
+  - **05:** algunos ceros se escribían como "-0.0". Ahora siempre son "0.0". Las cifras no cambian.
+- **Dos corridas seguidas del 05 producen archivos idénticos byte por byte**, con el mismo contenido que
+  `resultados-1.1` ya publicado.
+
+**Base de datos para la entrega:** `scripts/entrega_base_datos.py` genera `data/processed/entrega/base-datos-1.1/`:
+
+- `historia_municipal.csv`: 14,862 filas, un municipio por elección de 2009 a 2024;
+- `municipios_2027.csv` y `escenarios_2027.csv`: los mismos de `resultados-1.1`;
+- `diccionario.csv`: las 82 columnas, con su descripción y unidad;
+- `LEEME.md`, y un libro de Excel con las mismas tablas, en el que las claves quedan como texto.
+
+**Aclaración documentada en el LEEME:** los niveles nacionales de 2027 (44.06 %, 47.07 % y 51.84 %) son la
+participación de los conteos tal como vienen (paso 1). La historia municipal usa la participación corregida
+con las actas (44.09 %, 47.06 % y 51.85 %). La diferencia es de 0.03 puntos o menos y no cambia el semáforo.
