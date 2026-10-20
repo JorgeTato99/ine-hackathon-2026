@@ -47,7 +47,7 @@ default-groups = ["dev", "notebooks"]
 
 [tool.uv.build-backend]
 source-include = ["tests/**", "scripts/**", "config/**", "docs/**", "data/reference/**", "data/samples/**", "data/README.md", "notebooks/**", ".python-version", ".pre-commit-config.yaml", "Makefile", "uv.lock"]
-source-exclude = ["/temp", "/.venv*", "/dist", "/build", "/artifacts", "/output", "/data/raw", "/data/processed", "/data/geo", "/privado"]
+source-exclude = ["/temp", "/.venv*", "/dist", "/build", "/artifacts", "/output", "/frontend", "/data/raw", "/data/processed", "/data/geo", "/privado"]
 
 [tool.ruff]
 target-version = "py314"

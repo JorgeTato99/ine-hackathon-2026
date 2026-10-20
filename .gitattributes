@@ -1,5 +1,12 @@
 * text=auto
 *.py text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.mjs text eol=lf
+*.sh text eol=lf
+*.mts text eol=lf
+*.css text eol=lf
+*.svg text eol=lf
 *.toml text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
@@ -18,6 +25,10 @@ temp/ export-ignore
 
 # Las reglas especificas prevalecen sobre las extensiones generales.
 /data/reference/*.csv text eol=lf
+/config/*.csv text eol=lf
 /data/samples/muestra-0.3/** -text
+/data/processed/mapa/** -text
+/data/processed/entrega/** -text
+/frontend/public/data/** -text
 output/ export-ignore
 artifacts/ export-ignore
