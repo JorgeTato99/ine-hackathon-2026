@@ -30,7 +30,12 @@ PROCESADOS = RAIZ / "data" / "processed"
 VERSION = "resultados-1.1"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
 SALIDA = PROCESADOS / "entrega" / "base-datos-1.1"
-TEXTO = {"cvegeo": pl.String, "clave_ine_2024": pl.String, "motivo": pl.String, "ultima_eleccion_sin_casilla": pl.String}
+TEXTO = {
+    "cvegeo": pl.String,
+    "clave_ine_2024": pl.String,
+    "motivo": pl.String,
+    "ultima_eleccion_sin_casilla": pl.String,
+}
 
 HISTORIA = {
     "cvegeo": "clave INEGI del municipio (texto de 5 caracteres, con ceros); territorio de 2024",
@@ -54,7 +59,13 @@ HISTORIA = {
     "ayuntamiento_mismo_dia": "true si el municipio eligió ayuntamiento el mismo día",
     "usos_y_costumbres": "true si el municipio elegía autoridades por sistemas normativos indígenas en esa elección (Oaxaca y, según el año, hasta 7 municipios fuera de Oaxaca)",
 }
-COLUMNAS_PANEL = {"AELEC": "anio", "LN": "lista_nominal", "SV": "votaron", "NV": "no_votaron", "NS": "no_sabemos"}
+COLUMNAS_PANEL = {
+    "AELEC": "anio",
+    "LN": "lista_nominal",
+    "SV": "votaron",
+    "NV": "no_votaron",
+    "NS": "no_sabemos",
+}
 IDENTIDAD = {
     "cvegeo": "clave INEGI del municipio (texto de 5 caracteres, con ceros); clave de unión con la geometría",
     "clave_ine_2024": "clave del INE en 2024 (texto); solo referencia, el INE renumera municipios entre años",
@@ -73,7 +84,10 @@ def historia_municipal() -> pl.DataFrame:
     panel = pl.read_parquet(PROCESADOS / "panel_municipal.parquet")
     return (
         panel.rename(COLUMNAS_PANEL)
-        .with_columns(usos_y_costumbres=pl.col("es_sni").fill_null(False) | pl.col("sni_fuera_de_oaxaca").fill_null(False))
+        .with_columns(
+            usos_y_costumbres=pl.col("es_sni").fill_null(False)
+            | pl.col("sni_fuera_de_oaxaca").fill_null(False)
+        )
         .select(list(HISTORIA))
         .sort("cvegeo", "anio")
     )
@@ -94,7 +108,13 @@ def diccionario(tablas: dict[str, pl.DataFrame], unidades: dict[str, str]) -> pl
         raise KeyError(f"{archivo}: {columna} no tiene descripción")
 
     filas = [
-        {"archivo": archivo, "columna": c, "tipo": str(t.schema[c]), "vacios": t[c].null_count(), "descripcion": describe(archivo, c)}
+        {
+            "archivo": archivo,
+            "columna": c,
+            "tipo": str(t.schema[c]),
+            "vacios": t[c].null_count(),
+            "descripcion": describe(archivo, c),
+        }
         for archivo, t in tablas.items()
         for c in t.columns
     ]
@@ -142,12 +162,17 @@ def main() -> None:
     tablas = {
         "historia_municipal.csv": historia_municipal(),
         "municipios_2027.csv": pl.read_csv(RESULTADOS / "municipios.csv", schema_overrides=TEXTO),
-        "escenarios_2027.csv": pl.read_csv(RESULTADOS / "escenarios_2027.csv", schema_overrides=TEXTO),
+        "escenarios_2027.csv": pl.read_csv(
+            RESULTADOS / "escenarios_2027.csv", schema_overrides=TEXTO
+        ),
     }
     claves = {archivo: set(t["cvegeo"]) for archivo, t in tablas.items()}
-    assert claves["municipios_2027.csv"] == claves["escenarios_2027.csv"], "municipios y escenarios no coinciden"
-    assert claves["municipios_2027.csv"] <= claves["historia_municipal.csv"], "hay municipios 2027 sin historia"
-    assert all(t["cvegeo"].str.len_chars().eq(5).all() for t in tablas.values()), "cvegeo debe tener 5 caracteres"
+    if claves["municipios_2027.csv"] != claves["escenarios_2027.csv"]:
+        raise ValueError("municipios y escenarios no coinciden")
+    if not claves["municipios_2027.csv"] <= claves["historia_municipal.csv"]:
+        raise ValueError("hay municipios 2027 sin historia")
+    if not all(t["cvegeo"].str.len_chars().eq(5).all() for t in tablas.values()):
+        raise ValueError("cvegeo debe tener 5 caracteres")
     dic = diccionario(tablas, metadatos["unidades"])
 
     SALIDA.mkdir(parents=True, exist_ok=True)
@@ -155,16 +180,25 @@ def main() -> None:
         t.write_csv(SALIDA / archivo)
     dic.write_csv(SALIDA / "diccionario.csv")
     (SALIDA / "LEEME.md").write_text(
-        LEEME.format(n_hist=tablas["historia_municipal.csv"].height, n_mun=tablas["municipios_2027.csv"].height,
-                     n_esc=tablas["escenarios_2027.csv"].height, n_dic=dic.height,
-                     version=metadatos["version_resultados"], generado=metadatos["generado"][:10]),
-        encoding="utf-8")
+        LEEME.format(
+            n_hist=tablas["historia_municipal.csv"].height,
+            n_mun=tablas["municipios_2027.csv"].height,
+            n_esc=tablas["escenarios_2027.csv"].height,
+            n_dic=dic.height,
+            version=metadatos["version_resultados"],
+            generado=metadatos["generado"][:10],
+        ),
+        encoding="utf-8",
+    )
     if args.xlsx:
         from openpyxl import Workbook
 
         libro = Workbook()
         libro.remove(libro.active)
-        for nombre, t in [("diccionario", dic), *((a.removesuffix(".csv"), t) for a, t in tablas.items())]:
+        for nombre, t in [
+            ("diccionario", dic),
+            *((a.removesuffix(".csv"), t) for a, t in tablas.items()),
+        ]:
             hoja = libro.create_sheet(nombre[:31])
             hoja.append(t.columns)
             for fila in t.iter_rows():
