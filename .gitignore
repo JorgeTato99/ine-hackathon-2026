@@ -41,6 +41,9 @@ data/processed/mapa/resultados-1.1/*
 !data/processed/mapa/resultados-1.1/municipios.csv
 !data/processed/mapa/resultados-1.1/escenarios_2027.csv
 !data/processed/mapa/resultados-1.1/metadatos.json
+!data/processed/entrega/
+data/processed/entrega/*
+!data/processed/entrega/base-datos-1.1/
 artifacts/
 *.log
 .vscode/*
