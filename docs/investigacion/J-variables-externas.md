@@ -11,6 +11,8 @@ Paso 3b. Documento vivo: se actualiza conforme avanza el trabajo. Primero se esc
 3. **Diseñar la intervención:** a quién, por qué canal y dónde.
 4. **Construir alertas** para el mapa: indicadores que el INE pueda vigilar por zona.
 
+**Dónde está el código.** Los análisis se hicieron primero con scripts exploratorios de trabajo (citados abajo como `scratchpad/p3b/...`), que no están en el repositorio. Lo que se usa en el proyecto está reproducido en `notebooks/03b_variables_externas_y_patrones.ipynb` y `notebooks/04_modelo_riesgo_2027.ipynb`. Las fuentes se descargan con `scripts/externos/` (ver `docs/fuentes-externas.md`). Cuando una cifra del notebook difiere de la de este reporte, vale la del notebook, que ya tiene integradas las actas de 2009–2015.
+
 ## Reglas de trabajo
 
 - **Comparar cosas equiparables:**

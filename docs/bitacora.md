@@ -171,3 +171,44 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 ### Siguiente paso
 
 **Paso 3b · Variables externas** (reportes [J](investigacion/J-variables-externas.md) y [K](investigacion/K-patrones-y-alertas.md)) y **paso 4 · Modelo y validación**, con primer resultado el 22 de octubre.
+
+---
+
+## 2026-10-19 · Paso 3b: variables externas y patrones
+
+**Evidencia:** `notebooks/03b_variables_externas_y_patrones.ipynb`; reportes [J](investigacion/J-variables-externas.md) y [K](investigacion/K-patrones-y-alertas.md); fuentes en [`docs/fuentes-externas.md`](fuentes-externas.md); scripts en `scripts/externos/`.
+
+- **Fuentes nuevas, verificadas contra sus totales oficiales:** INEGI (censos 2010 y 2020, Intercensal 2015, homicidios), CONAPO (proyecciones, marginación, intensidad migratoria), CONEVAL (pobreza y rezago social), Banxico (remesas), SESNSP (delitos) y actas del INE de 2009, 2012 y 2015.
+- **Lo que anticipa la intermedia en las dos transiciones pasadas:** elegir ayuntamiento o gobernador el mismo día; en menor medida, % hombres, cobertura de la lista, escolaridad, lo rural y usos y costumbres.
+- **Lo que no se sostiene:** migración, pobreza y competitividad electoral.
+- **Patrones para el mapa:**
+  - la edad no explica dónde, pero sí a quién;
+  - el votante primerizo se pierde;
+  - falta credencial al 31 % de los jóvenes de 18 y 19 años;
+  - hay zonas frías (371 municipios);
+  - 285 municipios votan por debajo del país en las seis elecciones.
+
+## 2026-10-19 · Paso 4: modelo y primer resultado
+
+**Evidencia:** `notebooks/04_modelo_riesgo_2027.ipynb`; resultado en `data/processed/riesgo_2027.parquet` (no versionado; el notebook lo regenera).
+
+- **Modelo:** regresión robusta (Huber) con 34 variables, elegida por la regla del notebook. Es la que menos se equivoca en promedio en las dos validaciones y le gana a la regla simple en las dos.
+- **Validación principal (aprende de 2015, predice 2021):**
+  - error centrado de 5.49 pp contra 6.03 de la regla simple;
+  - ponderado por personas, 4.69 contra 6.80;
+  - acierto en el 20 % de mayor riesgo, 72 % contra 67 %;
+  - en el 10 % más extremo, la regla simple acierta un poco más (61 % contra 58 %).
+- **No predice bien el nivel general:** 2027 se presenta con tres escenarios nacionales (44.1 %, 47.1 % y 51.8 %).
+- **Corrección antes de publicar:** los antecedentes de falta de casillas se aprendían de solo 4 municipios que se recuperaron (sesgo de selección), y ponían a Tila o Nahuatzen como los de menor riesgo. Se sacaron del modelo; van en la alerta de D12.
+- **Riesgo 2027:**
+  - el 10 % de mayor riesgo son 248 municipios con 10.6 millones de personas;
+  - 226 no tendrán elección municipal ese día: 192 de Oaxaca, 18 de Durango y 16 de Veracruz;
+  - también entran ciudades como Tijuana, Juárez, Mexicali y Reynosa.
+
+### Pendiente de decisión
+
+- **D16:** usar las actas en los municipios con lista incompleta (ver arriba).
+
+### Siguiente paso
+
+**Paso 5 · Semáforo y escenarios:** cortes del semáforo (rojo = 20 % de mayor riesgo, donde el modelo se validó mejor), vista por personas y escenario "con campaña dirigida" (jóvenes, primerizos y credencialización).
