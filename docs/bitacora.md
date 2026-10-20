@@ -279,3 +279,31 @@ validación (`data/processed/validacion_modelo.parquet`); el riesgo 2027 no camb
 
 **Paso 6 · Mapa y prueba con Jorge (26 a 28 de octubre):** cargar `resultados-1.0` en la aplicación.
 Los cambios frente a la muestra 0.3 están en el notebook 05, sección 6.
+
+---
+
+## 2026-10-20 · Prueba final: otras fuentes de datos e importancia de variables
+
+**Evidencia:** `notebooks/04b_fuentes_adicionales_e_importancia.ipynb`. También se agregó al notebook 03b
+(sección 7) y al reporte J (R8) el matiz de la pobreza.
+
+- **18 variables nuevas, con hipótesis escritas antes de probarlas:** censos completos del INEGI (religión,
+  empleo, jefatura femenina, estado civil, discapacidad, bienes de la vivienda, analfabetismo, viviendas
+  deshabitadas), electores por casilla (INE) y densidad de población.
+- **12 son estables** frente a lo que la historia no anticipa, pero **solo dos mejoran la predicción en
+  las dos validaciones**, y menos de 1 %: la densidad de población y los ocupantes por vivienda. El modelo
+  no quedó corto de información.
+- **Gradient boosting**, con o sin las variables nuevas, se equivoca mucho más que Huber (7.3 contra 5.5
+  pp al predecir 2021).
+- **Importancia por permutación:** pesan la historia del municipio (de 5.6 a 7 pp), las elecciones
+  locales el mismo día y usos y costumbres (de 2.9 a 3.8 pp) y, como conjunto, las sociales y económicas
+  (de 1.5 a 1.9 pp). La violencia y la competencia política casi no pesan.
+- **La pobreza, con más detalle:** fuera de Oaxaca los más pobres votan más; dentro de Oaxaca, menos,
+  por el régimen de usos y costumbres. Los municipios sin casilla son más pobres, pero como alerta el
+  antecedente es más preciso.
+
+### Pendiente de decisión
+
+| # | Decisión | Opciones | Recomendación |
+| --- | --- | --- | --- |
+| D20 | ¿Agregar la densidad y los ocupantes por vivienda al modelo? | (a) dejar el modelo como está; (b) agregarlas y volver a correr los notebooks 04 y 05 | **(a).** La mejora es real pero menor al 1 % y no cambia el semáforo de forma visible |

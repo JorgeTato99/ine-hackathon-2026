@@ -163,6 +163,10 @@ Script: `scratchpad/p3b/primerizos.py`. Sigue a la generación nacida en 1998–
 
 - **Contra lo que esperábamos (E4), los municipios más pobres no votan menos que el país: votan un poco más** (0.13). Es consistente con que lo rural vota más.
 - **La pobreza no ayuda a anticipar lo que la historia no explica:** su correlación con el residuo es prácticamente cero. Sirve para **explicar** el contexto en el mapa, no para predecir.
+- **Matiz agregado el 20 de octubre de 2026** (notebook 03b, sección 7): el 0.13 nacional esconde dos relaciones opuestas.
+  - **Fuera de Oaxaca, los más pobres votan más** (de 0.26 a 0.44 entre 2018 y 2024).
+  - **Dentro de Oaxaca votan menos** (de −0.24 a −0.37). Ahí lo que separa a los municipios es el régimen de usos y costumbres: son más pobres (86.5 % contra 66.6 %) y votan menos en las federales.
+  - **Los municipios sin casilla o sin dato son más pobres** (mediana de 81 % a 83 % contra 66.5 %). Pero como alerta, la pobreza marca a demasiados municipios; el antecedente de falta de casillas es más preciso (D12).
 - **Las señales más fuertes hasta ahora son políticas:** el margen y el número efectivo de partidos de 2018. Donde hubo competencia, la participación se sostuvo mejor en 2021.
 - **Las versiones ponderadas por lista son más altas** para el rezago educativo y el rezago social. La relación es más fuerte en los municipios grandes, lo que sugiere probar **interacciones** con el tamaño o lo urbano en el modelo.
 
