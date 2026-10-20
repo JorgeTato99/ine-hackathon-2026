@@ -306,4 +306,53 @@ Los cambios frente a la muestra 0.3 están en el notebook 05, sección 6.
 
 | # | Decisión | Opciones | Recomendación |
 | --- | --- | --- | --- |
-| D20 | ¿Agregar la densidad y los ocupantes por vivienda al modelo? | (a) dejar el modelo como está; (b) agregarlas y volver a correr los notebooks 04 y 05 | **(a).** La mejora es real pero menor al 1 % y no cambia el semáforo de forma visible |
+| D20 | ¿Agregar la densidad y los ocupantes por vivienda al modelo? | (a) dejar el modelo como está; (b) agregarlas y volver a correr los notebooks 04 y 05 | **(a).** La mejora es real pero menor al 1 % y no cambia el semáforo de forma visible. *Actualizado abajo: con el calendario corregido se suma el % de católicos.* |
+
+---
+
+## 2026-10-20 · Otros modelos, lo que el modelo no ve y corrección del calendario
+
+**Evidencia:** `notebooks/04b_fuentes_adicionales_e_importancia.ipynb`, secciones 5 a 10. La corrección
+está en el notebook 03 y en `data/reference/municipios_sni_fuera_oaxaca.csv`.
+
+### Corrección de datos (error encontrado)
+
+- **7 municipios fuera de Oaxaca eligen por sistemas normativos indígenas** y no votan ayuntamiento por
+  partidos en la jornada: Oxchuc (Chiapas), Ayutla de los Libres y Ñuu Savi (Guerrero), Cherán (Michoacán),
+  Coatetelco, Xoxocotla y Hueyapan (Morelos). El calendario los marcaba con ayuntamiento el mismo día.
+  - La nota del INE ya estaba en `elecciones_locales_concurrentes.csv`, pero no se aplicaba al municipio.
+  - Se encontró al revisar los casos atípicos del modelo.
+  - Cada caso está verificado en documentos de los institutos electorales locales o del INE (tabla de
+    referencia con cita y fuente). Cherán 2015 y 2018 se apoyan en una fuente académica.
+  - Para 2027, donde no hay documento oficial todavía, se usa el régimen de 2024.
+- **Efecto:** la validación del modelo no cambia; esos 7 municipios suben de riesgo en 2027. El rojo
+  queda con 495 municipios y 25.6 millones de personas (antes 26.2): 414 sin elección municipal ese día
+  (6.8 millones) y 81 que sí la tienen (18.8 millones). Cambiaron de color 10 municipios en el límite.
+
+### Otros tipos de modelo
+
+- Se compararon 14 candidatos con la misma validación: lineales (Huber, ridge, lasso, elastic net), árbol
+  de decisión, random forest, extra trees, gradient boosting, red neuronal, SVR, vecinos cercanos y tres
+  ensambles. Los hiperparámetros se eligieron con validación cruzada dentro de la elección de entrenamiento.
+- **Ganador con la regla del notebook 04: el ensamble Huber + random forest.** Error promedio de 5.74
+  contra 6.03 de Huber; baja el error en las dos validaciones fuera del ruido (−0.17 y −0.41 pp); pierde
+  1.7 puntos de acierto en el 20 % de mayor riesgo al predecir 2021.
+- El árbol de decisión, la red neuronal, gradient boosting, SVR y vecinos cercanos son peores que Huber.
+
+### Lo que el modelo no ve
+
+- El estado explica el 28 % del error del modelo y el distrito, del 41 % al 44 %. Ese efecto **no se
+  repite** entre elecciones (−0.46): es coyuntura de cada elección.
+- **Gasto de campaña** de diputaciones federales (INE, fiscalización; 2018 y 2021): el de 2021 no explica
+  el error por distrito (0.05, intervalo con el cero). El de 2018 tiene una relación débil (−0.15) que no
+  se puede validar con 2015: queda como pista.
+- **Celular y computadora** dicen lo mismo que internet. **COVID:** no hay efecto aparte de la urbanización.
+- **Redes sociales:** no existe dato municipal (la ENDUTIH es estatal; la publicidad política de Meta da
+  rangos y requiere token; la de Google existe para México desde 2024).
+
+### Pendiente de decisión
+
+| # | Decisión | Opciones | Recomendación |
+| --- | --- | --- | --- |
+| D20 (actualizada) | ¿Agregar densidad, ocupantes por vivienda o % de católicos? | (a) no; (b) sí | **(a).** Mejoran menos de 1 % |
+| D21 | ¿Cambiar el modelo de Huber al ensamble Huber + random forest? | (a) seguir con Huber; (b) cambiar al ensamble y volver a correr los notebooks 04 y 05 | **(b).** Gana con la regla de selección fijada antes y mejora en las dos validaciones; Huber sigue sirviendo para explicar qué pesa |

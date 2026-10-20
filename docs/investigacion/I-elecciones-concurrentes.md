@@ -59,7 +59,12 @@ Fuentes (prensa; el texto del DOF no lo consultamos directamente):
 3. **Chiapas 2024:** Chicomuselo, Pantelhó y Capitán Luis Ángel Vidal eligieron ayuntamiento en una extraordinaria el 25 de agosto, no el 2 de junio.
 4. **Colima 2015:** la gubernatura se votó el 7 de junio, aunque el Tribunal Electoral la anuló después (SUP-JRC-678/2015). Ese día sí hubo elección de gobernador, así que se marca `si`.
 5. **Chiapas 2012 sí fue concurrente.** El IFE y la sentencia SUP-JRC-118/2012 fijan el 1 de julio; un informe del Congreso de EE. UU. de mayo de 2012 traía una fecha distinta, ya superada.
-6. **Cherán (Michoacán), Oxchuc (Chiapas) y Ayutla de los Libres (Guerrero)** también eligen por sistemas normativos, según la tabla del INE de 2021. **No se aplican como excepción en el modelo** porque no tenemos documentado desde qué año. Cherán y Oxchuc ya están en la alerta de "no hubo casilla" (D12).
+6. **Fuera de Oaxaca, 7 municipios eligen por sistemas normativos indígenas** y no votan ayuntamiento por partidos en la jornada. Se aplican como excepción desde el 20 de octubre de 2026 (antes no se aplicaban porque no teníamos documentado desde qué año).
+   - Los municipios: Oxchuc (Chiapas, desde 2018), Ayutla de los Libres (Guerrero, desde 2018), Ñuu Savi (Guerrero; su territorio sigue el régimen de Ayutla en 2018 y 2021), Cherán (Michoacán) y Coatetelco, Xoxocotla y Hueyapan (Morelos, desde su creación en 2017).
+   - La tabla, con fuente y cita por año, está en `data/reference/municipios_sni_fuera_oaxaca.csv`. Las fuentes son acuerdos y memorias del IEPC Chiapas, el IEPC Guerrero y el IMPEPAC, y las hojas informativas del INE de 2021 y 2024.
+   - Cherán 2015 y 2018 solo tienen fuente académica.
+   - Para 2027, donde aún no hay documento oficial, se usa el régimen de 2024.
+   - Chilón y Sitalá (Chiapas), que el INE señalaba en 2021 como "definiendo su sistema", votaron por partidos en todos los años.
 
 ## Lo que queda débil
 
