@@ -79,7 +79,7 @@ Script: `scratchpad/p3b/composicion.py`. Para cada municipio calculamos su parti
 - **Casi toda la diferencia es efecto del lugar**, y ese efecto se repite: 2018 anticipa el 73 % del efecto del lugar de 2021.
 - **Consecuencia:** para predecir **dónde** se vota menos sirven las características del lugar (migración, pobreza, violencia, política local), no la pirámide de edades. La edad sí sirve para **diseñar a quién** dirigir la campaña.
 
-### R4 · Competitividad electoral (actas del INE) — indicio fuerte, un solo periodo
+### R4 · Competitividad electoral (actas del INE) — no se repite en otro periodo (ver R13)
 
 Script: `scratchpad/p3b/competitividad.py`.
 
@@ -291,3 +291,28 @@ Script: `scratchpad/p3b/primerizos.py`. Sigue a la generación nacida en 1998–
 - **Con tan pocos datos (2,400 municipios), el modelo lineal regularizado (ridge) gana al gradient boosting.** Es más estable y más fácil de explicar.
 
 **Advertencia importante:** esta validación es **dentro de un mismo año** (2021). Mide si el modelo generaliza a estados que no vio, **no** si generaliza a otra elección. La prueba que importa para 2027 es **fuera de tiempo**: aprender de 2012 → 2015 y predecir 2018 → 2021 (D15). Para eso hacen falta las variables de esos años (CONEVAL 2010/2015 y marginación 2010/2015 sí existen) y, de preferencia, las actas de 2012 (en descarga). Si las relaciones cambian entre elecciones, el R² real para 2027 será menor que 0.83.
+
+### R13 · Actas oficiales de 2009, 2012 y 2015, y prueba del margen en otro periodo — verificado; el margen NO se repite
+
+**Datos:** `data/processed/externos/actas_{2009,2012,2015}.parquet`, del SICEEF del INE (http://siceef.ine.mx/downloadDB.html). Son resultados de cómputo distrital casilla por casilla, con las decisiones del Tribunal Electoral ya aplicadas.
+
+**Qué verificó el agente:**
+
+- 2015 cruza 1 a 1 con la base oficial de cómputos 2015, con lista nominal idéntica.
+- 2009 y 2015 cuadran con los acuerdos del Consejo General (CG426/2009 y CG804/2015), con diferencias de 28 a 68 votos.
+- 2012 cuadra distrito por distrito con el cómputo publicado por el IFE. La diferencia de +1,422 votos se explica completa por casillas con decisiones del Tribunal.
+
+**Corrección de un dato mío:** la cifra de votación de 2012 que le di al agente para comparar (50,143,616) la escribí de memoria y **no se pudo confirmar** en ninguna fuente del IFE o INE. No se usa.
+
+**Prueba del margen en 2012 → 2015** (`scratchpad/p3b/margen_2012.py`). Votos por candidatura según la tabla oficial del archivo:
+
+- **El margen típico de 2012 fue de 12.8 puntos**, contra 28.0 en 2018 y 48.9 en 2024.
+- **El margen de 2012 no anticipa lo que 2012 no anticipa de 2015:** Spearman 0.02, con IC 95 % de −0.02 a 0.06. El R² no cambia (0.463).
+- **El número efectivo de partidos se invierte:** −0.15 en 2015, contra +0.27 en 2021.
+
+**Conclusión:** el efecto del margen de 2018 sobre 2021 (R4) **no es una regla general**; parece propio de esa elección. **No se debe usar como variable del modelo sin más pruebas.** Es justo el riesgo de la advertencia de R12: las relaciones cambian entre elecciones, y por eso la validación que importa es de una elección a otra.
+
+**Para qué más sirven estas actas:**
+
+1. Aplicar la regla de origen A, B y C a 2009, 2012 y 2015. Por ejemplo, el "no sabemos" de 2015 en el boicot magisterial.
+2. Hacer la validación fuera de tiempo del paso 4 con más variables.
