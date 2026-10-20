@@ -2,9 +2,11 @@
 
 Datos de otras instituciones que se usan junto con los de la lista nominal y los cómputos del INE:
 población (INEGI, CONAPO), marginación y migración (CONAPO), remesas (Banxico), pobreza y rezago
-social (CONEVAL), violencia (INEGI y SESNSP) y resultados por casilla de 2009, 2012 y 2015 (INE).
+social (CONEVAL), violencia (INEGI y SESNSP), quién ejerce la seguridad pública en cada municipio y
+cifra oculta por estado (INEGI) y resultados por casilla de 2009, 2012 y 2015 (INE).
 
-Todo se consultó y descargó el **19 de octubre de 2026** (hora de la Ciudad de México). Los archivos
+Todo se consultó y descargó el **19 de octubre de 2026** (hora de la Ciudad de México), salvo el
+CNGMD 2025 y la ENVIPE 2026, que se descargaron el **20 de octubre de 2026**. Los archivos
 crudos quedan en `data/raw/externos/` y `data/raw/computos_{2009,2012,2015}/`, y los productos en
 `data/processed/externos/`. Ninguna de esas carpetas se sube al repositorio. Lo que sí se versiona
 es la huella SHA-256 de cada archivo crudo, en
@@ -46,7 +48,10 @@ ejemplo 09998 o 20999), marcadas con `cvegeo_en_catalogo_ref = False`. Los parqu
 | CONEVAL | Índice de Rezago Social, entidades y municipios | 2000, 2005, 2010, 2015, 2020 | <https://www.coneval.org.mx/Medicion/IRS/Paginas/Indice_de_Rezago_Social_2020_anexos.aspx> | `coneval_rezago_social.parquet` | `fuente_coneval.py` | 2020: 2,469 municipios y grados iguales al Cuadro 3 de la nota oficial; los 10 municipios con mayor índice coinciden. | El índice y el grado no son comparables entre años (lo dice CONEVAL); los componentes sí son magnitudes directas. |
 | INEGI | Estadísticas de Defunciones Registradas (homicidios = `presunto` 2) | 2009-2024 (año de ocurrencia) | <https://www.inegi.org.mx/programas/edr/> | `inegi_homicidios_municipio.parquet`, `inegi_homicidios_municipio_mes.parquet`, `inegi_homicidios_no_especificado.parquet` | `fuente_violencia.py` | La causa X85-Y09 reproduce exactamente la cifra oficial por año de registro en los 16 años; `presunto` 2 da de 0 a 4 casos más por año. | 2024 está subestimado (≈ 2 %-4 %) porque faltan registros tardíos. Miles de casos sin entidad de ocurrencia en 2017-2023 (2,011 en 2018). Es el lugar de la defunción, no de la agresión. 2025 no está publicado. |
 | SESNSP | Incidencia delictiva del fuero común, municipal (homicidio doloso, feminicidio, secuestro, extorsión, electorales) | 2015-2025 | <https://www.gob.mx/sesnsp/acciones-y-programas/datos-abiertos-de-incidencia-delictiva> | `sesnsp_delitos_municipio.parquet` | `fuente_violencia.py` | Total nacional del archivo municipal = archivo estatal = reporte nacional en PDF, en todos los años y delitos. | Mes de **registro** de la carpeta, no de los hechos. Carpetas no son víctimas. 2015-2016 casi sin Oaxaca municipal. Una fila ausente es "sin dato", no cero. Cifras revisadas retroactivamente. "Electorales" no equivale a violencia política. |
+| SESNSP | Incidencia delictiva del fuero común, **víctimas por entidad** (homicidio doloso, feminicidio, secuestro, extorsión, electorales) | 2015-2025 | <https://www.gob.mx/sesnsp/acciones-y-programas/datos-abiertos-de-incidencia-delictiva> | `sesnsp_victimas_estatal.parquet` | `fuente_violencia.py` | La suma de las entidades es igual al total nacional en todos los años y delitos. 2025: 23,612 víctimas de homicidio doloso y 736 de feminicidio, igual al reporte en PDF del SESNSP. | Antes de 2026 el SESNSP no publica víctimas por municipio, solo carpetas. Lugar del delito, no de la defunción. |
 | SESNSP | Registro Nacional de Incidencia Delictiva (RNID), municipal, delitos y víctimas | enero-septiembre de 2026 | <https://www.gob.mx/sesnsp/acciones-y-programas/datos-abiertos-de-incidencia-delictiva> | `sesnsp_rnid_2026_municipio.parquet` | `fuente_violencia.py` | Totales nacionales de carpetas y víctimas = reporte RNID en PDF (exacto). | Metodología nueva: se excluyen tentativas; la comparabilidad de secuestro con 2025 no está verificada. |
+| INEGI | Censo Nacional de Gobiernos Municipales y Demarcaciones Territoriales de la Ciudad de México (CNGMD) 2025, módulo 3 (seguridad pública) y módulo 5 (justicia cívica) | 2024 (año de referencia) | Datos abiertos bajo <https://www.inegi.org.mx/contenidos/programas/cngmd/2025/datosabiertos/>; tabulado <https://www.inegi.org.mx/contenidos/programas/cngmd/2025/tabulados/cngmd2025_seg_publica.xlsx> | `cngmd_seguridad_municipal.parquet` | `fuente_seguridad.py` | 2,478 municipios, cruce 1 a 1 con el catálogo. Situación de la función por entidad contra el Cuadro 1 del tabulado: 330 celdas, solo difiere Tumbiscatío (16096), que los datos abiertos ponen en el código 3 y el tabulado en el 1. Personal sin titulares: 164,224 (120,773 hombres y 43,451 mujeres), igual al Cuadro 3. Con titulares: 166,090 contra 166,091 publicados (Churintzio, 16028, no trae personal numérico). | Es lo que reporta cada gobierno municipal. Las alcaldías de la Ciudad de México son "no aplica" (su seguridad está en el censo estatal). 45 municipios "no identificado", 43 de Oaxaca. La institución que ejerce la función solo se pregunta cuando no hay policía municipal; el Mando Único, solo cuando hay policía municipal junto con otras instituciones. |
+| INEGI | Encuesta Nacional de Victimización y Percepción sobre Seguridad Pública (ENVIPE) 2026, cuadro 3.3 (cifra oculta por entidad) y su coeficiente de variación | 2025 (delitos) | <https://www.inegi.org.mx/contenidos/programas/envipe/2026/tabulados/III_denuncia_delito_2026_est.xlsx> y `..._cv.xlsx` | `envipe_cifra_oculta_estatal.parquet` | `fuente_seguridad.py` | Suma de las 32 entidades más 20,587 delitos sin entidad (nota 2 del cuadro) = total nacional (33,802,897). Cifra oculta nacional 93.4 %, igual al comunicado 50/26. | Solo existe por estado (y 34 áreas urbanas), no por municipio. No mide homicidios. Es una encuesta: cada cifra trae su coeficiente de variación. |
 | INE | SICEEF, resultados de cómputo distrital por casilla (con ajustes del TEPJF) | 2009 (diputados MR), 2012 (Presidente), 2015 (diputados MR) | <http://siceef.ine.mx/downloadDB.html> | `actas_2009.parquet`, `actas_2012.parquet`, `actas_2015.parquet` | `fuente_actas_2009_2015.py` y `verificar_actas_2009_2015.py` | 2012: casillas y votos contra el cómputo distrital del IFE, los 300 distritos uno por uno. 2015: cruce 1 a 1 con la base del sitio de cómputos y con el acuerdo INE/CG804/2015. 2009: contra CG426/2009 (−68 votos de 34,677,991). | Las casillas anuladas por el TEPJF conservan sus votos: para el resultado final hay que filtrar `~anulada_tepjf`. En 2015, Aguascalientes 01 trae la elección extraordinaria. Diferencias de lista nominal sin explicar (−21,631 en 2012; −11,089 en 2009). Ver la advertencia de 2012 arriba. |
 
 ## Cómo reproducir
@@ -68,10 +73,12 @@ uv tool run --from uv==0.13.1 uv run --no-project --with polars==2.0.0 --with op
     --with xlrd==2.0.1 python -I scripts/externos/fuente_conapo_banxico.py
 uv tool run --from uv==0.13.1 uv run --no-project --with polars==2.0.0 --with openpyxl==3.1.5 \
     python -I scripts/externos/fuente_coneval.py
+uv tool run --from uv==0.13.1 uv run --no-project --with polars==2.0.0 --with openpyxl==3.1.5 \
+    python -I scripts/externos/fuente_seguridad.py
 ```
 
-- `fuente_inegi.py` baja lo que falte; `fuente_violencia.py`, `fuente_coneval.py` y
-  `fuente_actas_2009_2015.py` lo hacen con `--descargar`.
+- `fuente_inegi.py` baja lo que falte; `fuente_violencia.py`, `fuente_coneval.py`,
+  `fuente_seguridad.py` y `fuente_actas_2009_2015.py` lo hacen con `--descargar`.
 - `fuente_conapo_banxico.py` no descarga: varios sitios oficiales bloquean las descargas
   automáticas (respuesta 403 en repodatos.atdt.gob.mx, reto JavaScript en gob.mx/conapo,
   conapo.gob.mx sin respuesta). Esos archivos se bajan a mano desde la URL que aparece en
@@ -95,7 +102,7 @@ Los scripts comprueban el SHA-256 de los archivos extraídos.
 ## Sobre `huellas_fuentes_externas.csv`
 
 Columnas: `fuente`, `archivo_relativo` (ruta desde la raíz del repo), `sha256`, `url` y
-`fecha_consulta`. Tiene una fila por archivo crudo (521 en total).
+`fecha_consulta`. Tiene una fila por archivo crudo (527 en total).
 
 - En los archivos extraídos de un comprimido, la `url` es la del comprimido de origen.
 - Las copias de la Wayback Machine llevan la URL de la captura en modo `id_` (bytes originales), con

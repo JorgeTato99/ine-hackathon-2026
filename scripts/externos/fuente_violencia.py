@@ -16,6 +16,7 @@ Qué produce (data/processed/externos/)
     inegi_homicidios_no_especificado.parquet  registros sin municipio o entidad válida
     sesnsp_delitos_municipio.parquet          cvegeo, anio, mes, delito, carpetas (2015-2025)
     sesnsp_rnid_2026_municipio.parquet        cvegeo, anio, mes, delito, carpetas, victimas (2026)
+    sesnsp_victimas_estatal.parquet           cve_ent, anio, delito, victimas (2015-2025)
     verificaciones/verificaciones_violencia.json
 
     Para leerlos extrae miembros de los ZIP en data/raw/externos/violencia/*/extraido/ (unos
@@ -644,6 +645,25 @@ def procesar_sesnsp(ref: set[str], verif: dict) -> None:
     )
     nacional_vic = vic_l.group_by(pl.col("Año").cast(pl.Int32).alias("anio"), "delito").agg(
         pl.col("victimas").sum()
+    )
+    # Víctimas por entidad y año: el SESNSP no publica víctimas por municipio antes de 2026
+    vic_ent = (
+        vic_l.group_by(
+            pl.col("Clave_Ent").cast(pl.Int32).cast(pl.String).str.zfill(2).alias("cve_ent"),
+            pl.col("Año").cast(pl.Int32).alias("anio"),
+            "delito",
+        )
+        .agg(pl.col("victimas").sum())
+        .sort("cve_ent", "anio", "delito")
+    )
+    vic_ent.write_parquet(OUT / "sesnsp_victimas_estatal.parquet")
+    verif["sesnsp_victimas_estatal_suma_igual_a_nacional"] = (
+        vic_ent.group_by("anio", "delito")
+        .agg(pl.col("victimas").sum())
+        .sort("anio", "delito")
+        .join(nacional_vic, on=["anio", "delito"], suffix="_nacional")
+        .select((pl.col("victimas") == pl.col("victimas_nacional")).all())
+        .item()
     )
     comp = (
         nacional_mun.join(nacional_est, on=["anio", "delito"], suffix="_estatal")

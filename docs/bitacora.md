@@ -166,7 +166,7 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
 
 | # | Propuesta | Por qué |
 | --- | --- | --- |
-| D16 (nueva, **pendiente de confirmar**) | Municipios con lista incompleta en los conteos: usar la participación de todas sus actas, en lugar de dejarlos "sin dato" | Recupera 108 municipios de 2012. Las secciones que faltan en los conteos se ubican con el mismo número de sección en la elección más cercana |
+| D16 (nueva; **confirmada por Sofía Ordaz el 20 de octubre de 2026**) | Municipios con lista incompleta en los conteos: usar la participación de todas sus actas, en lugar de dejarlos "sin dato" | Recupera 108 municipios de 2012. Las secciones que faltan en los conteos se ubican con el mismo número de sección en la elección más cercana |
 
 ### Siguiente paso
 
@@ -205,10 +205,36 @@ Aquí se anota cada decisión de análisis con su fecha, la evidencia y el porqu
   - 226 no tendrán elección municipal ese día: 192 de Oaxaca, 18 de Durango y 16 de Veracruz;
   - también entran ciudades como Tijuana, Juárez, Mexicali y Reynosa.
 
-### Pendiente de decisión
-
-- **D16:** usar las actas en los municipios con lista incompleta (ver arriba).
-
 ### Siguiente paso
 
 **Paso 5 · Semáforo y escenarios:** cortes del semáforo (rojo = 20 % de mayor riesgo, donde el modelo se validó mejor), vista por personas y escenario "con campaña dirigida" (jóvenes, primerizos y credencialización).
+
+---
+
+## 2026-10-20 · Complemento del paso 3b: presencia del Estado y qué tan completo es el dato de violencia
+
+**Evidencia:** `notebooks/03b_variables_externas_y_patrones.ipynb`, sección 8; reporte
+[L](investigacion/L-presencia-del-estado-y-dato-de-violencia.md). Datos nuevos:
+`scripts/externos/fuente_seguridad.py` (CNGMD 2025 y ENVIPE 2026) y una salida más de
+`scripts/externos/fuente_violencia.py` (víctimas del SESNSP por estado).
+
+- **D16 confirmada** por Sofía Ordaz. El código del notebook 03 ya la aplicaba; solo cambió el texto.
+- **Quién ejerce la seguridad (INEGI, 2024):** 517 municipios sin policía municipal. No tenerla no va con
+  votar menos: los 400 con cuerpos comunales son casi todos de usos y costumbres, y fuera de ellos no
+  hay diferencia. Entra al mapa como contexto, no como alerta ni en el modelo (es de 2024, posterior a
+  las elecciones con que se valida).
+- **Homicidios INEGI contra SESNSP, 2019-2024:** casi coinciden a nivel nacional (entre −0.5 % y +3.2 %),
+  pero no en todos los estados.
+- **Columnas nuevas en `indicadores_mapa.parquet`:** `quien_ejerce_seguridad`, `tiene_policia_municipal`,
+  `justicia_civica`, `policias_municipales_por_10mil_habitantes`, `comparacion_homicidios_inegi_sesnsp` y
+  `cifra_oculta_estatal_2025`. Las columnas que ya existían no cambiaron.
+
+### Pendiente de decisión
+
+| # | Decisión | Opciones | Recomendación |
+| --- | --- | --- | --- |
+| D17 (nueva) | Dato de violencia para el mapa y aviso por estado | (a) carpetas del SESNSP; (b) homicidios del INEGI, con una etiqueta por estado: "una fuente cuenta más" si en al menos 5 de los 6 años (2019-2024) supera a la otra por más de 5 % | **(b).** El INEGI no depende de la denuncia y es el que se usó en el modelo. Con la regla, el INEGI cuenta más en 5 estados (Guanajuato, Yucatán, Hidalgo, Estado de México y Tlaxcala) y el SESNSP en otros 5 (Veracruz, Oaxaca, Jalisco, Coahuila y Durango). Extorsión y secuestro solo existen en el SESNSP: van con el aviso |
+
+### Siguiente paso
+
+**Paso 5 · Semáforo y escenarios**, con la capa de contexto de seguridad.
