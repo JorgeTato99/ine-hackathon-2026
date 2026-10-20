@@ -389,5 +389,6 @@ está en el notebook 03 y en `data/reference/municipios_sni_fuera_oaxaca.csv`.
 
 ### Pendiente
 
-- **Archivos del mapa para Jorge** (`data/processed/mapa/resultados-1.0/`): queda pendiente cómo se le
-  entregan (subirlos al repo o pasárselos por fuera).
+- ~~**Archivos del mapa para Jorge**~~ **Decidido (20 de octubre):** `data/processed/mapa/resultados-1.0/` se
+  sube al repo (excepción en `.gitignore`), para que la aplicación use siempre la versión que generan los
+  notebooks y cada cambio quede en el historial. Son resultados por municipio, sin datos crudos ni de personas.

@@ -8,7 +8,8 @@
 | `samples/muestra-0.3/` | Tres entradas de integración con historia real y 2027 ilustrativo. | Sí |
 | `raw/` | Seis ZIP, CSV y diccionarios originales del INE, sin modificar. | No |
 | `geo/` | Respuestas geográficas originales del INEGI y manifiesto. | No |
-| `processed/` | Parquet tipados, tablas agregadas y GeoJSON nacional. | No |
+| `processed/mapa/resultados-1.0/` | Resultados para el mapa: semáforo 2027, escenarios y metadatos (notebook 05). | Sí |
+| `processed/` (resto) | Parquet tipados, tablas agregadas y GeoJSON nacional. | No |
 
 Los archivos grandes se generan localmente. Las fuentes y URLs están declaradas en
 `config/sources.json`; los diccionarios de origen se conservan en `docs/diccionarios/`.

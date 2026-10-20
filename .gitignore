@@ -29,6 +29,9 @@ data/reference/*
 !data/reference/*.json
 data/samples/*
 !data/samples/muestra-0.3/
+!data/processed/
+data/processed/*
+!data/processed/mapa/
 artifacts/
 *.log
 .vscode/*
