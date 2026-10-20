@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-17T07:28:40.719935+00:00",
+  "generated_at_utc": "2026-10-19T05:34:42.284237+00:00",
   "geometry_edition": "captura_servicio_2026-10-16",
   "years": [
     {
@@ -71,9 +71,9 @@
       "elegibles_mapeados": 2458,
       "cobertura_elegibles_pct": 100.0,
       "metodos": {
-        "clave_y_nombre": 1091,
-        "nombre_unico_en_entidad": 1359,
-        "revision_documentada": 18
+        "clave_y_nombre": 1090,
+        "nombre_unico_en_entidad": 1358,
+        "revision_documentada": 20
       },
       "geometrias_sin_datos": 10
     },

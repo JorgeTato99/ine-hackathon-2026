@@ -10686,8 +10686,8 @@ anio,cve_ent_ine,cve_mun_ine,entidad_ine,municipio_ine,nombres_ine,variantes_nom
 2021,16,062,MICHOACAN,Ocampo,Ocampo,1,1571,16827,10863,5373,591,16062,True,16061,Ocampo,nombre_unico_en_entidad,,Pajacuarán,False
 2021,16,063,MICHOACAN,Pajacuarán,Pajacuarán,1,2572,15555,8842,6324,389,16063,True,16062,Pajacuarán,nombre_unico_en_entidad,,Panindícuaro,False
 2021,16,064,MICHOACAN,Panindícuaro,Panindícuaro,1,2683,14245,7243,5117,1885,16064,True,16063,Panindícuaro,nombre_unico_en_entidad,,Parácuaro,False
-2021,16,065,MICHOACAN,Paracho,Paracho,1,2253,19051,10602,8091,358,16065,True,16065,Paracho,clave_y_nombre,,Paracho,True
-2021,16,066,MICHOACAN,Parácuaro,Parácuaro,1,2418,27223,11130,9231,6862,16066,True,16064,Parácuaro,nombre_unico_en_entidad,,Pátzcuaro,False
+2021,16,065,MICHOACAN,Paracho,Paracho,1,2253,19051,10602,8091,358,16065,True,16064,Parácuaro,revision_documentada,Nombres intercambiados en CCPC 2021; la clave INE 065 conserva las secciones 1426-1439 y 2671-2672 de Parácuaro; corrección limitada a esta elección; CSV originales CCPC de Michoacán 2009-2024 y continuidad por secciones; data/README.md,Paracho,False
+2021,16,066,MICHOACAN,Parácuaro,Parácuaro,1,2418,27223,11130,9231,6862,16066,True,16065,Paracho,revision_documentada,Nombres intercambiados en CCPC 2021; la clave INE 066 conserva las secciones 1440-1455 de Paracho; corrección limitada a esta elección; CSV originales CCPC de Michoacán 2009-2024 y continuidad por secciones; data/README.md,Pátzcuaro,False
 2021,16,067,MICHOACAN,Pátzcuaro,Pátzcuaro,1,6292,69902,29233,39214,1455,16067,True,16066,Pátzcuaro,nombre_unico_en_entidad,,Penjamillo,False
 2021,16,068,MICHOACAN,Penjamillo,Penjamillo,1,2774,16102,7840,7391,871,16068,True,16067,Penjamillo,nombre_unico_en_entidad,,Peribán,False
 2021,16,069,MICHOACAN,Peribán,Peribán,1,1702,21042,10675,9725,642,16069,True,16068,Peribán,nombre_unico_en_entidad,,La Piedad,False

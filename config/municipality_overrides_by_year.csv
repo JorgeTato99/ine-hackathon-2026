@@ -1,0 +1,3 @@
+anio,clave_ine,municipio_ine,cvegeo,municipio_inegi,motivo,fuente
+2021,16065,Paracho,16064,Parácuaro,Nombres intercambiados en CCPC 2021; la clave INE 065 conserva las secciones 1426-1439 y 2671-2672 de Parácuaro; corrección limitada a esta elección,CSV originales CCPC de Michoacán 2009-2024 y continuidad por secciones; data/README.md
+2021,16066,Parácuaro,16065,Paracho,Nombres intercambiados en CCPC 2021; la clave INE 066 conserva las secciones 1440-1455 de Paracho; corrección limitada a esta elección,CSV originales CCPC de Michoacán 2009-2024 y continuidad por secciones; data/README.md

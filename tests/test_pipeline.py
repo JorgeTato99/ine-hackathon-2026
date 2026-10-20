@@ -7,7 +7,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from scripts.build_crosswalk import match_municipality, normalize_name
+from scripts.build_crosswalk import index_overrides, match_municipality, normalize_name
 from scripts.common import archive_inventory, download, extract_verified
 
 
@@ -44,6 +44,52 @@ class CrosswalkTests(unittest.TestCase):
         result = match_municipality(source_row(), {}, {("01", "MUNICIPIO UNO"): candidates}, {})
         self.assertEqual(result["cvegeo"], "")
         self.assertEqual(result["metodo"], "nombre_ambiguo")
+
+    def test_year_override_precedes_apparent_code_and_name_match(self):
+        paracuaro = target_row("16064", "Parácuaro")
+        paracho = target_row("16065", "Paracho")
+        override = {
+            "anio": "2021",
+            "clave_ine": "16065",
+            "municipio_ine": "Paracho",
+            "cvegeo": "16064",
+            "municipio_inegi": "Parácuaro",
+            "motivo": "Nombres cruzados; secciones de Parácuaro",
+            "fuente": "CSV originales y continuidad",
+        }
+        by_code = {r["CVEGEO"]: r for r in [paracuaro, paracho]}
+        scoped = index_overrides([override], scoped=True)
+        row = {**source_row("16065", "Paracho"), "anio": "2021"}
+        result = match_municipality(row, by_code, {}, {}, scoped)
+        self.assertEqual(result["cvegeo"], "16064")
+        self.assertEqual(result["metodo"], "revision_documentada")
+        self.assertEqual(result["municipio_ine"], "Paracho")
+        self.assertEqual(result["municipio_inegi"], "Parácuaro")
+        other_year = match_municipality({**row, "anio": "2024"}, by_code, {}, {}, scoped)
+        self.assertEqual(other_year["cvegeo"], "16065")
+        self.assertEqual(other_year["metodo"], "clave_y_nombre")
+
+    def test_duplicate_year_override_is_rejected(self):
+        row = {"anio": "2021", "clave_ine": "16065", "municipio_ine": "Paracho"}
+        with self.assertRaises(
+            ValueError, msg="No permitir dos correcciones para la misma entrada"
+        ):
+            index_overrides([row, row], scoped=True)
+
+    def test_override_cannot_cross_state_or_use_changed_target_name(self):
+        override = {"cvegeo": "02001", "municipio_inegi": "Municipio Uno"}
+        with self.assertRaises(ValueError):
+            match_municipality(
+                source_row(),
+                {"02001": target_row("02001")},
+                {},
+                {("01001", "Municipio Uno"): override},
+            )
+        override = {"cvegeo": "01001", "municipio_inegi": "Nombre obsoleto"}
+        with self.assertRaises(ValueError):
+            match_municipality(
+                source_row(), {"01001": target_row()}, {}, {("01001", "Municipio Uno"): override}
+            )
 
 
 class ArchiveTests(unittest.TestCase):
