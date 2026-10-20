@@ -48,8 +48,23 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-20 - Exploración territorial y resultados científicos
+
+### 🎯 Resumen
+
+**Tipo de release:** Feature. Integrar el análisis científico y Traza Cívica en
+un mismo repositorio, con resultados precalculados, cartografía local y una
+aplicación estática reproducible. La versión del software es independiente de
+la entrega científica `resultados-1.1` y del sistema de diseño 1.6.0.
+
 ### Added
 
+- Incorporar el frontend React con exportación estática, cartografía Leaflet Canvas,
+  filtros, tabla con orden y paginación, ficha municipal y modo mapa ampliado.
+- Definir el sistema de diseño con tokens, temas claro/oscuro, componentes
+  reutilizables, índices de lectura y movimiento accesible.
+- Incluir la base de entrega CSV/XLSX de Sofía con historia municipal,
+  resultados, diccionario y guía de lectura, preservando su procedencia.
 - Incorporar preparacion reproducible de seis elecciones con Polars y Parquet, conservando originales y equivalencias municipales.
 - Incluir tablas agregadas, auditoria cartografica, notebook de inicio y decisiones de Sofia.
 - Comprobar tipos, valores invalidos, distritos nulos, catalogo de sexo 2024, cobertura, distribucion y entorno sin API ni boosting externo.
@@ -68,6 +83,10 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ### Changed
 
+- Separar el presupuesto del compilado de los perfiles de pruebas: usar por
+  defecto dos workers unitarios y un navegador, con alternativas ligero y rápido.
+- Actualizar la procedencia al corte científico `3f58a1d`: normalizar ceros
+  negativos y conservar las cifras e intervalos del mapa sin cambios numéricos.
 - Adoptar la plantilla con Python 3.14.8, datos como base y notebooks predeterminados.
 - Aplicar mypy estricto y cobertura a src, conservando flexibilidad de exploracion en notebooks.
 - Mantener DuckDB como contraste opcional y restringir las descargas a fuentes HTTPS configuradas.
@@ -83,6 +102,15 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ### Fixed
 
+- Corregir la correspondencia de Paracho y Parácuaro en 2021 mediante reglas por
+  elección y controles de continuidad por secciones, conservando los originales.
+- Validar claves de la base de entrega con errores explícitos, también al ejecutar
+  Python con optimizaciones, sin depender de aserciones eliminables.
 - Limpiar la selección municipal y la ficha al pulsar MX, sincronizando mapa y
   URL para que una recarga no vuelva al municipio anterior. Conservar filtros,
   escenarios y modo de presentación.
+
+### Security
+
+- Actualizar la dependencia transitiva [certifi a 2026.10.19](https://pypi.org/project/certifi/2026.10.19/)
+  para resolver el aviso `PYSEC-2026-4320` detectado en la auditoría del entorno Python.
