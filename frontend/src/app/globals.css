@@ -1,0 +1,353 @@
+html {
+  min-height: 100%;
+  scroll-padding-top: 24px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+html[data-map-mode="true"],
+html[data-map-mode="true"] body {
+  overflow: hidden !important;
+}
+
+@keyframes tc-floating-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.tc-floating-panel {
+  animation: tc-floating-panel-enter 220ms var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1500;
+  padding: 0.75rem 1rem;
+  color: var(--mui-palette-primary-contrastText, #fff);
+  background: var(--mui-palette-primary-main, #4338ca);
+  border-radius: 0.5rem;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+a {
+  color: inherit;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+svg {
+  max-width: 100%;
+}
+
+@keyframes tc-sheet-fan {
+  from {
+    opacity: 0;
+    translate: calc(var(--tc-sheet-direction, 0) * (100% + var(--tc-archive-gap, 12px)))
+      var(--tc-archive-distance, 24px);
+    rotate: 0deg;
+    scale: var(--tc-archive-start-scale, 0.94);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    rotate: var(--tc-sheet-angle, 0deg);
+    scale: 1;
+  }
+}
+@keyframes tc-trace-card-enter {
+  from {
+    opacity: 0;
+    translate: var(--tc-trace-distance, 24px) 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes tc-trace-number-enter {
+  from {
+    opacity: 0;
+    scale: var(--tc-trace-marker-scale, 0.65);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes tc-trace-enter {
+  from {
+    translate: 0 var(--tc-motion-subtle, 6px);
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes tc-line-enter {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+@keyframes tc-selection-enter {
+  from {
+    translate: var(--tc-entrance-heading-distance, 16px) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes tc-rule-enter {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+@keyframes tc-location-plane-enter {
+  from {
+    opacity: 0;
+    scale: var(--tc-location-plane-scale, 0.9);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes tc-location-pin-enter {
+  from {
+    opacity: 0;
+    translate: 0 calc(-1 * var(--tc-location-distance, 24px));
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes tc-location-ring-enter {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes tc-content-enter {
+  from {
+    translate: 0 var(--tc-entrance-distance, 24px);
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes tc-heading-enter {
+  from {
+    translate: calc(-1 * var(--tc-entrance-distance, 16px)) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes tc-card-enter {
+  from {
+    scale: var(--tc-card-start-scale, 0.965);
+  }
+  to {
+    scale: 1;
+  }
+}
+
+[data-entrance] {
+  --tc-entrance-name: tc-content-enter;
+  --tc-entrance-duration: var(--tc-entrance-block-duration, 520ms);
+  --tc-entrance-distance: var(--tc-entrance-block-distance, 24px);
+}
+[data-entrance="hero"] {
+  --tc-entrance-duration: var(--tc-entrance-hero-duration, 520ms);
+  --tc-entrance-distance: var(--tc-entrance-hero-distance, 24px);
+}
+[data-entrance="heading"] {
+  --tc-entrance-name: tc-heading-enter;
+  --tc-entrance-duration: var(--tc-entrance-heading-duration, 400ms);
+  --tc-entrance-distance: var(--tc-entrance-heading-distance, 16px);
+}
+[data-entrance="item"] {
+  --tc-entrance-duration: var(--tc-entrance-item-duration, 400ms);
+  --tc-entrance-distance: var(--tc-entrance-item-distance, 16px);
+}
+[data-entrance="card"] {
+  --tc-entrance-name: tc-card-enter;
+  --tc-entrance-duration: var(--tc-entrance-card-duration, 520ms);
+  --tc-entrance-distance: var(--tc-entrance-card-distance, 0px);
+  transform-origin: center top;
+}
+.tc-location-plane,
+.tc-location-pin,
+.tc-location-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  [data-entrance="hero"],
+  [data-entrance-state="entered"] {
+    animation: var(--tc-entrance-name) var(--tc-entrance-duration)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1)) var(--tc-entrance-delay, 0ms)
+      backwards;
+  }
+  .archive-sheet {
+    animation: tc-sheet-fan var(--tc-archive-duration, 640ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1))
+      calc(
+        var(--tc-archive-delay, 120ms) + var(--tc-sequence-order, 0) * var(--tc-archive-step, 140ms)
+      )
+      backwards;
+  }
+  .tc-feedback-enter {
+    animation: tc-trace-enter var(--tc-motion-enter, 220ms) var(--tc-motion-easing, ease-out);
+  }
+  .tc-trace-step,
+  .tc-guide-step {
+    --tc-sequence-delay: calc(
+      var(--tc-trace-delay, 120ms) + var(--tc-sequence-order, 0) * var(--tc-trace-step, 220ms)
+    );
+  }
+  .tc-trace-number,
+  .tc-guide-number {
+    animation: tc-trace-number-enter var(--tc-trace-marker-duration, 360ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1)) var(--tc-sequence-delay, 120ms)
+      backwards;
+  }
+  .tc-trace-card,
+  .tc-guide-label {
+    animation: tc-trace-card-enter var(--tc-trace-duration, 520ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1))
+      calc(var(--tc-sequence-delay, 120ms) + var(--tc-trace-detail-offset, 60ms)) backwards;
+  }
+  .tc-trace-link {
+    transform-origin: top;
+    animation: tc-line-enter var(--tc-trace-link-duration, 220ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1))
+      calc(var(--tc-sequence-delay, 120ms) + var(--tc-trace-link-offset, 180ms)) backwards;
+  }
+  .tc-selection-title {
+    animation: tc-selection-enter var(--tc-entrance-heading-duration, 400ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1));
+  }
+  .tc-guide-link {
+    transform-origin: left;
+    animation: tc-rule-enter var(--tc-trace-link-duration, 220ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1))
+      calc(var(--tc-sequence-delay, 120ms) + var(--tc-trace-link-offset, 180ms)) backwards;
+  }
+  .tc-location-plane {
+    animation: tc-location-plane-enter var(--tc-entrance-block-duration, 520ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1)) backwards;
+  }
+  .tc-location-pin {
+    animation: tc-location-pin-enter var(--tc-location-duration, 640ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1)) var(--tc-location-delay, 160ms)
+      backwards;
+  }
+  .tc-location-ring {
+    animation: tc-location-ring-enter var(--tc-entrance-block-duration, 520ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1)) var(--tc-location-ring-delay, 400ms)
+      backwards;
+  }
+  .tc-comparison-rule {
+    transform-origin: left;
+    animation: tc-rule-enter var(--tc-entrance-heading-duration, 400ms)
+      var(--tc-entrance-easing, cubic-bezier(0.22, 0, 0.36, 1)) backwards;
+  }
+  .MuiButton-endIcon svg {
+    transition: transform var(--tc-motion-feedback, 120ms) var(--tc-motion-easing, ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .MuiButton-root:hover .MuiButton-endIcon svg {
+      transform: translateX(2px);
+    }
+  }
+}
+
+[data-entrance-state="settled"],
+[data-entrance-reduced="true"] [data-entrance],
+[data-entrance-reduced="true"] .archive-sheet,
+[data-entrance-reduced="true"] .tc-trace-number,
+[data-entrance-reduced="true"] .tc-trace-card,
+[data-entrance-reduced="true"] .tc-trace-link {
+  animation: none !important;
+}
+[data-entrance-reduced="true"]
+  :is(
+    .tc-guide-number,
+    .tc-guide-label,
+    .tc-guide-link,
+    .tc-location-plane,
+    .tc-location-pin,
+    .tc-location-ring,
+    .tc-selection-title,
+    .tc-feedback-enter,
+    .tc-comparison-rule
+  ) {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .archive-sheet,
+  .tc-trace-number,
+  .tc-trace-card,
+  .tc-trace-link,
+  .tc-guide-number,
+  .tc-guide-label,
+  .tc-guide-link,
+  .tc-location-plane,
+  .tc-location-pin,
+  .tc-location-ring,
+  .tc-comparison-rule,
+  .tc-selection-title,
+  .tc-feedback-enter {
+    animation: none !important;
+  }
+  [data-entrance] {
+    animation: none !important;
+  }
+  .tc-chapter-link,
+  .tc-chapter-link::before {
+    transition: none !important;
+  }
+}
