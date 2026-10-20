@@ -12,14 +12,14 @@ y las versiones siguen [Semantic Versioning 2.0.0](https://semver.org/lang/es/).
 Registrar cambios terminados en `[Unreleased]`. Usar las categorías estándar y
 crear únicamente las que tengan contenido:
 
-| Categoría | Uso |
-| --- | --- |
-| ✨ Added | Funcionalidades nuevas. |
-| 🔄 Changed | Cambios en comportamiento existente. |
+| Categoría     | Uso                                                   |
+| ------------- | ----------------------------------------------------- |
+| ✨ Added      | Funcionalidades nuevas.                               |
+| 🔄 Changed    | Cambios en comportamiento existente.                  |
 | ⚠️ Deprecated | Funcionalidades disponibles cuya retirada se anuncia. |
-| 🗑️ Removed | Funcionalidades retiradas. |
-| 🐛 Fixed | Correcciones de comportamiento incorrecto. |
-| 🔒 Security | Correcciones de vulnerabilidades identificadas. |
+| 🗑️ Removed    | Funcionalidades retiradas.                            |
+| 🐛 Fixed      | Correcciones de comportamiento incorrecto.            |
+| 🔒 Security   | Correcciones de vulnerabilidades identificadas.       |
 
 - Escribir para quien usa el proyecto: explicar qué cambia y su efecto.
 - Empezar las entradas con verbos en infinitivo: agregar, corregir, retirar.
@@ -38,10 +38,10 @@ crear únicamente las que tengan contenido:
 6. Añadir enlaces a tags o comparaciones cuando existan; no inventar referencias.
 7. Conservar el historial publicado; registrar las correcciones posteriores en una versión nueva.
 
-| Etapa | Criterio de incremento |
-| --- | --- |
+| Etapa                      | Criterio de incremento                                                                                                                                                             |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Desarrollo inicial `0.y.z` | Usar `0.Y.0` para funcionalidad significativa o incompatibilidades y `0.y.Z` para correcciones compatibles. Es una convención del proyecto; SemVer considera inestable esta etapa. |
-| API estable `>=1.0.0` | MAJOR para incompatibilidades, MINOR para funcionalidad compatible y deprecaciones, PATCH para correcciones compatibles. |
+| API estable `>=1.0.0`      | MAJOR para incompatibilidades, MINOR para funcionalidad compatible y deprecaciones, PATCH para correcciones compatibles.                                                           |
 
 El primer registro de versión de un proyecto nuevo puede ser `0.1.0`.
 El historial debe reflejar sus propias entregas, con fecha ISO 8601.
@@ -53,9 +53,36 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 - Incorporar preparacion reproducible de seis elecciones con Polars y Parquet, conservando originales y equivalencias municipales.
 - Incluir tablas agregadas, auditoria cartografica, notebook de inicio y decisiones de Sofia.
 - Comprobar tipos, valores invalidos, distritos nulos, catalogo de sexo 2024, cobertura, distribucion y entorno sin API ni boosting externo.
+- Agregar acercamiento animado al seleccionar un municipio en la vista normal y
+  en modo mapa, respetando movimiento reducido y permitiendo interrumpir el recorrido.
+- Integrar `resultados-1.1` del [PR #3](https://github.com/JorgeTato99/ine-hackathon-2026/pull/3)
+  con dos pestañas: pronóstico de 2027 y siete vistas de indicadores y contexto.
+  Compartir filtros, selección y Canvas; presentar cifras de control, unidades y
+  leyendas propias para cada vista.
+- Incorporar tres niveles nacionales y comparación sin/con intervención al mismo
+  nivel, con intervalos del 90 %, probabilidad de rojo de referencia y desglose de
+  supuestos en la ficha. Identificar siempre la intervención como supuesto, no
+  efecto medido.
+- Publicar CSV y metadatos científicos íntegros, exportaciones filtradas y capas
+  GeoJSON/GPKG con indicadores y seis escenarios, acompañados de procedencia y SHA-256.
 
 ### Changed
 
 - Adoptar la plantilla con Python 3.14.8, datos como base y notebooks predeterminados.
 - Aplicar mypy estricto y cobertura a src, conservando flexibilidad de exploracion en notebooks.
 - Mantener DuckDB como contraste opcional y restringir las descargas a fuentes HTTPS configuradas.
+- Reducir el acercamiento municipal de 1.5 a 0.8 segundos y centralizar su duración
+  en los [tokens de movimiento](frontend/docs/movimiento.md).
+- Restaurar el escalado nativo durante el acercamiento y retirar los redibujados
+  intermedios: las pruebas con dos y ocho refrescos introdujeron pausas que
+  empeoraron la experiencia de uso.
+- Sustituir los valores ilustrativos de la muestra por resultados del modelo y
+  actualizar metodología, descargas y sistema de diseño a la entrega vigente.
+  Distinguir ceros por falta de casillas y la geometría sin datos de Villa de Pozos;
+  conservar ausencias y normalizar 15 `NaN` de brecha joven solo en la salida web/SIG.
+
+### Fixed
+
+- Limpiar la selección municipal y la ficha al pulsar MX, sincronizando mapa y
+  URL para que una recarga no vuelva al municipio anterior. Conservar filtros,
+  escenarios y modo de presentación.

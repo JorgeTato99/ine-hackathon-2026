@@ -43,6 +43,28 @@ Mypy estricto y la cobertura de líneas/ramas se aplican a `src/`, con umbral in
 de 90 %. Los notebooks de exploración están fuera de esos controles estrictos.
 La auditoría de dependencias puede ejecutarse con `uv run --locked pip-audit --skip-editable`.
 
+## Frontend
+
+El frontend tiene instalación y comprobaciones independientes:
+
+```console
+npm --prefix frontend ci
+npm --prefix frontend run dev
+npm --prefix frontend run check
+```
+
+Requiere Node 24 y npm 11; Python no interviene en su ejecución. Consultar la
+[guía frontend](../frontend/README.md) y su [testing](../frontend/test/README.md).
+La [guía de perfiles y recursos](../frontend/test/execution-profiles.md) reúne
+los comandos, las mediciones, los ajustes y el procedimiento de recalibración.
+El lock del frontend está versionado. Su perfil predeterminado es `eficiente`:
+dos workers de Vitest y un navegador; la batería completa coordina ambos en
+paralelo después del build. Existen también perfiles `ligero` y `rapido`, medidos
+en la batería actual. El presupuesto de compilación es independiente. Para un
+cierre completo, con Chromium instalado, usar `npm --prefix frontend run validate`.
+Las CI de Python y frontend son independientes. Los hooks Node sólo se activan si
+cambian archivos de `frontend/`; npm no sustituye los hooks de Git de la raíz.
+
 ## Convenciones y contribución
 
 Identificadores en inglés; comentarios y documentación en español. Las pruebas cubren
