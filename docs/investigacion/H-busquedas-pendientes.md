@@ -24,6 +24,22 @@ Hechas el 19 de octubre de 2026, después de que los agentes de investigación a
 | **Actas por casilla de 2009, 2012 y 2015** del INE | **Pendiente.** Permitirían clasificar el "no sabemos" de 2015 (boicot magisterial) en lugar de dejarlo "sin dato" |
 | **Elección judicial en 2027** | **Resuelto:** se movió a 2028 (ver [I](I-elecciones-concurrentes.md)) |
 
+## Causas encontradas el 19 de octubre de 2026 (notas leídas y verificadas)
+
+| Municipios | Elección | Qué dice la fuente | Fuente |
+| --- | --- | --- | --- |
+| Tingambato, Quiroga, Nahuatzen, Charapan, Cherán, Paracho, Ziracuaretiro y otros (Michoacán) | 2021 | El INE suspendió 92 casillas en comunidades purépechas, otomíes y mazahuas: las asambleas decidieron expulsar a los partidos | Zócalo, 6-jun-2021: https://www.zocalo.com.mx/pobladores-votaron-por-expulsar-a-partidos-ine-suspende-votaciones-en-92-casillas-de-michoacan/ |
+| Charapan, Cherán, Nahuatzen, Chilchota, Erongarícuaro, Ziracuaretiro, Tingambato, Quiroga y Paracho (Michoacán) | 2024 | "La negativa de concejos municipales y autoridades comunitarias a que se instalen centros de votación". Animal Político no menciona Chicomuselo | Animal Político, 2-jun-2024: https://grupoanimal.mx/politica/2-de-junio-apertura-casillas |
+| Jilotlán de los Dolores (Jalisco) | 2021 | No se instalaron 5 casillas por inseguridad ("Parece que hay temor") | Zeta, 6-jun-2021: https://zetatijuana.com/2021/06/violencia-obligo-a-no-instalar-casillas-en-algunos-municipios-de-jalisco/ |
+| Bolaños y Mezquitic (Jalisco) | 2021 | 13 casillas que ya se había previsto no instalar; las comunidades rechazan el proceso desde 2018 | Zeta (misma nota) |
+| Santo Domingo Petapa y San Mateo del Mar (Oaxaca) | 2024 | 8 casillas cerradas por "determinación de la asamblea del pueblo" | Excélsior, 30-may-2024: https://www.excelsior.com.mx/nacional/cerradas-ocho-casillas-istmo-oaxaca-determinacion-asambleas-de-pueblos/1654913 |
+| Chicomuselo y Pantelhó (Chiapas) | 2024 | "No se instalaron 45 casillas en Chicomuselo y 28 casillas en Pantelhó, debido al clima de violencia e inseguridad" | Acuerdo INE/CG844/2024 (texto leído): https://repositoriodocumental.ine.mx/xmlui/bitstream/handle/123456789/173483/CGex202407-18-ap-1.pdf |
+| Cherán y Nahuatzen (Michoacán) | 2018 | 57 casillas no instaladas en Michoacán, 18 en Cherán y 12 en Nahuatzen, "debido a la oposición de comunidades indígenas" y conflictos | Excélsior, 1-jul-2018: https://www.excelsior.com.mx/nacional/cierran-casillas-en-michoacan/1249448 |
+
+**Siguen sin causa documentada:** Tila (Chiapas) y Santiago Yaveo (Oaxaca), entre los recurrentes.
+
+**No se pudo leer:** el boletín del Tribunal Electoral sobre la nulidad de Frontera Comalapa 2021 (https://www.te.gob.mx/front3/bulletins/detail/193824/3); el sitio pide una verificación de navegador. Esa cita queda **sin verificar**.
+
 ## Fuentes de esta búsqueda
 
 - Animal Político, Frontera Comalapa: https://grupoanimal.mx/politica/xochitl-galvez-violencia-elecciones
