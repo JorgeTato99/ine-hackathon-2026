@@ -1,4 +1,4 @@
-# Tokens y componentes · Traza Cívica 1.6.0
+# Tokens y componentes · Traza Cívica 1.7.0
 
 Este documento define la versión vigente del sistema visual. Su fuente está en
 [`src/theme/tokens.ts`](../src/theme/tokens.ts), aplicada por
@@ -156,6 +156,13 @@ espaciado nunca cambia el significado de un escenario ni actualiza el modelo.
 
 ## Registro
 
+**1.7.0 · 20 de octubre de 2026.** Lenguaje y ayudas de lectura:
+`ContextHelp` recibe un `topic` tipado del catálogo compartido. Ofrece un resumen
+al apuntar/enfocar y una explicación en diálogo por clic, teclado o tacto, con
+cierre y retorno de foco. Las condiciones esenciales permanecen visibles.
+«Datos del territorio» y «Tema del mapa» explican los siete temas sin cambiar
+claves ni datos científicos. Reglas en [lenguaje y ayudas](lenguaje-y-ayudas.md).
+
 **1.6.0 · 20 de octubre de 2026.** Presentación de resultados científicos:
 `ResultsViews` ofrece pestañas y selectores de indicador; `ResultsCards` presenta
 conteos en una franja desplazable con teclado o cuadrícula `compact` en el lateral;
@@ -201,3 +208,6 @@ composiciones aplicadas a páginas. Se separa la versión científica de la iden
 
 Volver a [sistema de diseño](sistema-diseno.md), [frontend](../README.md) o
 [testing](../test/README.md).
+
+La guía de [lenguaje y ayudas](lenguaje-y-ayudas.md) gobierna las etiquetas,
+explicaciones visibles y el componente `ContextHelp`, también disponible en Storybook.

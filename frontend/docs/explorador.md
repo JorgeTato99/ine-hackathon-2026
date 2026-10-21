@@ -10,7 +10,7 @@ búsqueda y filtros frecuentes. La guía de tres pasos está en «Cómo explorar
 El aviso de pronóstico condicionado permanece visible. Las páginas de metodología y descargas
 conservan su composición editorial.
 
-Nombre/CVEGEO, entidad y semáforo de referencia son los filtros principales. En móvil, entidad y
+Buscar municipio o clave, Estado y Color sin intervención son los filtros principales. En móvil, entidad y
 riesgo están en «Filtros»; en escritorio, «Más filtros» despliega los adicionales:
 
 - Historia disponible: presencia en seis elecciones, parcial o sin registros.
@@ -34,7 +34,7 @@ atribuir a la intervención un cambio del supuesto nacional. La ficha y los cont
 la identifican como «Supuesto, no efecto medido».
 
 «Pronóstico 2027» usa el riesgo del escenario activo para el mapa y la cohorte
-sin intervención para el filtro de semáforo. «Indicadores y contexto» ofrece siete
+sin intervención para el filtro de semáforo. «Datos del territorio» ofrece siete
 vistas con unidades, leyendas y cifras de control propias. La historia identifica
 falta de casillas; Villa de Pozos conserva geometría gris y resultados ausentes.
 Ver [reglas y reproducción de resultados](resultados.md).
@@ -115,3 +115,5 @@ Integración comprueba consultas, paneles, foco y recuperación de tabla. E2E co
 la exportación real, Canvas compartido, una descarga de geometría, selección, CSV
 completo, teclado y accesibilidad automática en escritorio/móvil emulado.
 Las pruebas no acreditan dispositivos físicos, el modelo ni eficacia de intervenciones.
+
+Las etiquetas y ayudas siguen la [política de lenguaje](lenguaje-y-ayudas.md).

@@ -53,3 +53,9 @@ teclado, consola, móvil y accesibilidad automática. Las páginas informativas 
 prueban también a 320 px, en ambos temas y sin JavaScript; el movimiento se
 comprueba con la preferencia reducida. Los flujos nuevos requieren sus propios
 escenarios y resultados esperados.
+
+Las ayudas de lectura se prueban con foco, hover, clic, Enter, tacto, cierre y
+retorno de foco, también anidadas en filtros y modo mapa. Se comprueban 320 px y
+ambos temas. La [política de lenguaje](../docs/lenguaje-y-ayudas.md) conserva
+los límites científicos y define una validación con personas que no se sustituye
+por las pruebas automáticas.

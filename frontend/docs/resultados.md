@@ -40,11 +40,11 @@ La ficha presenta intervalo nominal del 90 %, posición y probabilidad de rojo
 **sin intervención**. Probabilidad ≥ 0.8 se lee probable, nunca seguro. Incluye
 calendario y S1/S2/S3; el último supuesto también modifica la lista nominal.
 
-Indicadores y contexto ofrece siete vistas independientes del semáforo. Cada una
+Datos del territorio ofrece siete vistas independientes del semáforo. Cada una
 define leyenda, unidades, tarjetas y valor de tabla. Seguridad y falta de casillas
 no se añaden al riesgo. Las escalas nacionales de color no cambian al filtrar.
 Filtros y selección se comparten entre pestañas y se conservan en la URL.
-El modo mapa utiliza el mismo Canvas; su panel «Vistas» cambia la presentación.
+El modo mapa utiliza el mismo Canvas; su panel «Qué ver» cambia la presentación.
 En escritorio las cifras quedan arriba del lateral, en una cuadrícula compacta;
 en móvil acompañan al mapa por debajo. Así la entrada conserva el territorio
 visible sin añadir otra franja superior. En modo mapa están en el panel de vistas.
@@ -71,3 +71,5 @@ El recorrido de las siete vistas conserva trazas DOM, red y fuentes, pero desact
 la captura continua de pantallas del Canvas en la traza: su recopilación causaba
 un bloqueo al cerrar el contexto de prueba. Las capturas explícitas y de fallos
 siguen activas; no se elimina ninguna comprobación funcional.
+
+Las etiquetas y ayudas siguen la [política de lenguaje](lenguaje-y-ayudas.md).

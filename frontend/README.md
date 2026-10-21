@@ -132,3 +132,7 @@ seguridad. La auditoría del 18 de octubre de 2026 también detectó un aviso de
 `braces` en la cadena de ESLint, [todavía sin versión corregida](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm).
 Este aviso pertenece a las herramientas de desarrollo; el sitio exportado sirve
 archivos estáticos. Revisarlo al actualizar `eslint-config-next` y sus dependencias.
+
+La política de [lenguaje y ayudas de lectura](docs/lenguaje-y-ayudas.md) forma parte
+del sistema de diseño: define explicaciones visibles, ayudas por teclado y tacto,
+y el protocolo para comprobar comprensión con personas.
