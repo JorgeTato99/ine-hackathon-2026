@@ -48,6 +48,11 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+### Changed
+
+- Distinguir en la documentación del frontend las fuentes de versión de software,
+  diseño y datos, retirando referencias desactualizadas del índice.
+
 ## [0.3.0] - 2026-10-21 - Consultas personales con procedencia
 
 ### 🎯 Resumen

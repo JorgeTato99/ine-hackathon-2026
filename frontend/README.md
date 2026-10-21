@@ -3,22 +3,27 @@
 Base del explorador territorial: Next App Router, React, TypeScript estricto, MUI
 y React Query. Se publica como archivos estáticos y funciona sin API ni entorno
 Python. **Traza Cívica** incorpora mapa municipal, tabla, filtros, ficha, escenarios
-precalculados y descargas. Resultados 1.1 procede del análisis de Sofía: 2027 se
+precalculados y descargas. Los resultados proceden del análisis de Sofía: 2027 se
 presenta como pronóstico y la intervención como supuesto, no efecto medido.
 
 Vista compartida de desarrollo: **[traza-civica.jorgetato.com](https://traza-civica.jorgetato.com/)**,
 siempre con exportación de producción servida por Nginx.
 
 - [Sistema de diseño e identidad](docs/sistema-diseno.md).
-- [Tokens, componentes y variantes 1.6.0](docs/tokens-y-componentes.md).
+- [Tokens, componentes y variantes vigentes](docs/tokens-y-componentes.md).
 - [Movimiento y animaciones accesibles](docs/movimiento.md).
 - [Cartografía, fuentes y preparación](docs/cartografia.md).
 - [Explorador, filtros, tabla y modo mapa](docs/explorador.md).
 - [Consultas personales e intercambio de archivos](docs/consultas-guardadas.md).
-- [Resultados 1.1, recepción y controles](docs/resultados.md).
+- [Resultados científicos, recepción y controles](docs/resultados.md).
 - [Vista pública de desarrollo y actualizaciones](deploy/README.md).
 - [Historial de cambios del proyecto](../CHANGELOG.md): registrar cada actualización
   visible en `Unreleased` antes de publicar la vista de desarrollo.
+
+Las versiones son independientes: el software se registra en
+[`package.json`](package.json), el diseño en su catálogo y los datos en el
+[`manifiesto de publicación`](public/data/manifest.json). Consultar esas fuentes
+evita confundir una actualización de interfaz con un nuevo resultado del modelo.
 
 ## Empezar
 

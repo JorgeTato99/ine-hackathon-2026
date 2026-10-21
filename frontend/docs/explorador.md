@@ -1,6 +1,6 @@
 # Explorador territorial
 
-Actualizado el 20 de octubre de 2026. [Frontend](../README.md) ·
+Actualizado el 21 de octubre de 2026. [Frontend](../README.md) ·
 [Diseño](sistema-diseno.md) · [Cartografía](cartografia.md).
 
 ## Composición y consulta
