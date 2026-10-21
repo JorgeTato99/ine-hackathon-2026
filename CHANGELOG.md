@@ -48,6 +48,36 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-10-20 - Resultados 1.2 y paquete portable del mapa
+
+### 🎯 Resumen
+
+**Tipo de release:** Corrección compatible. Publicar la entrega científica
+`resultados-1.2` sin cambiar pronósticos ni semáforo. Incorporar el componente
+portable del mapa con la base original y conservar las correcciones de main.
+
+### Changed
+
+- Actualizar los originales, las descargas SIG, JSON y la procedencia del sitio
+  a resultados-1.2; recibir las 15 ausencias de brecha joven como celdas vacías
+  desde el origen y rechazar NaN nuevos en la preparación web.
+- Integrar la base de entrega 1.2 de Sofía y mantener los validadores que siguen
+  activos con Python optimizado, junto con las equivalencias de 2021 corregidas.
+
+### Added
+
+- Generar un ZIP portable con URL, GPKG, base CSV/XLSX, metadatos, guía y huellas
+  SHA-256. Comprobar claves, versión, lectura SIG, integridad y repetibilidad,
+  según la [guía de entrega del mapa](docs/entrega-mapa.md).
+
+### Fixed
+
+- Escribir los JSON derivados con saltos LF también en Windows para conservar
+  el mismo formato de publicación y comprobar sus huellas sin cambios de fin de línea.
+- Evitar que el foco durante una entrada animada desplace el destino entre pulsar
+  y soltar, perdiendo enlaces como «Ver archivos». Conservar el foco inmediato
+  por teclado y el destino del clic/toque, con limpieza de gestos cancelados.
+
 ## [0.2.1] - 2026-10-20 - Lenguaje claro y ayudas de lectura
 
 ### 🎯 Resumen
