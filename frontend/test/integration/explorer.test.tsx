@@ -91,6 +91,25 @@ async function choose(label: string, text: string) {
   await user.click(await screen.findByRole("option", { name: text }));
 }
 
+describe("Publicaciones científicas", () => {
+  it("explica los cambios entre publicaciones sin cambiar el mapa vigente", () => {
+    environment.pathname = "/datos/";
+    render(
+      <AppProviders>
+        <AppShell>
+          <DataPage />
+        </AppShell>
+      </AppProviders>
+    );
+    expect(
+      screen.getByRole("heading", { name: "Cambios entre publicaciones" })
+    ).toBeInTheDocument();
+    const comparison = within(screen.getByRole("region", { name: "Cambios entre publicaciones" }));
+    expect(comparison.getByText(/105 celdas/)).toBeInTheDocument();
+    expect(comparison.getByText(/15 municipios/)).toBeInTheDocument();
+  });
+});
+
 describe("Consultas personales", () => {
   it("guarda la consulta efectiva y la recupera sin filtros sobrantes", async () => {
     window.localStorage.clear();

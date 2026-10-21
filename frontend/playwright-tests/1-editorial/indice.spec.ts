@@ -5,7 +5,7 @@ const pages = [
     route: "metodologia",
     chapters: ["recorrido", "participacion", "dimensiones", "comparar", "territorio"],
   },
-  { route: "datos", chapters: ["archivos", "importar", "fuentes", "incidencias"] },
+  { route: "datos", chapters: ["archivos", "importar", "fuentes", "incidencias", "publicaciones"] },
 ] as const;
 
 for (const entry of pages) {

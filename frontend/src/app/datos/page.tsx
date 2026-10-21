@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -13,14 +16,26 @@ import { DataStatus } from "@/components/ui/data-status";
 import { Icon } from "@/components/ui/icon";
 import { dataLibrary } from "@/content/data-library";
 import { resultsRelease } from "@/content/release";
+import comparison from "../../../public/data/publicaciones/resultados-1.2__resultados-1.3.json";
+import { PublicationComparison } from "@/components/editorial/publication-comparison";
 import { entranceProps } from "@/theme/entrance";
 
 export const metadata: Metadata = { title: "Datos y descargas" };
+const comparisonHref = "/data/publicaciones/resultados-1.2__resultados-1.3.json";
+const comparisonBytes = readFileSync(resolve(process.cwd(), "public", comparisonHref.slice(1)));
+if (JSON.stringify(JSON.parse(comparisonBytes.toString("utf8"))) !== JSON.stringify(comparison)) {
+  throw new Error("La comparación cambió durante la compilación. Vuelve a preparar y compilar.");
+}
+const comparisonFile = {
+  bytes: comparisonBytes.byteLength,
+  sha256: createHash("sha256").update(comparisonBytes).digest("hex"),
+};
 const chapters = [
   { id: "archivos", label: "Archivos disponibles" },
   { id: "importar", label: "Cómo usar los archivos" },
   { id: "fuentes", label: "Fuentes y cartografía" },
   { id: "incidencias", label: "Datos que requieren cuidado" },
+  { id: "publicaciones", label: "Cambios entre publicaciones" },
 ];
 const incidents = [
   {
@@ -33,7 +48,7 @@ const incidents = [
   },
   {
     title: "Ausencias y falta de casillas",
-    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 registros falta la diferencia de participación joven de 2024: la web la muestra como ausencia, no como cero. En los CSV originales de la versión 1.2 esas celdas también están vacías.",
+    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 municipios faltan algunos conteos por edad de 2024 y componentes de intervención. Las correcciones de la publicación 1.3 aparecen como vacíos; el detalle se consulta en «Cambios entre publicaciones».",
   },
   {
     title: "Qué significa comparar la intervención",
@@ -189,6 +204,20 @@ export default function DataPage() {
             </Box>
           ))}
         </Box>
+      </Box>
+      <Box component="section" id="publicaciones" aria-labelledby="publicaciones-title">
+        <SectionHeading
+          number="05"
+          id="publicaciones-title"
+          title="Cambios entre publicaciones"
+          description="Conoce qué se corrigió en los archivos. Comparar publicaciones ayuda a revisar su procedencia; es distinto de comparar escenarios sin y con intervención."
+        />
+        <PublicationComparison
+          data={comparison}
+          currentVersion={resultsRelease.version}
+          downloadHref={comparisonHref}
+          fileInfo={comparisonFile}
+        />
       </Box>
       <Box sx={{ mt: 6 }}>
         <Surface tone="brand" entrance="block">
