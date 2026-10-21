@@ -25,7 +25,7 @@ test("el archivo tiene navegación local, recursos identificables y descargas í
   expect(download.suggestedFilename()).toBe("municipios.csv");
   const bytes = await readFile((await download.path())!);
   expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-    manifest.files["resultados-1.1/municipios.csv"].sha256
+    manifest.files["resultados-1.2/municipios.csv"].sha256
   );
   await page
     .getByRole("navigation", { name: "En esta página" })
@@ -34,6 +34,29 @@ test("el archivo tiene navegación local, recursos identificables y descargas í
   await expect(
     page.getByRole("heading", { name: "Cómo usar los archivos", exact: true })
   ).toBeInViewport();
+});
+
+test("una entrada activa no pierde el click ni el toque al enfocar su enlace", async ({
+  page,
+  isMobile,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/datos/");
+  await expect(
+    page.getByRole("button", { name: "Activar tema oscuro", exact: true })
+  ).toBeEnabled();
+  // Fijar el desplazamiento observado antes del foco para reproducir el fallo sin depender del reloj.
+  await page.addStyleTag({
+    content:
+      '[data-entrance="hero"]:not([data-entrance-state="settled"]) { animation: none !important; translate: 0 24px !important; opacity: 1 !important; }',
+  });
+  const hero = page.locator('.tc-editorial-hero [data-entrance="hero"]');
+  await expect(hero).toHaveCSS("translate", "0px 24px");
+  const action = page.getByRole("link", { name: "Ver archivos", exact: true });
+  if (isMobile) await action.tap();
+  else await action.click();
+  await expect(page).toHaveURL(/#archivos$/);
+  await expect(hero).toHaveAttribute("data-entrance-state", "settled");
 });
 
 test("ambas páginas conservan contraste y reflow a 320px en los dos temas", async ({ page }) => {
@@ -130,7 +153,7 @@ test("los textos, anclas y archivos informativos funcionan sin JavaScript", asyn
     await expect(
       page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
     ).toHaveCSS("opacity", "1");
-    expect((await page.request.get("/data/resultados-1.1/metadatos.json")).status()).toBe(200);
+    expect((await page.request.get("/data/resultados-1.2/metadatos.json")).status()).toBe(200);
     const size = await page.evaluate(() => ({
       width: document.documentElement.scrollWidth,
       viewport: document.documentElement.clientWidth,

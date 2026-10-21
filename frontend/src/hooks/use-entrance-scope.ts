@@ -15,6 +15,9 @@ export function useEntranceScope() {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let observer: IntersectionObserver | null = null;
     let disposed = false;
+    let pointerActive = false;
+    let releaseFrame: number | null = null;
+    const pendingFocus = new Set<HTMLElement>();
 
     const settle = (target: HTMLElement) => {
       target.dataset.entranceState = "settled";
@@ -26,9 +29,31 @@ export function useEntranceScope() {
       targets.forEach(settle);
       observer?.disconnect();
     };
+    const settleFocus = (target: HTMLElement) => {
+      if (pointerActive) pendingFocus.add(target);
+      else settle(target);
+    };
+    const finishPointer = () => {
+      pointerActive = false;
+      if (releaseFrame !== null) cancelAnimationFrame(releaseFrame);
+      releaseFrame = null;
+      if (!disposed) pendingFocus.forEach(settle);
+      pendingFocus.clear();
+    };
+    const press = () => {
+      pointerActive = true;
+    };
+    const release = () => {
+      if (!pointerActive) return;
+      if (releaseFrame !== null) cancelAnimationFrame(releaseFrame);
+      releaseFrame = requestAnimationFrame(finishPointer);
+    };
+    const keyboard = (event: KeyboardEvent) => {
+      if (event.key === "Tab") finishPointer();
+    };
     const focus = (event: FocusEvent) => {
       if (event.target instanceof Node)
-        for (const target of targets) if (target.contains(event.target)) settle(target);
+        for (const target of targets) if (target.contains(event.target)) settleFocus(target);
     };
 
     if (preference.matches) reduce();
@@ -50,7 +75,7 @@ export function useEntranceScope() {
             const target = entry.target as HTMLElement;
             if (target.dataset.entranceState) continue;
             if (target.contains(document.activeElement)) {
-              settle(target);
+              settleFocus(target);
               continue;
             }
             const group =
@@ -74,11 +99,26 @@ export function useEntranceScope() {
     }
     preference.addEventListener("change", reduce);
     scope.addEventListener("focusin", focus);
+    scope.addEventListener("pointerdown", press, true);
+    // Asentar durante focusin mueve el destino entre pointerdown y pointerup.
+    // En captura de click el destino ya está fijado y los menús miden la posición final.
+    scope.addEventListener("click", finishPointer, true);
+    scope.addEventListener("keydown", keyboard, true);
+    window.addEventListener("pointerup", release, true);
+    window.addEventListener("pointercancel", release, true);
+    window.addEventListener("blur", release);
     return () => {
       disposed = true;
+      finishPointer();
       observer?.disconnect();
       preference.removeEventListener("change", reduce);
       scope.removeEventListener("focusin", focus);
+      scope.removeEventListener("pointerdown", press, true);
+      scope.removeEventListener("click", finishPointer, true);
+      scope.removeEventListener("keydown", keyboard, true);
+      window.removeEventListener("pointerup", release, true);
+      window.removeEventListener("pointercancel", release, true);
+      window.removeEventListener("blur", release);
     };
   }, []);
 

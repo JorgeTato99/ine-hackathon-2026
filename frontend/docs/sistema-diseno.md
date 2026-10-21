@@ -3,7 +3,7 @@
 Primera implementación: 19 de octubre de 2026.
 [Volver al frontend](../README.md).
 
-El sistema visual formal está en la versión **1.7.0**. El
+El sistema visual formal está en la versión **1.7.1**. El
 [catálogo de tokens y componentes](tokens-y-componentes.md) define escalas, variantes,
 contratos y su versionado, separado de la versión de resultados científicos.
 La política de [movimiento](movimiento.md) define animaciones, costos y accesibilidad.
@@ -63,7 +63,7 @@ consultar escenarios y descargar la vista/ficha. Los filtros se reflejan en la U
 esto todavía no constituye consultas guardadas ni comparación entre versiones.
 `/metodologia/` explica la lectura y `/datos/` reúne fuentes y descargas efectivas.
 
-La entrega vigente `resultados-1.1` separa «Pronóstico 2027» de «Datos del territorio». Las cifras de 2027 se identifican como pronóstico condicionado y la
+La entrega vigente `resultados-1.2` separa «Pronóstico 2027» de «Datos del territorio». Las cifras de 2027 se identifican como pronóstico condicionado y la
 intervención como supuesto, no efecto medido. La comparación conserva el mismo
 nivel nacional. Las vistas de contexto tienen leyendas propias, texto y valores
 equivalentes en tabla; no cambian el semáforo científico. La ficha respeta el

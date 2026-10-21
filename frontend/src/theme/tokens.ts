@@ -3,7 +3,7 @@ export const brand = {
   descriptor: "Participación y territorio",
 } as const;
 
-export const designSystem = { name: "Traza Cívica", version: "1.7.0" } as const;
+export const designSystem = { name: "Traza Cívica", version: "1.7.1" } as const;
 
 // Factores MUI en unidades de 8 px; strings para usar dimensiones CSS sin multiplicarlas.
 export const space = {

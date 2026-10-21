@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 import { EntranceScope } from "@/components/motion/entrance-scope";
 import { entranceProps } from "@/theme/entrance";
@@ -118,6 +118,65 @@ describe("Entradas editoriales", () => {
     act(() => ObserverMock.instances[0]!.enter([item]));
     expect(item).toHaveAttribute("data-entrance-state", "settled");
     expect(action).toHaveFocus();
+  });
+  it("mantiene el destino entre pulsar y soltar y asienta antes del manejador de click", () => {
+    render(<Example />);
+    const action = screen.getByRole("button", { name: "Acción de cabecera" });
+    const hero = screen.getByTestId("hero");
+    const click = vi.fn(() => expect(hero).toHaveAttribute("data-entrance-state", "settled"));
+    action.addEventListener("click", click);
+    fireEvent.pointerDown(action);
+    act(() => action.focus());
+    expect(hero).not.toHaveAttribute("data-entrance-state");
+    fireEvent.pointerUp(action);
+    expect(hero).not.toHaveAttribute("data-entrance-state");
+    fireEvent.click(action);
+    expect(click).toHaveBeenCalledOnce();
+    expect(action).toHaveFocus();
+  });
+  it("mantiene pendiente el foco táctil posterior a pointerup hasta el click", () => {
+    render(<Example />);
+    const action = screen.getByRole("button", { name: "Recurso 0" });
+    const item = screen.getByTestId("item-0");
+    fireEvent.pointerDown(action);
+    fireEvent.pointerUp(action);
+    act(() => action.focus());
+    act(() => ObserverMock.instances[0]!.enter([item]));
+    expect(item).not.toHaveAttribute("data-entrance-state");
+    fireEvent.click(action);
+    expect(item).toHaveAttribute("data-entrance-state", "settled");
+  });
+  it("libera una pulsación cancelada sin generar clicks y limpia el frame al desmontar", () => {
+    let frame: FrameRequestCallback | undefined;
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback) => {
+      frame = callback;
+      return 91;
+    });
+    const cancel = vi.spyOn(window, "cancelAnimationFrame");
+    const { unmount } = render(<Example />);
+    const action = screen.getByRole("button", { name: "Recurso 0" });
+    const item = screen.getByTestId("item-0");
+    const click = vi.fn();
+    action.addEventListener("click", click);
+    fireEvent.pointerDown(action);
+    act(() => action.focus());
+    fireEvent.pointerCancel(window);
+    act(() => frame?.(0));
+    expect(item).toHaveAttribute("data-entrance-state", "settled");
+    expect(click).not.toHaveBeenCalled();
+    fireEvent.pointerDown(action);
+    fireEvent.pointerUp(window);
+    unmount();
+    expect(cancel).toHaveBeenCalledWith(91);
+    act(() => frame?.(0));
+  });
+  it("restaura el foco de teclado si se pulsa Tab durante un gesto pendiente", () => {
+    render(<Example />);
+    const action = screen.getByRole("button", { name: "Recurso 0" });
+    fireEvent.pointerDown(action);
+    act(() => action.focus());
+    fireEvent.keyDown(action, { key: "Tab" });
+    expect(screen.getByTestId("item-0")).toHaveAttribute("data-entrance-state", "settled");
   });
   it("respeta movimiento reducido desde el inicio sin observar objetivos", () => {
     reduced = true;

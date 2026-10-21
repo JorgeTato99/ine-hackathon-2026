@@ -280,3 +280,18 @@ Consultadas el 19 de octubre de 2026:
 
 Volver a [sistema de diseño](sistema-diseno.md),
 [tokens y componentes](tokens-y-componentes.md) o [frontend](../README.md).
+
+## Foco y gestos durante la entrada
+
+Desde 1.7.1, el teclado asienta el contenedor al recibir foco. Si el foco llega
+por una pulsación de ratón o tacto, se conserva su posición hasta que el evento
+click ya tenga destino; se asienta en captura, antes de que menús o acciones
+midan su ancla. Esto evita mover un enlace entre pointerdown y pointerup.
+Una liberación sin click, cancelación o pérdida de ventana completa la limpieza
+en el siguiente frame. Tab recupera el comportamiento de teclado inmediatamente.
+El desmontaje cancela el frame y los listeners; no se sintetizan clicks.
+
+La regresión de lectura mantiene un desplazamiento de 24 px para reproducir el
+caso sin depender del reloj y comprueba clic/toque reales en ambos tamaños.
+Las pruebas unitarias cubren foco táctil tardío, cancelación y retorno a teclado.
+No cambia el vuelo del mapa, sus 800 ms ni la política sin redibujos intermedios.

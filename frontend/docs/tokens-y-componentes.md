@@ -1,9 +1,9 @@
-# Tokens y componentes · Traza Cívica 1.7.0
+# Tokens y componentes · Traza Cívica 1.7.1
 
 Este documento define la versión vigente del sistema visual. Su fuente está en
 [`src/theme/tokens.ts`](../src/theme/tokens.ts), aplicada por
 [`theme.ts`](../src/theme/theme.ts). Es independiente de la versión del software
-y de los resultados científicos, actualmente `resultados-1.1`.
+y de los resultados científicos, actualmente `resultados-1.2`.
 
 ## Espaciado y densidad
 
@@ -155,6 +155,11 @@ La entrega de datos sigue su propio contrato y versión. Cambiar una paleta o
 espaciado nunca cambia el significado de un escenario ni actualiza el modelo.
 
 ## Registro
+
+**1.7.1 · 20 de octubre de 2026.** Evitar desplazamientos del control entre
+pulsar y soltar durante entradas activas. Conservar el foco por teclado
+inmediato y completar el gesto antes de asentar el contenedor para ratón/tacto.
+Sin cambios a recorridos, duraciones ni APIs visuales.
 
 **1.7.0 · 20 de octubre de 2026.** Lenguaje y ayudas de lectura:
 `ContextHelp` recibe un `topic` tipado del catálogo compartido. Ofrece un resumen
