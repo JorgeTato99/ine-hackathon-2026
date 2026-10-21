@@ -92,8 +92,27 @@ test("las vistas y escenarios se configuran sin salir del modo mapa", async ({ p
 test("paneles y controles siguen utilizables a 320px, oscuro y en horizontal", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
   await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
-  await page.goto("/?modo=mapa&entidad=01&alerta=con");
-  await page.getByRole("button", { name: "Activar tema oscuro", exact: true }).click();
+  let releaseDataset = () => {};
+  const gate = new Promise<void>((resolve) => {
+    releaseDataset = resolve;
+  });
+  await page.route("**/data/dataset.json", async (route) => {
+    await gate;
+    await route.continue();
+  });
+  const requested = page.waitForRequest("**/data/dataset.json");
+  await page.goto("/?modo=mapa&entidad=01&alerta=con", { waitUntil: "domcontentloaded" });
+  await requested;
+  const controls = page.getByTestId("map-mode-controls");
+  try {
+    await expect(controls).toHaveCount(0);
+  } finally {
+    releaseDataset();
+  }
+  await expect(controls).toBeVisible();
+  // El botón de tema de la cabecera queda detrás del workspace al ampliarlo.
+  // Esperar y actuar sobre los controles del modo, también con datos demorados.
+  await controls.getByRole("button", { name: "Activar tema oscuro", exact: true }).click();
   await expect(page.locator("html")).toHaveClass(/dark/);
   await page.getByRole("button", { name: /^Filtros/ }).click();
   const panel = page.getByTestId("floating-panel");
