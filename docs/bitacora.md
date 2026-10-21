@@ -477,3 +477,19 @@ compararon todas las cifras de sus salidas y todos los archivos generados.
 **Aclaración documentada en el LEEME:** los niveles nacionales de 2027 (44.06 %, 47.07 % y 51.84 %) son la
 participación de los conteos tal como vienen (paso 1). La historia municipal usa la participación corregida
 con las actas (44.09 %, 47.06 % y 51.85 %). La diferencia es de 0.03 puntos o menos y no cambia el semáforo.
+
+---
+
+## 2026-10-20 · `resultados-1.2`: celdas sin dato vacías, nunca `NaN`
+
+**Hallazgo de Jorge al integrar la 1.1 en la aplicación:** 15 celdas de `brecha_jovenes_2024` venían escritas
+como `NaN`, y el contrato pide celdas vacías. Son municipios en los que los conteos no traen a nadie con
+dato, porque su participación sale de las actas; la brecha resultaba de dividir 0 entre 0.
+
+- **Corrección en el origen** (notebook 03b): esa división da "sin dato".
+- **Candado en el notebook 05:** ningún archivo del mapa puede salir con `NaN`. La base de entrega hace lo mismo.
+- **`resultados-1.2` y `base-datos-1.2`:** salvo esas 15 celdas, son idénticas a la 1.1. Se comprobó columna
+  por columna, y los escenarios son idénticos byte por byte. La 1.1 sale del repo y queda en el historial.
+- **Efecto en una cifra de la guía:** la mediana de la brecha joven pasa de −12.0 a −12.1 puntos, porque antes
+  los `NaN` se contaban como valores altos al calcularla.
+

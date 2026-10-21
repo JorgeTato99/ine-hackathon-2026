@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.1"
+VERSION = "resultados-1.2"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.1"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.2"
 TEXTO = {
     "cvegeo": pl.String,
     "clave_ine_2024": pl.String,
@@ -173,6 +173,16 @@ def main() -> None:
         raise ValueError("hay municipios 2027 sin historia")
     if not all(t["cvegeo"].str.len_chars().eq(5).all() for t in tablas.values()):
         raise ValueError("cvegeo debe tener 5 caracteres")
+    tablas = {
+        archivo: tabla.with_columns(
+            [
+                pl.col(columna).fill_nan(None)
+                for columna, tipo in tabla.schema.items()
+                if tipo.is_float()
+            ]
+        )
+        for archivo, tabla in tablas.items()
+    }
     dic = diccionario(tablas, metadatos["unidades"])
 
     SALIDA.mkdir(parents=True, exist_ok=True)

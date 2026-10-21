@@ -1,12 +1,18 @@
 # Vistas del mapa
 
-Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.1/`
+Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.2/`
 (formato de [contrato-datos.md](contrato-datos.md); unidades y significado de cada columna en
 `metadatos.json`). Decisiones D18, D19, D22 y D23 de la [bitácora](bitacora.md).
 
 ## Estado
 
-**`resultados-1.1` es la versión vigente.** Reemplaza a `resultados-1.0` y a `muestra-0.3`. Respecto a la 1.0:
+**`resultados-1.2` es la versión vigente.** Reemplaza a `resultados-1.1`, `resultados-1.0` y `muestra-0.3`.
+
+**Respecto a la 1.1**, solo cambia que las celdas sin dato llegan vacías y nunca como `NaN`. Eran 15 en
+`brecha_jovenes_2024`, de municipios cuya participación sale de las actas; lo detectó Jorge al integrar la 1.1.
+Lo demás es idéntico.
+
+**Respecto a la 1.0** (cambios que ya traía la 1.1):
 
 - **Escenario con intervención (D22):** `escenarios_2027.csv` pasa de 3 a 6 filas por municipio. Se agrega
   `intervencion = "dirigida_rojos"` para cada nivel nacional.
@@ -97,7 +103,7 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
 ## Pestaña 2 · Indicadores y contexto
 
 Selector de vista. Cada una pinta el mapa con su propia columna y tiene sus propias tarjetas. Las cifras
-son de `resultados-1.1` y sirven para comprobar que la aplicación suma bien.
+son de `resultados-1.2` y sirven para comprobar que la aplicación suma bien.
 
 ### 1. Qué se elige el 6 de junio de 2027
 
@@ -146,7 +152,7 @@ Selector de grupo. Son conteos, no efectos.
 | Nuevos sin credencial si se repite 2021 | `nuevos_sin_credencial_2027_si_se_repite_2021` | 1,268,747 | 318,946 |
 
 - **Complemento:** `brecha_jovenes_2024`, en puntos (participación de 20 a 29 años menos la del municipio;
-  mediana −12.0).
+  mediana −12.1).
 - Las dos últimas columnas tienen 8 y 245 vacíos: "sin dato", no cero.
 
 ### 5. Alerta "sin casilla"

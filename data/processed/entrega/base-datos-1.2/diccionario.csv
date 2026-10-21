@@ -53,7 +53,7 @@ municipios_2027.csv,alerta_sin_casilla,String,0,"recurrente (2 o más elecciones
 municipios_2027.csv,ultima_eleccion_sin_casilla,String,2402,año
 municipios_2027.csv,elecciones_por_debajo_del_pais,Int64,0,número de elecciones de 2009 a 2024 con participación menor a la nacional
 municipios_2027.csv,zona_participacion_2024,String,53,"agrupamiento territorial de la participación 2024 (LISA, vecindad Queen)"
-municipios_2027.csv,brecha_jovenes_2024,Float64,0,"puntos porcentuales: participación de 20 a 29 años menos la del municipio, 2024"
+municipios_2027.csv,brecha_jovenes_2024,Float64,15,"puntos porcentuales: participación de 20 a 29 años menos la del municipio, 2024"
 municipios_2027.csv,ayuntamiento_mismo_dia_2027,Boolean,0,true si el municipio elige ayuntamiento el 6 de junio de 2027 (calendario a octubre de 2026)
 municipios_2027.csv,gobernador_mismo_dia_2027,Boolean,0,true si el estado elige gubernatura ese día
 municipios_2027.csv,es_sni,Boolean,0,true si es municipio de Oaxaca que elige autoridades por sistemas normativos indígenas (IEEPCO 2025)
