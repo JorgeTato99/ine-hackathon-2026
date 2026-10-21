@@ -603,7 +603,13 @@ describe("Páginas de fuentes y alcance", () => {
     expect(screen.getByText("Datos y estimaciones")).toBeVisible();
     expect(screen.queryByText("Muestra de interfaz")).not.toBeInTheDocument();
     const downloads = screen.getAllByRole("link", { name: /Descargar/ });
-    expect(downloads).toHaveLength(6);
+    expect(downloads).toHaveLength(7);
+    expect(
+      downloads.some(
+        (link) =>
+          link.getAttribute("href") === "/data/publicaciones/resultados-1.2__resultados-1.3.json"
+      )
+    ).toBe(true);
     expect(
       downloads.some((link) => link.getAttribute("href") === "/data/resultados-1.3/municipios.gpkg")
     ).toBe(true);
