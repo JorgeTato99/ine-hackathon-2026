@@ -1,4 +1,4 @@
-# Tokens y componentes · Traza Cívica 1.7.1
+# Tokens y componentes · Traza Cívica 1.8.0
 
 Este documento define la versión vigente del sistema visual. Su fuente está en
 [`src/theme/tokens.ts`](../src/theme/tokens.ts), aplicada por
@@ -155,6 +155,15 @@ La entrega de datos sigue su propio contrato y versión. Cambiar una paleta o
 espaciado nunca cambia el significado de un escenario ni actualiza el modelo.
 
 ## Registro
+
+**1.8.0 · 21 de octubre de 2026.** `explorerLayout.mapHeight` formaliza la altura
+normal por breakpoint como dimensiones CSS: xs 280–520 px, sm 340–700 px y lg
+360–720 px, con descuento de viewport de 475/390/375 px. No se pasan como factores
+de espaciado. El botón de ampliación usa la variante contenida e icono expand;
+las dos entradas comparten acción y retorno de foco. El modo ampliado reutiliza
+`ResultsTabs`, controles y chips; `ResultsCards` permite desactivar su límite local
+de altura cuando ya vive en un panel desplazable. Se mantiene vuelo de 800 ms y
+ningún redibujado intermedio. Ver [composición del explorador](explorador.md).
 
 **1.7.1 · 20 de octubre de 2026.** Evitar desplazamientos del control entre
 pulsar y soltar durante entradas activas. Conservar el foco por teclado

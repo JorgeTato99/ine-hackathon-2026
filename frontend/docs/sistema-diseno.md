@@ -3,7 +3,7 @@
 Primera implementación: 19 de octubre de 2026.
 [Volver al frontend](../README.md).
 
-El sistema visual formal está en la versión **1.7.1**. El
+El sistema visual formal está en la versión **1.8.0**. El
 [catálogo de tokens y componentes](tokens-y-componentes.md) define escalas, variantes,
 contratos y su versionado, separado de la versión de resultados científicos.
 La política de [movimiento](movimiento.md) define animaciones, costos y accesibilidad.

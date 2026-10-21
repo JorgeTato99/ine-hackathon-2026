@@ -80,7 +80,29 @@ estuviera notificada. La carga inicial evita esa dependencia durante la edición
 Storybook importa el mismo CSS en su preview. `query-resources.spec.ts` comprueba
 la hoja inicial y la escritura de cada prefijo con el código del mapa retenido.
 
+La altura normal se define en `explorerLayout.mapHeight`: en 1440×900 son 525 px
+(70 más que antes) y en 1280×800, 425 px. Los mínimos/máximos por breakpoint
+mantienen el mapa utilizable en pantallas pequeñas y acotan su crecimiento.
+El botón **Ampliar mapa** está dentro del mapa normal, con texto e icono; comparte
+la acción de la cabecera y no crea otro renderer.
+
 ## Modo mapa
+
+Las opciones Pronóstico / Datos del territorio permanecen en la barra ampliada,
+con estado seleccionado. «Configurar escenarios» o «Cambiar tema del mapa» abre los controles propios
+y muestra el nombre completo de la vista. En pronóstico identifica el porcentaje
+nacional supuesto, la intervención del escenario que colorea el mapa y si la
+comparación está activa; en contexto conserva el tema y su subselector. Los controles se reutilizan,
+sin formularios duplicados ni un estado distinto del de la URL. En el panel de
+vistas aparecen primero los selectores, luego escenarios y después las cifras
+compactas en dos columnas, con un único desplazamiento de contenido.
+
+Filtros muestra los mismos criterios y chips eliminables que la consulta normal.
+Restablecer, total y Ver resultados permanecen fuera del cuerpo desplazable. El
+contador de Filtros cuenta criterios distintos de la búsqueda, que tiene su propio
+campo visible. La barra y el panel reparten su altura disponible, sin suponer una
+altura fija para la barra; en horizontal corto el panel pasa al lateral. La ficha
+se conserva al cambiar de modo, y el retorno a tabla conserva sus ajustes.
 
 «Modo mapa» ocupa el viewport mediante composición CSS, sin exigir la API nativa
 de pantalla completa. Es la misma instancia de Leaflet y conserva consulta y
@@ -89,15 +111,17 @@ espacio para los paneles. Al abrir una ficha puede haber un desplazamiento míni
 para no ocultarla, conservando el zoom.
 
 Los controles flotantes permiten buscar, cambiar filtros y escenarios, exportar,
-volver a tabla y alternar tema. La ficha es lateral en escritorio y una hoja inferior
-en móvil; el horizontal corto usa lateral. Los paneles y la leyenda pueden plegarse.
+volver a tabla y alternar tema. La ficha es lateral en escritorio y un panel debajo de la barra
+en móvil; el horizontal corto usa lateral. Los paneles y la leyenda pueden plegarse. La leyenda comparte la columna de
+controles y se oculta completamente cuando un panel ocupa ese espacio; al cerrar
+el panel conserva la preferencia de leyenda abierta o plegada.
 No hay arrastre libre de ventanas. Una búsqueda con un único resultado ofrece abrir
 su ficha directamente, también si no tiene geometría.
 
 El fondo queda inerte mientras está activo el modo; se bloquea scroll del documento
 y se mantiene scroll local en los paneles. No se abre el teclado móvil automáticamente.
 Escape cierra primero el menú o panel activo; después permite salir. Se restaura
-foco y desplazamiento al regresar, y si se entró desde tabla se recupera esa vista.
+foco al acceso utilizado y desplazamiento al regresar, y si se entró desde tabla se recupera esa vista.
 El botón «Tabla» dentro del modo vuelve directamente a los resultados.
 
 La implementación del aislamiento usa [inert](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert).
