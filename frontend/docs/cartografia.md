@@ -86,7 +86,10 @@ de navegador se comprueba en E2E real, no mediante Canvas simulado en jsdom:
 selección sobre geometría real, teclado, cámara estable entre escenarios,
 doble clic, vuelo municipal y su interrupción, movimiento reducido, tema,
 descarga, desmontaje y colores/tramas de cuatro niveles en una
-fixture gráfica controlada. Se ejecuta sobre la exportación de producción en
+fixture gráfica controlada. El oráculo de colores lee el Canvas renderizado en su resolución nativa,
+sin reducir una captura de pantalla a píxeles CSS. Conserva los criterios de
+mayoría del color base y presencia de trama, con el DPR del dispositivo emulado.
+Se ejecuta sobre la exportación de producción en
 escritorio y móvil emulado. Ver [testing](../test/testing-strategy.md) y
 [pruebas de navegador](../playwright-tests/README.md).
 

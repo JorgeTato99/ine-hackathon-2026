@@ -110,38 +110,32 @@ test("dibuja los cuatro riesgos y sus cambios con colores y tramas reales de Can
       await expect(map).toHaveAttribute("data-map-ready", "true");
       await map.scrollIntoViewIfNeeded();
       await page.mouse.move(0, 0);
-      const png = await map.screenshot({ scale: "css" });
       const color = riskTokens[risks[(i + s) % risks.length]!].map;
-      const result = await page.evaluate(
-        async ({ data, color }) => {
-          const img = new Image();
-          img.src = "data:image/png;base64," + data;
-          await img.decode();
-          const c = document.createElement("canvas");
-          c.width = c.height = 10;
-          const ctx = c.getContext("2d")!;
-          ctx.drawImage(
-            img,
-            Math.floor(img.width / 2) - 5,
-            Math.floor(img.height / 2) - 5,
-            10,
-            10,
-            0,
-            0,
-            10,
-            10
-          );
-          const pixels = ctx.getImageData(0, 0, 10, 10).data;
-          const rgb = color.match(/\w\w/g)!.map((x) => parseInt(x, 16));
-          let matching = 0;
-          for (let p = 0; p < pixels.length; p += 4)
-            if (rgb.every((v, j) => Math.abs(pixels[p + j]! - v) < 8)) matching++;
-          return matching;
-        },
-        { data: png.toString("base64"), color }
-      );
-      expect(result, `${id}/${scenario}/${color}`).toBeGreaterThan(50);
-      if (risks[(i + s) % risks.length] !== "bajo") expect(result).toBeLessThan(100);
+      // Leer el Canvas renderizado evita mezclar píxeles al reducir una captura
+      // de DPR fraccional a CSS. El umbral sigue siendo mayoría del color base.
+      const result = await map.evaluate((target, color) => {
+        const canvas = target.querySelector("canvas")!;
+        const mapBox = target.getBoundingClientRect();
+        const box = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / box.width,
+          scaleY = canvas.height / box.height;
+        const width = Math.round(20 * scaleX),
+          height = Math.round(20 * scaleY);
+        const x = Math.round((mapBox.left + mapBox.width / 2 - box.left) * scaleX - width / 2);
+        const y = Math.round((mapBox.top + mapBox.height / 2 - box.top) * scaleY - height / 2);
+        const pixels = canvas.getContext("2d")!.getImageData(x, y, width, height).data;
+        const rgb = color.match(/\w\w/g)!.map((value) => parseInt(value, 16));
+        let matching = 0;
+        for (let p = 0; p < pixels.length; p += 4)
+          if (rgb.every((value, j) => Math.abs(pixels[p + j]! - value) < 8)) matching++;
+        return { matching, total: width * height, dpr: devicePixelRatio };
+      }, color);
+      expect(
+        result.matching / result.total,
+        `${id}/${scenario}/${color}/${JSON.stringify(result)}`
+      ).toBeGreaterThan(0.5);
+      if (risks[(i + s) % risks.length] !== "bajo")
+        expect(result.matching).toBeLessThan(result.total);
     }
   }
 });
