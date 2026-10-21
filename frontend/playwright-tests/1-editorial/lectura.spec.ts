@@ -25,7 +25,7 @@ test("el archivo tiene navegación local, recursos identificables y descargas í
   expect(download.suggestedFilename()).toBe("municipios.csv");
   const bytes = await readFile((await download.path())!);
   expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-    manifest.files["resultados-1.2/municipios.csv"].sha256
+    manifest.files["resultados-1.3/municipios.csv"].sha256
   );
   await page
     .getByRole("navigation", { name: "En esta página" })
@@ -153,7 +153,7 @@ test("los textos, anclas y archivos informativos funcionan sin JavaScript", asyn
     await expect(
       page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
     ).toHaveCSS("opacity", "1");
-    expect((await page.request.get("/data/resultados-1.2/metadatos.json")).status()).toBe(200);
+    expect((await page.request.get("/data/resultados-1.3/metadatos.json")).status()).toBe(200);
     const size = await page.evaluate(() => ({
       width: document.documentElement.scrollWidth,
       viewport: document.documentElement.clientWidth,

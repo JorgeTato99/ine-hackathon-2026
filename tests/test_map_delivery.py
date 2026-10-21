@@ -62,7 +62,7 @@ def test_package_matches_real_originals_and_repeats_identically(tmp_path):
     archive = create_package(root, tmp_path)
     first = archive.read_bytes()
     assert create_package(root, tmp_path).read_bytes() == first
-    version = "resultados-1.2"
+    version = "resultados-1.3"
     published = root / "frontend/public/data"
     controls = json.loads((published / version / "controles.json").read_text(encoding="utf-8"))
     assert controls["normalizations"]["brecha_jovenes_2024_NaN_to_null"] == 0
@@ -70,23 +70,36 @@ def test_package_matches_real_originals_and_repeats_identically(tmp_path):
     indicators = {row["id"]: row["indicators"] for row in dataset["municipalities"]}
     with (published / version / "municipios.csv").open(encoding="utf-8", newline="") as stream:
         municipalities = list(csv.DictReader(stream))
-    assert sum(row["brecha_jovenes_2024"] == "" for row in municipalities) == 15
-    for row in municipalities:
-        value = row["brecha_jovenes_2024"]
-        assert indicators[row["cvegeo"]]["brecha_jovenes_2024"] == (float(value) if value else None)
+    nullable_fields = (
+        "brecha_jovenes_2024",
+        "peso_jov_2024",
+        "n_jov_2024",
+        "nv_jov_2024",
+        "primerizos_votaron_2024",
+        "jovenes_21_29_no_votaron_2024",
+        "interv_votos_retener_primerizos",
+        "interv_votos_brecha_joven",
+    )
+    for field in nullable_fields:
+        # S2 ya tenía 11 ausencias adicionales antes de la corrección de los 15 municipios.
+        expected_missing = 26 if field == "interv_votos_brecha_joven" else 15
+        assert sum(row[field] == "" for row in municipalities) == expected_missing
+        for row in municipalities:
+            value = row[field]
+            assert indicators[row["cvegeo"]][field] == (float(value) if value else None)
     prefix = archive.stem + "/"
     with ZipFile(archive) as package:
         assert package.testzip() is None
         assert len(package.namelist()) == 12
         manifest = json.loads(package.read(prefix + "MANIFIESTO.json"))
         assert manifest["version_resultados"] == version
-        assert manifest["source"]["commit"] == "ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821"
+        assert manifest["source"]["commit"] == "f25d9c2709d2a93179c7ee2d6d2df985d418d6ca"
         for name, metadata in manifest["files"].items():
             content = package.read(prefix + name)
             assert len(content) == metadata["bytes"]
             assert hashlib.sha256(content).hexdigest() == metadata["sha256"]
         for name in BASE_FILES:
-            original = root / "data/processed/entrega/base-datos-1.2" / name
+            original = root / "data/processed/entrega/base-datos-1.3" / name
             assert package.read(prefix + "base-datos/" + name) == original.read_bytes()
         assert b"https://traza-civica.jorgetato.com/" in package.read(prefix + "ENLACE.txt")
         assert not any(".." in name or name.startswith("/") for name in package.namelist())

@@ -74,6 +74,9 @@ La seguridad es contexto histórico y no modifica ese semáforo.
 En `historia_municipal.csv` la participación va de 0 a 100; en las tablas de
 2027 y el GPKG va de 0 a 1. Leer `base-datos/LEEME.md` y el diccionario antes
 de combinar archivos. Las 15 ausencias de brecha joven están vacías, no son cero.
+En esos mismos municipios faltan los conteos por edad de 2024 y los componentes
+S1/S2; en la versión 1.3 se conservan vacíos. Los totales de personas suman solo
+los datos disponibles. Esto no elimina sus pronósticos ni el componente S3.
 
 ## Alcance de este paquete
 

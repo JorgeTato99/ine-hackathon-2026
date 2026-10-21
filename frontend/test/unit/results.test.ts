@@ -17,9 +17,9 @@ const medium = "nac-medio_int-ninguna",
   intervention = "nac-medio_int-dirigida_rojos";
 const integer = (value: string) => Number(value.replace(/[^\d]/g, ""));
 
-describe("entrega científica resultados-1.2", () => {
+describe("entrega científica resultados-1.3", () => {
   it("conserva cobertura, identidad y ausencia de Villa de Pozos", () => {
-    expect(dataset.version).toBe("resultados-1.2");
+    expect(dataset.version).toBe("resultados-1.3");
     expect(dataset.sample).toBe(false);
     expect(dataset.municipalities).toHaveLength(2478);
     expect(dataset.scenarios).toHaveLength(6);
@@ -73,10 +73,63 @@ describe("entrega científica resultados-1.2", () => {
         medium,
         presentation(`pestana=contexto&indicador=personas&grupo=${group}`)
       ).map((card) => integer(card.value));
-    expect(check("primerizos_votaron_2024")).toEqual([2898581, 582590, 0]);
-    expect(check("jovenes_21_29_no_votaron_2024")).toEqual([9835966, 2884632, 0]);
+    expect(check("primerizos_votaron_2024")).toEqual([2898581, 582590, 15]);
+    expect(check("jovenes_21_29_no_votaron_2024")).toEqual([9835966, 2884632, 15]);
     expect(check("nuevos_votantes_2027")).toEqual([4363455, 1104131, 8]);
     expect(check("nuevos_sin_credencial_2027_si_se_repite_2021")).toEqual([1268747, 318946, 245]);
+  });
+  it("distingue los 15 conteos ausentes de cero sin perder pronóstico ni S3", () => {
+    const fields = [
+      "peso_jov_2024",
+      "n_jov_2024",
+      "nv_jov_2024",
+      "primerizos_votaron_2024",
+      "jovenes_21_29_no_votaron_2024",
+      "interv_votos_retener_primerizos",
+      "interv_votos_brecha_joven",
+    ];
+    const missing = dataset.municipalities.filter(
+      (item) => item.hasData && item.indicators?.n_jov_2024 === null
+    );
+    expect(missing.map((item) => item.id).sort()).toEqual([
+      "07030",
+      "07066",
+      "07119",
+      "16111",
+      "19028",
+      "20076",
+      "20247",
+      "20282",
+      "20357",
+      "20431",
+      "20508",
+      "26007",
+      "26022",
+      "26046",
+      "26065",
+    ]);
+    for (const item of missing) {
+      for (const field of fields) expect(item.indicators?.[field]).toBeNull();
+    }
+    expect(missing.filter((item) => item.indicators?.semaforo === "rojo")).toHaveLength(7);
+    const chico = missing.find((item) => item.id === "07030")!;
+    expect(chico.indicators?.interv_votos_credencializar).toBe(363);
+    expect(estimateFor(dataset, medium, chico.id).participation).not.toBeNull();
+    const map = mapPresentation(dataset, presentation("pestana=contexto&indicador=personas"));
+    expect(map.paints[chico.id]?.label).toBe("Sin dato");
+    expect(map.paints[chico.id]?.value).toBeNull();
+    expect(Object.values(map.paints).filter((paint) => paint.value === null)).toHaveLength(16);
+    const document = municipalityDocument(dataset, chico, medium);
+    expect(document.municipality.indicators?.interv_votos_retener_primerizos).toBeNull();
+  });
+  it("conserva un conteo cero disponible como cero, distinto de un conteo ausente", () => {
+    const zero = structuredClone(dataset);
+    const item = zero.municipalities.find((row) => row.id === "07030")!;
+    item.indicators!.primerizos_votaron_2024 = 0;
+    const map = mapPresentation(zero, presentation("pestana=contexto&indicador=personas"));
+    expect(map.paints[item.id]?.label).toBe("0");
+    expect(map.paints[item.id]?.value).toBe(0);
+    expect(map.paints["07066"]?.value).toBeNull();
   });
   it("conserva categorías coloreadas al traducir etiquetas sin modificar indicadores exportados", () => {
     for (const view of ["zonas", "elecciones", "casillas"]) {
@@ -148,6 +201,6 @@ describe("entrega científica resultados-1.2", () => {
       municipalityDocument(dataset, item, medium, "nac-alto_int-dirigida_rojos").secondReading
         ?.comparability
     ).toBe("pending");
-    expect(document.source?.commit).toBe("ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821");
+    expect(document.source?.commit).toBe("f25d9c2709d2a93179c7ee2d6d2df985d418d6ca");
   });
 });

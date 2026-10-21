@@ -23,7 +23,7 @@ export const contextGuides = {
     label: "Personas y participación",
     summary: "Consulta cuántas personas pertenecen a cada grupo de edad o situación electoral.",
     reading:
-      "Son cantidades de personas, no porcentajes ni resultados de una campaña. Los dos primeros grupos corresponden a 2024; los nuevos votantes de 2027 se estiman con el censo de 2020. La escala de color conserva la misma referencia nacional al filtrar.",
+      "Son cantidades de personas, no porcentajes ni resultados de una campaña. Los dos primeros grupos corresponden a 2024; los nuevos votantes de 2027 se estiman con el censo de 2020. Sin dato indica que no hay conteo disponible, no que haya cero personas; los totales suman solo los datos disponibles. La escala de color conserva la misma referencia nacional al filtrar.",
   },
   casillas: {
     label: "Falta de casillas en elecciones anteriores",

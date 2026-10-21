@@ -110,6 +110,39 @@ test("distingue sin casilla de cero y mantiene Villa de Pozos sin estimación", 
   expect(document.municipality.id).toBe("24059");
 });
 
+test("1.3 muestra conteos ausentes como Sin dato y conserva S3 y el pronóstico", async ({
+  page,
+}) => {
+  await page.goto("/?modo=mapa&pestana=contexto&indicador=personas&municipio=07030");
+  await expect(page.getByRole("heading", { name: "Chicomuselo", level: 2 })).toBeVisible();
+  const detail = (label: string) =>
+    page.locator("dt").filter({ hasText: label }).locator("..").locator("dd");
+  await expect(
+    detail("S1 · Votos por mantener la participación de la generación de 18 a 20 años de 2024")
+  ).toHaveText("Sin dato");
+  await expect(
+    detail("S2 · Votos por reducir a la mitad la diferencia de participación joven")
+  ).toHaveText("Sin dato");
+  await expect(detail("S3 · Votos por incorporar nuevos votantes a la lista")).toHaveText("363");
+  await expect(
+    page
+      .getByText("Dato del tema elegido", { exact: true })
+      .locator("..")
+      .getByText("Sin dato", { exact: true })
+  ).toBeVisible();
+  await expect(page.getByText("Participación estimada · 2027", { exact: true })).toBeVisible();
+  const downloading = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Descargar ficha (JSON)", exact: true }).click();
+  const download = await downloading;
+  const { readFile } = await import("node:fs/promises");
+  const document = JSON.parse(await readFile((await download.path())!, "utf8"));
+  expect(document.version).toBe("resultados-1.3");
+  expect(document.municipality.indicators.interv_votos_retener_primerizos).toBeNull();
+  expect(document.municipality.indicators.interv_votos_brecha_joven).toBeNull();
+  expect(document.municipality.indicators.interv_votos_credencializar).toBe(363);
+  expect(document.result.participation).not.toBeNull();
+});
+
 for (const mode of ["normal", "mapa"]) {
   test(`MX limpia la selección y conserva la vista nacional al recargar en modo ${mode}`, async ({
     page,

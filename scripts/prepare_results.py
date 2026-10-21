@@ -10,8 +10,8 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT_VERSION = "resultados-1.2"
-CURRENT_COMMIT = "ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821"
+CURRENT_VERSION = "resultados-1.3"
+CURRENT_COMMIT = "f25d9c2709d2a93179c7ee2d6d2df985d418d6ca"
 YEARS = (2009, 2012, 2015, 2018, 2021, 2024)
 TEXT = {
     "cvegeo",
@@ -206,7 +206,7 @@ def main():
             for code, result in estimates["nac-medio_int-dirigida_rojos"].items()
         ),
     }
-    if version in {"resultados-1.1", "resultados-1.2"} and (
+    if version in {"resultados-1.1", "resultados-1.2", "resultados-1.3"} and (
         controls["trafficLight"] != {"rojo": 495, "amarillo": 496, "verde": 1486}
         or controls["municipalities"] != 2477
         or controls["geometries"] != 2478
