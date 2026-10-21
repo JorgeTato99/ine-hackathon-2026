@@ -2,8 +2,8 @@
 
 ## Alcance y estado
 
-La entrega vigente es `data/processed/mapa/resultados-1.1/`, recibida del PR #3,
-commit `3f58a1d21a2c804a8711d5dbdfc55f7ee6d04c7b`. Sus tres archivos UTF-8 contienen
+La entrega vigente es `data/processed/mapa/resultados-1.2/`, continuación de la entrega del PR #3,
+commit `ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821`. Sus tres archivos UTF-8 contienen
 historia, indicadores y resultados precalculados del análisis de Sofía. 2027 es
 pronóstico condicionado al nivel nacional, no observación futura. La intervención
 es un supuesto aritmético, no un efecto medido. La muestra 0.3 se conserva solo
@@ -11,8 +11,11 @@ como antecedente y fixture; no alimenta la publicación vigente.
 
 Los CSV utilizan comas como separador, comillas dobles y punto decimal. Una celda
 vacía indica ausencia; nunca se convierte automáticamente en cero.
-En esta entrega hay 15 `NaN` literales en `brecha_jovenes_2024`: se normalizan a
-`null` únicamente al exportar para la web. Los originales se conservan íntegros.
+Las 15 ausencias de `brecha_jovenes_2024` llegan como celdas vacías desde la
+corrección en el origen de la versión 1.2. La publicación las representa como
+`null`, sin sustituirlas por cero. Un NaN nuevo bloquea la preparación; el
+tratamiento especial de la versión 1.1 queda limitado a ese antecedente.
+Los originales se conservan íntegros.
 
 ## Entradas
 
@@ -68,7 +71,7 @@ final por estar en los archivos.
 **Antecedente de la muestra 0.3:** las historias de Paracho (`16065`)
 y Parácuaro (`16064`) contienen los datos de 2021 intercambiados. Se conserva la
 muestra original para trazabilidad. Esa omisión provisional no se aplica a
-`resultados-1.1`, cuya historia proviene de la entrega científica regenerada.
+`resultados-1.2`, cuya historia proviene de la entrega científica regenerada.
 
 La entrega contiene 2,477 registros y la geometría 2,478 municipios. Villa de Pozos
 (`24059`) conserva geometría y se representa sin dato, en gris. No se le fabrican

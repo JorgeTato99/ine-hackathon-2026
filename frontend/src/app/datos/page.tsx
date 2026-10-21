@@ -33,7 +33,7 @@ const incidents = [
   },
   {
     title: "Ausencias y falta de casillas",
-    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 registros falta la diferencia de participación joven de 2024: la web la muestra como ausencia, no como cero. Los CSV originales conservan esos registros como NaN (valor no disponible).",
+    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 registros falta la diferencia de participación joven de 2024: la web la muestra como ausencia, no como cero. En los CSV originales de la versión 1.2 esas celdas también están vacías.",
   },
   {
     title: "Qué significa comparar la intervención",

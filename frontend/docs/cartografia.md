@@ -112,7 +112,7 @@ solapes nacionales. Es visualización, sin armonización histórica implícita.
 
 `public/data/manifest.json` conserva procedencia, transformaciones y huellas.
 `municipios.geojson` alimenta el mapa con geometría ligera. Las descargas vigentes
-en `public/data/resultados-1.1/` incluyen GeoJSON y GPKG enriquecidos con indicadores
+en `public/data/resultados-1.2/` incluyen GeoJSON y GPKG enriquecidos con indicadores
 y los seis escenarios. Los tres originales científicos se conservan íntegros.
 Ver [integración y reproducción](resultados.md). La muestra antigua es un antecedente.
 

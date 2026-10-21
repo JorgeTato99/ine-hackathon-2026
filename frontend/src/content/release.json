@@ -1,9 +1,9 @@
 {
-  "version": "resultados-1.1",
+  "version": "resultados-1.2",
   "metadata": {
-    "version_resultados": "resultados-1.1",
-    "generado": "2026-10-20T16:16:29",
-    "tipo": "resultados del análisis (reemplaza a resultados-1.0 y muestra-0.3)",
+    "version_resultados": "resultados-1.2",
+    "generado": "2026-10-20T20:21:26",
+    "tipo": "resultados del análisis (reemplaza a resultados-1.1, resultados-1.0 y muestra-0.3)",
     "pregunta": "¿Qué zonas podrían presentar mayor abstención en el futuro si no se interviene? Intermedia del 6 de junio de 2027.",
     "clave": "cvegeo (INEGI, 5 caracteres con ceros) es la clave estable y de unión con la geometría. clave_ine_2024 es solo referencia.",
     "lectura": "Leer cvegeo, clave_ine_2024 y motivo como texto. Celda vacía = sin dato o no aplica; nunca equivale a cero.",
@@ -114,7 +114,7 @@
     ]
   },
   "controls": {
-    "normalizations": { "brecha_jovenes_2024_NaN_to_null": 15 },
+    "normalizations": { "brecha_jovenes_2024_NaN_to_null": 0 },
     "municipalities": 2477,
     "geometries": 2478,
     "scenarios": 6,

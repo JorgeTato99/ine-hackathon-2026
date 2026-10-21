@@ -10,6 +10,8 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CURRENT_VERSION = "resultados-1.2"
+CURRENT_COMMIT = "ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821"
 YEARS = (2009, 2012, 2015, 2018, 2021, 2024)
 TEXT = {
     "cvegeo",
@@ -50,8 +52,8 @@ def number(value):
     return int(result) if result.is_integer() else result
 
 
-def scalar(key, value):
-    if key == "brecha_jovenes_2024" and value == "NaN":
+def scalar(key, value, *, legacy_nan=False):
+    if legacy_nan and key == "brecha_jovenes_2024" and value == "NaN":
         return None
     if value == "":
         return None
@@ -68,19 +70,22 @@ def write_json(path, value):
     path.write_text(
         json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(",", ":")) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=ROOT / "data/processed/mapa/resultados-1.1")
+    parser.add_argument(
+        "--input", type=Path, default=ROOT / "data/processed/mapa" / CURRENT_VERSION
+    )
     parser.add_argument("--output", type=Path, default=ROOT / "frontend/public/data")
-    parser.add_argument("--commit", default="3f58a1d21a2c804a8711d5dbdfc55f7ee6d04c7b")
+    parser.add_argument("--commit", default=CURRENT_COMMIT)
     args = parser.parse_args()
     output = args.output
     metadata = json.loads((args.input / "metadatos.json").read_text(encoding="utf-8-sig"))
     version = metadata["version_resultados"]
-    if version != "resultados-1.1" and args.commit == "3f58a1d21a2c804a8711d5dbdfc55f7ee6d04c7b":
+    if version != CURRENT_VERSION and args.commit == CURRENT_COMMIT:
         raise ValueError("Indicar --commit con la procedencia de la nueva entrega")
     if not version.startswith("resultados-") or "/" in version or "\\" in version:
         raise ValueError("Versión científica inválida")
@@ -96,7 +101,10 @@ def main():
         raise ValueError("Resultados sin geometría")
     municipalities = {}
     for code, row in rows.items():
-        indicators = {key: scalar(key, value) for key, value in row.items()}
+        indicators = {
+            key: scalar(key, value, legacy_nan=version == "resultados-1.1")
+            for key, value in row.items()
+        }
         history = {str(year): number(row[f"part_{year}"]) for year in YEARS}
         municipalities[code] = {
             "id": code,
@@ -198,13 +206,17 @@ def main():
             for code, result in estimates["nac-medio_int-dirigida_rojos"].items()
         ),
     }
-    if version == "resultados-1.1" and (
+    if version in {"resultados-1.1", "resultados-1.2"} and (
         controls["trafficLight"] != {"rojo": 495, "amarillo": 496, "verde": 1486}
+        or controls["municipalities"] != 2477
+        or controls["geometries"] != 2478
+        or controls["scenarios"] != 6
+        or controls["redNominal2024"] != 23818704
         or controls["additionalVotesMedium"] != 505007
         or controls["leaveRedMedium"] != 88
         or controls["missingData"] != ["24059"]
     ):
-        raise ValueError("La entrega no coincide con los controles científicos 1.1")
+        raise ValueError(f"La entrega no coincide con los controles científicos de {version}")
     source = {
         "repository": "https://github.com/JorgeTato99/ine-hackathon-2026",
         "commit": args.commit,

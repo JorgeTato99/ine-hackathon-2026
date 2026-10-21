@@ -3,8 +3,8 @@
 [Frontend](../README.md) · [Contrato](../../docs/contrato-datos.md) ·
 [Vistas y controles de Sofía](../../docs/vistas-mapa.md)
 
-Entrega `resultados-1.1`, PR #3, commit
-`3f58a1d21a2c804a8711d5dbdfc55f7ee6d04c7b`. Se consume el ensamble Huber + random
+Entrega `resultados-1.2`, continuación del PR #3, commit
+`ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821`. Se consume el ensamble Huber + random
 forest declarado en metadatos. No se entrena ni recalcula el modelo en la web.
 
 ## Preparar una publicación
@@ -12,7 +12,7 @@ forest declarado en metadatos. No se entrena ni recalcula el modelo en la web.
 Con el entorno Python de datos y la geometría ligera ya preparada:
 
 ```console
-uv run python -m scripts.prepare_results --input data/processed/mapa/resultados-1.1 --commit 3f58a1d21a2c804a8711d5dbdfc55f7ee6d04c7b
+uv run python -m scripts.prepare_results --input data/processed/mapa/resultados-1.2 --commit ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821
 cd frontend
 npm exec prettier -- --write src/content/release.json
 ```
@@ -23,8 +23,9 @@ nueva entrega debe indicar su propio commit. Los CSV originales no se modifican.
 
 - 2,477 registros, 2,478 geometrías, seis escenarios. Villa de Pozos (24059) se
   mantiene sin resultados y en gris.
-- Los 15 `NaN` literales de `brecha_jovenes_2024` pasan a null solo en la exportación
-  web/SIG. No se sustituyen por cero. La conversión se registra en controles.
+- Las 15 ausencias de `brecha_jovenes_2024` llegan vacías desde el origen en 1.2.
+  La publicación usa null y registra cero normalizaciones de NaN. Un NaN nuevo
+  se rechaza; el tratamiento especial de 1.1 se limita al antecedente.
 - `historyStatus` distingue cero por falta de casillas; conserva el valor original
   y deja un hueco en la gráfica, con la explicación textual.
 - No se arrastra la omisión provisional de Paracho/Parácuaro de la muestra antigua.
@@ -54,7 +55,7 @@ ausentes y 54 geometrías grises: Villa de Pozos es la geometría adicional sin 
 
 ## Salidas y comprobación
 
-`/data/resultados-1.1/` contiene los tres originales, `controles.json` y GeoJSON/GPKG
+`/data/resultados-1.2/` contiene los tres originales, `controles.json` y GeoJSON/GPKG
 con indicadores y los seis escenarios. Los campos SIG usan el identificador de
 escenario con guiones bajos y un sufijo, por ejemplo
 `nac_medio_int_ninguna_part_pred`. GPKG: capa `resultados_2027`, EPSG:4326,
@@ -73,3 +74,6 @@ un bloqueo al cerrar el contexto de prueba. Las capturas explícitas y de fallos
 siguen activas; no se elimina ninguna comprobación funcional.
 
 Las etiquetas y ayudas siguen la [política de lenguaje](lenguaje-y-ayudas.md).
+
+La [guía de entrega del mapa](../../docs/entrega-mapa.md) define el paquete
+portable con URL, GPKG y base de datos, generado desde la misma publicación.

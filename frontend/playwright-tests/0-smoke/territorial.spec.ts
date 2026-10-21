@@ -137,7 +137,7 @@ test("navega fuentes y descarga un GeoPackage real", async ({ page }) => {
     page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
   ).toBeVisible();
   const event = page.waitForEvent("download");
-  await page.locator('a[download][href="/data/resultados-1.1/municipios.gpkg"]').click();
+  await page.locator('a[download][href="/data/resultados-1.2/municipios.gpkg"]').click();
   const download = await event;
   const bytes = await readFile((await download.path())!);
   expect(bytes.subarray(0, 15).toString()).toBe("SQLite format 3");

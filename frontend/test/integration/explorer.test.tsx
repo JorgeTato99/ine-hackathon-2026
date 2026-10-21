@@ -439,7 +439,7 @@ describe("Páginas de fuentes y alcance", () => {
     const downloads = screen.getAllByRole("link", { name: /Descargar/ });
     expect(downloads).toHaveLength(6);
     expect(
-      downloads.some((link) => link.getAttribute("href") === "/data/resultados-1.1/municipios.gpkg")
+      downloads.some((link) => link.getAttribute("href") === "/data/resultados-1.2/municipios.gpkg")
     ).toBe(true);
     expect(screen.getByText(/Villa de Pozos \(24059\)/)).toBeVisible();
   });

@@ -17,9 +17,9 @@ const medium = "nac-medio_int-ninguna",
   intervention = "nac-medio_int-dirigida_rojos";
 const integer = (value: string) => Number(value.replace(/[^\d]/g, ""));
 
-describe("entrega científica resultados-1.1", () => {
+describe("entrega científica resultados-1.2", () => {
   it("conserva cobertura, identidad y ausencia de Villa de Pozos", () => {
-    expect(dataset.version).toBe("resultados-1.1");
+    expect(dataset.version).toBe("resultados-1.2");
     expect(dataset.sample).toBe(false);
     expect(dataset.municipalities).toHaveLength(2478);
     expect(dataset.scenarios).toHaveLength(6);
@@ -148,6 +148,6 @@ describe("entrega científica resultados-1.1", () => {
       municipalityDocument(dataset, item, medium, "nac-alto_int-dirigida_rojos").secondReading
         ?.comparability
     ).toBe("pending");
-    expect(document.source?.commit).toBe("3f58a1d21a2c804a8711d5dbdfc55f7ee6d04c7b");
+    expect(document.source?.commit).toBe("ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821");
   });
 });
