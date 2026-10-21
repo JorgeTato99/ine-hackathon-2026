@@ -2,6 +2,11 @@
 
 El código usa identificadores en inglés y comentarios/documentación en español.
 
+Para cambios en el frontend, consulta su [guía](frontend/README.md), la
+[política de testing](frontend/test/README.md) y los
+[perfiles de ejecución](frontend/test/execution-profiles.md). Sus comprobaciones
+son independientes del entorno Python. La siguiente rutina corresponde a Python.
+
 1. Instala el entorno con `uv sync --locked`.
 2. Añade pruebas para cambios de comportamiento.
 3. Ejecuta `uv run --locked python scripts/check.py`.

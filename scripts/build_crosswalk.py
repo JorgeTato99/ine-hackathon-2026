@@ -25,9 +25,23 @@ def write_csv(path, rows, fields):
         writer.writerows(rows)
 
 
-def match_municipality(row, by_code, by_name, overrides):
+def index_overrides(rows, *, scoped=False):
+    fields = ("anio", "clave_ine", "municipio_ine") if scoped else ("clave_ine", "municipio_ine")
+    indexed = {}
+    for row in rows:
+        key = tuple(row[field] for field in fields)
+        if not all(key) or key in indexed:
+            raise ValueError(f"Override incompleto o duplicado: {key}")
+        indexed[key] = row
+    return indexed
+
+
+def match_municipality(row, by_code, by_name, overrides, year_overrides=None):
     variants = {normalize_name(n) for n in row["nombres_ine"].split(" | ")}
-    override = overrides.get((row["clave_ine"], row["municipio_ine"]))
+    scoped_key = (row.get("anio", ""), row["clave_ine"], row["municipio_ine"])
+    override = (year_overrides or {}).get(scoped_key) or overrides.get(
+        (row["clave_ine"], row["municipio_ine"])
+    )
     direct = by_code.get(row["clave_ine"])
     target = None
     method = "sin_coincidencia"
@@ -77,11 +91,11 @@ def main() -> None:
     by_name = defaultdict(list)
     for row in inegi:
         by_name[(row["CVE_ENT"], normalize_name(row["NOMGEO"]))].append(row)
-    override_rows = read_csv(ROOT / "config/municipality_overrides.csv")
-    overrides = {(r["clave_ine"], r["municipio_ine"]): r for r in override_rows}
-    if len(overrides) != len(override_rows):
-        raise ValueError("Hay overrides duplicados")
-    results = [match_municipality(r, by_code, by_name, overrides) for r in ine]
+    overrides = index_overrides(read_csv(ROOT / "config/municipality_overrides.csv"))
+    year_overrides = index_overrides(
+        read_csv(ROOT / "config/municipality_overrides_by_year.csv"), scoped=True
+    )
+    results = [match_municipality(r, by_code, by_name, overrides, year_overrides) for r in ine]
     destination_counts = Counter((r["anio"], r["cvegeo"]) for r in results if r["cvegeo"])
     for row in results:
         if row["cvegeo"] and destination_counts[(row["anio"], row["cvegeo"])] > 1:

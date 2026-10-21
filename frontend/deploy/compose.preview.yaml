@@ -1,0 +1,20 @@
+name: traza-civica-preview
+services:
+  frontend:
+    image: traza-civica-preview:${IMAGE_TAG:?Indicar la versión a desplegar}
+    build:
+      context: .
+      dockerfile: Dockerfile.export
+    ports:
+      - "127.0.0.1:3101:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    cpus: 1.0
+    mem_limit: 128m
+    pids_limit: 128
+    restart: unless-stopped

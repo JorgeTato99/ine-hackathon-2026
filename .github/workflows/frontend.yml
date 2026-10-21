@@ -1,0 +1,63 @@
+name: Frontend
+
+on:
+  push:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend.yml"
+  pull_request:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend estático
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      TEST_PROFILE: "eficiente"
+      UV_THREADPOOL_SIZE: "2"
+      RAYON_NUM_THREADS: "2"
+      NODE_OPTIONS: "--max-old-space-size=3072"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Requerir instalación inicial cerrada
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "Completar la instalación inicial y versionar frontend/package-lock.json antes de ejecutar este workflow."
+            exit 1
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: frontend/.node-version
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npx playwright install --with-deps chromium
+      - run: npm run validate
+      - name: Build contenedor estático
+        run: docker build -t ine-frontend:ci .
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: frontend-reports
+          path: |
+            frontend/artifacts/checks/
+            frontend/coverage/
+            frontend/playwright-report/
+            frontend/test-results/
+          if-no-files-found: ignore

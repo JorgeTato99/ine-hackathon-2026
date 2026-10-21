@@ -2,9 +2,12 @@
 
 ## Estado y componentes
 
-La preparación de datos y la base Python están implementadas. El modelo definitivo
-y la aplicación se incorporarán conforme avance el proyecto. Las capacidades de
-esta sección describen el producto por construir, no funcionalidades ya verificadas.
+La preparación de datos, la base Python y el explorador frontend están implementados.
+El frontend usa Next App Router con exportación estática, MUI y React Query en
+`frontend/`, con dependencias y contenedores propios. La integración vigente consume
+`resultados-1.1`: dos pestañas, siete vistas de contexto, comparación sin/con
+intervención y descargas con resultados. El modelo se entrega precalculado por
+Sofía y no se ejecuta desde el navegador.
 
 ```text
 CCPC + cartografía INEGI
@@ -27,7 +30,28 @@ navegador seleccionan datos existentes; no ejecutan el modelo ni inventan nuevos
 supuestos. No se requiere un backend de negocio ni una base de datos en servidor.
 Un servidor HTTP en contenedor puede servir los archivos de la aplicación.
 
+El mapa vigente utiliza Leaflet 1.9.4 con Canvas y GeoJSON preparado por el equipo.
+No consulta un servicio cartográfico externo. La [documentación cartográfica](../frontend/docs/cartografia.md)
+define el adaptador, las reglas de cámara y selección y las condiciones para
+actualizar el renderer. La decisión sustituye la implementación inicial con OpenLayers.
+
+El [explorador](../frontend/docs/explorador.md) comparte consulta por URL entre mapa,
+tabla y modo ampliado. Filtros, ordenación y paginación seleccionan resultados
+precalculados; no ejecutan el modelo ni modifican la priorización científica.
+
+## Orden de construcción
+
+Primero se completa el núcleo: mapa con semáforo, comparación sin/con intervención,
+ficha municipal, descargas y cartografía abierta en GeoJSON/GPKG. Las consultas
+guardadas, las funciones avanzadas de comparación entre versiones y EXT-ACT se
+abordan después del núcleo. Los controles básicos de integridad y procedencia de
+datos se mantienen desde la preparación; no dependen de esa ampliación de interfaz.
+
 ## Capacidades del producto
+
+Este es el alcance acordado. El estado implementado se detalla al inicio y en la
+[guía del explorador](../frontend/docs/explorador.md); las consultas guardadas,
+comparación entre versiones y EXT-ACT siguen después del núcleo.
 
 1. **Exploración territorial:** mapa y tabla sincronizados, búsqueda, filtros e
    historia electoral, con cobertura y ausencias visibles.
@@ -56,18 +80,26 @@ de entrega. El [contrato de datos](contrato-datos.md) define el intercambio téc
 Riesgo, calidad y prioridad son dimensiones distintas. Un empate no se resuelve
 inventando una prioridad por nombre o clave. Una diferencia simulada no representa
 eficacia observada. Las comparaciones históricas identifican el tipo de elección;
-la interpretación de 2027 debe considerar el ciclo de elecciones intermedias.
+el tipo de elección se muestra como contexto. La referencia histórica predictora
+la define el modelo de Sofía; la interfaz no impone 2021 como base.
+
+Sofía puede responder los bloques de integración remitiendo a notebooks,
+`docs/bitacora.md` y los tres archivos acordados, sin duplicar su contenido en una
+ficha adicional. Para el reporte metodológico/preventivo se reservan como objetivo
+editorial 1–2 cuartillas para producto y arquitectura; el resto desarrolla variables,
+método, semáforo y recomendaciones, con revisión conjunta.
 
 ## Persistencia y entrega
 
-Las consultas se guardan localmente y se transfieren mediante archivos o enlaces,
-sin sincronización multiusuario. Una consulta anterior no se aplica silenciosamente
-a un corte nuevo. Las observaciones personales se diferencian del contenido científico.
+La consulta actual se comparte por URL y exporta datos con versión. Las consultas
+guardadas previstas utilizarán persistencia local y archivos o enlaces, sin
+sincronización multiusuario; una consulta anterior deberá advertir si cambia el
+corte. Las observaciones personales se diferenciarán del contenido científico.
 
 La modalidad de despliegue y el paquete de cartografía/datos se verifican en los
 artefactos reales. Una compilación web no se considera compatible con doble clic
-sin comprobarlo. Las herramientas y versiones concretas de frontend se elegirán
-y verificarán al implementar.
+sin comprobarlo. Las herramientas y versiones vigentes del frontend están fijadas
+en su manifiesto y [documentación](../frontend/README.md).
 
 ## Extensión condicionada y exclusiones
 

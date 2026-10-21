@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-17T07:39:44.409590+00:00",
+  "generated_at_utc": "2026-10-19T05:42:30.727125+00:00",
   "sources": {
     "elections": {
       "2009": "https://ine.mx/wp-content/uploads/2022/04/DatosAbiertos_DECEyEC_ConteosCensales2009.zip",
@@ -17,12 +17,19 @@
     }
   },
   "sha256": {
-    "equivalencias_ine_inegi.csv": "0bdf1cdc02ffc51a016ca1e3a7ecf86a838231f7638cd874bda6ecb1f0b035a2",
-    "municipios_para_mapa.csv": "305b38383c2a0878349e49c70843787d7cf4a5b511ecb2121ac129894f55a037",
+    "equivalencias_ine_inegi.csv": "832fb6b8f09a4384d1c5a469feb059a89664bd24b3233a16b182493cfc4f7975",
+    "municipios_para_mapa.csv": "fe241666c7a8d1f1732428b2ce885b661e614b62cc8fc6608e5896a54527e617",
     "municipios_inegi.csv": "7b0e9f1c24b223adfaa35cd321c8358dbba5dad18717acb922ccd42b6b040dae",
     "municipios_ine_excluidos.csv": "96171f12ba0c0f4dce88e0b8689594a24dcd49d9effb589c86b1d6878b8f980b",
-    "cobertura_cartografica.json": "80439c538015b633a2dad3c5bb07c6267ecad2a95114d66a3cb93e1352324f63",
-    "validacion.json": "80ec25c743be8350dba07feaa7c4be5b1ceb840a9805192b3e6afa404156d8ef",
+    "cobertura_cartografica.json": "b2bd9fbe12976024cb4ef5d2149c1477b3ac8e62166b56a42ffb8ca9a509f315",
+    "validacion.json": "eea09c3beaf4a71f6db6334671c224d630d2d72dd99e03efe3827286a8d8e6c6",
+    "continuidad_secciones.csv": "e50a3a663ed9ba93a29fc2156ed4d3d4c2d7fa6ceea848a3ed076e8519bf22d8",
+    "continuidad_secciones.json": "2c5a28768e8a75be9e980d02fb05737c75e65a96bb48a1d0cbb4f8848a2031b8",
     "geometry_geojson_sha256": "40716aac8df1f67b31839174beb1b73d226a412f3f2ab79c9e2f493bb210bfef"
+  },
+  "configuration_sha256": {
+    "config/municipality_overrides.csv": "1f90cd3145982500b4a81ee1950099acaeee287f97910e5571627c82d809ff27",
+    "config/municipality_overrides_by_year.csv": "9014f3f81bf99df0dc847b9c6e0150bc34b47b426fbdbd34de63be6581bae01d",
+    "config/section_continuity_exceptions.csv": "0a1a02d25b40cd2f4476861e36832e5625e025023466bc6aab0c626ecec8a963"
   }
 }

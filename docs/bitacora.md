@@ -517,3 +517,8 @@ dato, porque su participación sale de las actas; la brecha resultaba de dividir
 - **Tarjetas de la aplicación:** reproducen las cifras de control de las dos pestañas.
 - **Uso en celular:** sin desplazamiento lateral ni errores en la consola.
 
+**Integración con main (20 de octubre):** se trajo main a la rama, con la corrección de Paracho/Parácuaro en
+la tabla de equivalencias. El notebook 03 ya asignaba esos mismos valores fijos, así que no hay doble
+corrección. La carpeta `resultados-1.2` se conserva junto a la 1.3, porque la aplicación de Jorge tiene la
+versión fija en `scripts/prepare_results.py`. Pasar a la 1.3 es cambiar esa constante y regenerar.
+

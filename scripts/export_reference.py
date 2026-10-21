@@ -19,6 +19,8 @@ def main() -> None:
         "municipios_ine_excluidos.csv",
         "cobertura_cartografica.json",
         "validacion.json",
+        "continuidad_secciones.csv",
+        "continuidad_secciones.json",
     ]
     for name in names:
         shutil.copy2(source / name, target / name)
@@ -74,6 +76,14 @@ def main() -> None:
             "generated_at_utc": now_utc(),
             "sources": json.loads((ROOT / "config/sources.json").read_text(encoding="utf-8")),
             "sha256": inputs,
+            "configuration_sha256": {
+                name: sha256(ROOT / name)
+                for name in [
+                    "config/municipality_overrides.csv",
+                    "config/municipality_overrides_by_year.csv",
+                    "config/section_continuity_exceptions.csv",
+                ]
+            },
         },
     )
     print(json.dumps(audit, ensure_ascii=True))

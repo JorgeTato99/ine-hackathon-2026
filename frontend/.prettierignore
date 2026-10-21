@@ -1,0 +1,16 @@
+node_modules/
+public/data/
+.next/
+out/
+coverage/
+artifacts/
+.cache/
+test-results/
+playwright-report/
+storybook-static/
+next-env.d.ts
+# Next administra las rutas de tipos generados en este archivo.
+tsconfig.json
+package-lock.json
+*.tsbuildinfo
+LICENSE

@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "ine-hackathon-2026"
-version = "0.1.0"
+version = "0.2.2"
 description = "Preparación de datos agregados y análisis territorial para el Reto 2 del INE"
 readme = "README.md"
 license = "MIT"
@@ -47,7 +47,7 @@ default-groups = ["dev", "notebooks"]
 
 [tool.uv.build-backend]
 source-include = ["tests/**", "scripts/**", "config/**", "docs/**", "data/reference/**", "data/samples/**", "data/README.md", "notebooks/**", ".python-version", ".pre-commit-config.yaml", "Makefile", "uv.lock"]
-source-exclude = ["/temp", "/.venv*", "/dist", "/build", "/artifacts", "/output", "/data/raw", "/data/processed", "/data/geo", "/privado"]
+source-exclude = ["/temp", "/.venv*", "/dist", "/build", "/artifacts", "/output", "/frontend", "/data/raw", "/data/processed", "/data/geo", "/privado"]
 
 [tool.ruff]
 target-version = "py314"

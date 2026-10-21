@@ -7,6 +7,12 @@ import polars as pl
 
 from ine_hackathon_2026.ccpc import validate_municipal
 from scripts.common import ROOT, crc32_file, now_utc, sha256, write_json
+from scripts.section_continuity import (
+    aggregate_sections,
+    continuity_report,
+    map_sections,
+    require_continuity,
+)
 
 
 def load_csv(path):
@@ -79,6 +85,29 @@ def main() -> None:
         sum(int(r["filas_origen"]) for r in municipalities) == total_rows,
         "Se perdieron filas durante la agregación",
     )
+    sections = pl.concat(
+        [
+            aggregate_sections(pl.scan_parquet(output / "ccpc" / f"ccpc-{year}.parquet"))
+            for year in sources["elections"]
+        ]
+    )
+    exceptions = load_csv(ROOT / "config/section_continuity_exceptions.csv")
+    continuity = continuity_report(map_sections(sections, pl.DataFrame(crosswalk)), exceptions)
+    continuity.write_csv(output / "continuidad_secciones.csv")
+    continuity_summary = {
+        "reference_year": 2024,
+        "denominator": "LN de secciones presentes también en la referencia; ver cobertura",
+        "warning_threshold_exclusive": 0.5,
+        "failure_threshold_exclusive": 0.9,
+        "municipality_years": continuity.height,
+        "without_comparable_ln": continuity.filter(pl.col("ln_comparable") == 0).height,
+        "warnings": continuity.filter(pl.col("requiere_revision")).to_dicts(),
+        "blocking": continuity.filter(pl.col("bloqueante")).to_dicts(),
+        "documented_exceptions": exceptions,
+        "note": "Diagnóstico de pertenencia; no certifica ni reconstruye límites históricos.",
+    }
+    write_json(output / "continuidad_secciones.json", continuity_summary)
+    require_continuity(continuity)
     report = {
         "validated_at_utc": now_utc(),
         "status": "ok",
@@ -91,6 +120,7 @@ def main() -> None:
         "map_ready_rows": len(ready),
         "geometry_count": len(codes),
         "pending_correspondences": len(pending),
+        "section_continuity": continuity_summary,
     }
     write_json(output / "validacion.json", report)
     print(json.dumps(report, ensure_ascii=True), flush=True)

@@ -1,0 +1,26 @@
+name: ine-frontend-dev
+services:
+  frontend:
+    cpus: 4
+    mem_limit: 8g
+    pids_limit: 256
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "127.0.0.1:${FRONTEND_DEV_PORT:-3100}:3100"
+    environment:
+      WATCHPACK_POLLING: "true"
+      BUILD_WORKERS: "4"
+      UV_THREADPOOL_SIZE: "4"
+      RAYON_NUM_THREADS: "4"
+      NODE_OPTIONS: "--max-old-space-size=6144"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - next_cache:/app/.next
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  node_modules:
+  next_cache:

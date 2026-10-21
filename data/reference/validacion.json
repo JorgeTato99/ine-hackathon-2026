@@ -1,5 +1,5 @@
 {
-  "validated_at_utc": "2026-10-17T07:28:51.100431+00:00",
+  "validated_at_utc": "2026-10-19T05:35:14.360436+00:00",
   "status": "ok",
   "election_count": 6,
   "csv_count": 192,
@@ -9,5 +9,52 @@
   "excluded_zero_denominator": 73,
   "map_ready_rows": 14706,
   "geometry_count": 2478,
-  "pending_correspondences": 0
+  "pending_correspondences": 0,
+  "section_continuity": {
+    "reference_year": 2024,
+    "denominator": "LN de secciones presentes también en la referencia; ver cobertura",
+    "warning_threshold_exclusive": 0.5,
+    "failure_threshold_exclusive": 0.9,
+    "municipality_years": 14779,
+    "without_comparable_ln": 13,
+    "warnings": [
+      {
+        "anio": 2009,
+        "cvegeo": "07092",
+        "secciones_totales": 27,
+        "ln_total": 25707,
+        "secciones_comparables": 27,
+        "ln_comparable": 25707,
+        "ln_en_otro": 12971,
+        "ln_en_otro_sin_excepcion": 12971,
+        "proporcion_cobertura_ln": 1.0,
+        "proporcion_en_otro": 0.5045707394872991,
+        "proporcion_en_otro_sin_excepcion": 0.5045707394872991,
+        "anio_referencia": 2024,
+        "requiere_revision": true,
+        "bloqueante": false,
+        "estado_comparacion": "comparable"
+      },
+      {
+        "anio": 2015,
+        "cvegeo": "07092",
+        "secciones_totales": 27,
+        "ln_total": 28333,
+        "secciones_comparables": 27,
+        "ln_comparable": 28333,
+        "ln_en_otro": 14249,
+        "ln_en_otro_sin_excepcion": 14249,
+        "proporcion_cobertura_ln": 1.0,
+        "proporcion_en_otro": 0.5029117989623407,
+        "proporcion_en_otro_sin_excepcion": 0.5029117989623407,
+        "anio_referencia": 2024,
+        "requiere_revision": true,
+        "bloqueante": false,
+        "estado_comparacion": "comparable"
+      }
+    ],
+    "blocking": [],
+    "documented_exceptions": [],
+    "note": "Diagnóstico de pertenencia; no certifica ni reconstruye límites históricos."
+  }
 }

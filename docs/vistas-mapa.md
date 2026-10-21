@@ -6,7 +6,8 @@ Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/proc
 
 ## Estado
 
-**`resultados-1.3` es la versión vigente.** Reemplaza a `resultados-1.2`, `1.1`, `1.0` y `muestra-0.3`.
+**`resultados-1.3` es la versión vigente.** Reemplaza a `resultados-1.2`, `1.1`, `1.0` y `muestra-0.3`. La carpeta `resultados-1.2` se
+conserva mientras la aplicación migra; la 1.3 solo cambia lo descrito abajo.
 
 **Respecto a la 1.2**, solo cambia una cosa. Hay 15 municipios cuyos conteos de 2024 no tienen a nadie con dato,
 porque su participación sale de las actas; 7 de ellos están en rojo, como Chicomuselo y Pantelhó. En ellos, las
