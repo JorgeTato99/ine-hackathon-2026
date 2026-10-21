@@ -14,6 +14,7 @@ siempre con exportación de producción servida por Nginx.
 - [Movimiento y animaciones accesibles](docs/movimiento.md).
 - [Cartografía, fuentes y preparación](docs/cartografia.md).
 - [Explorador, filtros, tabla y modo mapa](docs/explorador.md).
+- [Consultas personales e intercambio de archivos](docs/consultas-guardadas.md).
 - [Resultados 1.1, recepción y controles](docs/resultados.md).
 - [Vista pública de desarrollo y actualizaciones](deploy/README.md).
 - [Historial de cambios del proyecto](../CHANGELOG.md): registrar cada actualización

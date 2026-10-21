@@ -10,6 +10,10 @@ búsqueda y filtros frecuentes. La guía de tres pasos está en «Cómo explorar
 El aviso de pronóstico condicionado permanece visible. Las páginas de metodología y descargas
 conservan su composición editorial.
 
+«Consultas» guarda filtros y notas personales en este navegador. Permite recuperar,
+editar, eliminar e intercambiar archivos JSON, con advertencia al cambiar el corte
+de datos. No guarda una copia de los resultados. Ver [consultas personales](consultas-guardadas.md).
+
 Buscar municipio o clave, Estado y Color sin intervención son los filtros principales. En móvil, entidad y
 riesgo están en «Filtros»; en escritorio, «Más filtros» despliega los adicionales:
 
