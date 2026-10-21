@@ -48,6 +48,27 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-10-21 - Consulta estable al escribir y ordenar
+
+### 🎯 Resumen
+
+**Tipo de release:** Corrección compatible. Conservar cada tecla y cada
+activación de ordenación mientras Next publica la consulta. Mantener los
+resultados científicos 1.3, el renderer y las animaciones existentes.
+
+### Fixed
+
+- Calcular el sentido de ordenación desde la URL vigente y aplicar la misma
+  normalización de columnas al mostrar y al activar la tabla de contexto.
+- Sincronizar los controles con una instantánea de la URL después de escribir
+  el historial, para evitar pérdida de caracteres en búsquedas y límites de
+  lista electoral. Conservar navegación, consulta al recargar y filtrado diferido.
+
+### Changed
+
+- Actualizar las referencias de arquitectura y documentar la lectura de consulta
+  y las pruebas de escritura, teclado, historial y activaciones consecutivas.
+
 ## [0.2.3] - 2026-10-20 - Conteos ausentes y entrega 1.3
 
 ### 🎯 Resumen
