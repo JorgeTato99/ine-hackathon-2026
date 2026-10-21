@@ -48,10 +48,30 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-21 - Comparaciones de publicaciones verificables
+
+### 🎯 Resumen
+
+**Tipo de release:** Funcionalidad compatible. Consultar qué cambió entre los
+originales 1.2 y 1.3 con procedencia verificable. El mapa usa resultados 1.3.
+
+### Added
+
+- Sección de comparación en Datos: resumen calculado, búsqueda por municipio,
+  campo o escenario, tabla paginada y valores originales antes y después.
+- Preparador independiente que verifica originales contra Git, compara por
+  identidad territorial y conserva la diferencia entre vacío, cero y formato.
+- Comparación completa de metadatos, unidades, cobertura por escenario y por
+  campo, con avisos de tipos desconocidos o condiciones no comparables.
+- Descarga de comparación con inventario de fuentes, generador y huella propia,
+  preparada mediante escritura atómica en una carpeta auxiliar restringida.
+
 ### Changed
 
 - Distinguir en la documentación del frontend las fuentes de versión de software,
   diseño y datos, retirando referencias desactualizadas del índice.
+- Actualizar la explicación de ausencias en Datos e incorporar el nuevo capítulo
+  al índice que sigue la lectura.
 
 ## [0.3.0] - 2026-10-21 - Consultas personales con procedencia
 
