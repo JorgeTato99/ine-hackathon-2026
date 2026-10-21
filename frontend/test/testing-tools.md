@@ -28,6 +28,12 @@ jsdom no implementa `matchMedia`; el setup define un doble mínimo para MUI. Las
 que requieran layout, canvas o WebGL se comprueban en navegador, sin añadir mocks
 globales que pretendan demostrar geometría o interacción real.
 
+El doble de Next en integración conserva una instantánea publicada de la
+consulta. Los casos con navegación diferida retienen esa instantánea hasta la
+notificación: leer directamente `location.search` desde el mock ocultaría la
+pérdida de teclas de un control ligado a una transición pendiente. El navegador
+comprueba escritura con teclas individuales, además de inserciones con `fill`.
+
 Reportes generados: `coverage/`, `playwright-report/`, `test-results/` y
 `storybook-static/`. Los tiempos por etapa se guardan en
 `artifacts/checks/latest.json`; los benchmarks opcionales, en `artifacts/benchmarks/`.

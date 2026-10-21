@@ -58,6 +58,17 @@ supuestos. CVEGEO conserva cinco dígitos. En contexto, la tabla ordena por el
 indicador seleccionado y el CSV añade la vista y su valor.
 La ordenación no cambia el orden canónico de IDs usado por el mapa ni lo reencuadra.
 
+Las activaciones consecutivas de ordenación se calculan desde la URL vigente,
+incluso si Next todavía no publica el cambio anterior en el render. La misma
+normalización de columnas se aplica al mostrar y al alternar la tabla de contexto.
+
+Los controles leen una instantánea de la URL con `useSyncExternalStore`. El
+actualizador notifica después de `replaceState`, para que las teclas no se
+pierdan mientras Next prepara su transición. `popstate` y la señal del router
+conservan navegación externa. El servidor usa una consulta vacía consistente
+con la exportación estática; al hidratar se lee la URL real. No se almacenan
+borradores paralelos. El filtrado de búsqueda sigue usando `useDeferredValue`.
+
 ## Modo mapa
 
 «Modo mapa» ocupa el viewport mediante composición CSS, sin exigir la API nativa

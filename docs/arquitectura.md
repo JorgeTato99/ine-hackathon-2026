@@ -5,7 +5,7 @@
 La preparación de datos, la base Python y el explorador frontend están implementados.
 El frontend usa Next App Router con exportación estática, MUI y React Query en
 `frontend/`, con dependencias y contenedores propios. La integración vigente consume
-`resultados-1.1`: dos pestañas, siete vistas de contexto, comparación sin/con
+`resultados-1.3`: dos pestañas, siete vistas de contexto, comparación sin/con
 intervención y descargas con resultados. El modelo se entrega precalculado por
 Sofía y no se ejecuta desde el navegador.
 
