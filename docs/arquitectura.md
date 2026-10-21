@@ -95,9 +95,9 @@ método, semáforo y recomendaciones, con revisión conjunta.
 ## Persistencia y entrega
 
 La consulta actual se comparte por URL y exporta datos con versión. Las consultas
-guardadas previstas utilizarán persistencia local y archivos o enlaces, sin
-sincronización multiusuario; una consulta anterior deberá advertir si cambia el
-corte. Las observaciones personales se diferenciarán del contenido científico.
+guardadas utilizan persistencia local e intercambio por archivos, sin
+sincronización multiusuario; una consulta anterior advierte si cambia el
+corte. Las observaciones personales se distinguen del contenido científico.
 
 La modalidad de despliegue y el paquete de cartografía/datos se verifican en los
 artefactos reales. Una compilación web no se considera compatible con doble clic

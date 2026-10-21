@@ -60,6 +60,8 @@ sistemas operativos. La geometría puede descargarse por separado con
 
 - [Requisitos del reto](docs/requisitos.md).
 - [Arquitectura y alcance del producto](docs/arquitectura.md).
+- [Apartado de producto para el reporte](docs/producto-arquitectura.md).
+- [Operación y cierre de entrega](docs/operacion.md).
 - [Contrato de integración de datos](docs/contrato-datos.md).
 - [Vistas del mapa y cifras de control](docs/vistas-mapa.md).
 - [Desarrollo y comprobaciones](docs/desarrollo.md).
