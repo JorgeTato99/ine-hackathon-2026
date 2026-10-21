@@ -11,7 +11,6 @@ import type { Dataset } from "@/types/dataset";
 import { parseMunicipalGeometry } from "@/utils/municipal-geometry";
 import { radii } from "@/theme/tokens";
 import { createTerritorialMap, type TerritorialMapController } from "./leaflet-map";
-import "leaflet/dist/leaflet.css";
 import type { MapPaint } from "@/utils/indicators";
 
 type Props = {

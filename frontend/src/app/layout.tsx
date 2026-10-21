@@ -8,6 +8,8 @@ import { modeStorageKey } from "@/theme/settings";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+// El estilo debe estar listo antes de escribir; el código del mapa sigue diferido.
+import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
