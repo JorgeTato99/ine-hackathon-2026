@@ -143,3 +143,7 @@ archivos estáticos. Revisarlo al actualizar `eslint-config-next` y sus dependen
 La política de [lenguaje y ayudas de lectura](docs/lenguaje-y-ayudas.md) forma parte
 del sistema de diseño: define explicaciones visibles, ayudas por teclado y tacto,
 y el protocolo para comprobar comprensión con personas.
+
+La [validación con personas](docs/validacion-personas.md) dispone de protocolo y
+[hoja de sesión vacía](docs/plantilla-sesion.md); su preparación no implica sesiones
+humanas realizadas.

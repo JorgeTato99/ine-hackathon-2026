@@ -91,6 +91,8 @@ qué significa rojo, distingan el pronóstico del dato histórico, comparen una
 intervención y elijan una descarga. Observar sin indicar la respuesta. Registrar
 con sus palabras los errores, dudas y ayudas utilizadas; corregir y repetir.
 No sustituir esta observación por una puntuación automática de legibilidad.
+El [protocolo de sesiones](validacion-personas.md) y su [hoja vacía](plantilla-sesion.md)
+separan tareas neutrales, controles del moderador y registro privado.
 
 Referencias: [W3C: palabras claras](https://www.w3.org/WAI/WCAG2/supplemental/patterns/o3p01-clear-words/),
 [APG: tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/) (patrón en desarrollo),
