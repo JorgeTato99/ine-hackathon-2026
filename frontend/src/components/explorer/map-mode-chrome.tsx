@@ -198,10 +198,6 @@ export function MapModeChrome({
             size="small"
             fullWidth
             data-panel-trigger="scenarios"
-            aria-label={
-              sample ? "Escenarios" : isContext ? "Cambiar tema del mapa" : "Configurar escenarios"
-            }
-            aria-describedby={viewLabel ? "map-view-summary" : undefined}
             aria-expanded={panel === "scenarios"}
             onClick={() => onPanel("scenarios")}
             sx={{

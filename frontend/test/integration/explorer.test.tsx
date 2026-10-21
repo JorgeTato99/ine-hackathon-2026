@@ -784,12 +784,12 @@ describe("Integración de resultados científicos reales", () => {
     window.history.replaceState(null, "", "/?modo=mapa&municipio=01001");
     openExplorer();
     await user.click(await screen.findByRole("button", { name: "Plegar ficha" }));
-    await user.click(screen.getByRole("button", { name: "Configurar escenarios" }));
+    await user.click(screen.getByRole("button", { name: /^Configurar escenarios/ }));
     await user.click(screen.getByRole("button", { name: "Datos del territorio" }));
     await choose("Tema del mapa", "Seguridad en el municipio");
     await user.click(screen.getByRole("button", { name: "Pronóstico" }));
     expect(screen.getByRole("combobox", { name: "Participación supuesta del país" })).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Configurar escenarios" }));
+    await user.click(screen.getByRole("button", { name: /^Configurar escenarios/ }));
     await user.click(screen.getByRole("button", { name: "Ver resultados en tabla" }));
     expect(await screen.findByRole("table", { name: "Resultados municipales" })).toBeVisible();
   });

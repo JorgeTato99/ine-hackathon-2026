@@ -59,7 +59,7 @@ test("las vistas y escenarios se configuran sin salir del modo mapa", async ({ p
   await expect(
     controls.getByRole("button", { name: "Datos del territorio", exact: true })
   ).toHaveAttribute("aria-pressed", "true");
-  await controls.getByRole("button", { name: "Cambiar tema del mapa", exact: true }).click();
+  await controls.getByRole("button", { name: /^Cambiar tema del mapa/ }).click();
   const panel = page.getByTestId("floating-panel");
   await panel.getByRole("combobox", { name: "Tema del mapa", exact: true }).click();
   await page
@@ -68,11 +68,9 @@ test("las vistas y escenarios se configuran sin salir del modo mapa", async ({ p
   await panel.getByRole("combobox", { name: "Año de la elección", exact: true }).click();
   await page.getByRole("option", { name: "2018", exact: true }).click();
   await page.keyboard.press("Escape");
-  await expect(
-    controls.getByRole("button", { name: "Cambiar tema del mapa", exact: true })
-  ).toBeFocused();
+  await expect(controls.getByRole("button", { name: /^Cambiar tema del mapa/ })).toBeFocused();
   await controls.getByRole("button", { name: "Pronóstico", exact: true }).click();
-  await controls.getByRole("button", { name: "Configurar escenarios", exact: true }).click();
+  await controls.getByRole("button", { name: /^Configurar escenarios/ }).click();
   await panel
     .getByRole("combobox", { name: "Participación supuesta del país", exact: true })
     .click();
@@ -110,7 +108,7 @@ test("paneles y controles siguen utilizables a 320px, oscuro y en horizontal", a
   await expect(panel.getByRole("button", { name: "Plegar filtros", exact: true })).toBeInViewport();
   await page.screenshot({ path: "../temp/trabajo-nocturno/07-mapa/horizontal-actual.png" });
   const axe = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(axe.violations).toEqual([]);
 });
