@@ -48,6 +48,32 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-21 - Consultas personales con procedencia
+
+### 🎯 Resumen
+
+**Tipo de release:** Funcionalidad compatible. Guardar y compartir consultas del
+explorador sin cuentas ni servidor, conservando los resultados científicos 1.3.
+
+### Added
+
+- Gestor de consultas desde la vista normal y el modo mapa: guardar filtros,
+  escenarios, selección y tabla con nombre, nota personal y fuente científica;
+  recuperar, editar los textos y eliminar con confirmación.
+- Exportación e importación de archivos JSON como copias, con vista previa,
+  validación íntegra y límites de 50 consultas y 256 KiB.
+- Resumen de territorio, vista y escenario en cada tarjeta, identificación de
+  otra publicación y advertencia antes de usar datos actuales de una fuente distinta.
+- Protección de borradores, corrupción y fallos de almacenamiento local, con
+  respaldo y reinicio explícito que respeta cambios de otras pestañas.
+- Documentación de alcance, recuperación, intercambio y límites del almacenamiento.
+
+### Changed
+
+- Recuperar una consulta reemplaza sus parámetros completos y abre la ficha en
+  el modo correspondiente, sin mezclar filtros previos ni presentar el archivo
+  como copia congelada de resultados antiguos.
+
 ## [0.2.5] - 2026-10-21 - Estilo del mapa listo antes de escribir
 
 ### 🎯 Resumen
