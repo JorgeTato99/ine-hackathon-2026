@@ -69,6 +69,13 @@ conservan navegación externa. El servidor usa una consulta vacía consistente
 con la exportación estática; al hidratar se lee la URL real. No se almacenan
 borradores paralelos. El filtrado de búsqueda sigue usando `useDeferredValue`.
 
+Leaflet carga su CSS desde el layout inicial, antes de los estilos propios; el
+JavaScript del mapa sigue diferido. En el build se reprodujo que una hoja de
+estilo tardía podía retener el commit de React y perder teclas aunque la URL ya
+estuviera notificada. La carga inicial evita esa dependencia durante la edición.
+Storybook importa el mismo CSS en su preview. `query-resources.spec.ts` comprueba
+la hoja inicial y la escritura de cada prefijo con el código del mapa retenido.
+
 ## Modo mapa
 
 «Modo mapa» ocupa el viewport mediante composición CSS, sin exigir la API nativa

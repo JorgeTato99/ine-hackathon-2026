@@ -48,6 +48,20 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-10-21 - Estilo del mapa listo antes de escribir
+
+### 🎯 Resumen
+
+**Tipo de release:** Corrección compatible. Evitar la pérdida de caracteres al
+escribir durante la primera carga del mapa con recursos lentos. Conservar los
+datos 1.3 y la carga diferida del JavaScript cartográfico.
+
+### Fixed
+
+- Cargar el CSS de Leaflet desde el layout inicial, con la misma entrada en
+  Storybook, para que su descarga tardía no retenga la confirmación de los
+  controles de consulta. Conservar los estilos propios con precedencia posterior.
+
 ## [0.2.4] - 2026-10-21 - Consulta estable al escribir y ordenar
 
 ### 🎯 Resumen
