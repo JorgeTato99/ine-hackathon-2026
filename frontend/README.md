@@ -147,3 +147,7 @@ y el protocolo para comprobar comprensión con personas.
 La [validación con personas](docs/validacion-personas.md) dispone de protocolo y
 [hoja de sesión vacía](docs/plantilla-sesion.md); su preparación no implica sesiones
 humanas realizadas.
+
+La extensión de [actividades territoriales](docs/actividades-territoriales.md) queda
+condicionada a un registro utilizable; su decisión y requisitos de lectura están
+documentados sin publicar una capa de cobertura no acreditada.
