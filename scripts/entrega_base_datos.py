@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.1"
+VERSION = "resultados-1.2"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.1"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.2"
 TEXTO = {"cvegeo": pl.String, "clave_ine_2024": pl.String, "motivo": pl.String, "ultima_eleccion_sin_casilla": pl.String}
 
 HISTORIA = {
@@ -148,6 +148,7 @@ def main() -> None:
     assert claves["municipios_2027.csv"] == claves["escenarios_2027.csv"], "municipios y escenarios no coinciden"
     assert claves["municipios_2027.csv"] <= claves["historia_municipal.csv"], "hay municipios 2027 sin historia"
     assert all(t["cvegeo"].str.len_chars().eq(5).all() for t in tablas.values()), "cvegeo debe tener 5 caracteres"
+    tablas = {a: t.with_columns([pl.col(c).fill_nan(None) for c, tipo in t.schema.items() if tipo.is_float()]) for a, t in tablas.items()}
     dic = diccionario(tablas, metadatos["unidades"])
 
     SALIDA.mkdir(parents=True, exist_ok=True)

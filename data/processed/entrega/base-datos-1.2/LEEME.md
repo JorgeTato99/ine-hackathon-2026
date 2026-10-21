@@ -26,4 +26,4 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 **Fuentes:** INE (Conteos Censales de Participación Ciudadana 2009-2024 y cómputos distritales por casilla),
 INEGI, CONAPO, CONEVAL, Banxico, SESNSP, IEEPCO y calendarios de los organismos públicos locales.
 
-**Versión:** resultados-1.1, generada el 2026-10-20. Las cifras salen de los notebooks 03 a 05 del repositorio.
+**Versión:** resultados-1.2, generada el 2026-10-20. Las cifras salen de los notebooks 03 a 05 del repositorio.
