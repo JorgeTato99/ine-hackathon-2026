@@ -48,6 +48,41 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-20 - Lenguaje claro y ayudas de lectura
+
+### 🎯 Resumen
+
+**Tipo de release:** Mejora compatible. Facilitar la lectura del explorador,
+metodología y descargas sin formación estadística. Conservar resultados-1.1,
+archivos científicos, parámetros URL y comportamiento del mapa. Formalizar el
+lenguaje y las ayudas en el sistema de diseño 1.7.0.
+
+### Added
+
+- Agregar ayudas junto a conceptos de riesgo, lista electoral, escenarios e
+  incertidumbre, con resumen al apuntar/enfocar y diálogo por clic, teclado o tacto.
+  Conservar el contexto al cerrar y devolver el foco al control de origen.
+- Documentar el patrón reutilizable, su catálogo en Storybook y un protocolo
+  de comprensión con personas en [lenguaje y ayudas](frontend/docs/lenguaje-y-ayudas.md).
+
+### Changed
+
+- Explicar las siete vistas bajo «Datos del territorio» y «Tema del mapa», con
+  etiquetas cotidianas, periodos y lectura visible de colores, conteos y ausencias.
+- Aclarar en la ficha la diferencia entre escala de riesgo, posibilidad de rojo,
+  rango estimado y puntos porcentuales; separar la brecha joven de 2024 de los
+  supuestos de intervención que usan 2021.
+- Orientar las descargas por su utilidad y explicar formatos, claves y celdas
+  vacías. Presentar fallos de carga con acciones para recuperarse y conservar
+  la tabla como alternativa al mapa.
+
+### Fixed
+
+- Corregir la etiqueta de muestra que persistía en las páginas informativas y
+  hacer coincidir el nombre accesible del botón «Qué ver» con su texto visible.
+- Evitar presentar un rango de estimación vacío para Villa de Pozos: mostrar su
+  ausencia de datos sin confundirla con cero participación.
+
 ## [0.2.0] - 2026-10-20 - Exploración territorial y resultados científicos
 
 ### 🎯 Resumen
