@@ -1,10 +1,11 @@
 {
-  "version_resultados": "resultados-1.2",
-  "generado": "2026-10-20T20:21:26",
-  "tipo": "resultados del análisis (reemplaza a resultados-1.1, resultados-1.0 y muestra-0.3)",
+  "version_resultados": "resultados-1.3",
+  "generado": "2026-10-20T22:26:34",
+  "tipo": "resultados del análisis (reemplaza a resultados-1.2, 1.1, 1.0 y muestra-0.3)",
   "pregunta": "¿Qué zonas podrían presentar mayor abstención en el futuro si no se interviene? Intermedia del 6 de junio de 2027.",
   "clave": "cvegeo (INEGI, 5 caracteres con ceros) es la clave estable y de unión con la geometría. clave_ine_2024 es solo referencia.",
   "lectura": "Leer cvegeo, clave_ine_2024 y motivo como texto. Celda vacía = sin dato o no aplica; nunca equivale a cero.",
+  "sin_conteo_2024": "En 15 municipios los conteos de 2024 no tienen a nadie con dato (su participación sale de las actas): n_jov_2024, nv_jov_2024, peso_jov_2024, primerizos_votaron_2024, jovenes_21_29_no_votaron_2024, brecha_jovenes_2024, interv_votos_retener_primerizos e interv_votos_brecha_joven van vacíos.",
   "archivos": [
     "municipios.csv",
     "escenarios_2027.csv",

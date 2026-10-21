@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.2"
+VERSION = "resultados-1.3"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.2"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.3"
 TEXTO = {"cvegeo": pl.String, "clave_ine_2024": pl.String, "motivo": pl.String, "ultima_eleccion_sin_casilla": pl.String}
 
 HISTORIA = {

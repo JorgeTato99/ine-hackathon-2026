@@ -36,17 +36,17 @@ municipios_2027.csv,territorio_aproximado_2024,Boolean,0,true si el territorio d
 municipios_2027.csv,posicion_riesgo,Float64,0,de 0 a 100; 100 = el municipio que se prevé más por debajo del país en 2027
 municipios_2027.csv,semaforo,String,0,"rojo (posición ≥ 80), amarillo (60 a < 80), verde (< 60) (D18)"
 municipios_2027.csv,probabilidad_rojo,Float64,0,"proporción de 2,000 simulaciones en que el municipio queda en rojo, sumando errores de la validación del modelo"
-municipios_2027.csv,peso_jov_2024,Float64,0,proporción de la lista 2024 de 18 a 34 años que votó o no votó (mismo concepto que la muestra 0.3)
-municipios_2027.csv,n_jov_2024,Int64,0,personas de 18 a 34 años que votaron o no votaron en 2024
-municipios_2027.csv,nv_jov_2024,Int64,0,personas de 18 a 34 años que no votaron en 2024
-municipios_2027.csv,primerizos_votaron_2024,Int64,0,personas de 18 a 20 años que votaron en 2024 (su primera elección federal)
+municipios_2027.csv,peso_jov_2024,Float64,15,proporción de la lista 2024 de 18 a 34 años que votó o no votó (mismo concepto que la muestra 0.3)
+municipios_2027.csv,n_jov_2024,Int64,15,personas de 18 a 34 años que votaron o no votaron en 2024
+municipios_2027.csv,nv_jov_2024,Int64,15,personas de 18 a 34 años que no votaron en 2024
+municipios_2027.csv,primerizos_votaron_2024,Int64,15,personas de 18 a 20 años que votaron en 2024 (su primera elección federal)
 municipios_2027.csv,jovenes_21_29_lista_2024,Int64,0,personas de 21 a 29 años en la lista nominal de 2024
-municipios_2027.csv,jovenes_21_29_no_votaron_2024,Int64,0,personas de 21 a 29 años que no votaron en 2024
+municipios_2027.csv,jovenes_21_29_no_votaron_2024,Int64,15,personas de 21 a 29 años que no votaron en 2024
 municipios_2027.csv,nuevos_votantes_2027,Int64,8,"personas que tendrán 18 o 19 años el 6 de junio de 2027, estimadas con el censo 2020 (0.25 × edad 10 + edad 11 + 0.75 × edad 12)"
 municipios_2027.csv,credencializacion_18_19_2021,Float64,245,proporción de la generación de 18 y 19 años en la lista nominal de 2021 (puede pasar de 1)
 municipios_2027.csv,nuevos_sin_credencial_2027_si_se_repite_2021,Int64,245,"personas; escenario aritmético: nuevos_votantes_2027 × (1 − credencialización 2021, tope 1)"
-municipios_2027.csv,interv_votos_retener_primerizos,Int64,0,votos; supuesto S1 (D22): generación de 18 a 20 años de 2024 que votó o no votó × 6.1 % (caída extra típica de la generación primeriza 2018 → 2021)
-municipios_2027.csv,interv_votos_brecha_joven,Int64,11,votos; supuesto S2 (D22): personas de 20 a 29 años de 2024 que votaron o no votaron × la mitad de su brecha con el municipio en 2021 (0 si no había brecha); vacío sin dato de 2021
+municipios_2027.csv,interv_votos_retener_primerizos,Int64,15,votos; supuesto S1 (D22): generación de 18 a 20 años de 2024 que votó o no votó × 6.1 % (caída extra típica de la generación primeriza 2018 → 2021)
+municipios_2027.csv,interv_votos_brecha_joven,Int64,26,votos; supuesto S2 (D22): personas de 20 a 29 años de 2024 que votaron o no votaron × la mitad de su brecha con el municipio en 2021 (0 si no había brecha); vacío sin dato de 2021
 municipios_2027.csv,interv_votos_credencializar,Int64,254,votos; supuesto S3 (D22): nuevos_sin_credencial_2027_si_se_repite_2021 × participación de 18 y 19 años del municipio en 2021; vacío sin dato
 municipios_2027.csv,interv_nuevos_en_lista,Int64,245,personas que S3 suma a la lista (igual a nuevos_sin_credencial_2027_si_se_repite_2021); vacío sin dato
 municipios_2027.csv,alerta_sin_casilla,String,0,"recurrente (2 o más elecciones con parte de la lista sin casilla), antecedente (1) o sin antecedente (D12); va aparte del modelo"

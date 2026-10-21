@@ -493,3 +493,27 @@ dato, porque su participación sale de las actas; la brecha resultaba de dividir
 - **Efecto en una cifra de la guía:** la mediana de la brecha joven pasa de −12.0 a −12.1 puntos, porque antes
   los `NaN` se contaban como valores altos al calcularla.
 
+---
+
+## 2026-10-20 · `resultados-1.3`: "sin dato" en lugar de 0 en las personas en juego
+
+**Hallazgo al revisar la ficha de Chicomuselo en la aplicación de Jorge:** los supuestos S1 y S2 valían 0.
+
+- **Causa:** son 15 municipios en los que los conteos de 2024 no tienen a nadie con dato, porque su
+  participación sale de las actas; 7 están en rojo. Los conteos por edad salían en 0, cuando en realidad
+  no se conocen.
+- **Corrección** (notebook 05): en esos municipios, las personas en juego por edad y los supuestos S1 y S2
+  quedan vacíos.
+- **Efecto:** cambian solo esas 15 celdas por columna. Los totales (583 mil primerizos y 2.9 millones de
+  jóvenes en rojo, 505,007 votos del supuesto) y los escenarios son idénticos. Dos corridas seguidas producen
+  los mismos archivos.
+- **Advertencia para el reporte:** en esos 7 rojos, las personas en juego no se pueden contar, así que los
+  totales en rojo quedan ligeramente por debajo de la realidad.
+
+**Revisión de la aplicación** (https://traza-civica.jorgetato.com/, 20 de octubre):
+
+- **Archivos publicados:** los CSV y metadatos son idénticos byte por byte a los del repo.
+- **GeoJSON y GPKG:** las 47 columnas municipales y los 36 campos de escenario coinciden con los CSV.
+- **Tarjetas de la aplicación:** reproducen las cifras de control de las dos pestañas.
+- **Uso en celular:** sin desplazamiento lateral ni errores en la consola.
+
