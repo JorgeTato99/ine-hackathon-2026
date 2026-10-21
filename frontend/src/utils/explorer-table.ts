@@ -3,11 +3,11 @@ import { estimateFor } from "./dataset";
 
 export const sortLabels = {
   municipio: "Municipio",
-  cvegeo: "CVEGEO",
-  entidad: "Entidad",
+  cvegeo: "Clave municipal",
+  entidad: "Estado",
   participacion: "Participación · ejemplo",
   riesgo: "Riesgo · ejemplo",
-  registro: "Estado del registro",
+  registro: "Datos de la estimación",
   indicador: "Indicador seleccionado",
 } as const;
 export type SortColumn = keyof typeof sortLabels;

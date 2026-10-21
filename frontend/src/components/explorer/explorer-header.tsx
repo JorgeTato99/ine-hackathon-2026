@@ -98,16 +98,18 @@ export function ExplorerHeader({
         <DialogTitle id="explorer-help-title">Cómo explorar el territorio</DialogTitle>
         <DialogContent dividers>
           <Typography variant="body2" sx={{ mb: 3 }}>
-            Localiza un municipio, recorre su historia y consulta escenarios de participación. El
-            mapa y la tabla comparten filtros y selección.
+            Busca un municipio por nombre o clave. Consulta su participación en elecciones
+            anteriores y la estimación para 2027. El mapa y la tabla muestran los mismos resultados
+            y comparten los filtros.
           </Typography>
           <ConsultationGuide />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
-            La historia 2009–2024 procede de los datos recibidos.{" "}
+            Los datos de 2009–2024 corresponden a elecciones anteriores.{" "}
             {sample
               ? "Los escenarios y el semáforo de 2027 son ilustrativos."
-              : "2027 es un pronóstico condicionado al nivel nacional; la intervención es un supuesto, no un efecto medido."}{" "}
-            Riesgo, disponibilidad del dato y prioridad son dimensiones distintas.
+              : "La cifra de 2027 es una estimación según el supuesto de participación del país. La intervención es una cuenta hipotética, no un efecto comprobado."}{" "}
+            El color compara el riesgo entre municipios; por sí solo no decide dónde destinar
+            recursos.
           </Typography>
           <Button component="a" href="/metodologia/" size="small" sx={{ mt: 1 }}>
             Consultar metodología y límites

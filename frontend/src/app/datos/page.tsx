@@ -18,26 +18,26 @@ import { entranceProps } from "@/theme/entrance";
 export const metadata: Metadata = { title: "Datos y descargas" };
 const chapters = [
   { id: "archivos", label: "Archivos disponibles" },
-  { id: "importar", label: "Antes de importar" },
+  { id: "importar", label: "Cómo usar los archivos" },
   { id: "fuentes", label: "Fuentes y cartografía" },
-  { id: "incidencias", label: "Incidencias del corte" },
+  { id: "incidencias", label: "Datos que requieren cuidado" },
 ];
 const incidents = [
   {
-    title: "Villa de Pozos: geometría sin resultados",
-    text: "Los CSV contienen 2,477 municipios y la capa tiene 2,478 geometrías. Villa de Pozos (24059) se conserva en gris y sin estimación; su ausencia no se convierte en cero.",
+    title: "Villa de Pozos: aparece en el mapa, sin estimación",
+    text: "Las tablas contienen 2,477 municipios y el mapa tiene límites de 2,478. Villa de Pozos (24059) aparece en gris porque no tiene resultados en esta entrega. Sin dato no significa cero participación.",
   },
   {
-    title: "Geometría e historia",
-    text: "La historia fue reconstruida por el análisis con territorio de 2024. La cartografía de visualización procede del servicio INEGI capturado el 16 de octubre de 2026; no sustituye límites oficiales.",
+    title: "Qué territorio se usa para reunir la historia",
+    text: "Se reunieron los resultados anteriores usando el territorio municipal de 2024. El mapa se preparó con información del INEGI consultada el 16 de octubre de 2026 y simplificada para mostrarla aquí. No sustituye los límites oficiales.",
   },
   {
     title: "Ausencias y falta de casillas",
-    text: "Vacío significa sin dato. Los ceros históricos identificados como falta de casillas se muestran como «sin casilla: no se pudo votar». Los 15 NaN literales de brecha_jovenes_2024 se normalizan a ausencia solo en la exportación web; el CSV original permanece intacto.",
+    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 registros falta la diferencia de participación joven de 2024: la web la muestra como ausencia, no como cero. Los CSV originales conservan esos registros como NaN (valor no disponible).",
   },
   {
-    title: "Comparabilidad",
-    text: "Se comparan sin y con intervención dentro del mismo nivel nacional. El resultado es aritmético y se etiqueta «Supuesto, no efecto medido»; no acredita eficacia de campañas.",
+    title: "Qué significa comparar la intervención",
+    text: "Se conserva el mismo supuesto de participación del país al comparar sin y con intervención. Es una cuenta de qué pasaría bajo ciertas condiciones. Se etiqueta «Supuesto, no efecto medido»: no demuestra que una campaña consiga esos votos.",
   },
 ];
 
@@ -45,8 +45,8 @@ export default function DataPage() {
   return (
     <ContentPage
       eyebrow="Archivo del proyecto · 02"
-      title="Datos abiertos, lectura responsable"
-      description="Elige el archivo adecuado, conserva sus claves y sigue la procedencia de cada dato que aparece en el explorador."
+      title="Descarga los datos y conoce sus fuentes"
+      description="Consulta las tablas, los archivos del mapa y las explicaciones que necesitas para usar los datos sin confundir estimaciones con resultados observados."
       chapters={chapters}
       action={{ href: "#archivos", label: "Ver archivos" }}
       aside={<ArchiveOverview />}
@@ -62,12 +62,12 @@ export default function DataPage() {
           number="01"
           id="archivos-title"
           title="Archivos disponibles"
-          description="Tablas para analizar, geometría para visualizar y metadatos para interpretar. Los formatos cumplen funciones diferentes."
+          description="Para revisar cifras, elige una tabla CSV. Para abrir el mapa en un programa de mapas, elige GeoJSON o GeoPackage. Los JSON describen los datos y permiten verificar los archivos."
         />
-        <NotePanel tone="warning" title="Originales conservados, pronósticos con límites." announce>
-          Los CSV conservan la entrega científica original. Los GeoJSON y GPKG descargables
-          incorporan indicadores y los seis escenarios. Los datos de 2027 son pronósticos y
-          supuestos, no observaciones futuras ni efectos medidos.
+        <NotePanel tone="warning" title="Los datos de 2027 son estimaciones y supuestos." announce>
+          Los CSV conservan la entrega científica original. Los archivos del mapa incluyen los
+          indicadores y seis escenarios. Ninguno muestra resultados ya observados de 2027 ni
+          demuestra el efecto de una intervención.
         </NotePanel>
         <Box sx={{ mt: 4, display: "grid", gap: 4 }}>
           {dataLibrary.map((group, index) => (
@@ -112,29 +112,32 @@ export default function DataPage() {
         <SectionHeading
           number="02"
           id="importar-title"
-          title="Antes de importar"
-          description="Tres detalles pequeños evitan perder la identidad de un municipio o convertir una ausencia en un resultado."
+          title="Cómo usar los archivos"
+          description="Si vas a abrir o combinar las tablas, cuida estos tres detalles. Un CSV puede abrirse en una hoja de cálculo; los JSON están pensados para otras herramientas."
         />
         <Surface tone="brand" density="editorial" entrance="block">
           <Box component="ol" sx={{ m: 0, pl: 2.5, display: "grid", gap: 2.5 }}>
             <li>
-              <strong>Conserva el formato.</strong> Lee los CSV en UTF-8, con separador coma, punto
-              decimal y comillas dobles para nombres que contienen comas.
+              <strong>Importa la tabla con sus columnas.</strong> En tu hoja de cálculo, elige UTF-8
+              para conservar acentos y coma como separador. El decimal es punto; las comillas dobles
+              protegen los nombres que contienen comas.
             </li>
             <li>
-              <strong>Claves como texto.</strong> Importa <code>cvegeo</code> como texto de cinco
-              posiciones: <code>01001</code> no es lo mismo que perder su cero inicial.
+              <strong>Conserva los cinco dígitos de la clave municipal.</strong> La columna
+              <code> cvegeo</code> identifica cada municipio. Impórtala como texto para que
+              <code> 01001</code> conserve el cero inicial.
             </li>
             <li>
-              <strong>Respeta la unidad y los vacíos.</strong> Une los escenarios por{" "}
-              <code>cvegeo</code> + <code>escenario_id</code>. Una celda vacía significa ausencia,
-              nunca cero.
+              <strong>No conviertas lo que falta en cero.</strong> Una celda vacía significa que no
+              hay dato. Para combinar las tablas de escenarios usa ambas columnas:{" "}
+              <code>cvegeo</code> (municipio) y <code>escenario_id</code> (escenario).
             </li>
           </Box>
         </Surface>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          La ficha JSON del explorador mantiene identificadores textuales y el contexto de la
-          consulta. GeoJSON y GeoPackage son alternativas para la misma capa geométrica.
+          La ficha municipal se descarga como JSON para reutilizarla con otras herramientas. GeoJSON
+          y GeoPackage contienen los mismos límites y resultados municipales; elige el formato que
+          admita tu programa de mapas, por ejemplo QGIS.
         </Typography>
       </Box>
       <Box component="section" id="fuentes" aria-labelledby="fuentes-title">
@@ -167,8 +170,8 @@ export default function DataPage() {
         <SectionHeading
           number="04"
           id="incidencias-title"
-          title="Incidencias y decisiones de presentación"
-          description="Qué conserva este corte, qué omite la interfaz y por qué conviene consultar el contexto antes de usar los archivos."
+          title="Datos que requieren cuidado"
+          description="Estas situaciones ayudan a distinguir una cifra real, una ausencia y una estimación antes de usar los archivos."
         />
         <Box component="dl" data-entrance-group sx={{ m: 0 }}>
           {incidents.map((item) => (
@@ -193,8 +196,9 @@ export default function DataPage() {
             Un archivo necesita contexto
           </Typography>
           <Typography variant="body2" sx={{ mb: 2 }}>
-            Revisa el denominador, la diferencia entre riesgo y prioridad y las condiciones para
-            comparar escenarios.
+            Revisa entre quiénes se calcula cada porcentaje, qué significa el color del mapa y cómo
+            se comparan los escenarios. El color de riesgo, por sí solo, no determina dónde conviene
+            destinar recursos.
           </Typography>
           <Button
             component="a"

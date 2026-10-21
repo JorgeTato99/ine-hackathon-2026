@@ -1,15 +1,16 @@
 import type { Dataset, Municipality } from "@/types/dataset";
 import { estimateFor, formatInteger, formatPercent } from "./dataset";
 import { riskTokens, contextMapTokens } from "@/theme/tokens";
+import { contextGuides, zoneLabels, boothLabels } from "@/content/reading-guide";
 
 export const contextViews = {
-  elecciones: "Qué se elige en 2027",
-  rezago: "Rezago persistente",
-  zonas: "Zonas frías y calientes",
-  personas: "Personas en juego",
-  casillas: "Alerta sin casilla",
-  seguridad: "Contexto de seguridad",
-  historia: "Historia 2009–2024",
+  elecciones: contextGuides.elecciones.label,
+  rezago: contextGuides.rezago.label,
+  zonas: contextGuides.zonas.label,
+  personas: contextGuides.personas.label,
+  casillas: contextGuides.casillas.label,
+  seguridad: contextGuides.seguridad.label,
+  historia: contextGuides.historia.label,
 } as const;
 export type ContextView = keyof typeof contextViews;
 export type Presentation = {
@@ -70,10 +71,10 @@ export function applyContextFilters(items: Municipality[], filters: ContextFilte
   });
 }
 export const peopleGroups = {
-  primerizos_votaron_2024: "Primerizos que votaron en 2024 · 18–20 años",
-  jovenes_21_29_no_votaron_2024: "Jóvenes que no votaron en 2024 · 21–29 años",
-  nuevos_votantes_2027: "Nuevos votantes en 2027 · 18–19 años",
-  nuevos_sin_credencial_2027_si_se_repite_2021: "Nuevos sin credencial · supuesto de 2021",
+  primerizos_votaron_2024: "18 a 20 años: votaron en 2024",
+  jovenes_21_29_no_votaron_2024: "21 a 29 años: no votaron en 2024",
+  nuevos_votantes_2027: "18 a 19 años en 2027 (estimación)",
+  nuevos_sin_credencial_2027_si_se_repite_2021: "Sin credencial en 2027 (supuesto)",
 } as const;
 const blues = contextMapTokens.sequential;
 const gray = contextMapTokens.missing;
@@ -113,8 +114,8 @@ export function electionCategory(item: Municipality): string | null {
       ? "Ayuntamiento y gubernatura"
       : "Ayuntamiento, sin gubernatura";
   return indicatorBoolean(item, "usos_y_costumbres")
-    ? "Sin municipal · usos y costumbres"
-    : "Sin municipal · otros";
+    ? "Sin ayuntamiento ese día · usos y costumbres"
+    : "Sin ayuntamiento ese día · otros municipios";
 }
 export function historicalLabel(item: Municipality, year: string) {
   return item.historyStatus?.[year] === "sin_casilla"
@@ -137,7 +138,7 @@ export function mapPresentation(dataset: Dataset, presentation: Presentation) {
             ? `Seguridad · ${{ homicidios: "homicidios 2022–2024", institucion: "quién ejerce la seguridad", policia: "policía municipal" }[security]}`
             : contextViews[view];
   let legend: LegendItem[] = [];
-  let description = "";
+  let description = contextGuides[view].reading;
   const paints: Record<string, MapPaint> = {};
   const distinct = [
     ...new Set(
@@ -155,56 +156,45 @@ export function mapPresentation(dataset: Dataset, presentation: Presentation) {
     legend = [
       "Ayuntamiento y gubernatura",
       "Ayuntamiento, sin gubernatura",
-      "Sin municipal · usos y costumbres",
-      "Sin municipal · otros",
+      "Sin ayuntamiento ese día · usos y costumbres",
+      "Sin ayuntamiento ese día · otros municipios",
     ].map((label, i) => ({ label, color: categories[i]! }));
-    description =
-      "Calendario a octubre de 2026; puede cambiar. Sin municipal significa que no elige ayuntamiento ese día, no que no haya elección federal. No atribuye causas.";
   } else if (view === "zonas") {
-    legend = Object.entries(zoneColors).map(([label, color]) => ({ label, color }));
-    description =
-      "Agrupamientos LISA de participación 2024, vecindad Queen. No son el semáforo de 2027.";
+    legend = Object.entries(zoneColors).map(([label, color]) => ({
+      label: zoneLabels[label] ?? label,
+      color,
+    }));
   } else if (view === "casillas") {
     legend = [
-      { label: "recurrente", color: "#8D76AE" },
-      { label: "antecedente", color: "#C3AFD3" },
-      { label: "sin antecedente", color: "#D9DDDF" },
+      { label: boothLabels["recurrente"]!, color: "#8D76AE" },
+      { label: boothLabels["antecedente"]!, color: "#C3AFD3" },
+      { label: boothLabels["sin antecedente"]!, color: "#D9DDDF" },
     ];
-    description =
-      "Antecedentes de falta de casillas. Se leen aparte del riesgo de menor participación.";
   } else if (view === "seguridad" && security === "institucion") {
     legend = distinct.map((label, i) => ({ label, color: categories[i % categories.length]! }));
-    description = "Quién ejerce la seguridad, CNGMD 2025. Es contexto y no entra al semáforo.";
   } else if (view === "seguridad" && security === "policia") {
     legend = [
       { label: "Con policía municipal", color: "#759C81" },
       { label: "Sin policía municipal", color: "#8D76AE" },
     ];
-    description = "Disponibilidad de policía municipal; vacío no equivale a ausencia de policía.";
   } else if (view === "rezago") {
     legend = Array.from({ length: 7 }, (_, i) => ({ label: `${i} elecciones`, color: blues[i]! }));
-    description =
-      "Elecciones de 2009–2024 por debajo de la participación nacional; no es una causa.";
   } else if (view === "personas") {
     legend = [
-      { label: "Menor conteo", color: blues[0]! },
+      { label: "Menos personas", color: blues[0]! },
       { label: `Mayor: ${formatInteger(maxPeople)}`, color: blues[6]! },
     ];
-    description = `${peopleGroups[group as keyof typeof peopleGroups]}. Conteos agregados; los grupos de 2027 se estiman con el censo 2020. Escala nacional fija, no efectos de una campaña.`;
   } else if (view === "historia") {
     legend = [
       { label: "Menor participación", color: blues[0]! },
       { label: "Mayor participación", color: blues[6]! },
       { label: "Sin casilla", color: "#8D76AE" },
     ];
-    description = `Participación observada ${year}. Historia reconstruida con el territorio de 2024 por el análisis; cero sin casilla se distingue de abstención.`;
   } else {
     legend = [
-      { label: "Percentil 0", color: blues[0]! },
-      { label: "Percentil 100", color: blues[6]! },
+      { label: "Menor tasa", color: blues[0]! },
+      { label: "Mayor tasa", color: blues[6]! },
     ];
-    description =
-      "Color por percentil de homicidios 2022–2024. La tasa es por 100 mil habitantes al año; no entra al semáforo.";
   }
   for (const item of dataset.municipalities) {
     let label = "Sin dato",
@@ -212,9 +202,13 @@ export function mapPresentation(dataset: Dataset, presentation: Presentation) {
     let numeric: number | null = null;
     if (item.hasData) {
       if (view === "elecciones") label = electionCategory(item) ?? label;
-      else if (view === "zonas") label = indicatorText(item, "zona_participacion_2024") ?? label;
-      else if (view === "casillas") label = indicatorText(item, "alerta_sin_casilla") ?? label;
-      else if (view === "seguridad" && security === "institucion")
+      else if (view === "zonas") {
+        const raw = indicatorText(item, "zona_participacion_2024");
+        label = raw ? (zoneLabels[raw] ?? raw) : label;
+      } else if (view === "casillas") {
+        const raw = indicatorText(item, "alerta_sin_casilla");
+        label = raw ? (boothLabels[raw] ?? raw) : label;
+      } else if (view === "seguridad" && security === "institucion")
         label = indicatorText(item, "quien_ejerce_seguridad") ?? label;
       else if (view === "seguridad" && security === "policia") {
         const value = indicatorBoolean(item, "tiene_policia_municipal");
@@ -240,7 +234,7 @@ export function mapPresentation(dataset: Dataset, presentation: Presentation) {
                 ? `${value} elecciones`
                 : view === "personas"
                   ? formatInteger(value)
-                  : `${indicatorNumber(item, "tasa_homicidios_2022_2024")} por 100 mil · percentil ${value}`;
+                  : `${indicatorNumber(item, "tasa_homicidios_2022_2024")} homicidios por cada 100 mil habitantes al año`;
           color = band(
             value,
             view === "rezago" ? 6 : view === "personas" ? maxPeople : view === "historia" ? 1 : 100
@@ -255,6 +249,14 @@ export function mapPresentation(dataset: Dataset, presentation: Presentation) {
       value: label === "Sin dato" || label === "Sin casilla" ? null : (numeric ?? label),
     };
   }
+  if (view === "elecciones")
+    description +=
+      " Ayuntamiento es el gobierno municipal; gubernatura es quien encabeza el gobierno del estado.";
+  if (view === "seguridad")
+    description +=
+      security === "homicidios"
+        ? " El color ordena las tasas de homicidios de 2022–2024, por cada 100 mil habitantes al año, de menor a mayor."
+        : " El registro de policía e instituciones corresponde al 31 de diciembre de 2024 (CNGMD 2025).";
   return { title, description, legend: [...legend, { label: "Sin dato", color: gray }], paints };
 }
 export function controlCards(
@@ -275,15 +277,15 @@ export function controlCards(
   if (presentation.tab === "pronostico") {
     const info = dataset.scenarios.find((s) => s.id === scenario);
     const cards = [
-      card("Municipios en rojo · referencia", red.length),
+      card("Rojos sin intervención", red.length),
       card(
-        "Personas en rojo · LN 2024",
+        "Personas registradas en rojos · 2024",
         red.reduce((n, item) => n + (item.nominal ?? 0), 0)
       ),
       {
-        label: "Supuesto nacional de partida",
+        label: "Participación supuesta del país",
         value: formatPercent(dataset.nationalLevels?.[info?.national ?? ""]),
-        detail: "No lo predice el modelo",
+        detail: "Es un punto de partida, no una predicción",
       },
     ];
     if (info?.intervention === "dirigida_rojos")
@@ -300,14 +302,14 @@ export function controlCards(
           red.filter((item) =>
             ["medio", "bajo"].includes(estimateFor(dataset, scenario, item.id).risk)
           ).length,
-          `${formatInteger(red.filter((item) => ["medio", "bajo"].includes(estimateFor(dataset, scenario, item.id).risk)).reduce((sum, item) => sum + (item.nominal ?? 0), 0))} · LN 2024`
+          `${formatInteger(red.filter((item) => ["medio", "bajo"].includes(estimateFor(dataset, scenario, item.id).risk)).reduce((sum, item) => sum + (item.nominal ?? 0), 0))} personas registradas · 2024`
         ),
         card(
-          "Rojo con intervención",
+          "Rojos con intervención",
           rows.filter((item) => estimateFor(dataset, scenario, item.id).risk === "alto").length
         )
       );
-    else cards.push(card("Con resultado", rows.length));
+    else cards.push(card("Con estimación", rows.length));
     return cards;
   }
   switch (presentation.view) {
@@ -321,15 +323,15 @@ export function controlCards(
       return [
         "Ayuntamiento y gubernatura",
         "Ayuntamiento, sin gubernatura",
-        "Sin municipal · usos y costumbres",
-        "Sin municipal · otros",
+        "Sin ayuntamiento ese día · usos y costumbres",
+        "Sin ayuntamiento ese día · otros municipios",
       ]
         .map((category) => {
           const group = rows.filter((item) => electionCategory(item) === category);
           return card(
             category,
             group.length,
-            `${formatInteger(group.reduce((n, item) => n + (item.nominal ?? 0), 0))} · LN 2024`
+            `${formatInteger(group.reduce((n, item) => n + (item.nominal ?? 0), 0))} personas registradas · 2024`
           );
         })
         .concat(
@@ -341,12 +343,12 @@ export function controlCards(
           card(
             "Rojos sin ayuntamiento ese día",
             redWithoutCouncil.length,
-            `${formatInteger(redWithoutCouncil.reduce((n, item) => n + (item.nominal ?? 0), 0))} · LN 2024`
+            `${formatInteger(redWithoutCouncil.reduce((n, item) => n + (item.nominal ?? 0), 0))} personas registradas · 2024`
           ),
           card(
             "Rojos con ayuntamiento ese día",
             redWithCouncil.length,
-            `${formatInteger(redWithCouncil.reduce((n, item) => n + (item.nominal ?? 0), 0))} · LN 2024`
+            `${formatInteger(redWithCouncil.reduce((n, item) => n + (item.nominal ?? 0), 0))} personas registradas · 2024`
           )
         );
     }
@@ -357,7 +359,7 @@ export function controlCards(
       return [
         card("Por debajo en las 6 elecciones", group.length),
         card(
-          "Personas · LN 2024",
+          "Personas registradas · 2024",
           group.reduce((n, item) => n + (item.nominal ?? 0), 0)
         ),
       ];
@@ -372,20 +374,20 @@ export function controlCards(
       ]
         .map((label) =>
           card(
-            label,
+            zoneLabels[label] ?? label,
             rows.filter((item) => indicatorText(item, "zona_participacion_2024") === label).length
           )
         )
         .concat(
           card(
-            "Sin indicador",
+            "Sin este dato",
             rows.filter((item) => indicatorText(item, "zona_participacion_2024") === null).length
           )
         );
     case "personas":
       return [
-        card("Personas en la consulta", sum(rows, presentation.group)),
-        card("En rojos de referencia", sum(red, presentation.group)),
+        card("Personas del grupo seleccionado", sum(rows, presentation.group)),
+        card("En municipios rojos sin intervención", sum(red, presentation.group)),
         card(
           "Municipios sin este dato",
           rows.filter((item) => indicatorNumber(item, presentation.group) === null).length
@@ -394,7 +396,7 @@ export function controlCards(
     case "casillas":
       return ["recurrente", "antecedente", "sin antecedente"].map((label) =>
         card(
-          label,
+          boothLabels[label] ?? label,
           rows.filter((item) => indicatorText(item, "alerta_sin_casilla") === label).length
         )
       );
@@ -416,12 +418,13 @@ export function controlCards(
     case "historia":
       return [
         card(
-          `Con participación ${presentation.year}`,
+          `Con dato de ${presentation.year}`,
           rows.filter(
             (item) =>
               item.history[presentation.year] !== null &&
               item.history[presentation.year] !== undefined
-          ).length
+          ).length,
+          "Incluye registros marcados sin casilla"
         ),
         card(
           "Sin casilla",

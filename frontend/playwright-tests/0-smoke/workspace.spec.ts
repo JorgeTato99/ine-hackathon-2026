@@ -46,13 +46,13 @@ test("la entrada muestra el mapa y la tabla permite consultar más de una págin
     "descending"
   );
   const downloading = page.waitForEvent("download");
-  await page.getByRole("button", { name: "CSV de la vista", exact: true }).click();
+  await page.getByRole("button", { name: "Descargar tabla (CSV)", exact: true }).click();
   const download = await downloading;
   expect((await readFile((await download.path())!, "utf8")).trim().split("\r\n")).toHaveLength(
     2479
   );
   await page
-    .getByRole("searchbox", { name: "Buscar municipio o CVEGEO", exact: true })
+    .getByRole("searchbox", { name: "Buscar municipio o clave", exact: true })
     .fill("01001");
   await expect(table.getByRole("row")).toHaveCount(2);
   expect(new URL(page.url()).searchParams.has("pagina")).toBe(false);
@@ -103,7 +103,7 @@ test("el modo mapa conserva Canvas, consulta y cámara sin repetir la descarga",
   await page.getByRole("button", { name: /^Filtros/ }).click();
   const panel = page.getByTestId("floating-panel");
   await expect(panel).toBeVisible();
-  await page.getByRole("combobox", { name: "Historia disponible", exact: true }).click();
+  await page.getByRole("combobox", { name: "Datos de elecciones anteriores", exact: true }).click();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("listbox")).toHaveCount(0);
   await expect(panel).toBeVisible();
@@ -115,7 +115,7 @@ test("el modo mapa conserva Canvas, consulta y cámara sin repetir la descarga",
     .analyze();
   expect(axe.violations).toEqual([]);
   await page
-    .getByRole("searchbox", { name: "Buscar municipio o CVEGEO", exact: true })
+    .getByRole("searchbox", { name: "Buscar municipio o clave", exact: true })
     .fill("01001");
   await page.getByRole("button", { name: "Ver ficha: Aguascalientes", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Aguascalientes", level: 2 })).toBeVisible();
@@ -143,7 +143,7 @@ test("permite consultar y descargar una ficha en el panel y recuperar espacio", 
   await expect(map).toHaveAttribute("data-selected-id", "01001");
   await expect(page.getByRole("heading", { name: "Aguascalientes", level: 2 })).toBeVisible();
   const downloading = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Descargar ficha JSON", exact: true }).click();
+  await page.getByRole("button", { name: "Descargar ficha (JSON)", exact: true }).click();
   const download = await downloading;
   const data = JSON.parse(await readFile((await download.path())!, "utf8"));
   expect(data.municipality.id).toBe("01001");
@@ -193,7 +193,7 @@ test("los filtros abiertos y las fichas seleccionadas conservan nombres accesibl
   await page.getByRole("button", { name: "Entrar al modo mapa", exact: true }).click();
   await expect(page.getByTestId("explorer-workspace")).toHaveAttribute("data-map-mode", "true");
   await page
-    .getByRole("searchbox", { name: "Buscar municipio o CVEGEO", exact: true })
+    .getByRole("searchbox", { name: "Buscar municipio o clave", exact: true })
     .fill("01001");
   await page.getByRole("button", { name: "Ver ficha: Aguascalientes", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Aguascalientes", level: 2 })).toBeVisible();

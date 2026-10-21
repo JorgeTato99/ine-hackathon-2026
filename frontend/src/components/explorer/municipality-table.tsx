@@ -61,6 +61,9 @@ export function MunicipalityTable({
   };
   return (
     <Box>
+      <Box sx={{ px: 1.5, py: 1, fontSize: 12, color: "text.secondary" }}>
+        Ordena con los títulos de columna. En pantallas pequeñas, desliza la tabla hacia los lados.
+      </Box>
       <TablePagination
         component="div"
         count={items.length}
@@ -161,7 +164,9 @@ export function MunicipalityTable({
                       {selected === item.id && <span aria-hidden="true"> ✓</span>}
                     </Button>
                     {!item.hasGeometry && (
-                      <Box sx={{ fontSize: 11, color: "text.secondary" }}>Sin geometría</Box>
+                      <Box sx={{ fontSize: 11, color: "text.secondary" }}>
+                        Sin límites disponibles
+                      </Box>
                     )}
                   </TableCell>
                   <TableCell
@@ -186,7 +191,9 @@ export function MunicipalityTable({
                         <RiskBadge risk={result.risk} />
                       </TableCell>
                       <TableCell sx={{ fontSize: 12 }}>
-                        {result.state.replaceAll("_", " ")}
+                        {result.state === "estimado"
+                          ? "Con estimación"
+                          : result.state.replaceAll("_", " ")}
                       </TableCell>
                     </>
                   )}

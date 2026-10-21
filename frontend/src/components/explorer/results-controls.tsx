@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { contextViews, peopleGroups, type Presentation, type LegendItem } from "@/utils/indicators";
+import { contextGuides } from "@/content/reading-guide";
 
 export function ResultsViews({
   presentation,
@@ -35,7 +36,7 @@ export function ResultsViews({
             variant={presentation.tab === "contexto" ? "contained" : "outlined"}
             onClick={() => onChange({ pestana: "contexto" })}
           >
-            Indicadores
+            Datos del territorio
           </Button>
         </ButtonGroup>
       ) : (
@@ -59,7 +60,7 @@ export function ResultsViews({
             id="tab-contexto"
             aria-controls="territorial-content"
             value="contexto"
-            label="Indicadores y contexto"
+            label="Datos del territorio"
           />
         </Tabs>
       )}
@@ -75,7 +76,7 @@ export function ResultsViews({
           }}
         >
           <TextField
-            label="Vista de contexto"
+            label="Tema del mapa"
             select
             size="small"
             value={presentation.view}
@@ -111,7 +112,7 @@ export function ResultsViews({
               onChange={(event) => onChange({ seguridad: event.target.value })}
             >
               {[
-                ["homicidios", "Tasa de homicidios"],
+                ["homicidios", "Homicidios por cada 100 mil habitantes"],
                 ["institucion", "Quién ejerce la seguridad"],
                 ["policia", "Policía municipal"],
               ].map(([value, label]) => (
@@ -138,6 +139,11 @@ export function ResultsViews({
           )}
         </Box>
       )}
+      {presentation.tab === "contexto" && (
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          {contextGuides[presentation.view].summary}
+        </Typography>
+      )}
     </Box>
   );
 }
@@ -157,7 +163,7 @@ export function ResultsCards({
     <Box sx={{ minWidth: 0, maxWidth: "100%" }}>
       <Box
         role="region"
-        aria-label="Cifras de control de la consulta"
+        aria-label="Resumen de los municipios seleccionados"
         tabIndex={0}
         sx={{
           display: "grid",
@@ -188,7 +194,7 @@ export function ResultsCards({
             <Typography
               variant="caption"
               color="text.secondary"
-              sx={{ fontSize: 11, display: "block" }}
+              sx={{ fontSize: 12, display: "block" }}
             >
               {card.label}
             </Typography>
@@ -203,7 +209,7 @@ export function ResultsCards({
               {card.value}
             </Typography>
             {card.detail && (
-              <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>
+              <Typography variant="caption" color="text.secondary">
                 {card.detail}
               </Typography>
             )}
@@ -212,8 +218,9 @@ export function ResultsCards({
       </Box>
       {count > withData && (
         <Typography variant="caption" color="text.secondary">
-          {count - withData} sin resultados; tarjetas sobre {withData.toLocaleString("es-MX")} con
-          datos.
+          {count - withData}{" "}
+          {count - withData === 1 ? "municipio sin datos" : "municipios sin datos"}. Las cifras
+          corresponden a los {withData.toLocaleString("es-MX")} que sí tienen información.
         </Typography>
       )}
     </Box>
@@ -233,6 +240,8 @@ export function ResultsLegend({
 }) {
   return (
     <Box
+      role="region"
+      tabIndex={compact ? 0 : undefined}
       aria-label={`Leyenda: ${title}`}
       sx={{
         px: 1.5,
@@ -241,6 +250,11 @@ export function ResultsLegend({
         borderColor: "divider",
         maxHeight: compact ? 180 : "none",
         overflowY: "auto",
+        "&:focus-visible": {
+          outline: "2px solid",
+          outlineColor: "primary.main",
+          outlineOffset: -2,
+        },
       }}
     >
       <Typography variant="caption" sx={{ fontWeight: 700 }}>
@@ -267,11 +281,7 @@ export function ResultsLegend({
           </Box>
         ))}
       </Box>
-      <Typography
-        variant="caption"
-        color="text.secondary"
-        sx={{ fontSize: 11, lineHeight: 1.5, display: "block" }}
-      >
+      <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.5, display: "block" }}>
         {description}
       </Typography>
     </Box>

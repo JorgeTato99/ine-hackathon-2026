@@ -69,7 +69,7 @@ export function ContentPage({
                 >
                   {action.label}
                 </Button>
-                <DataStatus status="sample" />
+                <DataStatus status="modeled" label="Datos y estimaciones" />
               </Box>
             </PageHeader>
           </Box>

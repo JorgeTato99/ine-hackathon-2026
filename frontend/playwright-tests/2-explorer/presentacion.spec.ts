@@ -25,9 +25,9 @@ test("registra los filtros tras cargar la base y no repite entradas al consultar
   try {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" })).toHaveCount(0);
+    await expect(page.getByRole("searchbox", { name: "Buscar municipio o clave" })).toHaveCount(0);
     releaseData();
-    const search = page.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" });
+    const search = page.getByRole("searchbox", { name: "Buscar municipio o clave" });
     await expect(search).toBeVisible();
     const panel = search.locator('xpath=ancestor::*[@data-entrance="card"]');
     const count = () =>
@@ -69,11 +69,13 @@ test("la ficha y las guías respetan reducción de movimiento y conservan datos 
   page,
 }) => {
   await page.goto("/?vista=tabla&buscar=16064&municipio=16064&comparar=1");
-  await expect(page.getByRole("button", { name: "CSV de la vista", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Descargar tabla (CSV)", exact: true })
+  ).toBeVisible();
   const show = page.getByRole("button", { name: "Ver ficha" });
   if (await show.isVisible()) await show.click();
   await expect(page.getByRole("heading", { name: "Parácuaro", level: 2 })).toBeVisible();
-  const action = page.getByRole("button", { name: "Descargar ficha JSON" });
+  const action = page.getByRole("button", { name: "Descargar ficha (JSON)" });
   await action.focus();
   await expect(action).toBeFocused();
   await page.emulateMedia({ reducedMotion: "reduce" });

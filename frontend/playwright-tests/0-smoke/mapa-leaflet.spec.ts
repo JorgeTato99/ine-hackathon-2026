@@ -87,7 +87,7 @@ test("dibuja los cuatro riesgos y sus cambios con colores y tramas reales de Can
   const scenariosDialog = await scenarioButton.isVisible();
   for (const [i, id] of ids.entries()) {
     const previousView = await map.getAttribute("data-map-view");
-    await page.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" }).fill(id);
+    await page.getByRole("searchbox", { name: "Buscar municipio o clave" }).fill(id);
     await expect.poll(() => map.getAttribute("data-map-view")).not.toBe(previousView);
     await expect(map).toHaveAttribute("data-map-visible", "1");
     for (const [s, scenario] of ["base", "con"].entries()) {

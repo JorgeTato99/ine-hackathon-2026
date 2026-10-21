@@ -29,10 +29,10 @@ test("el archivo tiene navegación local, recursos identificables y descargas í
   );
   await page
     .getByRole("navigation", { name: "En esta página" })
-    .getByRole("link", { name: /Antes de importar/ })
+    .getByRole("link", { name: /Cómo usar los archivos/ })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Antes de importar", exact: true })
+    page.getByRole("heading", { name: "Cómo usar los archivos", exact: true })
   ).toBeInViewport();
 });
 
@@ -97,7 +97,7 @@ test("el movimiento termina, respeta reducción y mantiene la navegación HTML",
     .getByRole("link", { name: "Datos y descargas", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Datos abiertos, lectura responsable" })
+    page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
   ).toBeVisible();
   for (const sheet of await page.locator(".archive-sheet").all())
     await expect(sheet).toHaveCSS("animation-name", "none");
@@ -128,7 +128,7 @@ test("los textos, anclas y archivos informativos funcionan sin JavaScript", asyn
     await page.goto("/datos/");
     await expect(page.getByRole("link", { name: /^Descargar / })).toHaveCount(6);
     await expect(
-      page.getByRole("heading", { name: "Datos abiertos, lectura responsable" })
+      page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
     ).toHaveCSS("opacity", "1");
     expect((await page.request.get("/data/resultados-1.1/metadatos.json")).status()).toBe(200);
     const size = await page.evaluate(() => ({

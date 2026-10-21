@@ -108,8 +108,8 @@ test("las descargas conservan identidad, foco y acceso durante la entrada por es
   await expect(first).toHaveCSS("opacity", "1");
   await expect(action).toBeFocused();
   expect(await action.getAttribute("href")).toBe(href);
-  await expect(page.locator('#archivos [data-entrance="heading"]')).toHaveCSS(
-    "animation-name",
-    "tc-heading-enter"
-  );
+  // En móvil, ir directamente a la tarjeta puede saltarse el título completo.
+  const heading = page.locator('#archivos [data-entrance="heading"]');
+  await heading.scrollIntoViewIfNeeded();
+  await expect(heading).toHaveCSS("animation-name", "tc-heading-enter");
 });

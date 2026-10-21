@@ -15,6 +15,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import { riskTokens } from "@/theme/tokens";
 import { Icon } from "@/components/ui/icon";
+import { ContextHelp } from "@/components/ui/context-help";
 import { entranceProps } from "@/theme/entrance";
 import {
   advancedFilterCount,
@@ -89,14 +90,14 @@ export function ExplorerFilters({
   const error = nominalRangeError(advanced);
   const stateField = (
     <TextField
-      label="Entidad federativa"
+      label="Estado"
       select
       size="small"
       slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
       value={state}
       onChange={(e) => onChange({ entidad: e.target.value })}
     >
-      <MenuItem value="">Todas las entidades</MenuItem>
+      <MenuItem value="">Todos los estados</MenuItem>
       {states.map(([id, name]) => (
         <MenuItem key={id} value={id}>
           {name}
@@ -105,21 +106,31 @@ export function ExplorerFilters({
     </TextField>
   );
   const riskField = (
-    <TextField
-      label={sample ? "Riesgo ilustrativo" : "Semáforo de referencia"}
-      select
-      size="small"
-      slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
-      value={risk}
-      onChange={(e) => onChange({ riesgo: e.target.value })}
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: sample ? "1fr" : "minmax(0, 1fr) 32px",
+        gap: 0.5,
+        alignItems: "center",
+      }}
     >
-      <MenuItem value="">Todos los niveles</MenuItem>
-      {Object.entries(riskTokens).map(([id, token]) => (
-        <MenuItem key={id} value={id}>
-          {sample ? token.label : referenceRiskLabels[id as keyof typeof riskTokens]}
-        </MenuItem>
-      ))}
-    </TextField>
+      <TextField
+        label={sample ? "Riesgo ilustrativo" : "Color sin intervención"}
+        select
+        size="small"
+        slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
+        value={risk}
+        onChange={(e) => onChange({ riesgo: e.target.value })}
+      >
+        <MenuItem value="">Todos los niveles</MenuItem>
+        {Object.entries(riskTokens).map(([id, token]) => (
+          <MenuItem key={id} value={id}>
+            {sample ? token.label : referenceRiskLabels[id as keyof typeof riskTokens]}
+          </MenuItem>
+        ))}
+      </TextField>
+      {!sample && <ContextHelp topic="baseline" />}
+    </Box>
   );
   const active: { key: string; label: string; remove: Record<string, string> }[] = [];
   if (contextFilters)
@@ -143,7 +154,7 @@ export function ExplorerFilters({
       key: "risk",
       label: sample
         ? `Riesgo: ${riskTokens[risk as keyof typeof riskTokens].label}`
-        : `Semáforo de referencia: ${referenceRiskLabels[risk as keyof typeof riskTokens]}`,
+        : `Color sin intervención: ${referenceRiskLabels[risk as keyof typeof riskTokens]}`,
       remove: { riesgo: "" },
     });
   if (advanced.history)
@@ -155,13 +166,13 @@ export function ExplorerFilters({
   if (advanced.geometry)
     active.push({
       key: "geometry",
-      label: advanced.geometry === "con" ? "Con geometría" : "Sin geometría",
+      label: advanced.geometry === "con" ? "Con límites disponibles" : "Sin límites disponibles",
       remove: { cartografia: "" },
     });
   if (advanced.minimum !== "" || advanced.maximum !== "")
     active.push({
       key: "nominal",
-      label: `Lista nominal: ${advanced.minimum || "0"}–${advanced.maximum || "sin límite"}`,
+      label: `Lista electoral: ${advanced.minimum || "0"}–${advanced.maximum || "sin límite"}`,
       remove: { ln_min: "", ln_max: "" },
     });
   const extendedFields = (
@@ -182,28 +193,38 @@ export function ExplorerFilters({
         )}
         {contextFilters && (
           <>
-            <TextField
-              label="Tamaño de lista 2024"
-              size="small"
-              select
-              value={contextFilters.tamano}
-              onChange={(event) => onChange({ tamano: event.target.value })}
-              slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 1fr) 32px",
+                gap: 0.5,
+                alignItems: "center",
+              }}
             >
-              {[
-                ["", "Todos los tamaños"],
-                ["pequeno", "Menos de 5 mil"],
-                ["medio", "5 mil a menos de 20 mil"],
-                ["grande", "20 mil a menos de 100 mil"],
-                ["mayor", "100 mil o más"],
-              ].map(([value, label]) => (
-                <MenuItem key={value} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
-            </TextField>
+              <TextField
+                label="Tamaño de la lista electoral"
+                size="small"
+                select
+                value={contextFilters.tamano}
+                onChange={(event) => onChange({ tamano: event.target.value })}
+                slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
+              >
+                {[
+                  ["", "Todos los tamaños"],
+                  ["pequeno", "Menos de 5 mil"],
+                  ["medio", "5 mil a menos de 20 mil"],
+                  ["grande", "20 mil a menos de 100 mil"],
+                  ["mayor", "100 mil o más"],
+                ].map(([value, label]) => (
+                  <MenuItem key={value} value={value}>
+                    {label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <ContextHelp topic="roll" />
+            </Box>
             <TextField
-              label="Ayuntamiento en 2027"
+              label="Elección municipal en 2027"
               size="small"
               select
               value={contextFilters.ayuntamiento}
@@ -220,26 +241,36 @@ export function ExplorerFilters({
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              label="Usos y costumbres"
-              size="small"
-              select
-              value={contextFilters.costumbres}
-              onChange={(event) => onChange({ costumbres: event.target.value })}
-              slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 1fr) 32px",
+                gap: 0.5,
+                alignItems: "center",
+              }}
             >
-              {[
-                ["", "Todos"],
-                ["si", "Sí"],
-                ["no", "No"],
-              ].map(([value, label]) => (
-                <MenuItem key={value} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
-            </TextField>
+              <TextField
+                label="Usos y costumbres"
+                size="small"
+                select
+                value={contextFilters.costumbres}
+                onChange={(event) => onChange({ costumbres: event.target.value })}
+                slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
+              >
+                {[
+                  ["", "Todos"],
+                  ["si", "Sí"],
+                  ["no", "No"],
+                ].map(([value, label]) => (
+                  <MenuItem key={value} value={value}>
+                    {label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <ContextHelp topic="customs" />
+            </Box>
             <TextField
-              label="Antecedente sin casilla"
+              label="Falta de casillas antes"
               size="small"
               select
               value={contextFilters.alerta}
@@ -259,32 +290,32 @@ export function ExplorerFilters({
           </>
         )}
         <TextField
-          label="Historia disponible"
+          label="Datos de elecciones anteriores"
           select
           size="small"
           value={advanced.history}
           slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
           onChange={(e) => onChange({ historia: e.target.value })}
         >
-          <MenuItem value="">Cualquier cobertura</MenuItem>
-          <MenuItem value="completa">Las seis elecciones</MenuItem>
-          <MenuItem value="parcial">Historia parcial</MenuItem>
+          <MenuItem value="">Con o sin datos anteriores</MenuItem>
+          <MenuItem value="completa">Datos en las seis elecciones</MenuItem>
+          <MenuItem value="parcial">Faltan datos en alguna elección</MenuItem>
           <MenuItem value="ausente">Sin registros históricos</MenuItem>
         </TextField>
         <TextField
-          label="Cartografía disponible"
+          label="Ubicación en el mapa"
           select
           size="small"
           value={advanced.geometry}
           slotProps={{ inputLabel: { shrink: true }, select: { displayEmpty: true } }}
           onChange={(e) => onChange({ cartografia: e.target.value })}
         >
-          <MenuItem value="">Con o sin geometría</MenuItem>
-          <MenuItem value="con">Con geometría</MenuItem>
-          <MenuItem value="sin">Sin geometría</MenuItem>
+          <MenuItem value="">Con o sin límites disponibles</MenuItem>
+          <MenuItem value="con">Con límites disponibles</MenuItem>
+          <MenuItem value="sin">Sin límites disponibles</MenuItem>
         </TextField>
         <TextField
-          label="Lista nominal 2024 · mínimo"
+          label="Lista electoral 2024 · mínimo"
           size="small"
           value={advanced.minimum}
           slotProps={{ htmlInput: { inputMode: "numeric" } }}
@@ -292,7 +323,7 @@ export function ExplorerFilters({
           onChange={(e) => onChange({ ln_min: e.target.value })}
         />
         <TextField
-          label="Lista nominal 2024 · máximo"
+          label="Lista electoral 2024 · máximo"
           size="small"
           value={advanced.maximum}
           slotProps={{ htmlInput: { inputMode: "numeric" } }}
@@ -301,9 +332,10 @@ export function ExplorerFilters({
         />
       </Box>
       <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 2 }}>
-        La cobertura indica presencia de datos de 2009–2024, no comparabilidad territorial ni
-        calidad del modelo. Los límites de lista nominal son inclusivos; al usarlos se excluyen los
-        registros sin ese dato.
+        La elección municipal se refiere al 6 de junio de 2027. Los filtros de datos anteriores y
+        ubicación indican qué información está disponible, no qué tan precisa es la estimación. La
+        lista electoral cuenta personas registradas para votar en 2024. Los límites mínimo y máximo
+        también se incluyen; los municipios sin ese dato quedan fuera al usarlos.
       </Typography>
       {error && (
         <Alert severity="warning" sx={{ mt: 1.5 }}>
@@ -338,15 +370,15 @@ export function ExplorerFilters({
             display: "grid",
             gridTemplateColumns: {
               xs: "minmax(0, 1fr) auto",
-              md: "minmax(200px, 1.4fr) minmax(170px, 1fr) minmax(160px, .85fr) auto auto",
+              md: "minmax(200px, 1.4fr) minmax(150px, 1fr) minmax(180px, .85fr) auto auto",
             },
             gap: 1.25,
             alignItems: "center",
           }}
         >
           <TextField
-            label="Buscar municipio o CVEGEO"
-            placeholder="Nombre o clave"
+            label="Buscar municipio o clave"
+            placeholder="Ej. Aguascalientes o 01001"
             type="search"
             size="small"
             value={search}

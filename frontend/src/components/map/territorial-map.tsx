@@ -140,7 +140,7 @@ export default function TerritorialMap({
     return (
       <Box sx={{ p: 3, height: "100%" }}>
         <Skeleton variant="rounded" height="100%" />
-        <span role="status">Cargando cartografía municipal…</span>
+        <span role="status">Cargando los límites de los municipios…</span>
       </Box>
     );
   if (geometry.isError || rendererError)
@@ -159,7 +159,8 @@ export default function TerritorialMap({
           </Button>
         }
       >
-        {geometry.isError ? geometry.error.message : rendererError}
+        No pudimos mostrar el mapa. Puedes reintentar o usar la tabla para consultar y seleccionar
+        municipios.
       </Alert>
     );
   return (
@@ -192,7 +193,7 @@ export default function TerritorialMap({
             zIndex: 1,
           }}
         >
-          No hay municipios con estos filtros.
+          No hay municipios con estos filtros. Quita algún filtro o cambia la búsqueda.
         </Box>
       )}
       <Box

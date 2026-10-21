@@ -33,7 +33,7 @@ test("selecciona una geometría real por clic y abre la misma ficha", async ({ p
   const expand = page.getByRole("button", { name: "Filtros", exact: true });
   const filtersDialog = await expand.isVisible();
   if (filtersDialog) await expand.click();
-  await page.getByRole("combobox", { name: "Entidad federativa" }).click();
+  await page.getByRole("combobox", { name: "Estado" }).click();
   await page.getByRole("option", { name: "Aguascalientes", exact: true }).click();
   await expect(page).toHaveURL(/entidad=01/);
   if (filtersDialog) {
@@ -82,7 +82,7 @@ test("consulta historia reconstruida y compara intervención al mismo nivel naci
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" }).fill("16064");
+  await page.getByRole("searchbox", { name: "Buscar municipio o clave" }).fill("16064");
   await page.getByRole("button", { name: "Tabla", exact: true }).click();
   await expect(page).toHaveURL(/buscar=16064/);
   await expect(page).toHaveURL(/vista=tabla/);
@@ -102,8 +102,10 @@ test("consulta historia reconstruida y compara intervención al mismo nivel naci
   await expect(
     page.getByText("Supuesto, no efecto medido.", { exact: true }).first()
   ).toBeVisible();
-  await page.getByRole("combobox", { name: "Nivel nacional", exact: true }).click();
-  await page.getByRole("option", { name: /^Alto/ }).click();
+  await page
+    .getByRole("combobox", { name: "Participación supuesta del país", exact: true })
+    .click();
+  await page.getByRole("option", { name: /^Alta participación/ }).click();
   await expect(page).toHaveURL(/escenario=nac-alto_int-ninguna/);
   await expect(page).toHaveURL(/segundo=nac-alto_int-dirigida_rojos/);
   if (scenariosDialog) {
@@ -113,7 +115,7 @@ test("consulta historia reconstruida y compara intervención al mismo nivel naci
   const show = page.getByRole("button", { name: "Ver ficha" });
   if (await show.isVisible()) await show.click();
   const event = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Descargar ficha JSON" }).click();
+  await page.getByRole("button", { name: "Descargar ficha (JSON)" }).click();
   const download = await event;
   const document = JSON.parse(await readFile((await download.path())!, "utf8"));
   expect(document.municipality.id).toBe("16064");
@@ -126,15 +128,13 @@ test("consulta historia reconstruida y compara intervención al mismo nivel naci
 
 test("navega fuentes y descarga un GeoPackage real", async ({ page }) => {
   await page.goto("/metodologia/");
-  await expect(
-    page.getByRole("heading", { name: "Leer los resultados con contexto" })
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Cómo leer los resultados" })).toBeVisible();
   await page
     .getByRole("navigation", { name: "Principal" })
     .getByRole("link", { name: "Datos y descargas" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Datos abiertos, lectura responsable" })
+    page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
   ).toBeVisible();
   const event = page.waitForEvent("download");
   await page.locator('a[download][href="/data/resultados-1.1/municipios.gpkg"]').click();

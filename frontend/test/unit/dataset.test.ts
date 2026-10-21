@@ -6,6 +6,7 @@ import {
   filterMunicipalities,
   formatInteger,
   formatPercent,
+  formatPointDifference,
   knownHistory,
   municipalityById,
   normalized,
@@ -15,6 +16,12 @@ import { selectionCsv, municipalityDocument } from "@/utils/downloads";
 import { datasetFixture } from "../fixtures/dataset";
 
 describe("Contrato y lectura de resultados", () => {
+  it("expresa una diferencia en puntos sin confundirla con porcentaje relativo", () => {
+    expect(formatPointDifference(-12)).toBe("12 puntos menos");
+    expect(formatPointDifference(5.25)).toBe("5.25 puntos más");
+    expect(formatPointDifference(0)).toBe("Misma participación");
+    expect(formatPointDifference(null)).toBe("Sin dato");
+  });
   it("conserva claves, ceros, ausencias y escenarios sin exigir doce", () => {
     const data = decodeDataset(datasetFixture());
     expect(data.municipalities[0]?.id).toBe("01001");

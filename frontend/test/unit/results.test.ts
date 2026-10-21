@@ -78,6 +78,25 @@ describe("entrega científica resultados-1.1", () => {
     expect(check("nuevos_votantes_2027")).toEqual([4363455, 1104131, 8]);
     expect(check("nuevos_sin_credencial_2027_si_se_repite_2021")).toEqual([1268747, 318946, 245]);
   });
+  it("conserva categorías coloreadas al traducir etiquetas sin modificar indicadores exportados", () => {
+    for (const view of ["zonas", "elecciones", "casillas"]) {
+      const map = mapPresentation(dataset, presentation(`pestana=contexto&indicador=${view}`));
+      const missing = map.legend.find((entry) => entry.label === "Sin dato")!.color;
+      const available = Object.values(map.paints).filter((paint) => paint.label !== "Sin dato");
+      expect(available.every((paint) => paint.color !== missing)).toBe(true);
+      expect(new Set(available.map((paint) => paint.color)).size).toBe(
+        view === "zonas" ? 5 : view === "elecciones" ? 4 : 3
+      );
+    }
+    const item = dataset.municipalities.find(
+      (row) => row.indicators?.zona_participacion_2024 === "fría (bajo-bajo)"
+    )!;
+    const map = mapPresentation(dataset, presentation("pestana=contexto&indicador=zonas"));
+    expect(map.paints[item.id]?.label).toBe("Participación baja entre vecinos");
+    const csv = selectionCsv(dataset, [item], medium, map);
+    expect(csv).toContain('"Participación baja entre vecinos"');
+    expect(csv).toContain('"fría (bajo-bajo)"');
+  });
   it("muestra cero sin casilla como una condición, sin reescribir el valor original", () => {
     const item = dataset.municipalities.find((row) => row.id === "07030")!;
     expect(item.history["2024"]).toBe(0);

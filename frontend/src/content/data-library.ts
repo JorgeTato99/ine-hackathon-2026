@@ -17,9 +17,8 @@ function resource(file: Omit<FileResource, "bytes">): FileResource {
 
 export const dataLibrary = [
   {
-    title: "Tablas y su contexto",
-    description:
-      "Historia reconstruida, indicadores y pronósticos precalculados de la entrega científica.",
+    title: "Tablas para consultar las cifras",
+    description: "Dos tablas CSV y un archivo que explica sus datos, fuentes y límites.",
     files: [
       resource({
         title: "Historia municipal",
@@ -27,7 +26,7 @@ export const dataLibrary = [
           "Identidad, historia 2009–2024, semáforo e indicadores. Original conservado sin alterar.",
         href: `/data/${resultsRelease.version}/municipios.csv`,
         format: "CSV",
-        unit: "Una fila por CVEGEO · Historia y auxiliares",
+        unit: "Una fila por municipio · Clave de cinco dígitos",
       }),
       resource({
         title: "Pronósticos y escenarios 2027",
@@ -35,35 +34,35 @@ export const dataLibrary = [
           "Seis escenarios: tres niveles nacionales, sin y con intervención. La intervención es un supuesto, no un efecto medido.",
         href: `/data/${resultsRelease.version}/escenarios_2027.csv`,
         format: "CSV",
-        unit: "Una fila por CVEGEO + escenario_id",
+        unit: "Una fila por municipio y escenario",
       }),
       resource({
-        title: "Metadatos recibidos",
+        title: "Guía de los datos y del modelo",
         description:
-          "Versión, modelo, unidades, fuentes y advertencias originales. La web consulta los resultados, no ejecuta las fórmulas del modelo.",
+          "Explica la versión, el modelo, las unidades, las fuentes y las advertencias. Archivo JSON para consulta con otras herramientas.",
         href: `/data/${resultsRelease.version}/metadatos.json`,
         format: "JSON",
-        unit: "Descripción del corte original",
+        unit: "Descripción de la entrega científica original",
       }),
     ],
   },
   {
-    title: "Geometría para visualización",
+    title: "Archivos para abrir el mapa",
     description:
-      "La misma capa municipal en dos formatos, con indicadores y resultados de los seis escenarios.",
+      "Los mismos límites municipales en dos formatos, con indicadores y resultados de los seis escenarios. Para programas de mapas como QGIS.",
     files: [
       resource({
         title: "Cartografía GeoJSON",
         description:
-          "Polígonos simplificados, indicadores y estimaciones por escenario, enlazados por CVEGEO.",
+          "Límites municipales simplificados, indicadores y estimaciones por escenario. Cada municipio conserva su clave de cinco dígitos.",
         href: `/data/${resultsRelease.version}/municipios.geojson`,
         format: "GeoJSON",
-        unit: "Una geometría por CVEGEO · EPSG:4326",
+        unit: "Un municipio por elemento · Coordenadas EPSG:4326",
       }),
       resource({
         title: "Cartografía GeoPackage",
         description:
-          "Capa resultados_2027 con la misma geometría, indicadores y escenarios; lista para herramientas SIG.",
+          "La misma información del GeoJSON, en un solo archivo para programas de mapas. La capa se llama resultados_2027.",
         href: `/data/${resultsRelease.version}/municipios.gpkg`,
         format: "GPKG",
         unit: "Capa resultados_2027 · EPSG:4326",
@@ -71,13 +70,14 @@ export const dataLibrary = [
     ],
   },
   {
-    title: "Procedencia de la publicación",
-    description: "El vínculo entre lo que se consulta y los archivos de este corte.",
+    title: "Verificar los archivos descargados",
+    description:
+      "Para comprobar de qué entrega proviene cada archivo y que su contenido no cambió.",
     files: [
       resource({
         title: "Manifiesto de publicación",
         description:
-          "Huellas SHA-256, advertencias y metadatos cartográficos por entidad para comprobar la identidad de los recursos.",
+          "Incluye una huella digital (SHA-256) de cada archivo, advertencias y la fuente del mapa por estado. Permite verificar su contenido con otras herramientas.",
         href: "/data/manifest.json",
         format: "JSON",
         unit: `Corte ${manifest.version} · Integridad de archivos`,

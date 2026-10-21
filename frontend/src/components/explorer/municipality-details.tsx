@@ -52,16 +52,18 @@ export function MunicipalityDetails({
             <LocationGuide />
           </Box>
           <Typography component="h2" variant="h2" sx={compactEmpty ? { fontSize: 20 } : {}}>
-            Cada municipio tiene una historia
+            Consulta un municipio
           </Typography>
           <Typography color="text.secondary" variant="body2">
-            Selecciona un territorio en el mapa o búscalo por nombre o clave. Aquí podrás consultar
-            su historia, {dataset.sample ? "resultado de muestra" : "pronóstico e indicadores"} y
-            condiciones de lectura.
+            Elige un municipio en el mapa o búscalo por nombre o clave. Aquí podrás consultar su
+            participación en elecciones anteriores,{" "}
+            {dataset.sample ? "resultado de muestra" : "pronóstico e indicadores"} y condiciones de
+            lectura.
           </Typography>
           <Box sx={{ borderLeft: 3, borderColor: "primary.main", pl: 2 }}>
             <Typography variant="caption" color="text.secondary">
-              El riesgo, el estado de la estimación y la prioridad son dimensiones diferentes.
+              El color orienta la comparación. Revisa también la historia, las personas y los avisos
+              antes de decidir una acción.
             </Typography>
           </Box>
           <Button

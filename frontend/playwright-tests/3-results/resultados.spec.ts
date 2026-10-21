@@ -28,18 +28,18 @@ test("pronóstico real: compara al mismo nivel nacional y reproduce 505007 votos
     "aria-selected",
     "true"
   );
-  const cards = page.getByRole("region", { name: "Cifras de control de la consulta" });
+  const cards = page.getByRole("region", { name: "Resumen de los municipios seleccionados" });
   await page.screenshot({ path: test.info().outputPath("pronostico.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await expect(cards.getByText("495", { exact: true })).toBeVisible();
   if (isMobile) await page.getByRole("button", { name: "Escenarios", exact: true }).click();
-  await choose(page, "Intervención hipotética", "Con intervención dirigida");
+  await choose(page, "Intervención (supuesto)", "Con intervención supuesta");
   await closeScenarioDialog(page);
   await expect(page).toHaveURL(/nac-medio_int-dirigida_rojos/);
   await expect(cards.getByText("505,007", { exact: true })).toBeVisible();
   await expect(cards.getByText("88", { exact: true })).toBeVisible();
   if (isMobile) await page.getByRole("button", { name: "Escenarios", exact: true }).click();
-  await choose(page, "Nivel nacional", /^Bajo/);
+  await choose(page, "Participación supuesta del país", /^Baja participación/);
   await closeScenarioDialog(page);
   await expect(cards.getByText("90", { exact: true })).toBeVisible();
   await expect(cards.getByText("495", { exact: true })).toBeVisible();
@@ -59,19 +59,19 @@ test("las siete vistas reutilizan Canvas y los filtros se comparten entre pesta�
   await map
     .locator("canvas")
     .evaluate((element) => element.setAttribute("data-qa-retained", "yes"));
-  await page.getByRole("tab", { name: "Indicadores y contexto", exact: true }).click();
+  await page.getByRole("tab", { name: "Datos del territorio", exact: true }).click();
   const cases = [
-    ["Qué se elige en 2027", "676"],
-    ["Rezago persistente", "285"],
-    ["Zonas frías y calientes", "371"],
-    ["Personas en juego", "2,898,581"],
-    ["Alerta sin casilla", "59"],
-    ["Contexto de seguridad", "517"],
-    ["Historia 2009–2024", "4"],
+    ["Elecciones locales en 2027", "676"],
+    ["Participación por debajo del país", "285"],
+    ["Participación de municipios vecinos", "371"],
+    ["Personas y participación", "2,898,581"],
+    ["Falta de casillas en elecciones anteriores", "59"],
+    ["Seguridad en el municipio", "517"],
+    ["Participación en elecciones anteriores", "4"],
   ];
-  const cards = page.getByRole("region", { name: "Cifras de control de la consulta" });
+  const cards = page.getByRole("region", { name: "Resumen de los municipios seleccionados" });
   for (const [view, total] of cases) {
-    await choose(page, "Vista de contexto", view!);
+    await choose(page, "Tema del mapa", view!);
     await expect(cards.getByText(total!, { exact: true }).first()).toBeVisible();
     await expect(map.locator('[data-qa-retained="yes"]')).toHaveCount(1);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
@@ -101,7 +101,7 @@ test("distingue sin casilla de cero y mantiene Villa de Pozos sin estimación", 
   await expect(page.getByRole("heading", { name: "Villa de Pozos", level: 2 })).toBeVisible();
   await expect(page.getByText(/Sin datos electorales en esta entrega/)).toBeVisible();
   const downloading = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Descargar ficha JSON", exact: true }).click();
+  await page.getByRole("button", { name: "Descargar ficha (JSON)", exact: true }).click();
   const download = await downloading;
   const { readFile } = await import("node:fs/promises");
   const document = JSON.parse(await readFile((await download.path())!, "utf8"));

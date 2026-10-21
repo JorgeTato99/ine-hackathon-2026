@@ -27,45 +27,46 @@ const stages = [
     title: "Partir de lo observado",
     status: "observed" as const,
     text: "Participación municipal de 2009 a 2024. Se conserva el tipo de elección, la ausencia de datos y las incidencias conocidas.",
-    detail: "La historia aporta contexto; no fija por sí sola la referencia predictora.",
+    detail: "La historia ayuda a entender el municipio; no determina por sí sola lo que ocurrirá.",
   },
   {
     number: "02",
-    title: "Modelar la posición relativa",
+    title: "Estimar qué municipios podrían participar menos",
     status: "modeled" as const,
-    text: "Ensamble de regresión robusta Huber y random forest con 34 variables. Validación de una transición presidencial–intermedia a la otra; el nivel nacional se mantiene como escenario.",
-    detail: "El diseño de la interfaz no decide el modelo ni la prioridad territorial.",
+    text: "El análisis usa la historia y características de los municipios para compararlos. Se probó con elecciones anteriores. La participación total del país se plantea con tres supuestos porque el modelo no la predice.",
+    detail: "El color compara riesgo; no decide por sí solo dónde destinar recursos.",
   },
   {
     number: "03",
     title: "Consultar con contexto",
     status: "modeled" as const,
     text: "Pronóstico 2027 e indicadores se consultan en pestañas separadas. Seis escenarios permiten comparar sin y con intervención hipotética, manteniendo el mismo nivel nacional.",
-    detail: "Cambiar una selección consulta un archivo; no genera escenarios nuevos.",
+    detail:
+      "Las opciones muestran cálculos ya preparados y conservan los mismos supuestos al comparar.",
   },
 ];
 const dimensions = [
   {
     name: "Riesgo",
-    question: "¿Cómo se clasifica el territorio?",
+    question: "¿Qué significa el color de un municipio?",
     detail:
-      "Es riesgo relativo: rojo para el 20 % de mayor riesgo, amarillo para el 20 % siguiente y verde para el resto. El color sin intervención no cambia al seleccionar otro nivel nacional.",
+      "El semáforo compara municipios entre sí. Sin intervención, el rojo reúne al 20 % con mayor riesgo de menor participación; el amarillo al 20 % siguiente y el verde al resto. Cambiar el supuesto nacional no cambia estos colores de partida.",
     limit: "Un color no determina por sí solo dónde asignar recursos.",
   },
   {
     name: "Estado de la estimación",
-    question: "¿Qué registro está disponible?",
+    question: "¿Hay información para mostrar una estimación?",
     detail:
-      "Comunica el estado declarado y su motivo, junto con las condiciones de lectura. Una ausencia queda identificada.",
-    limit: "«Estimado» no acredita por sí solo calidad alta.",
+      "Indica si existe una estimación y avisa cuando falta información. Si no hay un dato, se muestra como tal; no se inventa un cero.",
+    limit: "Que exista una estimación no garantiza que sea precisa.",
   },
   {
     name: "Prioridad",
-    question: "¿Con qué criterio se ordena la atención?",
+    question: "¿Dónde conviene atender primero?",
     detail:
-      "Requiere un criterio científico explícito y recomendaciones preventivas. No se deduce automáticamente del semáforo.",
+      "Para decidir dónde destinar recursos hacen falta objetivos y criterios explícitos. El color del mapa es una parte de esa información.",
     limit:
-      "Una mayor tasa, un mayor volumen de personas y una alerta sin casilla requieren lecturas distintas; un único color no sustituye el criterio de asignación.",
+      "Un municipio con menor porcentaje de participación no siempre reúne a más personas que no votan. La falta de casillas también se revisa por separado.",
   },
 ];
 
@@ -73,7 +74,7 @@ export default function MethodologyPage() {
   return (
     <ContentPage
       eyebrow="Cuaderno de lectura · 01"
-      title="Leer los resultados con contexto"
+      title="Cómo leer los resultados"
       description="Una guía para recorrer la participación: distinguir lo observado, entender los escenarios y reconocer sus límites."
       chapters={chapters}
       aside={<TraceOverview />}
@@ -81,16 +82,21 @@ export default function MethodologyPage() {
       <Box component="section" id="recorrido" aria-labelledby="recorrido-title">
         <NotePanel
           tone="warning"
-          title="Pronóstico condicionado, no certeza ni efecto causal."
+          title="Una estimación no es una certeza ni un efecto comprobado."
           announce
         >
-          El modelo ordena municipios y expresa incertidumbre. No predice el nivel nacional: se
-          consultan tres niveles de partida. La intervención es un cálculo con supuestos, no el
-          efecto medido de una campaña.
+          El análisis compara municipios, pero no sabe cuánta gente votará en todo el país en 2027.
+          Por eso se prueban tres porcentajes nacionales. La intervención es una cuenta hipotética:
+          no demuestra lo que conseguiría una campaña.
         </NotePanel>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          {resultMetadata.modelo}
-        </Typography>
+        <Box component="details" sx={{ mt: 2 }}>
+          <Box component="summary" sx={{ cursor: "pointer", color: "primary.main" }}>
+            Detalles técnicos del modelo
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            {resultMetadata.modelo}
+          </Typography>
+        </Box>
         <Box sx={{ mt: 4 }}>
           <SectionHeading
             number="01"
@@ -167,7 +173,7 @@ export default function MethodologyPage() {
           number="02"
           id="participacion-title"
           title="Cómo leer la participación"
-          description="Primero el denominador. Una proporción solo se interpreta bien cuando sabemos quiénes están incluidos."
+          description="El porcentaje indica cuántas personas votaron de cada 100 con dato conocido. Es importante saber a quiénes incluye la cuenta."
         />
         <Surface tone="brand" density="editorial" entrance="block">
           <Typography variant="overline" component="p" sx={{ m: 0, color: "primary.main" }}>
@@ -193,10 +199,11 @@ export default function MethodologyPage() {
                 letterSpacing: "-.035em",
               }}
             >
-              SV / (SV + NV)
+              ¿Cuántas personas votaron de cada 100?
             </Typography>
             <Typography component="figcaption" variant="body2" sx={{ maxWidth: "30ch" }}>
-              Personas que votaron, entre quienes votaron o no votaron.
+              Se cuentan quienes tienen registro de si votaron o no. Las personas sin ese dato se
+              tratan por separado.
             </Typography>
           </Box>
           <Box
@@ -211,7 +218,7 @@ export default function MethodologyPage() {
             {[
               { code: "SV", label: "Sí votaron" },
               { code: "NV", label: "No votaron" },
-              { code: "NS", label: "Sin dato; fuera del denominador" },
+              { code: "NS", label: "No se conoce si votaron; se excluyen de esta cuenta" },
             ].map((item) => (
               <Box key={item.code} sx={{ borderTop: 1, borderColor: "divider", pt: 1.5 }}>
                 <Typography component="dt" sx={{ fontWeight: 700 }}>
@@ -222,6 +229,15 @@ export default function MethodologyPage() {
                 </Typography>
               </Box>
             ))}
+          </Box>
+          <Box component="details" sx={{ mt: 2 }}>
+            <Box component="summary" sx={{ cursor: "pointer", color: "primary.main" }}>
+              Ver la fórmula de participación
+            </Box>
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              Participación = SV / (SV + NV) × 100. Si SV + NV es cero, no se calcula este
+              porcentaje.
+            </Typography>
           </Box>
         </Surface>
         <Box
@@ -239,18 +255,21 @@ export default function MethodologyPage() {
           </Box>
           <Box>
             <Typography component="h3" variant="h3" sx={{ mb: 1 }}>
-              Proporción, porcentaje y puntos
+              Porcentaje y puntos porcentuales
             </Typography>
             <Typography color="text.secondary">
-              0.60 se comunica como 60 %. Una diferencia de 0.01 de proporción equivale a un punto
-              porcentual, no a 1 % de crecimiento relativo.
+              Un 60 % equivale a 60 de cada 100 personas consideradas. Ejemplo ilustrativo: pasar de
+              60 % a 65 % es subir 5 puntos porcentuales. En los archivos, un valor como 0.60
+              representa 60 %.
             </Typography>
           </Box>
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
-          La posición es más confiable que la cifra exacta. Los intervalos nominales son de 90 %,
-          suelen abarcar de ±8 a ±15 pp y dependen del tamaño de la lista. La cobertura observada en
-          la validación fue de 85 % a 90 %.
+          La comparación entre municipios es más confiable que la cifra exacta. Por eso cada
+          estimación muestra un rango, llamado intervalo del 90 %. Suele extenderse entre 8 y 15
+          puntos porcentuales hacia cada lado, según el tamaño de la lista electoral. En las pruebas
+          con elecciones anteriores, estos rangos incluyeron entre 85 % y 90 % de los resultados
+          reales: no son una garantía para 2027.
         </Typography>
       </Box>
       <Box component="section" id="dimensiones" aria-labelledby="dimensiones-title">
@@ -295,8 +314,8 @@ export default function MethodologyPage() {
         <SectionHeading
           number="04"
           id="comparar-title"
-          title="Comparar exige condiciones compatibles"
-          description="La lectura A/B presenta dos resultados precalculados, junto con su contexto nacional e intervención."
+          title="Cómo comparar sin y con intervención"
+          description="Compara dos cálculos que parten del mismo porcentaje de participación del país: uno sin intervención y otro con una intervención supuesta."
         />
         <Surface entrance="block">
           <Box
@@ -310,65 +329,64 @@ export default function MethodologyPage() {
             }}
           >
             <Typography sx={{ fontWeight: 700 }}>Antes de interpretar una diferencia</Typography>
-            <DataStatus status="modeled" label="Parejas del mismo nivel nacional" />
+            <DataStatus status="modeled" label="Mismo supuesto de participación del país" />
           </Box>
           <Box component="ol" sx={{ m: 0, pl: 2.5, display: "grid", gap: 2 }}>
             <li>
-              <strong>Revisar el contexto.</strong> Si cambia el nivel nacional, una diferencia no
-              puede atribuirse solamente a la intervención.
+              <strong>Conservar el punto de partida.</strong> Si cambia el porcentaje nacional, la
+              diferencia ya no corresponde solo a la intervención. La aplicación mantiene ese
+              porcentaje al comparar.
             </li>
             <li>
-              <strong>Confirmar la pareja.</strong> La entrega identifica tres parejas canónicas:
-              sin y con intervención dentro de cada nivel nacional, sin cambiar las demás
-              condiciones.
+              <strong>Comparar el mismo municipio.</strong> Cada porcentaje nacional tiene dos
+              opciones: sin intervención y con intervención. Se mantienen las demás condiciones para
+              comparar el mismo caso.
             </li>
             <li>
-              <strong>Conservar los límites.</strong> Los supuestos se aplican solo en los rojos de
-              referencia y se etiquetan «Supuesto, no efecto medido». No validan eficacia ni
-              garantizan una mejora.
+              <strong>Recordar que es un supuesto.</strong> La cuenta se aplica solo a los
+              municipios rojos sin intervención. La etiqueta «Supuesto, no efecto medido» indica que
+              no es una mejora comprobada ni una promesa de lo que ocurrirá.
             </li>
           </Box>
         </Surface>
         <Typography color="text.secondary" sx={{ mt: 2 }}>
-          La intervención suma retención de primerizos, cierre de la mitad de la brecha joven y
-          credencialización de nuevos votantes. El último supuesto también aumenta la lista nominal.
-          Las cifras e intervalos se reciben precalculados; no se entrena ni se ejecuta el modelo en
-          el navegador.
+          La cuenta suma tres supuestos: mantener la participación de la generación más joven de
+          2024, reducir a la mitad la diferencia de participación de jóvenes e incorporar nuevos
+          votantes a la lista electoral. El último aumenta los votos y las personas registradas, por
+          lo que el porcentaje puede cambiar poco. La ficha muestra cuánto aporta cada supuesto.
         </Typography>
       </Box>
       <Box component="section" id="territorio" aria-labelledby="territorio-title">
         <SectionHeading
           number="05"
           id="territorio-title"
-          title="Territorio, cobertura e incidencias"
-          description="Una clave permite enlazar identidades. No demuestra por sí sola que los límites hayan permanecido iguales entre elecciones."
+          title="Límites del mapa y datos que faltan"
+          description="La clave municipal permite reunir datos del mismo municipio. Sus límites pueden haber cambiado entre elecciones."
         />
         <Box sx={{ display: "grid", gap: 3 }}>
           <Box>
             <Typography component="h3" variant="h3" sx={{ mb: 1 }}>
-              Cartografía con procedencia
+              De dónde vienen los límites del mapa
             </Typography>
             <Typography color="text.secondary">
-              La captura municipal del servicio INEGI del 16 de octubre de 2026 conserva sus
-              metadatos por entidad. Fue reproyectada y simplificada para visualización. La
-              reconstrucción de historia con territorio de 2024 pertenece al análisis científico;
-              esta simplificación de visualización no sustituye límites oficiales.
+              Los límites se obtuvieron del INEGI el 16 de octubre de 2026 y se simplificaron para
+              que el mapa cargue mejor. La historia se reconstruyó sobre el territorio de 2024. Este
+              mapa sirve para explorar información; no reemplaza los límites oficiales.
             </Typography>
           </Box>
           <NotePanel title="Paracho y Parácuaro · Historia de 2021">
-            La entrega real sustituye la muestra anterior: utiliza la correspondencia por CVEGEO y
-            la historia reconstruida del análisis. No se arrastra la omisión provisional de esos dos
-            valores de 2021.
+            Se corrigió un intercambio de nombres en la fuente de 2021 para no asignar a un
+            municipio los datos del otro. La historia que se muestra ya incorpora esa corrección.
           </NotePanel>
         </Box>
       </Box>
       <Box sx={{ mt: 6 }}>
         <Surface tone="brand" entrance="block">
           <Typography component="h2" variant="h3" sx={{ mb: 1 }}>
-            Sigue la traza hasta los archivos
+            Consulta los archivos y sus fuentes
           </Typography>
           <Typography variant="body2" sx={{ mb: 2 }}>
-            Consulta las fuentes, la cartografía y el manifiesto que acompañan a esta publicación.
+            Puedes descargar las tablas, los mapas y la información de la versión utilizada.
           </Typography>
           <Button
             component="a"

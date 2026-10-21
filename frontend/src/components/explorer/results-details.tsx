@@ -7,7 +7,13 @@ import Alert from "@mui/material/Alert";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import type { Dataset, Municipality } from "@/types/dataset";
-import { estimateFor, formatInteger, formatPercent, scenarioLabel } from "@/utils/dataset";
+import {
+  estimateFor,
+  formatInteger,
+  formatPercent,
+  formatPointDifference,
+  scenarioLabel,
+} from "@/utils/dataset";
 import {
   historicalLabel,
   indicatorBoolean,
@@ -20,6 +26,8 @@ import { Icon } from "@/components/ui/icon";
 import { municipalityDocument, saveFile } from "@/utils/downloads";
 import { radii } from "@/theme/tokens";
 import { EntranceScope } from "@/components/motion/entrance-scope";
+import { ContextHelp } from "@/components/ui/context-help";
+import { boothLabels, type HelpTopic } from "@/content/reading-guide";
 
 const riskNames = { alto: "Rojo", medio: "Amarillo", bajo: "Verde", sin_estimacion: "Sin dato" };
 export function ResultsDetails({
@@ -60,10 +68,11 @@ export function ResultsDetails({
     path += `${continuous ? " L" : " M"}${15 + index * 54},${85 - value * 72}`;
     continuous = true;
   });
-  const datum = (label: string, value: string) => (
+  const datum = (label: string, value: string, help?: HelpTopic) => (
     <Box key={label}>
       <Typography component="dt" variant="caption" color="text.secondary">
         {label}
+        {help && <ContextHelp topic={help} />}
       </Typography>
       <Typography component="dd" variant="body2" sx={{ m: 0, overflowWrap: "anywhere" }}>
         {value}
@@ -81,7 +90,7 @@ export function ResultsDetails({
         key={item.id}
         sx={{ p: 2.5, bgcolor: "action.hover", borderBottom: 1, borderColor: "divider" }}
       >
-        <Typography variant="overline">Ficha municipal · CVEGEO {item.id}</Typography>
+        <Typography variant="overline">Ficha municipal · Clave {item.id}</Typography>
         <Typography component="h2" variant="h2" sx={{ overflowWrap: "anywhere" }}>
           {item.name}
         </Typography>
@@ -92,112 +101,133 @@ export function ResultsDetails({
       <Stack spacing={2} sx={{ p: 2.5 }}>
         {!item.hasData && (
           <Alert severity="info">
-            Sin datos electorales en esta entrega. La geometría de {item.name} no tiene una
-            estimación y se muestra en gris.
+            Sin datos electorales en esta entrega. {item.name} tiene límites disponibles en el mapa,
+            pero no una estimación. Se muestra en gris; no significa que su participación sea cero.
           </Alert>
         )}
         {presentation.tab === "contexto" && (
           <Box sx={{ borderLeft: 3, borderColor: "primary.main", pl: 1.5 }}>
-            <Typography variant="caption">Indicador seleccionado</Typography>
+            <Typography variant="caption">Dato del tema elegido</Typography>
             <Typography variant="body1" sx={{ fontWeight: 700 }}>
               {contextLabel ?? "Sin dato"}
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              Contexto separado del pronóstico de 2027.
+              Este dato describe el municipio; se consulta por separado de la estimación de 2027.
             </Typography>
           </Box>
         )}
-        <Box sx={{ border: 1, borderColor: "divider", borderRadius: radii.panel, p: 2 }}>
-          <Typography variant="caption" color="text.secondary">
-            Participación estimada · 2027
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: 36,
-              fontWeight: 700,
-              lineHeight: 1.3,
-              fontVariantNumeric: "tabular-nums",
-            }}
-          >
-            {formatPercent(result.participation)}
-          </Typography>
-          <Typography variant="body2">
-            Intervalo del 90 %: {formatPercent(result.lower)}–{formatPercent(result.upper)}
-          </Typography>
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center", flexWrap: "wrap", mt: 1 }}>
-            <RiskBadge risk={result.risk} />
-            <Typography variant="caption">{riskNames[result.risk]} · riesgo relativo</Typography>
-          </Box>
-          <Typography variant="caption" color="text.secondary">
-            {info ? scenarioLabel(info) : "Sin escenario"}
-          </Typography>
-        </Box>
-        {info?.intervention === "dirigida_rojos" && (
-          <Alert severity="info">
-            <strong>Supuesto, no efecto medido.</strong> Se aplican los supuestos solo a los
-            municipios rojos de referencia.
-          </Alert>
-        )}
-        <Box
-          component="dl"
-          sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1.5, m: 0 }}
-        >
-          {datum(
-            "Posición de riesgo · 100 = mayor",
-            position === null ? "Sin dato" : position.toFixed(1)
-          )}
-          {datum("Probabilidad de rojo · sin intervención", formatPercent(probability))}
-          {datum("Ayuntamiento el mismo día", boolean("ayuntamiento_mismo_dia_2027"))}
-          {datum("Gubernatura el mismo día", boolean("gobernador_mismo_dia_2027"))}
-          {datum("Usos y costumbres", boolean("usos_y_costumbres"))}
-          {datum("Lista nominal · 2024", formatInteger(item.nominal))}
-        </Box>
-        {probability !== null && probability >= 0.8 && (
-          <Typography variant="caption" color="text.secondary">
-            Probable, no seguro: la probabilidad de rojo es optimista en los extremos.
-          </Typography>
+        {item.hasData && (
+          <>
+            <Box sx={{ border: 1, borderColor: "divider", borderRadius: radii.panel, p: 2 }}>
+              <Typography variant="caption" color="text.secondary">
+                Participación estimada · 2027
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 36,
+                  fontWeight: 700,
+                  lineHeight: 1.3,
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {formatPercent(result.participation)}
+              </Typography>
+              <Typography variant="body2">
+                Rango estimado (90 %): {formatPercent(result.lower)}–{formatPercent(result.upper)}
+                <ContextHelp topic="interval" />
+              </Typography>
+              <Box sx={{ display: "flex", gap: 1, alignItems: "center", flexWrap: "wrap", mt: 1 }}>
+                <RiskBadge risk={result.risk} />
+                <Typography variant="caption">
+                  {riskNames[result.risk]} · comparación entre municipios
+                </Typography>
+              </Box>
+              <Typography variant="caption" color="text.secondary">
+                {info ? scenarioLabel(info) : "Sin escenario"}
+              </Typography>
+            </Box>
+            {info?.intervention === "dirigida_rojos" && (
+              <Alert severity="info">
+                <strong>Supuesto, no efecto medido.</strong> La cuenta se aplica solo a los
+                municipios que estaban en rojo sin intervención. No muestra votos conseguidos por
+                una campaña.
+              </Alert>
+            )}
+            <Box
+              component="dl"
+              sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1.5, m: 0 }}
+            >
+              {datum(
+                "Escala de riesgo · de 0 a 100",
+                position === null ? "Sin dato" : position.toFixed(1),
+                "position"
+              )}
+              {datum(
+                "Posibilidad de rojo · sin intervención",
+                formatPercent(probability),
+                "probability"
+              )}
+              {datum("Elige ayuntamiento el 6 de junio", boolean("ayuntamiento_mismo_dia_2027"))}
+              {datum("Elige gubernatura el 6 de junio", boolean("gobernador_mismo_dia_2027"))}
+              {datum("Autoridades por usos y costumbres", boolean("usos_y_costumbres"), "customs")}
+              {datum("Personas en lista electoral · 2024", formatInteger(item.nominal), "roll")}
+            </Box>
+            <Typography variant="body2" color="text.secondary">
+              Un número más alto en la escala indica mayor riesgo respecto de otros municipios. No
+              es el porcentaje de personas que dejará de votar.
+            </Typography>
+            {probability !== null && probability >= 0.8 && (
+              <Typography variant="caption" color="text.secondary">
+                Probable, no seguro: con 80 % o más, el modelo puede mostrar más certeza de la que
+                realmente tiene.
+              </Typography>
+            )}
+          </>
         )}
         {alert && alert !== "sin antecedente" && (
           <Alert severity="warning">
-            Alerta sin casilla: <strong>{alert}</strong>. Último antecedente:{" "}
-            {indicatorText(item, "ultima_eleccion_sin_casilla") ?? "Sin dato"}. Va aparte del
-            semáforo.
+            Falta de casillas antes: <strong>{boothLabels[alert] ?? alert}</strong>. Última elección
+            registrada: {indicatorText(item, "ultima_eleccion_sin_casilla") ?? "Sin dato"}. Va
+            aparte del semáforo. Puede afectar solo a parte del municipio; no anuncia que vaya a
+            ocurrir en 2027.
           </Alert>
         )}
         {item.baseRisk === "alto" && (
           <Box sx={{ p: 2, bgcolor: "action.hover", borderRadius: radii.panel }}>
             <Typography component="h3" variant="subtitle2">
-              Intervención dirigida · supuestos
+              Cómo se calcula la intervención supuesta
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Supuesto, no efecto medido. Votos adicionales, no personas movilizadas observadas.
             </Typography>
             <Box component="dl" sx={{ display: "grid", gap: 1, m: "12px 0" }}>
               {datum(
-                "S1 · Retener primerizos",
+                "S1 · Votos por mantener la participación de la generación de 18 a 20 años de 2024",
                 formatInteger(indicatorNumber(item, "interv_votos_retener_primerizos"))
               )}
               {datum(
-                "S2 · Cerrar la mitad de la brecha joven",
+                "S2 · Votos por reducir a la mitad la diferencia de participación joven",
                 formatInteger(indicatorNumber(item, "interv_votos_brecha_joven"))
               )}
               {datum(
-                "S3 · Credencializar a los nuevos",
+                "S3 · Votos por incorporar nuevos votantes a la lista",
                 formatInteger(indicatorNumber(item, "interv_votos_credencializar"))
               )}
               {datum(
-                "Nuevas personas en la lista · S3",
+                "Personas que S3 agrega a la lista electoral",
                 formatInteger(indicatorNumber(item, "interv_nuevos_en_lista"))
               )}
               {datum("Total de votos del supuesto", formatInteger(intervention.additionalVotes))}
             </Box>
             <Typography variant="caption">
-              S3 también aumenta el denominador: sumar votos no equivale a subir el mismo número de
-              puntos de participación. Los componentes vacíos permanecen sin dato.
+              S2 usa la diferencia de participación joven de 2021; S3 usa la participación de ese
+              mismo año. En S3 crecen tanto los votos como la lista de personas registradas: el
+              porcentaje no crece en la misma medida que los votos. Un dato vacío no se reemplaza
+              por cero.
             </Typography>
           </Box>
         )}
-        {other && (
+        {other && item.hasData && (
           <Box sx={{ p: 2, border: 1, borderColor: "divider", borderRadius: radii.panel }}>
             <Typography component="h3" variant="subtitle2">
               Comparación sin/con intervención
@@ -207,8 +237,9 @@ export function ResultsDetails({
               {formatPercent(other.participation)}
             </Typography>
             <Typography variant="caption">
-              Intervalo 90 %: {formatPercent(other.lower)}–{formatPercent(other.upper)} ·{" "}
-              {riskNames[other.risk]}. Mismo nivel nacional. Supuesto, no efecto medido.
+              Rango estimado (90 %): {formatPercent(other.lower)}–{formatPercent(other.upper)} ·{" "}
+              {riskNames[other.risk]}. Se conserva el supuesto de participación del país. Supuesto,
+              no efecto medido.
             </Typography>
           </Box>
         )}
@@ -218,8 +249,9 @@ export function ResultsDetails({
             Participación observada
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            Historia reconstruida con territorio de 2024; fuentes INE y actas oficiales. Sin casilla
-            no se representa como abstención.
+            Se usaron los límites municipales de 2024 para reunir la historia, con datos del INE y
+            actas oficiales. El gráfico muestra la evolución; los porcentajes se leen debajo. Sin
+            casilla no significa que la gente decidiera no votar.
           </Typography>
           <Box
             component="svg"
@@ -241,7 +273,7 @@ export function ResultsDetails({
                   textAnchor="middle"
                   fill="currentColor"
                 >
-                  {year.slice(2)}
+                  {year}
                 </text>
               </g>
             ))}
@@ -255,56 +287,65 @@ export function ResultsDetails({
         </Box>
         {indicatorBoolean(item, "historia_completa") === false && (
           <Alert severity="info">
-            Historia incompleta: faltan observaciones en alguna elección. Los vacíos no se
-            sustituyen por cero.
+            Faltan datos de alguna elección. Esos espacios no significan cero participación.
           </Alert>
         )}
         <Divider />
-        <Box>
-          <Typography component="h3" variant="h3">
-            Contexto del municipio
-          </Typography>
-          <Box component="dl" sx={{ display: "grid", gap: 1, mt: 1 }}>
-            {datum(
-              "Brecha joven 2024 · puntos porcentuales",
-              indicatorNumber(item, "brecha_jovenes_2024") === null
-                ? "Sin dato"
-                : `${indicatorNumber(item, "brecha_jovenes_2024")} pp`
-            )}
-            {datum(
-              "Homicidios 2022–2024 · por 100 mil al año",
-              indicatorNumber(item, "tasa_homicidios_2022_2024")?.toLocaleString("es-MX", {
-                maximumFractionDigits: 1,
-              }) ?? "Sin dato"
-            )}
-            {datum(
-              "Quién ejerce la seguridad",
-              indicatorText(item, "quien_ejerce_seguridad") ?? "Sin dato"
-            )}
-            {datum("Policía municipal", boolean("tiene_policia_municipal"))}
-            {datum(
-              "Policías municipales por 10 mil habitantes",
-              String(
-                indicatorNumber(item, "policias_municipales_por_10mil_habitantes") ?? "Sin dato"
-              )
-            )}
-            {datum("Justicia cívica", indicatorText(item, "justicia_civica") ?? "Sin dato")}
-            {datum(
-              "Cifra oculta estatal 2025 · ENVIPE 2026",
-              indicatorNumber(item, "cifra_oculta_estatal_2025") === null
-                ? "Sin dato"
-                : `${indicatorNumber(item, "cifra_oculta_estatal_2025")}%`
-            )}
+        {item.hasData && (
+          <Box>
+            <Typography component="h3" variant="h3">
+              Otros datos del municipio
+            </Typography>
+            <Box component="dl" sx={{ display: "grid", gap: 1, mt: 1 }}>
+              {datum(
+                "Participación de 20 a 29 años frente al municipio · 2024",
+                formatPointDifference(indicatorNumber(item, "brecha_jovenes_2024")),
+                "gap"
+              )}
+              {datum(
+                "Homicidios 2022–2024 · por 100 mil al año",
+                indicatorNumber(item, "tasa_homicidios_2022_2024")?.toLocaleString("es-MX", {
+                  maximumFractionDigits: 1,
+                }) ?? "Sin dato"
+              )}
+              {datum(
+                "Quién ejerce la seguridad",
+                indicatorText(item, "quien_ejerce_seguridad") ?? "Sin dato"
+              )}
+              {datum("Policía municipal", boolean("tiene_policia_municipal"))}
+              {datum(
+                "Policías municipales por 10 mil habitantes",
+                String(
+                  indicatorNumber(item, "policias_municipales_por_10mil_habitantes") ?? "Sin dato"
+                )
+              )}
+              {datum(
+                "Autoridad de justicia cívica",
+                indicatorText(item, "justicia_civica") ?? "Sin dato",
+                "civic"
+              )}
+              {datum(
+                "Delitos no denunciados o sin carpeta · estado, 2025",
+                indicatorNumber(item, "cifra_oculta_estatal_2025") === null
+                  ? "Sin dato"
+                  : `${indicatorNumber(item, "cifra_oculta_estatal_2025")}%`,
+                "unreported"
+              )}
+            </Box>
+            <Typography variant="caption" color="text.secondary">
+              Homicidios del estado: {indicatorText(item, "comparacion_homicidios_inegi_sesnsp")}.
+              Estos datos históricos de seguridad no cambian el semáforo ni describen la situación
+              en tiempo real.
+            </Typography>
           </Box>
-          <Typography variant="caption" color="text.secondary">
-            {indicatorText(item, "comparacion_homicidios_inegi_sesnsp")}. Seguridad es contexto; no
-            entra al semáforo.
-          </Typography>
-        </Box>
-        <Alert severity="info">
-          El modelo ordena bien a los municipios, pero no predice el nivel nacional. El intervalo es
-          ancho (de ±8 a ±15 pp); la posición es más confiable que la cifra.
-        </Alert>
+        )}
+        {item.hasData && (
+          <Alert severity="info">
+            La cifra exacta es incierta. El modelo sirve mejor para comparar municipios que para
+            saber el porcentaje preciso que votará. La participación total del país se plantea como
+            supuesto y no es una predicción del modelo.
+          </Alert>
+        )}
         <Button
           variant="outlined"
           startIcon={<Icon name="download" />}
@@ -316,10 +357,11 @@ export function ResultsDetails({
             )
           }
         >
-          Descargar ficha JSON
+          Descargar ficha (JSON)
         </Button>
         <Typography variant="caption" color="text.secondary">
-          {dataset.version} · pronóstico y supuestos 2027; no resultados observados de esa elección.
+          {dataset.version} · JSON permite reutilizar esta ficha con otras herramientas. Los datos
+          de 2027 son estimaciones y supuestos, no resultados observados.
         </Typography>
       </Stack>
     </EntranceScope>

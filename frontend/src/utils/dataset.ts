@@ -20,6 +20,11 @@ export function formatPercent(value: number | null | undefined) {
 export function formatInteger(value: number | null | undefined) {
   return value === null || value === undefined ? "Sin dato" : integer.format(value);
 }
+export function formatPointDifference(value: number | null) {
+  if (value === null) return "Sin dato";
+  if (value === 0) return "Misma participación";
+  return `${Math.abs(value).toLocaleString("es-MX", { maximumFractionDigits: 2 })} puntos ${value < 0 ? "menos" : "más"}`;
+}
 export function normalized(value: string) {
   return value
     .normalize("NFD")

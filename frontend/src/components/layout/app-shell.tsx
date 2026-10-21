@@ -130,8 +130,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           }),
         })}
       >
-        <strong>Pronóstico 2027</strong> · El nivel nacional es un escenario. Intervención:
-        supuesto, no efecto medido.
+        <strong>Pronóstico 2027</strong> · Son estimaciones con supuestos. La intervención no es un
+        efecto comprobado.
       </Box>
       <Box
         component="main"
@@ -167,7 +167,8 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         <span>Hackathon INE 2026 · Reto 2 · Proyecto del equipo</span>
         <span>
-          {resultsRelease.version} · Datos agregados · <a href="/metodologia/">Fuentes y alcance</a>
+          {resultsRelease.version} · Datos por municipio ·{" "}
+          <a href="/metodologia/">Cómo leer los datos</a>
         </span>
       </Box>
     </Box>

@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import type { Dataset } from "@/types/dataset";
 import { scenarioLabel, formatPercent } from "@/utils/dataset";
 import { Icon } from "@/components/ui/icon";
+import { ContextHelp } from "@/components/ui/context-help";
 import type { QueryChange } from "./explorer-filters";
 
 export type ScenarioPanelProps = {
@@ -44,23 +45,38 @@ export function ExplorerScenarios({
         <Typography component="h2" sx={{ fontSize: 14, fontWeight: 700, mb: 1.5 }}>
           Pronóstico 2027
         </Typography>
-        <TextField
-          fullWidth
-          label="Nivel nacional"
-          size="small"
-          select
-          value={info.national}
-          onChange={(event) => choose(event.target.value, info.intervention)}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 1fr) 32px",
+            alignItems: "center",
+            gap: 0.5,
+          }}
         >
-          {Object.entries(dataset.nationalLevels ?? {}).map(([key, value]) => (
-            <MenuItem key={key} value={key}>
-              {key[0]!.toUpperCase() + key.slice(1)} · {formatPercent(value)}
-            </MenuItem>
-          ))}
-        </TextField>
+          <TextField
+            fullWidth
+            label="Participación supuesta del país"
+            size="small"
+            select
+            value={info.national}
+            onChange={(event) => choose(event.target.value, info.intervention)}
+          >
+            {Object.entries(dataset.nationalLevels ?? {}).map(([key, value]) => (
+              <MenuItem key={key} value={key}>
+                {{
+                  bajo: "Baja participación",
+                  medio: "Participación media",
+                  alto: "Alta participación",
+                }[key] ?? key}{" "}
+                · {formatPercent(value)}
+              </MenuItem>
+            ))}
+          </TextField>
+          <ContextHelp topic="national" />
+        </Box>
         <TextField
           fullWidth
-          label="Intervención hipotética"
+          label="Intervención (supuesto)"
           size="small"
           select
           value={info.intervention}
@@ -68,7 +84,7 @@ export function ExplorerScenarios({
           sx={{ mt: 1.5 }}
         >
           <MenuItem value="ninguna">Sin intervención</MenuItem>
-          <MenuItem value="dirigida_rojos">Con intervención dirigida</MenuItem>
+          <MenuItem value="dirigida_rojos">Con intervención supuesta</MenuItem>
         </TextField>
         <Button
           size="small"
@@ -80,12 +96,14 @@ export function ExplorerScenarios({
           Comparar sin/con intervención
         </Button>
         <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1 }}>
-          El nivel nacional es un supuesto de partida. La comparación conserva siempre el mismo
-          nivel nacional.
+          Prueba qué podría pasar con distintas cifras de participación del país. La opción con
+          intervención supone acciones para promover el voto en los municipios rojos. Al comparar,
+          se mantiene el mismo porcentaje nacional.
         </Typography>
         {(info.intervention !== "ninguna" || comparing) && (
           <Alert severity="info" sx={{ mt: 1.5, fontSize: 12 }}>
-            <strong>Supuesto, no efecto medido.</strong> No predice lo que conseguiría una campaña.
+            <strong>Supuesto, no efecto medido.</strong> Es una cuenta hipotética, no un resultado
+            comprobado ni una promesa de lo que conseguiría una campaña.
           </Alert>
         )}
       </Box>

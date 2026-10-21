@@ -35,9 +35,9 @@ export function nominalRangeError(filters: AdvancedFilters): string | null {
   const minimum = count(filters.minimum),
     maximum = count(filters.maximum);
   if (Number.isNaN(minimum) || Number.isNaN(maximum))
-    return "Usa números enteros de cero o más para la lista nominal.";
+    return "Usa números enteros de cero o más para la lista electoral.";
   if (minimum !== null && maximum !== null && minimum > maximum)
-    return "El mínimo de la lista nominal no puede superar al máximo.";
+    return "El mínimo de la lista electoral no puede superar al máximo.";
   return null;
 }
 

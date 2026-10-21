@@ -67,7 +67,7 @@ export function MapModeChrome({
   const [legendOpen, setLegendOpen] = useState(true);
   const titles = {
     filters: "Filtros de consulta",
-    scenarios: sample ? "Configurar escenarios" : "Vistas y escenarios",
+    scenarios: sample ? "Configurar escenarios" : "Elegir datos y escenarios",
     detail: "Ficha municipal",
   };
   return (
@@ -107,7 +107,7 @@ export function MapModeChrome({
         </Box>
         <TextField
           fullWidth
-          label="Buscar municipio o CVEGEO"
+          label="Buscar municipio o clave"
           size="small"
           type="search"
           value={search}
@@ -128,19 +128,19 @@ export function MapModeChrome({
           <Button
             size="small"
             data-panel-trigger="scenarios"
-            aria-label={sample ? "Escenarios" : "Vistas y escenarios"}
+            aria-label={sample ? "Escenarios" : "Qué ver: datos y escenarios"}
             aria-expanded={panel === "scenarios"}
             startIcon={<Icon name="compare" size={15} />}
             onClick={() => onPanel("scenarios")}
             sx={{ minWidth: 0, px: 1, flex: 1 }}
           >
-            {sample ? "Escenarios" : "Vistas"}
+            {sample ? "Escenarios" : "Qué ver"}
           </Button>
           <Tooltip title="Descargar toda la consulta">
             <span>
               <IconButton
                 size="small"
-                aria-label="CSV de la vista"
+                aria-label="Descargar tabla (CSV)"
                 disabled={!count}
                 onClick={onDownload}
               >
@@ -187,7 +187,7 @@ export function MapModeChrome({
         )}
         {error && (
           <Typography role="status" variant="caption" color="warning.main">
-            Revisa el rango de lista nominal en Filtros.
+            Revisa el mínimo y máximo de la lista electoral en Filtros.
           </Typography>
         )}
         {!municipality && singleResult && (
@@ -211,7 +211,7 @@ export function MapModeChrome({
         )}
         {singleResult && !singleResult.hasGeometry && (
           <Typography variant="caption" color="text.secondary">
-            Este registro no tiene geometría.
+            No hay límites disponibles para mostrar este municipio en el mapa.
           </Typography>
         )}
         {municipality && (

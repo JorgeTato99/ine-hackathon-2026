@@ -67,7 +67,7 @@ export function WorkspaceLoading() {
     <Box sx={{ p: 2 }}>
       <Skeleton variant="rounded" height={300} />
       <Typography role="status" variant="body2" sx={{ mt: 1.5 }}>
-        Preparando el explorador territorial…
+        Cargando los datos del mapa…
       </Typography>
     </Box>
   );
@@ -243,7 +243,7 @@ export function Explorer() {
         description={
           isContext
             ? (mapInfo?.description ?? "")
-            : "Riesgo relativo entre municipios. El filtro usa el semáforo sin intervención; el mapa muestra el riesgo del escenario seleccionado. La alerta sin casilla se consulta aparte."
+            : "Rojo indica mayor riesgo de baja participación respecto de otros municipios. El filtro conserva el color sin intervención; el mapa muestra el escenario elegido. La falta de casillas se consulta por separado."
         }
         entries={isContext ? (mapInfo?.legend ?? []) : forecastLegend()}
       />
@@ -310,7 +310,7 @@ export function Explorer() {
           <Typography component="h2" variant="subtitle2">
             {mapInfo?.title}
           </Typography>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="body2" color="text.secondary">
             {mapInfo?.description}
           </Typography>
         </Box>
@@ -379,7 +379,7 @@ export function Explorer() {
           severity="error"
           action={<Button onClick={() => void query.refetch()}>Reintentar</Button>}
         >
-          {query.error.message}
+          No pudimos cargar los resultados. Reintenta; si el problema continúa, recarga la página.
         </Alert>
       )}
       {dataset && (
@@ -473,7 +473,7 @@ export function Explorer() {
                 >
                   <strong>{formatInteger(items.length)}</strong>{" "}
                   {items.length === 1 ? "municipio" : "municipios"} · {formatInteger(withEstimate)}{" "}
-                  con resultado
+                  con estimación
                 </Typography>
                 {mobile && (
                   <Button
@@ -489,14 +489,14 @@ export function Explorer() {
                     <Button
                       size="small"
                       variant="text"
-                      aria-label="CSV de la vista"
+                      aria-label="Descargar tabla (CSV)"
                       sx={{ minWidth: { xs: 32, sm: 64 }, gap: 0.75 }}
                       disabled={!items.length}
                       onClick={download}
                     >
                       <Icon name="download" size={16} />
                       <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
-                        CSV de la vista
+                        Descargar tabla (CSV)
                       </Box>
                     </Button>
                   </span>

@@ -21,7 +21,7 @@ export function ArchiveOverview() {
         {[
           { type: "CSV", label: "Tablas", rotation: "-8deg" },
           { type: "JSON", label: "Procedencia", rotation: "0deg" },
-          { type: "SIG", label: "Territorio", rotation: "8deg" },
+          { type: "MAPA", label: "Territorio", rotation: "8deg" },
         ].map((file, index) => (
           <Box
             key={file.type}
@@ -77,7 +77,7 @@ export function ArchiveOverview() {
         color="text.secondary"
         sx={{ textAlign: "center", mt: 0.5 }}
       >
-        Tablas, cartografía y contexto de publicación.
+        Tablas, mapas y una guía para interpretarlos.
       </Typography>
     </Box>
   );

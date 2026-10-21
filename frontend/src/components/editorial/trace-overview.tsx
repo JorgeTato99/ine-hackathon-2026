@@ -11,8 +11,8 @@ export function TraceOverview() {
       <Box component="ol" sx={{ m: 0, p: 0, listStyle: "none" }}>
         {[
           { year: "2009—2024", title: "Lo que observamos", status: "observed" },
-          { year: "ANÁLISIS", title: "La posición que modelamos", status: "modeled" },
-          { year: "2027", title: "Los escenarios que exploramos", status: "modeled" },
+          { year: "ANÁLISIS", title: "Lo que estima el análisis", status: "modeled" },
+          { year: "2027", title: "Los supuestos que comparamos", status: "modeled" },
         ].map((item, index) => (
           <Box
             component="li"
@@ -103,7 +103,8 @@ export function TraceOverview() {
         variant="caption"
         sx={{ pl: 5.5, mt: 1.5, color: "text.secondary" }}
       >
-        De la observación a la consulta. Cada etapa conserva sus límites.
+        Datos de elecciones anteriores, estimaciones y supuestos: cada uno tiene una lectura
+        distinta.
       </Typography>
     </Box>
   );

@@ -103,7 +103,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     ).toBeVisible();
     expect(await screen.findByRole("button", { name: /Consultar dos escenarios/ })).toBeEnabled();
     expect(screen.getByRole("link", { name: /Traza Cívica/ })).toHaveAttribute("href", "/");
-    expect(screen.getByText(/El nivel nacional es un escenario/)).toBeVisible();
+    expect(screen.getByText(/Son estimaciones con supuestos/)).toBeVisible();
     await user.click(await screen.findByRole("button", { name: "Activar tema oscuro" }));
     expect(localStorage.getItem(modeStorageKey)).toBe("dark");
     await user.click(screen.getByRole("button", { name: "Activar tema claro" }));
@@ -112,13 +112,13 @@ describe("Recorrido de consulta con muestra identificada", () => {
   it("busca por clave, sincroniza la ficha y descarga la vista filtrada", async () => {
     const user = userEvent.setup();
     openExplorer();
-    const search = await screen.findByRole("searchbox", { name: "Buscar municipio o CVEGEO" });
+    const search = await screen.findByRole("searchbox", { name: "Buscar municipio o clave" });
     await user.type(search, "01001");
     await user.click(screen.getByRole("button", { name: "Tabla" }));
     await user.click(await screen.findByRole("button", { name: "Aguascalientes" }));
     expect(await screen.findByRole("heading", { name: "Aguascalientes", level: 2 })).toBeVisible();
     expect(window.location.search).toContain("municipio=01001");
-    await user.click(screen.getByRole("button", { name: "CSV de la vista" }));
+    await user.click(screen.getByRole("button", { name: "Descargar tabla (CSV)" }));
     expect(URL.createObjectURL).toHaveBeenCalled();
     await user.click(screen.getByRole("button", { name: "Descargar ficha JSON" }));
     expect(URL.createObjectURL).toHaveBeenCalledTimes(2);
@@ -128,7 +128,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
   });
   it("conserva cambios consecutivos aunque el router todavía no haya renderizado la URL", async () => {
     openExplorer();
-    const search = await screen.findByRole("searchbox", { name: "Buscar municipio o CVEGEO" });
+    const search = await screen.findByRole("searchbox", { name: "Buscar municipio o clave" });
     environment.deferNavigation = true;
     fireEvent.change(search, { target: { value: "01001" } });
     fireEvent.click(screen.getByRole("button", { name: "Tabla" }));
@@ -146,7 +146,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     const user = userEvent.setup();
     openExplorer();
     await screen.findByRole("button", { name: /Consultar dos escenarios/ });
-    await choose("Entidad federativa", "Michoacán");
+    await choose("Estado", "Michoacán");
     await user.click(screen.getByRole("button", { name: "Tabla" }));
     await user.click(await screen.findByRole("button", { name: "Parácuaro" }));
     expect(await screen.findByText(/Incidencia de 2021/)).toBeVisible();
@@ -181,15 +181,11 @@ describe("Recorrido de consulta con muestra identificada", () => {
     );
     openExplorer();
     await screen.findByRole("button", { name: /Consultar dos escenarios/ });
-    expect(screen.getByRole("combobox", { name: "Entidad federativa" })).toHaveTextContent(
-      "Todas las entidades"
-    );
+    expect(screen.getByRole("combobox", { name: "Estado" })).toHaveTextContent("Todos los estados");
     expect(screen.getByRole("combobox", { name: "Riesgo ilustrativo" })).toHaveTextContent(
       "Todos los niveles"
     );
-    expect(
-      screen.getByRole("heading", { name: "Cada municipio tiene una historia" })
-    ).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Consulta un municipio" })).toBeVisible();
   });
   it("abre y cierra ficha móvil conservando selección", async () => {
     environment.mobile = true;
@@ -212,7 +208,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     const user = userEvent.setup();
     openExplorer();
     const retry = await screen.findByRole("button", { name: "Reintentar" }, { timeout: 5000 });
-    expect(screen.getByText(/No se pudo cargar el corte/)).toBeVisible();
+    expect(screen.getByText(/No pudimos cargar los resultados/)).toBeVisible();
     server.use(http.get("*/data/dataset.json", () => HttpResponse.json(datasetFixture())));
     await user.click(retry);
     expect(await screen.findByRole("button", { name: /Consultar dos escenarios/ })).toBeEnabled();
@@ -221,9 +217,9 @@ describe("Recorrido de consulta con muestra identificada", () => {
     const user = userEvent.setup();
     openExplorer();
     await user.click(await screen.findByRole("button", { name: "Más filtros" }));
-    await choose("Historia disponible", "Historia parcial");
-    await user.type(screen.getByLabelText("Lista nominal 2024 · mínimo"), "0");
-    await user.type(screen.getByLabelText("Lista nominal 2024 · máximo"), "0");
+    await choose("Datos de elecciones anteriores", "Faltan datos en alguna elección");
+    await user.type(screen.getByLabelText("Lista electoral 2024 · mínimo"), "0");
+    await user.type(screen.getByLabelText("Lista electoral 2024 · máximo"), "0");
     await user.click(screen.getByRole("button", { name: "Ver resultados" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     await user.click(screen.getByRole("button", { name: "Tabla" }));
@@ -236,8 +232,8 @@ describe("Recorrido de consulta con muestra identificada", () => {
     const user = userEvent.setup();
     openExplorer();
     await user.click(await screen.findByRole("button", { name: "Más filtros" }));
-    await user.type(screen.getByLabelText("Lista nominal 2024 · mínimo"), "100");
-    await user.type(screen.getByLabelText("Lista nominal 2024 · máximo"), "10");
+    await user.type(screen.getByLabelText("Lista electoral 2024 · mínimo"), "100");
+    await user.type(screen.getByLabelText("Lista electoral 2024 · máximo"), "10");
     expect(within(screen.getByRole("dialog")).getByText(/no puede superar/)).toBeVisible();
     await user.click(
       within(screen.getByRole("dialog")).getByRole("button", { name: "Restablecer" })
@@ -245,7 +241,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     expect(
       within(screen.getByRole("dialog")).queryByText(/no puede superar/)
     ).not.toBeInTheDocument();
-    await choose("Cartografía disponible", "Sin geometría");
+    await choose("Ubicación en el mapa", "Sin límites disponibles");
     await user.click(screen.getByRole("button", { name: "Ver resultados" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     await user.click(screen.getByRole("button", { name: "Tabla" }));
@@ -256,7 +252,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     const user = userEvent.setup();
     openExplorer();
     await user.click(await screen.findByRole("button", { name: "Filtros" }));
-    await choose("Entidad federativa", "Michoacán");
+    await choose("Estado", "Michoacán");
     await user.click(screen.getByRole("button", { name: "Ver resultados" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     await user.click(screen.getByRole("button", { name: "Escenarios" }));
@@ -312,7 +308,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     expect(window.location.search).not.toContain("pagina=");
     await choose("Filas por página", "50");
     expect(within(table).getAllByRole("row")).toHaveLength(41);
-    await user.type(screen.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" }), "16064");
+    await user.type(screen.getByRole("searchbox", { name: "Buscar municipio o clave" }), "16064");
     await waitFor(() => expect(within(table).getAllByRole("row")).toHaveLength(2));
     expect(screen.getByRole("button", { name: "Página siguiente" })).toBeDisabled();
   });
@@ -332,7 +328,7 @@ describe("Recorrido de consulta con muestra identificada", () => {
     expect(legend).toHaveAttribute("aria-expanded", "false");
     await user.click(legend);
     expect(legend).toHaveAttribute("aria-expanded", "true");
-    await user.click(screen.getByRole("button", { name: "CSV de la vista" }));
+    await user.click(screen.getByRole("button", { name: "Descargar tabla (CSV)" }));
     expect(URL.createObjectURL).toHaveBeenCalled();
     await user.click(screen.getByRole("button", { name: "Salir del modo mapa" }));
     expect(document.documentElement).not.toHaveAttribute("data-map-mode");
@@ -346,13 +342,15 @@ describe("Recorrido de consulta con muestra identificada", () => {
     await waitFor(() => expect(enter).toBeEnabled());
     await user.click(enter);
     await user.click(screen.getByRole("button", { name: "Filtros" }));
-    await user.click(screen.getByRole("combobox", { name: "Historia disponible" }));
+    await user.click(screen.getByRole("combobox", { name: "Datos de elecciones anteriores" }));
     await user.keyboard("{Escape}");
     await waitFor(() => expect(screen.queryByRole("listbox")).not.toBeInTheDocument());
     expect(screen.getByRole("region", { name: "Filtros de consulta" })).toBeVisible();
-    await user.type(screen.getByLabelText("Lista nominal 2024 · mínimo"), "5");
-    await user.type(screen.getByLabelText("Lista nominal 2024 · máximo"), "4");
-    expect(screen.getByText("Revisa el rango de lista nominal en Filtros.")).toBeVisible();
+    await user.type(screen.getByLabelText("Lista electoral 2024 · mínimo"), "5");
+    await user.type(screen.getByLabelText("Lista electoral 2024 · máximo"), "4");
+    expect(
+      screen.getByText("Revisa el mínimo y máximo de la lista electoral en Filtros.")
+    ).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Restablecer" }));
     await user.click(screen.getByRole("button", { name: "Ver resultados" }));
     expect(screen.queryByRole("region", { name: "Filtros de consulta" })).not.toBeInTheDocument();
@@ -377,12 +375,14 @@ describe("Recorrido de consulta con muestra identificada", () => {
     expect(screen.getByRole("heading", { name: "Aguascalientes", level: 2 })).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Plegar ficha" }));
     await user.click(screen.getByRole("button", { name: /^Ver ficha ·/ }));
-    const search = screen.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" });
+    const search = screen.getByRole("searchbox", { name: "Buscar municipio o clave" });
     await user.type(search, "01099");
     await waitFor(() =>
       expect(screen.queryByRole("button", { name: "Plegar ficha" })).not.toBeInTheDocument()
     );
-    expect(screen.getByText("Este registro no tiene geometría.")).toBeVisible();
+    expect(
+      screen.getByText("No hay límites disponibles para mostrar este municipio en el mapa.")
+    ).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Ver ficha: Sin registro" }));
     expect(screen.getByText(/Sin registro en la muestra/)).toBeVisible();
     await user.keyboard("{Escape}");
@@ -432,8 +432,10 @@ describe("Páginas de fuentes y alcance", () => {
       </AppProviders>
     );
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Datos abiertos, lectura responsable"
+      "Descarga los datos y conoce sus fuentes"
     );
+    expect(screen.getByText("Datos y estimaciones")).toBeVisible();
+    expect(screen.queryByText("Muestra de interfaz")).not.toBeInTheDocument();
     const downloads = screen.getAllByRole("link", { name: /Descargar/ });
     expect(downloads).toHaveLength(6);
     expect(
@@ -448,12 +450,14 @@ describe("Páginas de fuentes y alcance", () => {
       </AppProviders>
     );
     expect(
-      screen.getByRole("heading", { name: "Comparar exige condiciones compatibles" })
+      screen.getByRole("heading", { name: "Cómo comparar sin y con intervención" })
     ).toBeVisible();
-    expect(screen.getByText(/La posición es más confiable que la cifra exacta/)).toBeVisible();
+    expect(
+      screen.getByText(/La comparación entre municipios es más confiable que la cifra exacta/)
+    ).toBeVisible();
     expect(
       within(screen.getByRole("alert")).getByText(
-        /Pronóstico condicionado, no certeza ni efecto causal/
+        /Una estimación no es una certeza ni un efecto comprobado/
       )
     ).toBeVisible();
   });
@@ -469,16 +473,20 @@ describe("Integración de resultados científicos reales", () => {
     await screen.findByRole("tab", { name: "Pronóstico 2027" });
     await user.click(screen.getByRole("button", { name: "Ayuda: cómo explorar el territorio" }));
     expect(
-      within(screen.getByRole("dialog")).getByText(/2027 es un pronóstico condicionado/)
+      within(screen.getByRole("dialog")).getByText(/2027 es una estimación según el supuesto/)
     ).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Cerrar ayuda" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
-    expect(screen.getByRole("combobox", { name: "Nivel nacional" })).toHaveTextContent("Medio");
-    await choose("Intervención hipotética", "Con intervención dirigida");
-    const cards = within(screen.getByRole("region", { name: "Cifras de control de la consulta" }));
+    expect(
+      screen.getByRole("combobox", { name: "Participación supuesta del país" })
+    ).toHaveTextContent("Participación media");
+    await choose("Intervención (supuesto)", "Con intervención supuesta");
+    const cards = within(
+      screen.getByRole("region", { name: "Resumen de los municipios seleccionados" })
+    );
     expect(cards.getByText("505,007", { exact: true })).toBeVisible();
     expect(cards.getByText("88", { exact: true })).toBeVisible();
-    await choose("Nivel nacional", "Bajo · 44.1%");
+    await choose("Participación supuesta del país", "Baja participación · 44.1%");
     expect(cards.getByText("90", { exact: true })).toBeVisible();
     const comparison = screen.getByRole("button", { name: "Comparar sin/con intervención" });
     await user.click(comparison);
@@ -490,41 +498,45 @@ describe("Integración de resultados científicos reales", () => {
   it("ofrece los siete indicadores y una tabla del indicador seleccionado", async () => {
     const user = userEvent.setup();
     openExplorer();
-    await user.click(await screen.findByRole("tab", { name: "Indicadores y contexto" }));
+    await user.click(await screen.findByRole("tab", { name: "Datos del territorio" }));
     for (const view of [
-      "Rezago persistente",
-      "Zonas frías y calientes",
-      "Alerta sin casilla",
-      "Historia 2009–2024",
+      "Participación por debajo del país",
+      "Participación de municipios vecinos",
+      "Falta de casillas en elecciones anteriores",
+      "Participación en elecciones anteriores",
     ]) {
-      await choose("Vista de contexto", view);
-      expect(screen.getByRole("combobox", { name: "Vista de contexto" })).toHaveTextContent(view);
+      await choose("Tema del mapa", view);
+      expect(screen.getByRole("combobox", { name: "Tema del mapa" })).toHaveTextContent(view);
     }
-    await choose("Vista de contexto", "Personas en juego");
+    await choose("Tema del mapa", "Personas y participación");
     await user.click(screen.getByRole("button", { name: "Tabla" }));
     const table = screen.getByRole("table", { name: "Resultados municipales" });
     expect(within(table).getAllByRole("columnheader")).toHaveLength(4);
     await user.click(within(table).getByRole("button", { name: /Ordenar por Personas/ }));
-    await user.click(screen.getByRole("button", { name: "CSV de la vista" }));
+    await user.click(screen.getByRole("button", { name: "Descargar tabla (CSV)" }));
     expect(URL.createObjectURL).toHaveBeenCalled();
-    await user.type(screen.getByRole("searchbox", { name: "Buscar municipio o CVEGEO" }), "01001");
+    await user.type(screen.getByRole("searchbox", { name: "Buscar municipio o clave" }), "01001");
     await user.click(await screen.findByRole("button", { name: "Aguascalientes" }));
-    expect(screen.getByText("Contexto separado del pronóstico de 2027.")).toBeVisible();
+    expect(
+      screen.getByText(
+        "Este dato describe el municipio; se consulta por separado de la estimación de 2027."
+      )
+    ).toBeVisible();
   });
   it("permite cambiar grupos, capas de seguridad y año sin mezclar pronóstico", async () => {
     const user = userEvent.setup();
     window.history.replaceState(null, "", "/?pestana=contexto&indicador=personas");
     openExplorer();
     await screen.findByRole("combobox", { name: "Grupo de personas" });
-    await choose("Grupo de personas", "Jóvenes que no votaron en 2024 · 21–29 años");
-    await choose("Grupo de personas", "Nuevos votantes en 2027 · 18–19 años");
+    await choose("Grupo de personas", "21 a 29 años: no votaron en 2024");
+    await choose("Grupo de personas", "18 a 19 años en 2027 (estimación)");
     expect(screen.getByText("4,363,455", { exact: true })).toBeVisible();
-    await choose("Grupo de personas", "Nuevos sin credencial · supuesto de 2021");
+    await choose("Grupo de personas", "Sin credencial en 2027 (supuesto)");
     expect(screen.getByText("245", { exact: true })).toBeVisible();
-    await choose("Vista de contexto", "Contexto de seguridad");
+    await choose("Tema del mapa", "Seguridad en el municipio");
     await choose("Indicador de seguridad", "Quién ejerce la seguridad");
     await choose("Indicador de seguridad", "Policía municipal");
-    await choose("Vista de contexto", "Historia 2009–2024");
+    await choose("Tema del mapa", "Participación en elecciones anteriores");
     await choose("Año de la elección", "2021");
     expect(window.location.search).toContain("anio=2021");
     await user.click(screen.getByRole("tab", { name: "Pronóstico 2027" }));
@@ -534,24 +546,24 @@ describe("Integración de resultados científicos reales", () => {
     const user = userEvent.setup();
     openExplorer();
     await user.click(await screen.findByRole("button", { name: "Más filtros" }));
-    await choose("Tamaño de lista 2024", "Menos de 5 mil");
-    await choose("Ayuntamiento en 2027", "No elige ese día");
+    await choose("Tamaño de la lista electoral", "Menos de 5 mil");
+    await choose("Elección municipal en 2027", "No elige ese día");
     await choose("Usos y costumbres", "Sí");
-    await choose("Antecedente sin casilla", "Con antecedente");
+    await choose("Falta de casillas antes", "Con antecedente");
     await user.click(screen.getByRole("button", { name: "Ver resultados" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     const chip = screen.getByRole("button", { name: "Quitar filtro: Usos y costumbres: Sí" });
     expect(chip).toBeVisible();
-    await user.click(screen.getByRole("tab", { name: "Indicadores y contexto" }));
+    await user.click(screen.getByRole("tab", { name: "Datos del territorio" }));
     expect(window.location.search).toContain("costumbres=si");
     chip.focus();
     await user.keyboard("{Delete}");
     expect(window.location.search).not.toContain("costumbres=si");
     await user.click(screen.getByRole("button", { name: "Restablecer" }));
     await user.click(screen.getByRole("tab", { name: "Pronóstico 2027" }));
-    await choose("Semáforo de referencia", "Rojo");
+    await choose("Color sin intervención", "Rojo");
     expect(
-      screen.getByRole("button", { name: "Quitar filtro: Semáforo de referencia: Rojo" })
+      screen.getByRole("button", { name: "Quitar filtro: Color sin intervención: Rojo" })
     ).toBeVisible();
   });
   it("explica incertidumbre y supuestos en la ficha y corrige una pareja nacional ajena en URL", async () => {
@@ -568,12 +580,12 @@ describe("Integración de resultados científicos reales", () => {
     await screen.findByRole("heading", { name: red.name, level: 2 });
     expect(screen.getByText(/Probable, no seguro/)).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Intervención dirigida · supuestos" })
+      screen.getByRole("heading", { name: "Cómo se calcula la intervención supuesta" })
     ).toBeVisible();
     expect(screen.getByRole("heading", { name: "Comparación sin/con intervención" })).toBeVisible();
-    await choose("Intervención hipotética", "Con intervención dirigida");
-    expect(screen.getByText(/No predice lo que conseguiría una campaña/)).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Descargar ficha JSON" }));
+    await choose("Intervención (supuesto)", "Con intervención supuesta");
+    expect(screen.getByText(/No muestra votos conseguidos por una campaña/)).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Descargar ficha (JSON)" }));
     expect(URL.createObjectURL).toHaveBeenCalled();
   });
   it("mantiene sin casilla e historia incompleta como avisos y Villa de Pozos como ausencia", async () => {
@@ -583,15 +595,15 @@ describe("Integración de resultados científicos reales", () => {
     openExplorer();
     await screen.findByRole("heading", { name: "Chicomuselo", level: 2 });
     expect(screen.getByText("Sin casilla: no se pudo votar")).toBeVisible();
-    expect(screen.getByText(/Alerta sin casilla:/)).toBeVisible();
+    expect(screen.getByText(/Falta de casillas antes:/)).toBeVisible();
     const incomplete = realResults.municipalities.find(
       (item) => item.indicators?.historia_completa === false
     )!;
     act(() => window.history.replaceState(null, "", `/?modo=mapa&municipio=${incomplete.id}`));
-    expect(await screen.findByText(/Historia incompleta:/)).toBeVisible();
+    expect(await screen.findByText(/Faltan datos de alguna elección./)).toBeVisible();
     act(() => window.history.replaceState(null, "", "/?modo=mapa&municipio=24059"));
     expect(await screen.findByText(/Sin datos electorales en esta entrega/)).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Descargar ficha JSON" }));
+    await user.click(screen.getByRole("button", { name: "Descargar ficha (JSON)" }));
     expect(URL.createObjectURL).toHaveBeenCalled();
   });
   it("configura indicadores y pronóstico en el panel compacto del modo mapa", async () => {
@@ -600,12 +612,12 @@ describe("Integración de resultados científicos reales", () => {
     window.history.replaceState(null, "", "/?modo=mapa&municipio=01001");
     openExplorer();
     await user.click(await screen.findByRole("button", { name: "Plegar ficha" }));
-    await user.click(screen.getByRole("button", { name: "Vistas y escenarios" }));
-    await user.click(screen.getByRole("button", { name: "Indicadores" }));
-    await choose("Vista de contexto", "Contexto de seguridad");
+    await user.click(screen.getByRole("button", { name: "Qué ver: datos y escenarios" }));
+    await user.click(screen.getByRole("button", { name: "Datos del territorio" }));
+    await choose("Tema del mapa", "Seguridad en el municipio");
     await user.click(screen.getByRole("button", { name: "Pronóstico" }));
-    expect(screen.getByRole("combobox", { name: "Nivel nacional" })).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Vistas y escenarios" }));
+    expect(screen.getByRole("combobox", { name: "Participación supuesta del país" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Qué ver: datos y escenarios" }));
     await user.click(screen.getByRole("button", { name: "Ver resultados en tabla" }));
     expect(await screen.findByRole("table", { name: "Resultados municipales" })).toBeVisible();
   });

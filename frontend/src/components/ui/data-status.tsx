@@ -5,14 +5,14 @@ import { colors, radii } from "@/theme/tokens";
 
 const statuses = {
   modeled: {
-    label: "Resultado de modelo",
+    label: "Estimación",
     ink: colors.light.info,
     fill: colors.light.infoSoft,
     darkInk: colors.dark.info,
     darkFill: colors.dark.infoSoft,
   },
   observed: {
-    label: "Historia observada",
+    label: "Dato registrado",
     ink: colors.light.info,
     fill: colors.light.infoSoft,
     darkInk: colors.dark.info,
