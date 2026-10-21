@@ -48,6 +48,43 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-21 - Exploración ampliada y preparación de entrega
+
+### 🎯 Resumen
+
+**Tipo de release:** Funcionalidad compatible. Dar más espacio al territorio e
+integrar la consulta en el modo ampliado, conservando resultados científicos 1.3.
+El sistema de diseño pasa a 1.8.0; el ZIP del mapa mantiene su identidad.
+
+### Added
+
+- Agregar acceso «Ampliar mapa» dentro del mapa normal, con retorno de foco al
+  botón utilizado y conservación de consulta, selección e instancia cartográfica.
+- Preparar un apartado editorial de producto/arquitectura, guía operativa y matriz
+  de entrega que distinguen pruebas técnicas y decisiones pendientes del equipo.
+- Preparar protocolo y hoja vacía para observar comprensión con personas no
+  expertas, sin presentar revisiones técnicas como sesiones humanas realizadas.
+- Documentar la condición de integración de actividades territoriales: fuente
+  inspeccionable, ámbito, periodo y lectura de ausencias; mantener EXT-ACT inactiva.
+
+### Changed
+
+- Aumentar la altura normal del mapa mediante tokens adaptables; ganar 70 px en
+  los tamaños de escritorio de referencia, con mínimos y máximos para móvil.
+- Mantener Pronóstico y Datos del territorio accesibles en el modo mapa, con un
+  acceso explícito a sus controles y resumen del escenario o tema activo.
+- Reunir chips eliminables, total y acciones persistentes en filtros; distribuir
+  barra, paneles y leyenda según el espacio disponible, con tarjetas compactas.
+
+### Fixed
+
+- Corregir el clic en el cuerpo de los chips y conservar un destino de foco al
+  quitarlos, tanto en consulta normal como en filtros del modo mapa.
+- Evitar fragmentos de leyenda detrás de los paneles, conservar su preferencia de
+  apertura y mantener controles utilizables en móvil y horizontal.
+- Identificar contexto sin rotularlo como pronóstico y conservar el aviso de
+  muestra cuando corresponda; restaurar foco también si el puntero no lo movió.
+
 ## [0.4.0] - 2026-10-21 - Comparaciones de publicaciones verificables
 
 ### 🎯 Resumen
