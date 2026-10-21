@@ -1,12 +1,19 @@
 # Vistas del mapa
 
-Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.2/`
+Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.3/`
 (formato de [contrato-datos.md](contrato-datos.md); unidades y significado de cada columna en
 `metadatos.json`). Decisiones D18, D19, D22 y D23 de la [bitácora](bitacora.md).
 
 ## Estado
 
-**`resultados-1.2` es la versión vigente.** Reemplaza a `resultados-1.1`, `resultados-1.0` y `muestra-0.3`.
+**`resultados-1.3` es la versión vigente.** Reemplaza a `resultados-1.2`, `1.1`, `1.0` y `muestra-0.3`. La carpeta `resultados-1.2` se
+conserva mientras la aplicación migra; la 1.3 solo cambia lo descrito abajo.
+
+**Respecto a la 1.2**, solo cambia una cosa. Hay 15 municipios cuyos conteos de 2024 no tienen a nadie con dato,
+porque su participación sale de las actas; 7 de ellos están en rojo, como Chicomuselo y Pantelhó. En ellos, las
+personas en juego por edad (`n_jov_2024`, `nv_jov_2024`, `peso_jov_2024`, `primerizos_votaron_2024`,
+`jovenes_21_29_no_votaron_2024`) y los supuestos S1 y S2 llegan vacíos, no en 0. Los totales y los escenarios
+no cambian.
 
 **Respecto a la 1.1**, solo cambia que las celdas sin dato llegan vacías y nunca como `NaN`. Eran 15 en
 `brecha_jovenes_2024`, de municipios cuya participación sale de las actas; lo detectó Jorge al integrar la 1.1.
@@ -103,7 +110,7 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
 ## Pestaña 2 · Indicadores y contexto
 
 Selector de vista. Cada una pinta el mapa con su propia columna y tiene sus propias tarjetas. Las cifras
-son de `resultados-1.2` y sirven para comprobar que la aplicación suma bien.
+son de `resultados-1.3` y sirven para comprobar que la aplicación suma bien.
 
 ### 1. Qué se elige el 6 de junio de 2027
 
@@ -153,7 +160,8 @@ Selector de grupo. Son conteos, no efectos.
 
 - **Complemento:** `brecha_jovenes_2024`, en puntos (participación de 20 a 29 años menos la del municipio;
   mediana −12.1).
-- Las dos últimas columnas tienen 8 y 245 vacíos: "sin dato", no cero.
+- Vacíos ("sin dato", no cero): 15 en las dos primeras columnas, 8 en la tercera y 245 en la cuarta. Los
+  totales no cuentan esos vacíos.
 
 ### 5. Alerta "sin casilla"
 

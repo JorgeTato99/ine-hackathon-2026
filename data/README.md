@@ -8,8 +8,8 @@
 | `samples/muestra-0.3/`              | Muestra estructural con incidencia histórica documentada y 2027 ilustrativo.                                                  | Sí  |
 | `raw/`                              | Seis ZIP, CSV y diccionarios originales del INE, sin modificar.                                                               | No  |
 | `geo/`                              | Respuestas geográficas originales del INEGI y manifiesto.                                                                     | No  |
-| `processed/mapa/resultados-1.2/`    | Tres originales agregados para el mapa: semáforo, escenarios y metadatos (notebook 05). Ver [vistas](../docs/vistas-mapa.md). | Sí  |
-| `processed/entrega/base-datos-1.2/` | Historia municipal, resultados 2027, diccionario, LEEME y XLSX; generados por `scripts/entrega_base_datos.py`.                | Sí  |
+| `processed/mapa/resultados-1.3/`    | Tres originales agregados para el mapa: semáforo, escenarios y metadatos (notebook 05). Ver [vistas](../docs/vistas-mapa.md). | Sí  |
+| `processed/entrega/base-datos-1.3/` | Historia municipal, resultados 2027, diccionario, LEEME y XLSX; generados por `scripts/entrega_base_datos.py`.                | Sí  |
 | `processed/` (resto)                | Parquet tipados, tablas agregadas y GeoJSON nacional.                                                                         | No  |
 
 Los archivos grandes se generan localmente. Las fuentes y URLs están declaradas en
