@@ -10,9 +10,9 @@ presentación y las cartas firmadas, que se coordinan por separado.
 
 ## Preparación
 
-Se utiliza la entrega científica `resultados-1.2`, commit
-`ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821`, y
-`data/processed/entrega/base-datos-1.2/`. La base incluye CSV y XLSX proporcionados
+Se utiliza la entrega científica `resultados-1.3`, commit
+`f25d9c2709d2a93179c7ee2d6d2df985d418d6ca`, y
+`data/processed/entrega/base-datos-1.3/`. La base incluye CSV y XLSX proporcionados
 por el análisis. No se recalculan modelos ni se reescribe ese libro para empaquetar.
 
 Primero preparar los recursos web con el entorno de datos y la geometría ligera
@@ -24,7 +24,7 @@ uv run python -m scripts.package_map_delivery
 ```
 
 Resultado:
-`output/entrega/TrazaCivica_Reto2_Mapa_resultados-1.2.zip`.
+`output/entrega/TrazaCivica_Reto2_Mapa_resultados-1.3.zip`.
 `output/` no se sube a Git. Los comandos aceptan `--help`; el paquete permite
 `--output` para otra carpeta y `--url` para una dirección HTTP/HTTPS sin credenciales.
 

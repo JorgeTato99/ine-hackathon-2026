@@ -766,7 +766,7 @@ wheels = [
 
 [[package]]
 name = "ine-hackathon-2026"
-version = "0.2.2"
+version = "0.2.3"
 source = { editable = "." }
 default-groups = ["dev", "notebooks"]
 dependencies = [

@@ -2,8 +2,8 @@
 
 ## Alcance y estado
 
-La entrega vigente es `data/processed/mapa/resultados-1.2/`, continuación de la entrega del PR #3,
-commit `ac8dc3cdbb06b5a0d5ddd63b67bee9a43def9821`. Sus tres archivos UTF-8 contienen
+La entrega vigente es `data/processed/mapa/resultados-1.3/`, integrada en el PR #5,
+commit `f25d9c2709d2a93179c7ee2d6d2df985d418d6ca`. Sus tres archivos UTF-8 contienen
 historia, indicadores y resultados precalculados del análisis de Sofía. 2027 es
 pronóstico condicionado al nivel nacional, no observación futura. La intervención
 es un supuesto aritmético, no un efecto medido. La muestra 0.3 se conserva solo
@@ -16,6 +16,14 @@ corrección en el origen de la versión 1.2. La publicación las representa como
 `null`, sin sustituirlas por cero. Un NaN nuevo bloquea la preparación; el
 tratamiento especial de la versión 1.1 queda limitado a ese antecedente.
 Los originales se conservan íntegros.
+
+La versión 1.3 corrige 105 celdas en esos 15 municipios: los siete campos
+`peso_jov_2024`, `n_jov_2024`, `nv_jov_2024`, `primerizos_votaron_2024`,
+`jovenes_21_29_no_votaron_2024`, `interv_votos_retener_primerizos` y
+`interv_votos_brecha_joven` quedan vacíos por falta de conteo por edad en 2024,
+en lugar de cero. La participación de esos municipios proviene de actas,
+según `sin_conteo_2024` en metadatos. Los totales suman solo datos disponibles;
+no se eliminan pronósticos ni S3. Los escenarios son idénticos a los de 1.2.
 
 ## Entradas
 
@@ -71,7 +79,7 @@ final por estar en los archivos.
 **Antecedente de la muestra 0.3:** las historias de Paracho (`16065`)
 y Parácuaro (`16064`) contienen los datos de 2021 intercambiados. Se conserva la
 muestra original para trazabilidad. Esa omisión provisional no se aplica a
-`resultados-1.2`, cuya historia proviene de la entrega científica regenerada.
+`resultados-1.3`, cuya historia proviene de la entrega científica regenerada.
 
 La entrega contiene 2,477 registros y la geometría 2,478 municipios. Villa de Pozos
 (`24059`) conserva geometría y se representa sin dato, en gris. No se le fabrican

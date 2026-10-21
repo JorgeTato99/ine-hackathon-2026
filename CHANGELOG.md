@@ -48,6 +48,28 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-10-20 - Conteos ausentes y entrega 1.3
+
+### 🎯 Resumen
+
+**Tipo de release:** Corrección compatible. Publicar resultados-1.3 y regenerar
+el paquete portable con la base del mismo corte. Conservar escenarios, pronósticos
+y diseño; distinguir conteos ausentes de ceros observados.
+
+### Fixed
+
+- Corregir la lectura de 105 celdas de siete campos en 15 municipios sin conteos
+  por edad de 2024: mostrar «Sin dato» en los grupos de personas y componentes
+  S1/S2, en lugar de cero. Mantener los pronósticos y el componente S3.
+- Contar esas ausencias en las tarjetas y explicar que los totales suman solo
+  datos disponibles, sin cambiar las sumas nacionales ni los seis escenarios.
+
+### Changed
+
+- Actualizar originales, procedencia, JSON y descargas SIG a resultados-1.3,
+  [PR #5](https://github.com/JorgeTato99/ine-hackathon-2026/pull/5).
+  Regenerar el ZIP con base-datos-1.3, guía y manifiesto de integridad.
+
 ## [0.2.2] - 2026-10-20 - Resultados 1.2 y paquete portable del mapa
 
 ### 🎯 Resumen

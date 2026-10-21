@@ -3,7 +3,7 @@
 Este documento define la versión vigente del sistema visual. Su fuente está en
 [`src/theme/tokens.ts`](../src/theme/tokens.ts), aplicada por
 [`theme.ts`](../src/theme/theme.ts). Es independiente de la versión del software
-y de los resultados científicos, actualmente `resultados-1.2`.
+y de los resultados científicos, actualmente `resultados-1.3`.
 
 ## Espaciado y densidad
 
