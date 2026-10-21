@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useSearchParams } from "next/navigation";
 import { useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -22,6 +21,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useDataset } from "@/services/use-dataset";
 import { useMapMode } from "@/hooks/use-map-mode";
+import { notifyExplorerQuery, useExplorerQuery } from "@/hooks/use-explorer-query";
 import { riskTokens, radii } from "@/theme/tokens";
 import {
   defaultScenarios,
@@ -75,7 +75,7 @@ export function WorkspaceLoading() {
 
 export function Explorer() {
   const query = useDataset();
-  const params = useSearchParams();
+  const params = useExplorerQuery();
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("md"));
   const [detailOpen, setDetailOpen] = useState(false);
@@ -163,6 +163,7 @@ export function Explorer() {
       "",
       `${window.location.pathname}${next.size ? `?${next}` : ""}`
     );
+    notifyExplorerQuery();
   }, []);
   const updateFilters = useCallback(
     (changes: Record<string, string>) => {
@@ -198,11 +199,7 @@ export function Explorer() {
         : [],
     [dataset, deferredSearch, state, risk, scenario, advanced, contextFilters]
   );
-  const rawTableState = readTableState(params);
-  const tableState =
-    isContext && !["municipio", "cvegeo", "entidad", "indicador"].includes(rawTableState.column)
-      ? { ...rawTableState, column: "municipio" as const }
-      : rawTableState;
+  const tableState = readTableState(params, isContext);
   const orderedItems = useMemo(
     () =>
       dataset
@@ -544,16 +541,24 @@ export function Explorer() {
                   contextTitle={isContext ? mapInfo?.title : undefined}
                   onSelect={onSelect}
                   state={tableState}
-                  onSort={(column) =>
+                  onSort={(column) => {
+                    // Next puede publicar searchParams después del siguiente clic.
+                    const currentParams = new URLSearchParams(window.location.search);
+                    const current = readTableState(
+                      currentParams,
+                      Boolean(
+                        dataset &&
+                        !dataset.sample &&
+                        readPresentation(currentParams).tab === "contexto"
+                      )
+                    );
                     update({
                       orden: column,
                       direccion:
-                        tableState.column === column && tableState.direction === "asc"
-                          ? "desc"
-                          : "asc",
+                        current.column === column && current.direction === "asc" ? "desc" : "asc",
                       pagina: "",
-                    })
-                  }
+                    });
+                  }}
                   onPage={(page) => update({ pagina: page > 0 ? String(page + 1) : "" })}
                   onPageSize={(size) => update({ filas: String(size), pagina: "" })}
                 />

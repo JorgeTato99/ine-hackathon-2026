@@ -21,7 +21,7 @@ export type TableState = {
 const collator = new Intl.Collator("es-MX", { sensitivity: "base", numeric: true });
 const riskOrder = { bajo: 0, medio: 1, alto: 2, sin_estimacion: null } as const;
 
-export function readTableState(params: Pick<URLSearchParams, "get">): TableState {
+export function readTableState(params: Pick<URLSearchParams, "get">, context = false): TableState {
   const column = params.get("orden") ?? "municipio";
   const size = Number(params.get("filas") ?? 25);
   const rawPage = params.get("pagina") ?? "1";
@@ -29,8 +29,12 @@ export function readTableState(params: Pick<URLSearchParams, "get">): TableState
     /^\d+$/.test(rawPage) && Number.isSafeInteger(Number(rawPage)) && Number(rawPage) > 0
       ? Number(rawPage) - 1
       : 0;
+  const validColumn = Object.hasOwn(sortLabels, column) ? (column as SortColumn) : "municipio";
   return {
-    column: Object.hasOwn(sortLabels, column) ? (column as SortColumn) : "municipio",
+    column:
+      context && !["municipio", "cvegeo", "entidad", "indicador"].includes(validColumn)
+        ? "municipio"
+        : validColumn,
     direction: params.get("direccion") === "desc" ? "desc" : "asc",
     pageSize: pageSizes.some((value) => value === size) ? size : 25,
     page,

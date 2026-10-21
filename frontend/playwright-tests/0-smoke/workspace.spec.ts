@@ -58,6 +58,103 @@ test("la entrada muestra el mapa y la tabla permite consultar más de una págin
   expect(new URL(page.url()).searchParams.has("pagina")).toBe(false);
 });
 
+test("dos activaciones en el mismo turno conservan el sentido de ordenación en URL y tabla", async ({
+  page,
+}) => {
+  await page.goto("/?vista=tabla&entidad=01&escenario=nac-medio_int-ninguna&filas=100");
+  const sorter = page.getByRole("button", {
+    name: "Ordenar por Participación estimada · 2027",
+    exact: true,
+  });
+  await sorter.evaluate((element: HTMLElement) => {
+    element.click();
+    element.click();
+  });
+  await expect.poll(() => new URL(page.url()).searchParams.get("direccion")).toBe("desc");
+  await expect(page.getByRole("columnheader", { name: /Participación/ })).toHaveAttribute(
+    "aria-sort",
+    "descending"
+  );
+  const params = new URL(page.url()).searchParams;
+  expect(params.get("entidad")).toBe("01");
+  expect(params.get("escenario")).toBe("nac-medio_int-ninguna");
+  expect(params.get("filas")).toBe("100");
+});
+
+test("historial nativo y teclado ordenan desde la consulta de destino", async ({ page }) => {
+  await page.goto("/?vista=tabla&entidad=01&orden=participacion&direccion=asc");
+  const header = page.getByRole("columnheader", { name: /Participación/ });
+  const sorter = page.getByRole("button", {
+    name: "Ordenar por Participación estimada · 2027",
+    exact: true,
+  });
+  await expect(header).toHaveAttribute("aria-sort", "ascending");
+  await page.evaluate(() =>
+    window.history.pushState(
+      null,
+      "",
+      "/?vista=tabla&entidad=02&orden=participacion&direccion=desc"
+    )
+  );
+  await expect(header).toHaveAttribute("aria-sort", "descending");
+  await page.goBack();
+  await expect(header).toHaveAttribute("aria-sort", "ascending");
+  expect(new URL(page.url()).searchParams.get("entidad")).toBe("01");
+  await sorter.focus();
+  await page.keyboard.press("Enter");
+  await expect(header).toHaveAttribute("aria-sort", "descending");
+  await expect(sorter).toBeFocused();
+  await page.goForward();
+  await expect.poll(() => new URL(page.url()).searchParams.get("entidad")).toBe("02");
+  await expect(header).toHaveAttribute("aria-sort", "descending");
+  await sorter.focus();
+  await page.keyboard.press("Space");
+  await expect(header).toHaveAttribute("aria-sort", "ascending");
+  await expect(sorter).toBeFocused();
+});
+
+for (const mode of ["tabla", "mapa"]) {
+  test(`el buscador conserva teclas, reinicio y recarga en modo ${mode}`, async ({ page }) => {
+    await page.goto(mode === "mapa" ? "/?modo=mapa" : "/?vista=tabla&filas=100");
+    const search = page.getByRole("searchbox", { name: "Buscar municipio o clave", exact: true });
+    await search.pressSequentially("01001");
+    await expect(search).toHaveValue("01001");
+    await expect.poll(() => new URL(page.url()).searchParams.get("buscar")).toBe("01001");
+    if (mode === "tabla")
+      await expect(
+        page.getByRole("table", { name: "Resultados municipales", exact: true }).getByRole("row")
+      ).toHaveCount(2);
+    if (mode === "mapa") await page.getByRole("button", { name: /^Filtros/ }).click();
+    await page.getByRole("button", { name: "Restablecer", exact: true }).click();
+    await expect(search).toHaveValue("");
+    expect(new URL(page.url()).searchParams.has("buscar")).toBe(false);
+    if (mode === "mapa")
+      await page.getByRole("button", { name: "Ver resultados", exact: true }).click();
+    await search.pressSequentially("01002");
+    await expect(search).toHaveValue("01002");
+    await page.reload();
+    await expect(search).toHaveValue("01002");
+    expect(new URL(page.url()).searchParams.get("buscar")).toBe("01002");
+  });
+}
+
+test("los límites de lista electoral conservan las teclas individuales", async ({
+  page,
+  isMobile,
+}) => {
+  await page.goto("/?vista=tabla");
+  await page.getByRole("button", { name: isMobile ? /^Filtros/ : /^Más filtros/ }).click();
+  const minimum = page.getByLabel("Lista electoral 2024 · mínimo", { exact: true });
+  const maximum = page.getByLabel("Lista electoral 2024 · máximo", { exact: true });
+  await minimum.pressSequentially("100");
+  await expect(minimum).toHaveValue("100");
+  await maximum.pressSequentially("1000");
+  await expect(maximum).toHaveValue("1000");
+  const params = new URL(page.url()).searchParams;
+  expect(params.get("ln_min")).toBe("100");
+  expect(params.get("ln_max")).toBe("1000");
+});
+
 test("el modo mapa conserva Canvas, consulta y cámara sin repetir la descarga", async ({
   page,
 }) => {

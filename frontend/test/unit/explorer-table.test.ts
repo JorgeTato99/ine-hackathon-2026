@@ -27,6 +27,22 @@ describe("Orden y páginas de la consulta", () => {
     expect(boundedPage(4, 51, 25)).toBe(2);
     expect(boundedPage(1, 1, 100)).toBe(0);
   });
+  it("resuelve las mismas columnas de contexto al mostrar y alternar la tabla", () => {
+    for (const column of ["participacion", "riesgo", "registro", "no-existe"]) {
+      expect(
+        readTableState(
+          new URLSearchParams(`orden=${column}&direccion=desc&filas=50&pagina=2`),
+          true
+        )
+      ).toEqual({ column: "municipio", direction: "desc", page: 1, pageSize: 50 });
+    }
+    for (const column of ["municipio", "cvegeo", "entidad", "indicador"]) {
+      expect(readTableState(new URLSearchParams(`orden=${column}`), true).column).toBe(column);
+    }
+    expect(readTableState(new URLSearchParams("orden=participacion"), false).column).toBe(
+      "participacion"
+    );
+  });
   it("ordena porcentajes como números y mantiene ceros y ausencias diferenciados", () => {
     const d = datasetFixture(),
       m = d.municipalities;

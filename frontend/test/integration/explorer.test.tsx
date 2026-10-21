@@ -15,13 +15,22 @@ import { decodeDataset } from "@/utils/dataset";
 
 const realResults = decodeDataset(JSON.parse(readFileSync("public/data/dataset.json", "utf8")));
 
-const environment = vi.hoisted(() => ({ mobile: false, pathname: "/", deferNavigation: false }));
+const environment = vi.hoisted(() => ({
+  mobile: false,
+  pathname: "/",
+  deferNavigation: false,
+  publishedSearch: "",
+}));
 vi.mock("@mui/material/useMediaQuery", () => ({ default: () => environment.mobile }));
 vi.mock("next/navigation", async () => {
   const { useSyncExternalStore } = await import("react");
   const subscribe = (listener: () => void) => {
-    window.addEventListener("popstate", listener);
-    return () => window.removeEventListener("popstate", listener);
+    const publish = () => {
+      environment.publishedSearch = window.location.search;
+      listener();
+    };
+    window.addEventListener("popstate", publish);
+    return () => window.removeEventListener("popstate", publish);
   };
   return {
     usePathname: () => environment.pathname,
@@ -29,7 +38,7 @@ vi.mock("next/navigation", async () => {
       new URLSearchParams(
         useSyncExternalStore(
           subscribe,
-          () => window.location.search,
+          () => environment.publishedSearch,
           () => ""
         )
       ),
@@ -50,11 +59,15 @@ beforeEach(() => {
   environment.mobile = false;
   environment.pathname = "/";
   environment.deferNavigation = false;
+  environment.publishedSearch = "";
   window.history.replaceState(null, "", "/");
   const replace = window.history.replaceState.bind(window.history);
   vi.spyOn(window.history, "replaceState").mockImplementation((...args) => {
     replace(...args);
-    if (!environment.deferNavigation) window.dispatchEvent(new Event("popstate"));
+    if (!environment.deferNavigation) {
+      environment.publishedSearch = window.location.search;
+      window.dispatchEvent(new Event("popstate"));
+    }
   });
   server.use(http.get("*/data/dataset.json", () => HttpResponse.json(datasetFixture())));
   vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:test");
@@ -141,6 +154,20 @@ describe("Recorrido de consulta con muestra identificada", () => {
     expect(
       await screen.findByRole("table", { name: "Resultados municipales de muestra" })
     ).toBeVisible();
+  });
+  it("conserva cada tecla del buscador aunque Next difiera la publicación de parámetros", async () => {
+    const user = userEvent.setup();
+    window.history.replaceState(null, "", "/?vista=tabla&entidad=01&municipio=01001&pagina=2");
+    openExplorer();
+    const search = await screen.findByRole("searchbox", { name: "Buscar municipio o clave" });
+    environment.deferNavigation = true;
+    await user.type(search, "01001");
+    expect(search).toHaveValue("01001");
+    const params = new URLSearchParams(window.location.search);
+    expect(params.get("buscar")).toBe("01001");
+    expect(params.get("entidad")).toBe("01");
+    expect(params.has("municipio")).toBe(false);
+    expect(params.has("pagina")).toBe(false);
   });
   it("filtra por entidad/riesgo y conserva la distinción de ausencia", async () => {
     const user = userEvent.setup();
@@ -283,6 +310,101 @@ describe("Recorrido de consulta con muestra identificada", () => {
       "descending"
     );
   });
+  it("aplica cada clic de ordenación aunque Next todavía no publique la URL", async () => {
+    const user = userEvent.setup();
+    openExplorer();
+    await user.click(await screen.findByRole("button", { name: "Tabla" }));
+    const sorter = screen.getByRole("button", { name: "Ordenar por Participación · ejemplo" });
+    environment.deferNavigation = true;
+    const writesBefore = vi.mocked(window.history.replaceState).mock.calls.length;
+    act(() => {
+      fireEvent.click(sorter);
+      fireEvent.click(sorter);
+    });
+    expect(vi.mocked(window.history.replaceState).mock.calls.length - writesBefore).toBe(2);
+    expect(new URLSearchParams(window.location.search).get("direccion")).toBe("desc");
+    fireEvent.click(sorter);
+    expect(new URLSearchParams(window.location.search).get("direccion")).toBe("asc");
+    const municipalitySorter = screen.getByRole("button", { name: "Ordenar por Municipio" });
+    fireEvent.click(municipalitySorter);
+    expect(new URLSearchParams(window.location.search).get("direccion")).toBe("asc");
+    fireEvent.click(municipalitySorter);
+    expect(new URLSearchParams(window.location.search).get("direccion")).toBe("desc");
+    fireEvent.click(sorter);
+    expect(new URLSearchParams(window.location.search).get("direccion")).toBe("asc");
+    fireEvent.click(sorter);
+    environment.deferNavigation = false;
+    act(() => window.dispatchEvent(new Event("popstate")));
+    await waitFor(() =>
+      expect(screen.getByRole("columnheader", { name: /Participación/ })).toHaveAttribute(
+        "aria-sort",
+        "descending"
+      )
+    );
+    const rows = within(
+      screen.getByRole("table", { name: "Resultados municipales de muestra" })
+    ).getAllByRole("row");
+    expect(within(rows[1]!).getByRole("button", { name: "Aguascalientes" })).toBeVisible();
+    expect(within(rows.at(-1)!).getByRole("button", { name: "Sin registro" })).toBeVisible();
+  });
+  it("conserva orden y búsqueda en ráfaga y aplica los resets de la consulta", async () => {
+    window.history.replaceState(null, "", "/?vista=tabla&pagina=2&municipio=01001&entidad=01");
+    openExplorer();
+    const sorter = await screen.findByRole("button", {
+      name: "Ordenar por Participación · ejemplo",
+    });
+    const search = screen.getByRole("searchbox", { name: "Buscar municipio o clave" });
+    environment.deferNavigation = true;
+    fireEvent.click(sorter);
+    fireEvent.change(search, { target: { value: "01001" } });
+    fireEvent.click(sorter);
+    const params = new URLSearchParams(window.location.search);
+    expect(params.get("buscar")).toBe("01001");
+    expect(params.get("entidad")).toBe("01");
+    expect(params.get("direccion")).toBe("desc");
+    expect(params.has("pagina")).toBe(false);
+    expect(params.has("municipio")).toBe(false);
+    environment.deferNavigation = false;
+    act(() => window.dispatchEvent(new Event("popstate")));
+    await waitFor(() => expect(search).toHaveValue("01001"));
+  });
+  it.each([
+    ["asc", "desc", "ascending", "descending"],
+    ["desc", "asc", "descending", "ascending"],
+  ])(
+    "alterna contexto desde la columna efectiva heredada en %s",
+    async (direction, next, initialAria, nextAria) => {
+      server.use(http.get("*/data/dataset.json", () => HttpResponse.json(realResults)));
+      window.history.replaceState(
+        null,
+        "",
+        `/?vista=tabla&pestana=contexto&indicador=personas&orden=participacion&direccion=${direction}&entidad=01`
+      );
+      openExplorer();
+      const sorter = await screen.findByRole("button", {
+        name: "Ordenar por Municipio",
+      });
+      expect(screen.getByRole("columnheader", { name: "Municipio" })).toHaveAttribute(
+        "aria-sort",
+        initialAria
+      );
+      environment.deferNavigation = true;
+      fireEvent.click(sorter);
+      const params = new URLSearchParams(window.location.search);
+      expect(params.get("orden")).toBe("municipio");
+      expect(params.get("direccion")).toBe(next);
+      expect(params.get("pestana")).toBe("contexto");
+      expect(params.get("entidad")).toBe("01");
+      environment.deferNavigation = false;
+      act(() => window.dispatchEvent(new Event("popstate")));
+      await waitFor(() =>
+        expect(screen.getByRole("columnheader", { name: "Municipio" })).toHaveAttribute(
+          "aria-sort",
+          nextAria
+        )
+      );
+    }
+  );
   it("controla tamaño, siguiente/última página y reinicio por filtros", async () => {
     const d = datasetFixture();
     for (let i = 0; i < 36; i++) {
