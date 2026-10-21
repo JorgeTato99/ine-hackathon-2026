@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
+import { useCallback, useDeferredValue, useMemo, useRef, useState, type MouseEvent } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
@@ -22,12 +22,13 @@ import { useTheme } from "@mui/material/styles";
 import { useDataset } from "@/services/use-dataset";
 import { useMapMode } from "@/hooks/use-map-mode";
 import { notifyExplorerQuery, useExplorerQuery } from "@/hooks/use-explorer-query";
-import { riskTokens, radii } from "@/theme/tokens";
+import { riskTokens, radii, explorerLayout } from "@/theme/tokens";
 import {
   defaultScenarios,
   estimateFor,
   filterMunicipalities,
   formatInteger,
+  formatPercent,
   municipalityById,
 } from "@/utils/dataset";
 import {
@@ -47,7 +48,7 @@ import { RiskLegend } from "./risk-legend";
 import { MunicipalityDetails } from "./municipality-details";
 import { MunicipalityTable } from "./municipality-table";
 import { MapModeChrome, type MapPanel } from "./map-mode-chrome";
-import { ResultsViews, ResultsCards, ResultsLegend } from "./results-controls";
+import { ResultsViews, ResultsTabs, ResultsCards, ResultsLegend } from "./results-controls";
 import { ResultsDetails } from "./results-details";
 import { SavedQueriesDialog } from "./saved-queries-dialog";
 import { captureQuery } from "@/utils/saved-queries";
@@ -88,6 +89,7 @@ export function Explorer() {
   );
   const workspace = useRef<HTMLDivElement>(null);
   const restoreScroll = useRef(0);
+  const mapModeTrigger = useRef<HTMLElement | null>(null);
   const returnView = useRef(params.get("vista") === "tabla" ? "tabla" : "mapa");
   const search = params.get("buscar") ?? "";
   const deferredSearch = useDeferredValue(search);
@@ -285,16 +287,9 @@ export function Explorer() {
     ) : null;
   const scenarioPanel = dataset ? (
     <Box>
-      {!dataset.sample && mapMode && (
+      {!dataset.sample && mapMode && presentation.tab === "contexto" && (
         <Box sx={{ p: 2, pb: 0 }}>
-          <ResultsViews presentation={presentation} onChange={updateScenarios} compact />
-          <Box sx={{ mt: 1 }}>
-            <ResultsCards
-              cards={cards}
-              count={items.length}
-              withData={items.filter((item) => item.hasData).length}
-            />
-          </Box>
+          <ResultsViews presentation={presentation} onChange={updateScenarios} compact hideTabs />
         </Box>
       )}
       {dataset.sample || presentation.tab === "pronostico" ? (
@@ -313,6 +308,17 @@ export function Explorer() {
           <Typography variant="body2" color="text.secondary">
             {mapInfo?.description}
           </Typography>
+        </Box>
+      )}
+      {!dataset.sample && mapMode && (
+        <Box sx={{ p: 2, pt: 0 }}>
+          <ResultsCards
+            compact
+            scrollable={false}
+            cards={cards}
+            count={items.length}
+            withData={items.filter((item) => item.hasData).length}
+          />
         </Box>
       )}
     </Box>
@@ -339,11 +345,18 @@ export function Explorer() {
     setActivePanel(null);
     update({ modo: "", vista: returnView.current === "tabla" ? "tabla" : "" });
   }, [update]);
-  useMapMode(mapMode, workspace, restoreScroll, () => {
-    if (activePanel) closePanel();
-    else exitMapMode();
-  });
-  const enterMapMode = () => {
+  useMapMode(
+    mapMode,
+    workspace,
+    restoreScroll,
+    () => {
+      if (activePanel) closePanel();
+      else exitMapMode();
+    },
+    mapModeTrigger
+  );
+  const enterMapMode = (event: MouseEvent<HTMLButtonElement>) => {
+    mapModeTrigger.current = event.currentTarget;
     restoreScroll.current = window.scrollY;
     returnView.current = view;
     setDetailOpen(false);
@@ -352,6 +365,7 @@ export function Explorer() {
     update({ modo: "mapa", vista: "" });
   };
   const restoreQuery = (saved: Record<string, string>) => {
+    mapModeTrigger.current = null;
     const next = new URLSearchParams(saved);
     returnView.current = saved.vista === "tabla" ? "tabla" : "mapa";
     if (saved.modo === "mapa" && !mapMode) restoreScroll.current = window.scrollY;
@@ -529,22 +543,31 @@ export function Explorer() {
                 <Box
                   data-pw="map-workspace"
                   sx={{
-                    height: mapMode
-                      ? "100%"
-                      : !dataset.sample
-                        ? {
-                            xs: "clamp(240px, calc(100dvh - 535px), 480px)",
-                            sm: "clamp(280px, calc(100dvh - 460px), 620px)",
-                            lg: "clamp(300px, calc(100dvh - 445px), 640px)",
-                          }
-                        : {
-                            xs: "clamp(280px, calc(100dvh - 420px), 480px)",
-                            sm: "clamp(340px, calc(100dvh - 360px), 620px)",
-                            lg: "clamp(360px, calc(100dvh - 340px), 640px)",
-                          },
+                    height: mapMode ? "100%" : explorerLayout.mapHeight,
                     position: "relative",
                   }}
                 >
+                  <Box
+                    sx={{
+                      display: mapMode ? "none" : "block",
+                      position: "absolute",
+                      zIndex: 3,
+                      top: 12,
+                      left: 12,
+                    }}
+                  >
+                    <Button
+                      data-pw="enter-map-mode-inline"
+                      size="small"
+                      variant="contained"
+                      aria-label="Ampliar mapa"
+                      aria-controls="territorial-content"
+                      startIcon={<Icon name="expand" size={17} />}
+                      onClick={enterMapMode}
+                    >
+                      Ampliar mapa
+                    </Button>
+                  </Box>
                   <TerritorialMap
                     dataset={dataset}
                     visibleIds={visibleIds}
@@ -645,6 +668,12 @@ export function Explorer() {
             {mapMode && (
               <MapModeChrome
                 search={search}
+                contentTabs={
+                  dataset.sample ? undefined : (
+                    <ResultsTabs presentation={presentation} onChange={updateScenarios} compact />
+                  )
+                }
+                isContext={isContext}
                 count={items.length}
                 filterCount={
                   advancedFilterCount(advanced) +
@@ -675,7 +704,13 @@ export function Explorer() {
                 }}
                 onSelect={onSelect}
                 sample={dataset.sample}
-                viewLabel={dataset.sample ? undefined : mapInfo?.title}
+                viewLabel={
+                  dataset.sample
+                    ? undefined
+                    : isContext
+                      ? mapInfo?.title
+                      : `País supuesto: ${formatPercent(dataset.nationalLevels?.[scenarioInfo?.national ?? ""])} · ${scenarioInfo?.intervention === "ninguna" ? "Sin intervención" : "Con intervención supuesta"}${comparing ? " · Comparación activa" : ""}`
+                }
                 legend={modeLegend}
                 selectionLabel={isContext ? mapInfo?.paints[selected]?.label : undefined}
               />

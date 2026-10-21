@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { contextViews, peopleGroups, type Presentation, type LegendItem } from "@/utils/indicators";
 import { contextGuides } from "@/content/reading-guide";
 
-export function ResultsViews({
+export function ResultsTabs({
   presentation,
   onChange,
   compact = false,
@@ -21,7 +21,7 @@ export function ResultsViews({
   compact?: boolean;
 }) {
   return (
-    <Box sx={{ minWidth: 0 }}>
+    <>
       {compact ? (
         <ButtonGroup fullWidth size="small" aria-label="Contenido territorial">
           <Button
@@ -64,6 +64,27 @@ export function ResultsViews({
           />
         </Tabs>
       )}
+    </>
+  );
+}
+
+export function ResultsViews({
+  presentation,
+  onChange,
+  compact = false,
+  hideTabs = false,
+}: {
+  presentation: Presentation;
+  onChange: (changes: Record<string, string>) => void;
+  compact?: boolean;
+  hideTabs?: boolean;
+}) {
+  return (
+    <Box sx={{ minWidth: 0 }}>
+      {!hideTabs && (
+        <ResultsTabs presentation={presentation} onChange={onChange} compact={compact} />
+      )}
+
       {presentation.tab === "contexto" && (
         <Box
           sx={{
@@ -153,18 +174,20 @@ export function ResultsCards({
   count,
   withData,
   compact = false,
+  scrollable = true,
 }: {
   cards: { label: string; value: string; detail?: string | undefined }[];
   count: number;
   withData: number;
   compact?: boolean;
+  scrollable?: boolean;
 }) {
   return (
     <Box sx={{ minWidth: 0, maxWidth: "100%" }}>
       <Box
         role="region"
         aria-label="Resumen de los municipios seleccionados"
-        tabIndex={0}
+        tabIndex={scrollable ? 0 : undefined}
         sx={{
           display: "grid",
           gridAutoFlow: compact ? "row" : "column",
@@ -174,7 +197,7 @@ export function ResultsCards({
           gridAutoColumns: compact ? undefined : "minmax(155px, 1fr)",
           gap: 1,
           overflowX: "auto",
-          maxHeight: compact ? 245 : undefined,
+          maxHeight: compact && scrollable ? 245 : undefined,
           pb: 0.5,
           "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main" },
         }}

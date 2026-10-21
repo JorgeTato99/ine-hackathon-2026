@@ -3,7 +3,7 @@ export const brand = {
   descriptor: "Participación y territorio",
 } as const;
 
-export const designSystem = { name: "Traza Cívica", version: "1.7.1" } as const;
+export const designSystem = { name: "Traza Cívica", version: "1.8.0" } as const;
 
 // Factores MUI en unidades de 8 px; strings para usar dimensiones CSS sin multiplicarlas.
 export const space = {
@@ -39,6 +39,11 @@ export const explorerLayout = {
   inset: 16,
   narrowInset: 8,
   sheetFraction: 0.52,
+  mapHeight: {
+    xs: "clamp(280px, calc(100dvh - 475px), 520px)",
+    sm: "clamp(340px, calc(100dvh - 390px), 700px)",
+    lg: "clamp(360px, calc(100dvh - 375px), 720px)",
+  },
 } as const;
 export const density = { compact: 2, comfortable: 3, editorial: 4 } as const;
 export const typeScale = {

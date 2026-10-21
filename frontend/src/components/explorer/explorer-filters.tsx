@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
@@ -84,6 +84,12 @@ export function ExplorerFilters({
   contextFilters,
 }: ExplorerFiltersProps) {
   const [open, setOpen] = useState(false);
+  const resetButton = useRef<HTMLButtonElement>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const removeFilter = (changes: Record<string, string>) => {
+    (floating ? resetButton.current : searchInput.current)?.focus({ preventScroll: true });
+    onChange(changes);
+  };
   const extraCount =
     advancedFilterCount(advanced) +
     (contextFilters ? Object.values(contextFilters).filter(Boolean).length : 0);
@@ -344,15 +350,67 @@ export function ExplorerFilters({
       )}
     </>
   );
+  const activeChips = active.length > 0 && (
+    <Box
+      role="group"
+      aria-label="Filtros activos"
+      sx={{ display: "flex", gap: 0.75, flexWrap: "wrap", alignItems: "center", mt: 1.25 }}
+    >
+      {active.map((chip) => (
+        <Chip
+          key={chip.key}
+          size="small"
+          label={chip.label}
+          aria-label={`Quitar filtro: ${chip.label}`}
+          variant="outlined"
+          onClick={() => removeFilter(chip.remove)}
+          onDelete={() => removeFilter(chip.remove)}
+          sx={{
+            maxWidth: "100%",
+            ".MuiChip-label": { overflow: "hidden", textOverflow: "ellipsis" },
+          }}
+        />
+      ))}
+      {mobile && !floating && (
+        <Button size="small" onClick={() => onChange(reset)}>
+          Restablecer
+        </Button>
+      )}
+    </Box>
+  );
   if (floating)
     return (
-      <Box sx={{ p: 2 }}>
-        {extendedFields}
-        <Box sx={{ display: "flex", justifyContent: "space-between", gap: 1, mt: 2 }}>
-          <Button onClick={() => onChange(reset)}>Restablecer</Button>
-          <Button variant="contained" onClick={onClose}>
-            Ver resultados
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: 0, flex: "1 1 auto" }}>
+        <Box
+          sx={{ p: 2, pt: 0.75, overflowY: "auto", overscrollBehavior: "contain", minHeight: 0 }}
+        >
+          {activeChips}
+          <Box sx={{ mt: active.length ? 2 : 0.5 }}>{extendedFields}</Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 1,
+            p: 1.5,
+            borderTop: 1,
+            borderColor: "divider",
+            bgcolor: "background.paper",
+            flexShrink: 0,
+          }}
+        >
+          <Button ref={resetButton} onClick={() => onChange(reset)}>
+            Restablecer
           </Button>
+          <Box sx={{ display: "flex", alignItems: "flex-end", flexDirection: "column", gap: 0.25 }}>
+            <Typography variant="caption" role="status" aria-live="polite">
+              {count.toLocaleString("es-MX")} {count === 1 ? "municipio" : "municipios"}
+            </Typography>
+            <Button variant="contained" onClick={onClose}>
+              Ver resultados
+            </Button>
+          </Box>
         </Box>
       </Box>
     );
@@ -378,6 +436,7 @@ export function ExplorerFilters({
         >
           <TextField
             label="Buscar municipio o clave"
+            inputRef={searchInput}
             placeholder="Ej. Aguascalientes o 01001"
             type="search"
             size="small"
@@ -405,32 +464,7 @@ export function ExplorerFilters({
             Restablecer
           </Button>
         </Box>
-        {active.length > 0 && (
-          <Box
-            aria-label="Filtros activos"
-            sx={{ display: "flex", gap: 0.75, flexWrap: "wrap", alignItems: "center", mt: 1.25 }}
-          >
-            {active.map((chip) => (
-              <Chip
-                key={chip.key}
-                size="small"
-                label={chip.label}
-                aria-label={`Quitar filtro: ${chip.label}`}
-                variant="outlined"
-                onDelete={() => onChange(chip.remove)}
-                sx={{
-                  maxWidth: "100%",
-                  ".MuiChip-label": { overflow: "hidden", textOverflow: "ellipsis" },
-                }}
-              />
-            ))}
-            {mobile && (
-              <Button size="small" onClick={() => onChange(reset)}>
-                Restablecer
-              </Button>
-            )}
-          </Box>
-        )}
+        {activeChips}
         {error && (
           <Alert severity="warning" sx={{ mt: 1 }}>
             {error}

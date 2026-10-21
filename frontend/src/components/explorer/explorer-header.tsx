@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEventHandler } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -20,7 +20,7 @@ export function ExplorerHeader({
   mapDisabled = false,
   sample = true,
 }: {
-  onMapMode?: () => void;
+  onMapMode?: MouseEventHandler<HTMLButtonElement>;
   onSavedQueries?: () => void;
   mapDisabled?: boolean;
   sample?: boolean;

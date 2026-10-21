@@ -2,12 +2,22 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 
+function visible(element: HTMLElement) {
+  for (let node: HTMLElement | null = element; node; node = node.parentElement) {
+    const style = getComputedStyle(node);
+    if (style.display === "none" || style.visibility === "hidden" || node.hasAttribute("inert"))
+      return false;
+  }
+  return true;
+}
+
 /** Aísla el workspace ampliado sin convertir sus paneles en diálogos modales. */
 export function useMapMode(
   active: boolean,
   container: RefObject<HTMLElement | null>,
   restoreScroll: RefObject<number>,
-  onEscape: () => void
+  onEscape: () => void,
+  returnFocus?: RefObject<HTMLElement | null>
 ) {
   const escape = useRef(onEscape);
   const restoreFrame = useRef(0);
@@ -19,6 +29,7 @@ export function useMapMode(
     cancelAnimationFrame(restoreFrame.current);
     const root = document.documentElement;
     const previousScroll = restoreScroll.current;
+    const origin = returnFocus?.current;
     const previousMode = root.getAttribute("data-map-mode");
     const chrome = [...document.querySelectorAll<HTMLElement>("[data-app-chrome], .skip-link")].map(
       (element) => ({
@@ -56,11 +67,12 @@ export function useMapMode(
         if (hidden === null) element.removeAttribute("aria-hidden");
         else element.setAttribute("aria-hidden", hidden);
       }
-      const trigger = document.querySelector<HTMLElement>('[data-pw="enter-map-mode"]');
+      const fallback = () => document.querySelector<HTMLElement>('[data-pw="enter-map-mode"]');
       // El documento recupera altura después de retirar el workspace fijo.
       // Restaurar antes de ese layout puede acotar el scroll a cero en móvil.
       const restore = (remaining: number) => {
         restoreFrame.current = 0;
+        const trigger = origin?.isConnected && visible(origin) ? origin : fallback();
         if (!trigger?.isConnected || root.getAttribute("data-map-mode") === "true") return;
         const available = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
         if (available < previousScroll && remaining > 0) {
@@ -73,5 +85,5 @@ export function useMapMode(
       };
       restoreFrame.current = requestAnimationFrame(() => restore(4));
     };
-  }, [active, container, restoreScroll]);
+  }, [active, container, restoreScroll, returnFocus]);
 }
