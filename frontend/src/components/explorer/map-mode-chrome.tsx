@@ -34,6 +34,7 @@ export function MapModeChrome({
   onPanel,
   onClosePanel,
   onDownload,
+  onSavedQueries,
   onTable,
   onSelect,
   sample = true,
@@ -57,6 +58,7 @@ export function MapModeChrome({
   onPanel: (panel: Exclude<MapPanel, null>) => void;
   onClosePanel: () => void;
   onDownload: () => void;
+  onSavedQueries?: () => void;
   onTable: () => void;
   onSelect: (id: string) => void;
   sample?: boolean;
@@ -148,6 +150,18 @@ export function MapModeChrome({
               </IconButton>
             </span>
           </Tooltip>
+          {onSavedQueries && (
+            <Tooltip title="Consultas guardadas">
+              <IconButton
+                data-saved-queries
+                size="small"
+                aria-label="Consultas guardadas"
+                onClick={onSavedQueries}
+              >
+                <Icon name="bookmark" size={17} />
+              </IconButton>
+            </Tooltip>
+          )}
         </Box>
         <Box
           sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}

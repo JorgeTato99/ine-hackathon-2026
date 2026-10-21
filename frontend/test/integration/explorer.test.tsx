@@ -91,6 +91,31 @@ async function choose(label: string, text: string) {
   await user.click(await screen.findByRole("option", { name: text }));
 }
 
+describe("Consultas personales", () => {
+  it("guarda la consulta efectiva y la recupera sin filtros sobrantes", async () => {
+    window.localStorage.clear();
+    const user = userEvent.setup();
+    openExplorer();
+    await screen.findByRole("button", { name: "Entrar al modo mapa" });
+    await user.click(await screen.findByRole("button", { name: "Consultas guardadas" }));
+    await user.type(screen.getByRole("textbox", { name: "Nombre de la consulta" }), "Mi lectura");
+    await user.click(screen.getByRole("button", { name: "Guardar consulta actual" }));
+    expect(await screen.findByText("Consulta guardada en este navegador.")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Cerrar consultas" }));
+    act(() => {
+      window.history.replaceState(null, "", "/?buscar=Parácuaro&riesgo=alto&ln_min=2000");
+    });
+    await user.click(screen.getByRole("button", { name: "Consultas guardadas" }));
+    await user.click(screen.getByRole("button", { name: "Abrir Mi lectura" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    const restored = new URLSearchParams(window.location.search);
+    expect(restored.has("buscar")).toBe(false);
+    expect(restored.has("riesgo")).toBe(false);
+    expect(restored.has("ln_min")).toBe(false);
+    expect(restored.get("escenario")).toBe("base");
+  });
+});
+
 describe("Recorrido de consulta con muestra identificada", () => {
   it("mantiene la guía bajo demanda y devuelve el foco al cerrar la ayuda", async () => {
     const user = userEvent.setup();

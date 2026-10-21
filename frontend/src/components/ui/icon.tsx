@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
 const paths = {
+  bookmark: "M6 3h12v18l-6-4-6 4V3Z",
   map: "m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16",
   table: "M3 4h18v16H3V4Zm0 5h18M9 4v16M3 14h18",
   search: "m20 20-5-5M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z",

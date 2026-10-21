@@ -49,6 +49,8 @@ import { MunicipalityTable } from "./municipality-table";
 import { MapModeChrome, type MapPanel } from "./map-mode-chrome";
 import { ResultsViews, ResultsCards, ResultsLegend } from "./results-controls";
 import { ResultsDetails } from "./results-details";
+import { SavedQueriesDialog } from "./saved-queries-dialog";
+import { captureQuery } from "@/utils/saved-queries";
 import {
   readPresentation,
   mapPresentation,
@@ -80,6 +82,7 @@ export function Explorer() {
   const mobile = useMediaQuery(theme.breakpoints.down("md"));
   const [detailOpen, setDetailOpen] = useState(false);
   const [scenarioOpen, setScenarioOpen] = useState(false);
+  const [savedOpen, setSavedOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<MapPanel>(() =>
     params.get("municipio") ? "detail" : null
   );
@@ -348,6 +351,28 @@ export function Explorer() {
     setActivePanel(selected ? "detail" : null);
     update({ modo: "mapa", vista: "" });
   };
+  const restoreQuery = (saved: Record<string, string>) => {
+    const next = new URLSearchParams(saved);
+    returnView.current = saved.vista === "tabla" ? "tabla" : "mapa";
+    if (saved.modo === "mapa" && !mapMode) restoreScroll.current = window.scrollY;
+    setActivePanel(saved.modo === "mapa" && saved.municipio ? "detail" : null);
+    setDetailOpen(saved.modo !== "mapa" && Boolean(saved.municipio));
+    setScenarioOpen(false);
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${next.size ? `?${next}` : ""}`
+    );
+    notifyExplorerQuery();
+    // El acceso visible puede cambiar cuando se recupera otro modo de consulta.
+    setTimeout(
+      () =>
+        [...document.querySelectorAll<HTMLElement>("[data-saved-queries]")]
+          .find((node) => node.getClientRects().length)
+          ?.focus({ preventScroll: true }),
+      0
+    );
+  };
   const filterProps = {
     search,
     state,
@@ -366,6 +391,7 @@ export function Explorer() {
       <Box sx={{ display: mapMode ? "none" : "block" }}>
         <ExplorerHeader
           onMapMode={enterMapMode}
+          {...(dataset ? { onSavedQueries: () => setSavedOpen(true) } : {})}
           mapDisabled={!dataset}
           sample={dataset?.sample ?? false}
         />
@@ -642,6 +668,7 @@ export function Explorer() {
                 }}
                 onClosePanel={closePanel}
                 onDownload={download}
+                onSavedQueries={() => setSavedOpen(true)}
                 onTable={() => {
                   returnView.current = "tabla";
                   exitMapMode();
@@ -705,6 +732,16 @@ export function Explorer() {
             </>
           )}
         </EntranceScope>
+      )}
+      {dataset && savedOpen && (
+        <SavedQueriesDialog
+          dataset={dataset}
+          capture={() =>
+            captureQuery(dataset, new URLSearchParams(window.location.search), returnView.current)
+          }
+          onRestore={restoreQuery}
+          onClose={() => setSavedOpen(false)}
+        />
       )}
     </Stack>
   );

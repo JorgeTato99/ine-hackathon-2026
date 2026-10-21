@@ -16,10 +16,12 @@ import { ConsultationGuide } from "./consultation-guide";
 
 export function ExplorerHeader({
   onMapMode,
+  onSavedQueries,
   mapDisabled = false,
   sample = true,
 }: {
   onMapMode?: () => void;
+  onSavedQueries?: () => void;
   mapDisabled?: boolean;
   sample?: boolean;
 }) {
@@ -56,12 +58,33 @@ export function ExplorerHeader({
             </Typography>
           </Box>
           <Box sx={{ display: "flex", gap: 0.5, flexShrink: 0 }}>
+            {onSavedQueries && (
+              <Button
+                data-saved-queries
+                aria-label="Consultas guardadas"
+                size="small"
+                onClick={onSavedQueries}
+                startIcon={<Icon name="bookmark" size={17} />}
+                sx={{
+                  minWidth: { xs: 32, sm: 64 },
+                  ".MuiButton-startIcon": { mr: { xs: 0, sm: 1 } },
+                }}
+              >
+                <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
+                  Consultas
+                </Box>
+              </Button>
+            )}
             <Button
               size="small"
               aria-label="Ayuda: cómo explorar el territorio"
               onClick={() => setHelpOpen(true)}
               startIcon={<Icon name="info" size={17} />}
-              sx={{ flexShrink: 0 }}
+              sx={{
+                flexShrink: 0,
+                minWidth: { xs: 32, sm: 64 },
+                ".MuiButton-startIcon": { mr: { xs: 0, sm: 1 } },
+              }}
             >
               <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
                 Cómo explorar
