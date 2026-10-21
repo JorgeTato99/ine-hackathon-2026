@@ -15,6 +15,7 @@ siempre con exportación de producción servida por Nginx.
 - [Cartografía, fuentes y preparación](docs/cartografia.md).
 - [Explorador, filtros, tabla y modo mapa](docs/explorador.md).
 - [Consultas personales e intercambio de archivos](docs/consultas-guardadas.md).
+- [Comparación de publicaciones y procedencia](docs/publicaciones.md).
 - [Resultados científicos, recepción y controles](docs/resultados.md).
 - [Vista pública de desarrollo y actualizaciones](deploy/README.md).
 - [Historial de cambios del proyecto](../CHANGELOG.md): registrar cada actualización

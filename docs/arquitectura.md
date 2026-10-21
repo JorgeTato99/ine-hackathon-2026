@@ -50,8 +50,11 @@ datos se mantienen desde la preparación; no dependen de esa ampliación de inte
 ## Capacidades del producto
 
 Este es el alcance acordado. El estado implementado se detalla al inicio y en la
-[guía del explorador](../frontend/docs/explorador.md); las consultas guardadas,
-comparación entre versiones y EXT-ACT siguen después del núcleo.
+[guía del explorador](../frontend/docs/explorador.md). Las
+[consultas personales](../frontend/docs/consultas-guardadas.md) y la
+[comparación de publicaciones](../frontend/docs/publicaciones.md) amplían el núcleo
+sin servidor de negocio. EXT-ACT requiere una fuente territorial utilizable antes
+de incorporarse al producto.
 
 1. **Exploración territorial:** mapa y tabla sincronizados, búsqueda, filtros e
    historia electoral, con cobertura y ausencias visibles.
