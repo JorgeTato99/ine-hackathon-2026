@@ -48,6 +48,22 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-10-21 - Nombre accesible del escenario activo
+
+### 🎯 Resumen
+
+**Tipo de release:** Corrección compatible. Incluir el resumen visible del
+escenario en el nombre accesible de su botón de configuración. Datos 1.3 y
+sistema de diseño 1.8.0 se conservan.
+
+### Fixed
+
+- Corregir la discordancia entre texto visible y nombre accesible del acceso a
+  escenarios/temas, detectada por el CI completo; utilizar su contenido como nombre.
+- Incluir WCAG 2.1 A en la comprobación nueva y medir colores sobre el Canvas
+  nativo, evitando la mezcla de píxeles de una captura reducida. Conservar los
+  criterios de mayoría de color y presencia de trama, y el DPR del dispositivo.
+
 ## [0.5.0] - 2026-10-21 - Exploración ampliada y preparación de entrega
 
 ### 🎯 Resumen
