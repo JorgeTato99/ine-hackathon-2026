@@ -522,3 +522,29 @@ la tabla de equivalencias. El notebook 03 ya asignaba esos mismos valores fijos,
 corrección. La carpeta `resultados-1.2` se conserva junto a la 1.3, porque la aplicación de Jorge tiene la
 versión fija en `scripts/prepare_results.py`. Pasar a la 1.3 es cambiar esa constante y regenerar.
 
+
+---
+
+## 2026-10-22 · Inventario de variables y pruebas finales
+
+**Documentación nueva:** `docs/variables/`, que reúne las 101 variables probadas: fuente, transformación,
+resultado y estado. Incluye los cambios de lectura y las otras bases de datos posibles.
+
+- **39 variables que ya teníamos y nunca se habían probado** (componentes de pobreza, marginación y
+  rezago social; remesas en dólares; delitos del SESNSP de 2015 y 2021; votos nulos; otros datos del censo):
+  - 20 son estables;
+  - 2 mejoran el modelo final en las dos validaciones: vulnerables por carencias y ni pobres ni
+    vulnerables (CONEVAL), alrededor de 1 %.
+- **Extorsión y delitos electorales** se midieron por primera vez también en 2015: **no son estables**.
+  Corrige lo que decía el resumen para Jorge ("solo se midieron para 2021").
+- **Búsqueda de otras bases.** La única nueva que existe por municipio antes de 2015, 2021 y 2027 son las
+  elecciones de ayuntamiento compiladas por Magar (ITAM). La participación en la última elección municipal
+  mejora el modelo final alrededor de 1.5 %.
+- **Las tres que mejoran por separado no mejoran juntas** (−0.040 y −0.005, intervalo con el cero).
+- **Recomendación (D26, pendiente de Sofía):** no agregarlas ahora. Mismo criterio que D20, riesgo de azar
+  después de 60 pruebas y costo alto a 9 días de la entrega. Quedan como candidatas para una versión
+  posterior.
+- **Pendientes de decisión:**
+  - D24: tratar como "sin dato" la participación de 0 % por falta de casillas cuando es dato de entrada;
+  - D25: cómo presentar los escenarios nacionales. Con el calendario de 2027, los escenarios bajo y medio
+    dejan a 30 % a 40 % de los municipios por debajo de su mínimo histórico; el escenario alto, a 12 %.

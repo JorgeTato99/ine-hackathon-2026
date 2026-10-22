@@ -115,3 +115,14 @@ Columnas: `fuente`, `archivo_relativo` (ruta desde la raíz del repo), `sha256`,
   RNID 2026 del SESNSP (las notas solo guardan su identificador en gob.mx: 1009052, 1009060, 1009065,
   1009066, 1058530 y 1058479), y dos PDF de `computos_2012/verificacion/`
   (`20130718-O-1-3-27-6-3.pdf` y `20150317-E-4-3-264-8-4.pdf`). Ninguno lo lee un script.
+
+## Elecciones de ayuntamiento (Magar, ITAM) — solo para la prueba del 22 de octubre de 2026
+
+- **Archivo:** `aymu1970-on.coalAgg.csv` del repositorio público https://github.com/emagar/elecRetrns
+  (descarga: https://raw.githubusercontent.com/emagar/elecRetrns/master/data/aymu1970-on.coalAgg.csv).
+- **Copia local:** `data/raw/externos/magar/aymu1970-on.coalAgg.csv`, que no se sube al repo. SHA-256
+  `426ed728e47abdb2729a04634e47c7d6370c22bcb28f07fac4b495645dccd01d`.
+- **Contenido:** resultados de ayuntamientos de 1970 a 2025 por municipio (clave INEGI), con votos
+  totales y lista nominal. Es una base académica, no oficial.
+- **Uso:** solo en `notebooks/pruebas_variables/magar_ayuntamientos.py`. No entra al modelo; resultados en
+  `docs/variables/otras-fuentes.md`.
