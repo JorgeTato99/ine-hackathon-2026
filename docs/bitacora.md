@@ -548,3 +548,14 @@ resultado y estado. Incluye los cambios de lectura y las otras bases de datos po
   - D24: tratar como "sin dato" la participación de 0 % por falta de casillas cuando es dato de entrada;
   - D25: cómo presentar los escenarios nacionales. Con el calendario de 2027, los escenarios bajo y medio
     dejan a 30 % a 40 % de los municipios por debajo de su mínimo histórico; el escenario alto, a 12 %.
+
+### Decisiones (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D24 | ¿Tratar como "sin dato" la participación de una elección de entrada con falta de casillas (10 % o más de la lista)? | **Se probó y no se adopta.** La validación mejora al predecir 2021 (5.317 → 5.301) y empeora al predecir 2015 (6.158 → 6.204). Además saca del rojo a municipios con participación muy baja y repetida: Cherán votó 8 %, 7 % y 7 % en 2018, 2021 y 2024, y con el cambio pasaría de −36 a −2 puntos frente al país. Se conserva `resultados-1.3` y se documenta la advertencia: en esos municipios, el semáforo refleja la participación observada y se lee junto con la alerta "sin casilla" |
+| D25 | ¿Cómo presentar los escenarios nacionales? | **Se mantienen los tres** (44.1 %, 47.1 % y 51.8 %), pero **"alto" (como 2021) se presenta como el más parecido a 2027 por su calendario:** el 91 % de la lista tendrá elección municipal ese día, contra 95 % en 2021 y 58 % en 2015. Con el calendario de 2027, los escenarios bajo y medio dejan a 40 % y 30 % de los municipios por debajo de su mínimo histórico; el alto, a 12 %. El color del semáforo no cambia entre escenarios. No cambian los datos: es un cambio de presentación en la aplicación y en los materiales |
+| D26 | ¿Agregar alguna de las variables probadas el 22 de octubre? | **No.** Mejoran alrededor de 1 % por separado y juntas no; después de 60 pruebas puede ser azar. Quedan como candidatas para una versión posterior (`docs/variables/cambios-y-pruebas.md`) |
+
+Prueba de D24: `build_03b` con el cambio, guardado fuera del repo. Al revertirlo, los archivos volvieron a ser
+idénticos a la 1.3 (diferencias de 0.00000000000003 por redondeo).

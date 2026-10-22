@@ -52,7 +52,7 @@ el catálogo). Se conservaron porque el modelo les da poco peso si no ayudan y l
 - **Muchas variables se relacionan con votar menos, pero casi ninguna agrega información.** La historia
   del municipio ya resume la mayor parte de lo que dicen.
 - **De las 60 probadas después del modelo** (18 el 20 de octubre y 42 el 22), 3 mejoran el modelo final
-  en las dos validaciones, alrededor de 1 % cada una, y **juntas ya no mejoran** (ver
+  en las dos validaciones, alrededor de 1 % cada una, y **juntas ya no mejoran**. No se agregan (D26; ver
   [cambios-y-pruebas.md](cambios-y-pruebas.md)).
 
 Fuentes de cada cifra: notebooks `03b`, `04` y `04b`; scripts de la prueba del 22 de octubre en

@@ -65,7 +65,19 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
    | --- | --- | --- |
    | `bajo` | 44.1 % | como la intermedia de 2009 |
    | `medio` | 47.1 % | como 2015 |
-   | `alto` | 51.8 % | como 2021 |
+   | `alto` | 51.8 % | como 2021 · **el más parecido a 2027 (D25)** |
+
+   **D25 (22 de octubre):** se mantienen los tres niveles, pero `alto` se presenta como el más parecido a
+   2027 por su calendario: el 91 % de la lista elige ayuntamiento ese día, contra 95 % en 2021 y 58 % en
+   2015. Con bajo o medio, entre 30 % y 40 % de los municipios quedan por debajo de su mínimo histórico
+   (casos como Xalapa o Mapimí); con alto, el 12 %.
+
+   Propuesta para la aplicación:
+   - abrir en `alto`;
+   - etiquetarlo "más parecido a 2027 por su calendario";
+   - explicar en la ayuda que el nivel nacional es un supuesto, no una predicción.
+
+   Los datos no cambian.
 
 2. **Sin o con intervención** (`intervencion`: `ninguna` o `dirigida_rojos`). Siempre se compara con el
    **mismo** nivel nacional: `nac-medio_int-ninguna` contra `nac-medio_int-dirigida_rojos`.

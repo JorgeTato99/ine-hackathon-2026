@@ -133,12 +133,12 @@ Mismo método. Detalle y conclusiones en [cambios-y-pruebas.md](cambios-y-prueba
 | `pct_viviendas_sin_refrigerador` | CONEVAL, rezago social | 2010 / 2020 | % | −0.08 | −0.07 | sí | no | 🟡 |
 | `pct_ocupados_hasta_2_salarios_minimos` | CONAPO | 2010 / 2020 | % de ocupados que gana hasta 2 salarios mínimos | 0.06 | 0.07 | sí | no | 🟡 |
 | `pct_votos_nulos_presidencial` | INE, cómputos por casilla | 2012 / 2018 / 2024 | Votos nulos entre votos totales, casillas básicas, contiguas y extraordinarias, en % | 0.20 | 0.07 | sí | no | 🟡 |
-| `vulnerable_carencias_pct` | CONEVAL, pobreza | 2010 / 2020 | % vulnerable por carencias sociales | 0.12 | 0.07 | sí | **sí, también en el ensamble** (−0.07 y −0.02 pp) | 🟡 (pendiente de decisión) |
+| `vulnerable_carencias_pct` | CONEVAL, pobreza | 2010 / 2020 | % vulnerable por carencias sociales | 0.12 | 0.07 | sí | **sí, también en el ensamble** (−0.07 y −0.02 pp) | 🟡 (no se agrega, D26) |
 | `carencia_seguridad_social_pct` | CONEVAL, pobreza | 2010 / 2020 | % | 0.09 | 0.06 | sí | Huber sí; ensamble no | 🟡 |
 | `pct_viviendas_sin_lavadora` | CONEVAL, rezago social | 2010 / 2020 | % | −0.09 | −0.06 | sí | no | 🟡 |
 | `indice_rezago_social` | CONEVAL | 2010 / 2020 | Índice | 0.07 | 0.05 | sí | no | 🟡 |
 | `vulnerable_ingreso_pct` | CONEVAL, pobreza | 2010 / 2020 | % vulnerable por ingreso | −0.14 | −0.05 | sí | no | 🟡 |
-| `no_pobre_no_vulnerable_pct` | CONEVAL, pobreza | 2010 / 2020 | % ni pobre ni vulnerable | −0.10 | −0.03 | no | **sí, también en el ensamble** (−0.07 y −0.03 pp) | 🟡 (pendiente de decisión) |
+| `no_pobre_no_vulnerable_pct` | CONEVAL, pobreza | 2010 / 2020 | % ni pobre ni vulnerable | −0.10 | −0.03 | no | **sí, también en el ensamble** (−0.07 y −0.03 pp) | 🟡 (no se agrega, D26) |
 | `pct_viviendas_hacinamiento` | CONAPO | 2010 / 2020 | % de viviendas con hacinamiento | −0.00 | −0.01 | no | Huber sí; ensamble no | ⚪ |
 | `sesnsp_extorsion_ene_may_log` | SESNSP | ene–may 2015 / 2021 | Carpetas por 100 mil, logaritmo | −0.03 | −0.13 | no | no | ⚪ |
 | `sesnsp_electorales_ene_may_log` | SESNSP | Ídem | Ídem | 0.06 | −0.10 | no (cambia de signo) | no | ⚪ |
@@ -164,7 +164,7 @@ Para 2027 se usan los datos de 2020 (censo, CONEVAL y CONAPO), los últimos publ
 
 | Variable | Fuente | Año usado | Transformación | ρ 2015 | ρ 2021 | Estable | Mejora en las dos | Estado |
 | --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
-| `part_local_ultima_vs_estado` | Magar, `elecRetrns` | Última elección de ayuntamiento antes de cada intermedia | Votos totales entre lista nominal, menos la mediana de su estado en esa elección | 0.14 | 0.13 | sí | **sí, también en el ensamble** (−0.08 y −0.08 pp) | 🟡 (pendiente de decisión) |
+| `part_local_ultima_vs_estado` | Magar, `elecRetrns` | Última elección de ayuntamiento antes de cada intermedia | Votos totales entre lista nominal, menos la mediana de su estado en esa elección | 0.14 | 0.13 | sí | **sí, también en el ensamble** (−0.08 y −0.08 pp) | 🟡 (no se agrega, D26) |
 | `brecha_local_federal_hist` | Magar e INE | Elecciones de ayuntamiento no concurrentes anteriores | Promedio de participación local menos la federal anterior más cercana; solo unos 1,360 municipios | 0.31 | 0.16 | sí | no | 🟡 |
 | `margen_local_ultimo` | Magar | Última elección de ayuntamiento | Margen de victoria, en % | −0.00 | −0.02 | no | no | ⚪ |
 

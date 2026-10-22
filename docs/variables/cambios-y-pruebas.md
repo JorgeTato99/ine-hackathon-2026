@@ -18,10 +18,11 @@
 por usos y costumbres y estaban marcados como si eligieran ayuntamiento por partidos. Se corrigió en los
 notebooks 03 a 05 (`data/reference/municipios_sni_fuera_oaxaca.csv`).
 
-**Pendiente de decisión (D24):** cuando la presidencial anterior tuvo falta de casillas, el modelo recibe
-una participación de 0 % como dato de entrada (18 municipios para 2027; en 4, la participación de 2024 es
-0 %). La propuesta es tratar ese dato como "sin dato", igual que ya se hace cuando la elección a predecir
-tuvo falta de casillas.
+**Falta de casillas como dato de entrada (D24, probada y no adoptada):** cuando la elección de entrada tuvo
+falta de casillas, el modelo recibe la participación observada, que puede ser muy baja o 0 % (18 municipios
+para 2027; en 4, la de 2024 es 0 %). Tratarla como "sin dato" mejoró una validación y empeoró la otra, y
+sacaba del rojo a municipios con participación muy baja y repetida, como Cherán (8 %, 7 % y 7 % en 2018,
+2021 y 2024). Se conserva como está, con la advertencia de leer el semáforo junto con la alerta "sin casilla".
 
 ## 2 · Prueba del 22 de octubre: 39 variables que teníamos y no habíamos probado, y una base nueva
 
@@ -75,7 +76,7 @@ Script: `notebooks/pruebas_variables/variables_no_probadas.py`.
 
   Si las mejoras fueran sólidas, deberían sumarse. Que no se sumen indica que en buena parte son azar.
 
-**Recomendación (decisión de Sofía, sería D26): no agregarlas ahora.**
+**Decisión de Sofía Ordaz (D26, 22 de octubre): no agregarlas.** Razones:
 
 - **Mejoran el modelo alrededor de 1 % cada una, la misma magnitud que llevó a no agregar las 18 de D20, y
   juntas no mejoran ni el error ni el acierto en el 20 % de mayor riesgo.**
