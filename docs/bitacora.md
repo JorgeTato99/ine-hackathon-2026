@@ -522,3 +522,92 @@ la tabla de equivalencias. El notebook 03 ya asignaba esos mismos valores fijos,
 corrección. La carpeta `resultados-1.2` se conserva junto a la 1.3, porque la aplicación de Jorge tiene la
 versión fija en `scripts/prepare_results.py`. Pasar a la 1.3 es cambiar esa constante y regenerar.
 
+
+---
+
+## 2026-10-22 · Inventario de variables y pruebas finales
+
+**Documentación nueva:** `docs/variables/`, que reúne las 101 variables probadas: fuente, transformación,
+resultado y estado. Incluye los cambios de lectura y las otras bases de datos posibles.
+
+- **39 variables que ya teníamos y nunca se habían probado** (componentes de pobreza, marginación y
+  rezago social; remesas en dólares; delitos del SESNSP de 2015 y 2021; votos nulos; otros datos del censo):
+  - 20 son estables;
+  - 2 mejoran el modelo final en las dos validaciones: vulnerables por carencias y ni pobres ni
+    vulnerables (CONEVAL), alrededor de 1 %.
+- **Extorsión y delitos electorales** se midieron por primera vez también en 2015: **no son estables**.
+  Corrige lo que decía el resumen para Jorge ("solo se midieron para 2021").
+- **Búsqueda de otras bases.** La única nueva que existe por municipio antes de 2015, 2021 y 2027 son las
+  elecciones de ayuntamiento compiladas por Magar (ITAM). La participación en la última elección municipal
+  mejora el modelo final alrededor de 1.5 %.
+- **Las tres que mejoran por separado no mejoran juntas** (−0.040 y −0.005, intervalo con el cero).
+- **Recomendación (D26, pendiente de Sofía):** no agregarlas ahora. Mismo criterio que D20, riesgo de azar
+  después de 60 pruebas y costo alto a 9 días de la entrega. Quedan como candidatas para una versión
+  posterior.
+- **Pendientes de decisión:**
+  - D24: tratar como "sin dato" la participación de 0 % por falta de casillas cuando es dato de entrada;
+  - D25: cómo presentar los escenarios nacionales. Con el calendario de 2027, los escenarios bajo y medio
+    dejan a 30 % a 40 % de los municipios por debajo de su mínimo histórico; el escenario alto, a 12 %.
+
+### Decisiones (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D24 | ¿Tratar como "sin dato" la participación de una elección de entrada con falta de casillas (10 % o más de la lista)? | **Se probó y no se adopta.** La validación mejora al predecir 2021 (5.317 → 5.301) y empeora al predecir 2015 (6.158 → 6.204). Además saca del rojo a municipios con participación muy baja y repetida: Cherán votó 8 %, 7 % y 7 % en 2018, 2021 y 2024, y con el cambio pasaría de −36 a −2 puntos frente al país. Se conserva `resultados-1.3` y se documenta la advertencia: en esos municipios, el semáforo refleja la participación observada y se lee junto con la alerta "sin casilla" |
+| D25 | ¿Cómo presentar los escenarios nacionales? | **Se mantienen los tres** (44.1 %, 47.1 % y 51.8 %), pero **"alto" (como 2021) se presenta como el más parecido a 2027 por su calendario:** el 91 % de la lista tendrá elección municipal ese día, contra 95 % en 2021 y 58 % en 2015. Con el calendario de 2027, los escenarios bajo y medio dejan a 40 % y 30 % de los municipios por debajo de su mínimo histórico; el alto, a 12 %. El color del semáforo no cambia entre escenarios. No cambian los datos: es un cambio de presentación en la aplicación y en los materiales |
+| D26 | ¿Agregar alguna de las variables probadas el 22 de octubre? | **No.** Mejoran alrededor de 1 % por separado y juntas no; después de 60 pruebas puede ser azar. Quedan como candidatas para una versión posterior (`docs/variables/cambios-y-pruebas.md`) |
+
+Prueba de D24: `build_03b` con el cambio, guardado fuera del repo. Al revertirlo, los archivos volvieron a ser
+idénticos a la 1.3 (diferencias de 0.00000000000003 por redondeo).
+
+---
+
+## 2026-10-22 · `resultados-1.4`: una sola predicción y tipos de intervención
+
+### Decisiones (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D27 | Una sola predicción por municipio | El nivel nacional de 2027 se estima con un **modelo por calendario**: una recta con las tres intermedias de los CCPC (participación nacional según el % de la lista que elige ayuntamiento ese día). Para 2027 (91.2 % de la lista) da **51.4 %**. Prueba prediciendo cada intermedia con las otras dos: errores de +1.6, −1.2 y +5.4 puntos (raíz del error cuadrático medio de 3.3). El rango de cada municipio suma ese error. El mapa muestra una sola predicción; los niveles de 2009, 2015 y 2021 quedan como sensibilidad en la documentación. Sustituye a D25 |
+| D28 | Tipos de intervención | Una fila por tipo en `escenarios_2027.csv`: `retener_primerizos` (salen del rojo 20), `jovenes_20_29` (66), `credencializacion` (5) y `combinada` (87, con 505,007 votos; 408 siguen en rojo) |
+
+- **`municipios.csv` no cambia** respecto a la 1.3; cambian `escenarios_2027.csv` (5 filas por municipio) y
+  `metadatos.json` (sección `modelo_nacional`).
+- **Dos corridas seguidas del notebook 05 dan archivos idénticos.**
+- **Con el nivel estimado**, Xalapa pasa de 38.5 % (nivel de 2015) a 42.9 %, casi su 42.6 % de 2015.
+- **Credencialización por sí sola:** suma 129,665 votos, pero en 200 de los 495 rojos baja un poco el
+  porcentaje. Es una medida de inclusión.
+- **La 1.3 se conserva** mientras la aplicación migra. `scripts/prepare_results.py` necesita el ajuste descrito
+  en `docs/vistas-mapa.md`.
+
+---
+
+## 2026-10-22 · `resultados-1.5`: por qué de cada predicción
+
+### Decisión (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D29 | Por qué de cada predicción | Cada predicción se reparte entre los cinco grupos de variables del modelo (historia; calendario y usos y costumbres; lista y población; condiciones sociales; competencia política), en puntos frente al país. Huber se reparte de forma exacta y el random forest por contribuciones de camino; se promedian y se centran en el promedio del país ponderado por la lista de 2024, así que los cinco suman los puntos frente al país. Va al mapa como `aporte_*` en `municipios.csv`, con la nota "reparto de la predicción, no causas probadas" |
+
+- **Notebook nuevo:** `04c_por_que_cada_municipio`. Reentrena el modelo final y da la misma predicción que el 04
+  (diferencia de 1e-14). Los cinco aportes suman los puntos frente al país en los 2,477 municipios.
+- **En los 495 rojos, el grupo que más baja la predicción es el calendario en 332 y la historia en 163.**
+  - Sin elección municipal (413): calendario −13.8 y condiciones sociales +9.2 (medianas).
+  - Con elección municipal (82): historia −11.5.
+- **Las dos partes del modelo coinciden** en historia y calendario (correlación de 0.95 y 0.98); en condiciones
+  sociales, menos (0.65).
+- **`metadatos.json` agrega la participación del país en cada elección** (`participacion_nacional_historica`),
+  la misma de la historia de cada municipio: 44.09, 62.10, 47.06, 62.38, 51.85 y 59.68 %. El modelo nacional
+  (D27) usa las intermedias de los CCPC sin corregir (44.06, 47.07 y 51.84 %); la diferencia es de 0.03 puntos o
+  menos y se explica en los metadatos.
+- **Lo demás no cambia:** `escenarios_2027.csv` es idéntico al de la 1.4 y las demás columnas de
+  `municipios.csv`, también.
+- **Base de la entrega:** `data/processed/entrega/base-datos-1.5/`.
+- **Propuesta de rediseño del explorador:** [`docs/propuesta-front.md`](propuesta-front.md).
+
+### Estructura del explorador para la entrega (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D30 | Pantallas del explorador | Dos pestañas: **Pronóstico 2027** (cifras arriba que cambian con estado, municipio y tipo de intervención; mapa grande con colores planos; ficha a la derecha con predicción, por qué, historial e intervención) e **Histórico** (participación de 2009 a 2024 en el mapa, por año). La pestaña de indicadores y contexto (D23) **sale por ahora**; lo esencial pasa a la ficha. Se quitan los filtros avanzados. Detalle en `docs/propuesta-front.md` |
