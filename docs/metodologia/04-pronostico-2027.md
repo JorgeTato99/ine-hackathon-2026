@@ -1,6 +1,6 @@
 # 4 · Pronóstico 2027
 
-Notebooks `04` (sección 6) y `05`. Decisiones D18, D25 y D27.
+Notebooks `04` (sección 6), `04c` y `05`. Decisiones D18, D25, D27 y D29.
 
 ## 4.1 Una sola predicción: nivel nacional por calendario (D27)
 
@@ -100,14 +100,46 @@ intervalo de arriba.
   - **82 que sí eligen ayuntamiento** pero votan poco siempre (17.5 millones de personas): Tijuana, Juárez,
     Mexicali, Reynosa, Hermosillo y otras ciudades, sobre todo del norte.
 
-## 4.4 Archivos
+## 4.4 Por qué de cada predicción (D29)
 
-`data/processed/mapa/resultados-1.4/`, con el formato de [`docs/contrato-datos.md`](../contrato-datos.md):
+Notebook `04c`. Cada predicción se reparte entre los cinco grupos de variables del modelo, en **puntos frente al
+país**:
+
+- **Cómo se reparte:**
+  - en la parte Huber, de forma exacta: cada variable aporta su peso × su valor estandarizado;
+  - en el random forest, por contribuciones de camino: en cada pregunta de cada árbol, el cambio de la predicción
+    se le atribuye a la variable de esa pregunta;
+  - se promedian las dos partes, se suman por grupo y cada grupo se centra en el promedio del país ponderado por la
+    lista de 2024.
+- **Por qué así:** con los grupos centrados, los cinco aportes suman exactamente los puntos frente al país que
+  muestra la ficha. Comprobado en los 2,477 municipios.
+
+**Qué muestra en los 495 rojos** (medianas en puntos frente al país):
+
+| Rojos | Municipios | Historia | Calendario y usos y costumbres | Condiciones sociales |
+| --- | ---: | ---: | ---: | ---: |
+| Sin elección municipal el 6 de junio | 413 | −6.8 | **−13.8** | +9.2 |
+| Con elección municipal | 82 | **−11.5** | +1.9 | −0.8 |
+
+- **El grupo que más baja la predicción** es el calendario en 332 rojos y la historia en 163.
+- **En los que no eligen ayuntamiento,** sus condiciones sociales (municipios chicos y rurales, que suelen votar
+  más) los suben, pero no alcanza a compensar el calendario.
+- **Ejemplos:** Tijuana, −14.9 (historia −12.0); Xalapa, −8.5 (calendario −11.7); Cherán, −36.0 (historia −30.8 y
+  calendario −11.3).
+- **Límites:**
+  - es un reparto de la predicción, no causas probadas;
+  - el reparto del random forest es una aproximación;
+  - en condiciones sociales, las dos partes del modelo coinciden menos (correlación de 0.65, contra 0.95 y 0.98
+    en historia y calendario).
+
+## 4.5 Archivos
+
+`data/processed/mapa/resultados-1.5/`, con el formato de [`docs/contrato-datos.md`](../contrato-datos.md):
 
 | Archivo | Contenido |
 | --- | --- |
-| `municipios.csv` | Una fila por municipio: identidad, historia, posición de riesgo, semáforo, probabilidad de rojo, personas en juego, supuestos de intervención, alertas y contexto |
+| `municipios.csv` | Una fila por municipio: identidad, historia, posición de riesgo, semáforo, probabilidad de rojo, aportes por grupo de variables, personas en juego, supuestos de intervención, alertas y contexto |
 | `escenarios_2027.csv` | 5 filas por municipio, una por tipo de intervención (ninguna, retener primerizos, jóvenes de 20 a 29, credencialización y combinada), con el nivel estimado: participación esperada, rango, riesgo, efecto y votos adicionales |
-| `metadatos.json` | Unidades y significado de cada columna, reglas, fuentes y advertencias |
+| `metadatos.json` | Unidades y significado de cada columna, reglas, participación del país por elección, fuentes y advertencias |
 
 Cifras de control y vistas del mapa: [`docs/vistas-mapa.md`](../vistas-mapa.md).

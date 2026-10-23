@@ -1,13 +1,27 @@
 # Vistas del mapa
 
-Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.4/`
+Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.5/`
 (formato de [contrato-datos.md](contrato-datos.md); unidades y significado de cada columna en
-`metadatos.json`). Decisiones D18, D19, D22, D23, D27 y D28 de la [bitácora](bitacora.md).
+`metadatos.json`). Decisiones D18, D19, D22, D23, D27, D28, D29 y D30 de la [bitácora](bitacora.md).
+
+**Diseño de la pantalla:** la propuesta de rediseño para la entrega está en
+[propuesta-front.md](propuesta-front.md). Por D30, la entrega lleva dos pestañas, Pronóstico 2027 e Histórico;
+las 7 vistas de indicadores se quedan aquí como referencia para una versión posterior.
 
 ## Estado
 
-**`resultados-1.4` es la versión vigente.** La carpeta `resultados-1.3` se conserva mientras la aplicación
-migra.
+**`resultados-1.5` es la versión vigente.** Las carpetas `resultados-1.3` y `resultados-1.4` se conservan
+mientras la aplicación migra.
+
+**Respecto a la 1.4** (`escenarios_2027.csv` no cambia):
+
+- **`municipios.csv` agrega cinco columnas (D29):** `aporte_historia`, `aporte_calendario`, `aporte_lista`,
+  `aporte_social` y `aporte_politica`. Son los puntos que cada grupo de variables sube o baja la predicción frente
+  al país; los cinco suman `(part_pred − 0.5141) × 100` de la fila sin intervención (diferencia de 0.02 o menos por
+  redondeo). Las demás columnas no cambian.
+- **`metadatos.json` agrega `participacion_nacional_historica`:** la participación del país en cada elección de
+  2009 a 2024, para la gráfica del historial.
+- **`scripts/prepare_results.py`** solo tiene que aceptar las cinco columnas nuevas, además del ajuste de la 1.4.
 
 **Respecto a la 1.3** (`municipios.csv` no cambia; cambia `escenarios_2027.csv`):
 
@@ -97,13 +111,16 @@ Mostrar también la palabra (rojo, amarillo, verde), no solo el color, para acce
 
   Las columnas existen para todos los municipios, pero el escenario solo las aplica en los rojos. Vacío =
   sin dato para calcularlo.
-- **Leyenda fija:** "El modelo ordena bien a los municipios, pero no predice el nivel nacional. El intervalo
-  es ancho (de ±8 a ±15 pp); la posición es más confiable que la cifra."
+- **¿Qué empuja esta predicción? (D29):** una barra por grupo con `aporte_historia`, `aporte_calendario`,
+  `aporte_lista`, `aporte_social` y `aporte_politica`, en puntos (+ sube, − baja). Nota obligatoria: "Reparto de la
+  predicción del modelo; no son causas probadas."
+- **Leyenda fija:** "El nivel del país (51.4 %) es una estimación con un error de unos 3 puntos. El rango es
+  ancho (de 20 a 31 puntos); la posición frente a los demás es más confiable que la cifra."
 
 ## Pestaña 2 · Indicadores y contexto
 
 Selector de vista. Cada una pinta el mapa con su propia columna y tiene sus propias tarjetas. Las cifras
-son de `resultados-1.4` y sirven para comprobar que la aplicación suma bien.
+son de `resultados-1.5` y sirven para comprobar que la aplicación suma bien.
 
 ### 1. Qué se elige el 6 de junio de 2027
 

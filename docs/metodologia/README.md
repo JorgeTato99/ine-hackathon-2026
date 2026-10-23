@@ -33,10 +33,13 @@ Datos del INE (CCPC 2009–2024, actas por casilla)  +  INEGI, CONAPO, CONEVAL, 
 04 · Modelo y validación  →  riesgo_2027.parquet       04b · Pruebas finales (14 modelos, 18 variables más)
       │
       ▼
-05 · Nivel nacional, semáforo, personas en juego, intervención  →  data/processed/mapa/resultados-1.4/ (lo que lee el mapa)
+04c · Por qué de cada predicción (aportes por grupo de variables)  →  aportes_2027.parquet
       │
       ▼
-scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.4/ (base de la entrega)
+05 · Nivel nacional, semáforo, personas en juego, intervención  →  data/processed/mapa/resultados-1.5/ (lo que lee el mapa)
+      │
+      ▼
+scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.5/ (base de la entrega)
 ```
 
 ## Índice
@@ -46,11 +49,11 @@ scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.4/ (base
 | 1 | [01-datos-y-calidad.md](01-datos-y-calidad.md) | Fuentes del INE, fórmula de participación, reglas de "sin dato", actas, territorio de 2024, falta de casillas, correcciones |
 | 2 | [02-variables.md](02-variables.md) | Resumen de las 101 variables y enlace al catálogo completo |
 | 3 | [03-modelo-y-validacion.md](03-modelo-y-validacion.md) | Qué se predice, cómo se valida, regla simple, métricas, 14 modelos, modelo final, importancia, estructura del error |
-| 4 | [04-pronostico-2027.md](04-pronostico-2027.md) | Modelo nacional por calendario, predicción única, rango, probabilidad de rojo, semáforo, cómo leer casos como Xalapa o Mapimí |
+| 4 | [04-pronostico-2027.md](04-pronostico-2027.md) | Modelo nacional por calendario, predicción única, rango, probabilidad de rojo, semáforo, por qué de cada predicción, cómo leer casos como Xalapa o Mapimí |
 | 5 | [05-intervencion-y-personas.md](05-intervencion-y-personas.md) | Personas en juego y tipos de intervención |
 | 6 | [06-alertas-y-contexto.md](06-alertas-y-contexto.md) | Alerta "sin casilla", zonas frías, rezago persistente, seguridad |
 | 7 | [07-limites.md](07-limites.md) | Lo que el modelo no puede decir y cómo usarlo con responsabilidad |
-| 8 | [08-decisiones.md](08-decisiones.md) | Las 28 decisiones (D1 a D28), en una tabla |
+| 8 | [08-decisiones.md](08-decisiones.md) | Las 30 decisiones (D1 a D30), en una tabla |
 | 9 | [09-reproducir.md](09-reproducir.md) | Cómo volver a generar todo y qué prueba la reproducibilidad |
 
 Documentos relacionados:

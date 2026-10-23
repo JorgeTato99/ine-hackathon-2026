@@ -580,3 +580,34 @@ idénticos a la 1.3 (diferencias de 0.00000000000003 por redondeo).
 - **La 1.3 se conserva** mientras la aplicación migra. `scripts/prepare_results.py` necesita el ajuste descrito
   en `docs/vistas-mapa.md`.
 
+---
+
+## 2026-10-22 · `resultados-1.5`: por qué de cada predicción
+
+### Decisión (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D29 | Por qué de cada predicción | Cada predicción se reparte entre los cinco grupos de variables del modelo (historia; calendario y usos y costumbres; lista y población; condiciones sociales; competencia política), en puntos frente al país. Huber se reparte de forma exacta y el random forest por contribuciones de camino; se promedian y se centran en el promedio del país ponderado por la lista de 2024, así que los cinco suman los puntos frente al país. Va al mapa como `aporte_*` en `municipios.csv`, con la nota "reparto de la predicción, no causas probadas" |
+
+- **Notebook nuevo:** `04c_por_que_cada_municipio`. Reentrena el modelo final y da la misma predicción que el 04
+  (diferencia de 1e-14). Los cinco aportes suman los puntos frente al país en los 2,477 municipios.
+- **En los 495 rojos, el grupo que más baja la predicción es el calendario en 332 y la historia en 163.**
+  - Sin elección municipal (413): calendario −13.8 y condiciones sociales +9.2 (medianas).
+  - Con elección municipal (82): historia −11.5.
+- **Las dos partes del modelo coinciden** en historia y calendario (correlación de 0.95 y 0.98); en condiciones
+  sociales, menos (0.65).
+- **`metadatos.json` agrega la participación del país en cada elección** (`participacion_nacional_historica`),
+  la misma de la historia de cada municipio: 44.09, 62.10, 47.06, 62.38, 51.85 y 59.68 %. El modelo nacional
+  (D27) usa las intermedias de los CCPC sin corregir (44.06, 47.07 y 51.84 %); la diferencia es de 0.03 puntos o
+  menos y se explica en los metadatos.
+- **Lo demás no cambia:** `escenarios_2027.csv` es idéntico al de la 1.4 y las demás columnas de
+  `municipios.csv`, también.
+- **Base de la entrega:** `data/processed/entrega/base-datos-1.5/`.
+- **Propuesta de rediseño del explorador:** [`docs/propuesta-front.md`](propuesta-front.md).
+
+### Estructura del explorador para la entrega (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D30 | Pantallas del explorador | Dos pestañas: **Pronóstico 2027** (cifras arriba que cambian con estado, municipio y tipo de intervención; mapa grande con colores planos; ficha a la derecha con predicción, por qué, historial e intervención) e **Histórico** (participación de 2009 a 2024 en el mapa, por año). La pestaña de indicadores y contexto (D23) **sale por ahora**; lo esencial pasa a la ficha. Se quitan los filtros avanzados. Detalle en `docs/propuesta-front.md` |

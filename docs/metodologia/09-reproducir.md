@@ -21,7 +21,7 @@ uv tool run --from uv==0.13.1 uv run --no-project --with polars==2.0.0 --with op
 
 # 3 · Notebooks, en este orden
 for nb in 01_calidad_datos 02_investigacion_datos_raros 03_historia_y_variables \
-          03b_variables_externas_y_patrones 04_modelo_riesgo_2027 05_semaforo_y_mapa \
+          03b_variables_externas_y_patrones 04_modelo_riesgo_2027 04c_por_que_cada_municipio 05_semaforo_y_mapa \
           04b_fuentes_adicionales_e_importancia; do
   uv tool run --from uv==0.13.1 uv run --locked jupyter nbconvert --to notebook --execute --inplace \
       --ExecutePreprocessor.timeout=7200 notebooks/$nb.ipynb
@@ -44,8 +44,9 @@ octubre se corren aparte: `notebooks/pruebas_variables/`.
 | 03 | `data/processed/panel_municipal.parquet` (14,862 filas: municipio × elección) | No |
 | 03b | `data/processed/variables_transiciones.parquet`, `indicadores_mapa.parquet` | No |
 | 04 | `data/processed/riesgo_2027.parquet`, `validacion_modelo.parquet` | No |
-| 05 | `data/processed/mapa/resultados-1.4/` (`municipios.csv`, `escenarios_2027.csv`, `metadatos.json`) | Sí |
-| entrega | `data/processed/entrega/base-datos-1.4/` | Sí |
+| 04c | `data/processed/aportes_2027.parquet` | No |
+| 05 | `data/processed/mapa/resultados-1.5/` (`municipios.csv`, `escenarios_2027.csv`, `metadatos.json`) | Sí |
+| entrega | `data/processed/entrega/base-datos-1.5/` | Sí |
 
 ## Prueba de reproducibilidad (20 y 22 de octubre de 2026)
 
@@ -66,6 +67,7 @@ octubre se corren aparte: `notebooks/pruebas_variables/`.
 | 1.1 | Escenario con intervención (D22) y columna `usos_y_costumbres` |
 | 1.2 | Celdas sin dato vacías, nunca `NaN` (15 en `brecha_jovenes_2024`) |
 | 1.3 | En 15 municipios sin conteo por edad en 2024, las personas en juego y los supuestos S1 y S2 quedan vacíos en lugar de 0 |
-| **1.4** (vigente) | Una sola predicción con el nivel nacional estimado (51.4 %, D27); el rango suma el error nacional; cinco tipos de intervención (D28). `municipios.csv` igual que en la 1.3 |
+| 1.4 | Una sola predicción con el nivel nacional estimado (51.4 %, D27); el rango suma el error nacional; cinco tipos de intervención (D28). `municipios.csv` igual que en la 1.3 |
+| **1.5** (vigente) | `municipios.csv` agrega `aporte_*`, el por qué de cada predicción (D29, notebook 04c); `metadatos.json` agrega la participación del país por elección. `escenarios_2027.csv` igual que en la 1.4 |
 
 El semáforo no cambia desde la 1.0.
