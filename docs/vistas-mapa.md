@@ -1,107 +1,88 @@
 # Vistas del mapa
 
-Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.3/`
+Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.4/`
 (formato de [contrato-datos.md](contrato-datos.md); unidades y significado de cada columna en
-`metadatos.json`). Decisiones D18, D19, D22 y D23 de la [bitácora](bitacora.md).
+`metadatos.json`). Decisiones D18, D19, D22, D23, D27 y D28 de la [bitácora](bitacora.md).
 
 ## Estado
 
-**`resultados-1.3` es la versión vigente.** Reemplaza a `resultados-1.2`, `1.1`, `1.0` y `muestra-0.3`. La carpeta `resultados-1.2` se
-conserva mientras la aplicación migra; la 1.3 solo cambia lo descrito abajo.
+**`resultados-1.4` es la versión vigente.** La carpeta `resultados-1.3` se conserva mientras la aplicación
+migra.
 
-**Respecto a la 1.2**, solo cambia una cosa. Hay 15 municipios cuyos conteos de 2024 no tienen a nadie con dato,
-porque su participación sale de las actas; 7 de ellos están en rojo, como Chicomuselo y Pantelhó. En ellos, las
-personas en juego por edad (`n_jov_2024`, `nv_jov_2024`, `peso_jov_2024`, `primerizos_votaron_2024`,
-`jovenes_21_29_no_votaron_2024`) y los supuestos S1 y S2 llegan vacíos, no en 0. Los totales y los escenarios
-no cambian.
+**Respecto a la 1.3** (`municipios.csv` no cambia; cambia `escenarios_2027.csv`):
 
-**Respecto a la 1.1**, solo cambia que las celdas sin dato llegan vacías y nunca como `NaN`. Eran 15 en
-`brecha_jovenes_2024`, de municipios cuya participación sale de las actas; lo detectó Jorge al integrar la 1.1.
-Lo demás es idéntico.
+- **Una sola predicción (D27):** ya no hay tres niveles nacionales. El nivel de 2027 se estima con el
+  calendario local en **51.4 %** (`nivel_nacional = "estimado"`). El modelo, su prueba y la sensibilidad están
+  en `metadatos.json` → `modelo_nacional`.
+- **El rango de cada municipio** (`part_pred_inf` a `part_pred_sup`) suma ahora el error del nivel nacional:
+  mide de 20 a 31 puntos de ancho.
+- **Cinco tipos de intervención (D28)**, una fila por municipio cada uno:
+  - `ninguna`;
+  - `retener_primerizos`;
+  - `jovenes_20_29`;
+  - `credencializacion`;
+  - `combinada`.
 
-**Respecto a la 1.0** (cambios que ya traía la 1.1):
+  Los identificadores son `nac-estimado_int-<tipo>`. Se reemplaza `dirigida_rojos`, que equivalía a
+  `combinada`.
+- **Ajuste para `scripts/prepare_results.py`:**
+  - 5 escenarios en lugar de 6;
+  - las claves `nac-medio_int-*` pasan a `nac-estimado_int-*`;
+  - con `combinada` salen del rojo **87**, no 88.
 
-- **Escenario con intervención (D22):** `escenarios_2027.csv` pasa de 3 a 6 filas por municipio. Se agrega
-  `intervencion = "dirigida_rojos"` para cada nivel nacional.
-- **Cinco columnas nuevas en `municipios.csv`:**
-  - `interv_votos_retener_primerizos`, `interv_votos_brecha_joven`, `interv_votos_credencializar` e
-    `interv_nuevos_en_lista`: lo que suma cada supuesto;
-  - `usos_y_costumbres`: 425 municipios, que son los 418 de Oaxaca (`es_sni`) más 7 fuera de Oaxaca.
-- **Lo demás no cambia:** las columnas que ya existían y los escenarios sin intervención son idénticos a los
-  de la 1.0. Lo comprobé.
+Historia de versiones: [`docs/metodologia/09-reproducir.md`](metodologia/09-reproducir.md).
 
 ## Estructura: dos pestañas (D23)
 
-El pronóstico no se mezcla con los indicadores.
-
 | Pestaña | Para qué | Contenido |
 | --- | --- | --- |
-| **1 · Pronóstico 2027** | Dónde se prevé menor participación el 6 de junio de 2027 | Semáforo, nivel nacional, sin o con intervención, ficha con intervalo |
+| **1 · Pronóstico 2027** | Dónde se prevé menor participación el 6 de junio de 2027 | Semáforo, tipo de intervención y ficha con la predicción y su rango |
 | **2 · Indicadores y contexto** | Por qué, a quién y en qué condiciones | 7 vistas informativas, una a la vez |
 
 Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias **tarjetas** arriba.
 
 ## Pestaña 1 · Pronóstico 2027
 
-**Color del municipio:** `semaforo` en `municipios.csv`.
+**Color del municipio:** `semaforo` en `municipios.csv` (sin intervención) o `riesgo` del escenario elegido.
 
 | Valor | Color | Regla (D18) | Municipios | Lista 2024 |
 | --- | --- | --- | ---: | ---: |
-| `rojo` | rojo | 20 % de mayor riesgo (`posicion_riesgo` ≥ 80) | 495 | 23,818,704 |
-| `amarillo` | amarillo | el 20 % siguiente (60 a < 80) | 496 | 43,525,306 |
-| `verde` | verde | el resto | 1,486 | 30,986,338 |
+| `rojo` / `alto` | rojo | 20 % de mayor riesgo (`posicion_riesgo` ≥ 80) | 495 | 23,818,704 |
+| `amarillo` / `medio` | amarillo | el 20 % siguiente (60 a < 80) | 496 | 43,525,306 |
+| `verde` / `bajo` | verde | el resto | 1,486 | 30,986,338 |
 
-- `riesgo` en `escenarios_2027.csv` equivale a `semaforo`: `alto` = rojo, `medio` = amarillo, `bajo` = verde.
-- **El color no cambia con el nivel nacional.** El semáforo ordena municipios entre sí. Lo comprobé: `riesgo`
-  es igual en los 3 niveles.
-- Mostrar también la palabra (rojo, amarillo, verde), no solo el color, para accesibilidad.
+Mostrar también la palabra (rojo, amarillo, verde), no solo el color, para accesibilidad.
 
-**Selectores:**
+**Un solo selector: tipo de intervención** (`intervencion`). Ya no hay selector de nivel nacional (D27).
 
-1. **Nivel nacional** (`nivel_nacional`). Cambia solo la participación estimada (`part_pred`) y su intervalo,
-   no el color.
+| Opción en pantalla | `intervencion` | Votos adicionales | Rojos que salen | Siguen en rojo |
+| --- | --- | ---: | ---: | ---: |
+| Sin intervención | `ninguna` | — | — | 495 |
+| Retener a quienes votaron por primera vez en 2024 | `retener_primerizos` | 80,478 | 20 | 475 |
+| Jóvenes de 20 a 29 años | `jovenes_20_29` | 294,864 | 66 | 429 |
+| Credencialización de nuevos votantes | `credencializacion` | 129,665 | 5 | 490 |
+| Las tres juntas | `combinada` | 505,007 | 87 | 408 |
 
-   | Nivel | Participación nacional | Origen |
-   | --- | --- | --- |
-   | `bajo` | 44.1 % | como la intermedia de 2009 |
-   | `medio` | 47.1 % | como 2015 |
-   | `alto` | 51.8 % | como 2021 · **el más parecido a 2027 (D25)** |
-
-   **D25 (22 de octubre):** se mantienen los tres niveles, pero `alto` se presenta como el más parecido a
-   2027 por su calendario: el 91 % de la lista elige ayuntamiento ese día, contra 95 % en 2021 y 58 % en
-   2015. Con bajo o medio, entre 30 % y 40 % de los municipios quedan por debajo de su mínimo histórico
-   (casos como Xalapa o Mapimí); con alto, el 12 %.
-
-   Propuesta para la aplicación:
-   - abrir en `alto`;
-   - etiquetarlo "más parecido a 2027 por su calendario";
-   - explicar en la ayuda que el nivel nacional es un supuesto, no una predicción.
-
-   Los datos no cambian.
-
-2. **Sin o con intervención** (`intervencion`: `ninguna` o `dirigida_rojos`). Siempre se compara con el
-   **mismo** nivel nacional: `nac-medio_int-ninguna` contra `nac-medio_int-dirigida_rojos`.
-   - **Con intervención solo cambian los rojos.** Fuera del rojo, `efecto_interv` = 0 y `votos_adicionales` = 0.
-   - `riesgo` con intervención se compara contra la línea fija del semáforo sin intervención. Así se ve
-     cuántos salen del rojo: en el nivel medio, 88 de 495 (407 siguen en rojo).
-   - **Etiqueta obligatoria:** "Supuesto, no efecto medido". Es una cuenta, no una predicción de lo que
-     lograría una campaña.
+- **Solo cambian los rojos.** Fuera del rojo, `efecto_interv` = 0 y `votos_adicionales` = 0.
+- **El color con intervención** se compara contra la línea fija del semáforo sin intervención.
+- **Etiqueta obligatoria:** "Supuesto, no efecto medido".
+- **Credencialización** suma votos, pero en 200 de los 495 rojos baja un poco el porcentaje, porque las personas
+  nuevas votan menos que el promedio. Conviene explicarlo en la ayuda: es una medida de inclusión.
 
 **Tarjetas:**
 
-- **Municipios en rojo:** conteo de `semaforo == "rojo"`. Valor actual: 495.
-- **Personas en rojo:** suma de `ln_2024` en los rojos. Valor actual: 23.8 millones.
-- **Participación nacional del escenario:** `niveles_nacionales_2027` de `metadatos.json`.
-- **Con intervención:**
-  - votos adicionales: suma de `votos_adicionales`, 505,007;
-  - municipios que salen del rojo: los que pasan de `riesgo` `alto` a otro valor; en el nivel medio son 88,
-    con 4.7 M de personas.
+- **Municipios en rojo:** conteo de `riesgo == "alto"` del escenario elegido. Sin intervención: 495.
+- **Personas en rojo:** suma de `ln_2024` en esos municipios. Sin intervención: 23.8 millones.
+- **Con intervención:** votos adicionales (suma de `votos_adicionales`) y municipios que salen del rojo.
+- **Participación esperada del país:** 51.4 % (`niveles_nacionales_2027.estimado`). Etiqueta sugerida:
+  "estimada con el calendario electoral de 2027".
 
 **Ficha del municipio:**
 
 - **Nombre:** `nombre_mpio` con `nombre_edo`. Hay 2 nombres que se repiten dentro de un mismo estado; la
   clave es siempre `cvegeo`.
-- **Participación estimada:** `part_pred`, con su intervalo de `part_pred_inf` a `part_pred_sup` (90 %).
+- **Participación esperada en 2027:** `part_pred`, con su rango de `part_pred_inf` a `part_pred_sup` (90 %).
+- **Frente al país:** `desv_base` × 100, en puntos. Por ejemplo, "9 puntos menos que el país".
 - **Posición de riesgo:** `posicion_riesgo`, de 0 a 100, donde 100 es el mayor riesgo.
 - **Probabilidad de quedar en rojo:** `probabilidad_rojo`. Si es 0.8 o más, decir **"probable"**, no
   "seguro"; los metadatos explican por qué.
@@ -122,7 +103,7 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
 ## Pestaña 2 · Indicadores y contexto
 
 Selector de vista. Cada una pinta el mapa con su propia columna y tiene sus propias tarjetas. Las cifras
-son de `resultados-1.3` y sirven para comprobar que la aplicación suma bien.
+son de `resultados-1.4` y sirven para comprobar que la aplicación suma bien.
 
 ### 1. Qué se elige el 6 de junio de 2027
 

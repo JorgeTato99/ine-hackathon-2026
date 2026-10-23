@@ -559,3 +559,24 @@ resultado y estado. Incluye los cambios de lectura y las otras bases de datos po
 
 Prueba de D24: `build_03b` con el cambio, guardado fuera del repo. Al revertirlo, los archivos volvieron a ser
 idénticos a la 1.3 (diferencias de 0.00000000000003 por redondeo).
+
+---
+
+## 2026-10-22 · `resultados-1.4`: una sola predicción y tipos de intervención
+
+### Decisiones (Sofía Ordaz, 22 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D27 | Una sola predicción por municipio | El nivel nacional de 2027 se estima con un **modelo por calendario**: una recta con las tres intermedias de los CCPC (participación nacional según el % de la lista que elige ayuntamiento ese día). Para 2027 (91.2 % de la lista) da **51.4 %**. Prueba prediciendo cada intermedia con las otras dos: errores de +1.6, −1.2 y +5.4 puntos (raíz del error cuadrático medio de 3.3). El rango de cada municipio suma ese error. El mapa muestra una sola predicción; los niveles de 2009, 2015 y 2021 quedan como sensibilidad en la documentación. Sustituye a D25 |
+| D28 | Tipos de intervención | Una fila por tipo en `escenarios_2027.csv`: `retener_primerizos` (salen del rojo 20), `jovenes_20_29` (66), `credencializacion` (5) y `combinada` (87, con 505,007 votos; 408 siguen en rojo) |
+
+- **`municipios.csv` no cambia** respecto a la 1.3; cambian `escenarios_2027.csv` (5 filas por municipio) y
+  `metadatos.json` (sección `modelo_nacional`).
+- **Dos corridas seguidas del notebook 05 dan archivos idénticos.**
+- **Con el nivel estimado**, Xalapa pasa de 38.5 % (nivel de 2015) a 42.9 %, casi su 42.6 % de 2015.
+- **Credencialización por sí sola:** suma 129,665 votos, pero en 200 de los 495 rojos baja un poco el
+  porcentaje. Es una medida de inclusión.
+- **La 1.3 se conserva** mientras la aplicación migra. `scripts/prepare_results.py` necesita el ajuste descrito
+  en `docs/vistas-mapa.md`.
+

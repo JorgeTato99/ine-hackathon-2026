@@ -44,8 +44,8 @@ octubre se corren aparte: `notebooks/pruebas_variables/`.
 | 03 | `data/processed/panel_municipal.parquet` (14,862 filas: municipio × elección) | No |
 | 03b | `data/processed/variables_transiciones.parquet`, `indicadores_mapa.parquet` | No |
 | 04 | `data/processed/riesgo_2027.parquet`, `validacion_modelo.parquet` | No |
-| 05 | `data/processed/mapa/resultados-1.3/` (`municipios.csv`, `escenarios_2027.csv`, `metadatos.json`) | Sí |
-| entrega | `data/processed/entrega/base-datos-1.3/` | Sí |
+| 05 | `data/processed/mapa/resultados-1.4/` (`municipios.csv`, `escenarios_2027.csv`, `metadatos.json`) | Sí |
+| entrega | `data/processed/entrega/base-datos-1.4/` | Sí |
 
 ## Prueba de reproducibilidad (20 y 22 de octubre de 2026)
 
@@ -65,6 +65,7 @@ octubre se corren aparte: `notebooks/pruebas_variables/`.
 | 1.0 | Primera entrega real para el mapa |
 | 1.1 | Escenario con intervención (D22) y columna `usos_y_costumbres` |
 | 1.2 | Celdas sin dato vacías, nunca `NaN` (15 en `brecha_jovenes_2024`) |
-| **1.3** (vigente) | En 15 municipios sin conteo por edad en 2024, las personas en juego y los supuestos S1 y S2 quedan vacíos en lugar de 0 |
+| 1.3 | En 15 municipios sin conteo por edad en 2024, las personas en juego y los supuestos S1 y S2 quedan vacíos en lugar de 0 |
+| **1.4** (vigente) | Una sola predicción con el nivel nacional estimado (51.4 %, D27); el rango suma el error nacional; cinco tipos de intervención (D28). `municipios.csv` igual que en la 1.3 |
 
-Los escenarios y el semáforo no cambian desde la 1.1.
+El semáforo no cambia desde la 1.0.

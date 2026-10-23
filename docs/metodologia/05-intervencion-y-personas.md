@@ -1,6 +1,6 @@
 # 5 · Personas en juego y escenario con intervención
 
-Notebook `05`, secciones 3 y 5b. Decisiones D19 y D22.
+Notebook `05`, secciones 3 y 5b. Decisiones D19, D22 y D28.
 
 ## 5.1 Personas en juego (D19)
 
@@ -38,24 +38,24 @@ efecto medido.**
 lista). Para saber quién sale del rojo se usa la **línea fija** del semáforo sin intervención, porque si
 no, siempre habría 20 % en rojo.
 
-**Resultados (escenario nacional medio):**
+**Resultados por tipo de intervención (D28), con el nivel nacional estimado (51.4 %):**
 
-| Supuesto | Votos adicionales | Rojos que salen |
-| --- | ---: | ---: |
-| S1 | 80 mil | 20 |
-| S2 | 295 mil | 66 |
-| S3 | 130 mil | 8 |
-| **Los tres juntos (lo que muestra el mapa)** | **505,007** | **88 (4.7 millones de personas)** |
+| Tipo | Votos adicionales | Efecto en el rojo típico | Rojos que salen | Siguen en rojo |
+| --- | ---: | ---: | ---: | ---: |
+| Retener a los primerizos (S1) | 80,478 | +0.32 pp | 20 | 475 |
+| Jóvenes de 20 a 29 años (S2) | 294,864 | +1.29 pp | 66 | 429 |
+| Credencialización (S3) | 129,665 | 0.00 pp | 5 | 490 |
+| **Las tres juntas** | **505,007** | **+1.58 pp** | **87 (4.7 millones de personas)** | **408** |
 
-- **407 de los 495 rojos siguen en rojo:** el rojo típico sube 1.65 puntos, pero está a 5.5 puntos de la línea.
-- **Credencializar suma votos, pero casi no sube el porcentaje,** porque las personas nuevas también entran
-  a la lista.
-- **En el país, el efecto es de +0.36 puntos.**
-- **Lectura:** las campañas para jóvenes ayudan, pero no compensan que en 2027 no haya elección municipal
-  en la mayoría de los rojos.
+- **El rojo típico está a 5.5 puntos de la línea:** ni las tres acciones juntas alcanzan para la mayoría.
+- **Credencializar suma votos, pero no sube el porcentaje:** en 200 de los 495 rojos lo baja un poco, porque las
+  personas nuevas votan menos que el promedio de su municipio. Es una medida de inclusión.
+- **En el país, el efecto de las tres juntas es de +0.35 puntos.**
+- **Lectura:** el tipo que más mueve es el de jóvenes, pero ninguna campaña compensa que en 2027 no haya
+  elección municipal en la mayoría de los rojos.
 
 **En los archivos:**
-- en `escenarios_2027.csv` van las filas `intervencion = "dirigida_rojos"`, con `efecto_interv` y
-  `votos_adicionales`;
+- en `escenarios_2027.csv` va una fila por tipo (`retener_primerizos`, `jovenes_20_29`, `credencializacion` y
+  `combinada`), con `efecto_interv` y `votos_adicionales`;
 - en `municipios.csv` van las columnas `interv_*` con lo que suma cada supuesto en cada municipio;
 - fuera del rojo, el efecto es 0.

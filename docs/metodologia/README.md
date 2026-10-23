@@ -11,8 +11,9 @@ mapa. Cada cifra sale de los notebooks del repositorio; las decisiones están en
 - **Para qué le sirve al INE:** planeación anticipada y priorización de recursos.
 - **Unidad:** municipio (2,477 con datos; la clave de unión es `cvegeo` del INEGI).
 - **Objetivo:** la elección federal intermedia del 6 de junio de 2027.
-- **Qué se predice:** la **desviación** de cada municipio, es decir su participación menos la nacional. El
-  nivel nacional no se predice: se plantea en tres escenarios.
+- **Qué se predice:** la participación de cada municipio en 2027, en dos partes:
+  - un modelo municipal predice su **desviación** frente al país;
+  - un modelo nacional por calendario estima el nivel del país: **51.4 %** (D27).
 
 ## El camino, de principio a fin
 
@@ -32,10 +33,10 @@ Datos del INE (CCPC 2009–2024, actas por casilla)  +  INEGI, CONAPO, CONEVAL, 
 04 · Modelo y validación  →  riesgo_2027.parquet       04b · Pruebas finales (14 modelos, 18 variables más)
       │
       ▼
-05 · Semáforo, personas en juego, intervención  →  data/processed/mapa/resultados-1.3/ (lo que lee el mapa)
+05 · Nivel nacional, semáforo, personas en juego, intervención  →  data/processed/mapa/resultados-1.4/ (lo que lee el mapa)
       │
       ▼
-scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.3/ (base de la entrega)
+scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.4/ (base de la entrega)
 ```
 
 ## Índice
@@ -45,11 +46,11 @@ scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.3/ (base
 | 1 | [01-datos-y-calidad.md](01-datos-y-calidad.md) | Fuentes del INE, fórmula de participación, reglas de "sin dato", actas, territorio de 2024, falta de casillas, correcciones |
 | 2 | [02-variables.md](02-variables.md) | Resumen de las 101 variables y enlace al catálogo completo |
 | 3 | [03-modelo-y-validacion.md](03-modelo-y-validacion.md) | Qué se predice, cómo se valida, regla simple, métricas, 14 modelos, modelo final, importancia, estructura del error |
-| 4 | [04-pronostico-2027.md](04-pronostico-2027.md) | Escenarios nacionales, intervalo, probabilidad de rojo, semáforo, cómo leer casos como Xalapa o Mapimí |
-| 5 | [05-intervencion-y-personas.md](05-intervencion-y-personas.md) | Personas en juego y escenario con intervención (supuestos S1 a S3) |
+| 4 | [04-pronostico-2027.md](04-pronostico-2027.md) | Modelo nacional por calendario, predicción única, rango, probabilidad de rojo, semáforo, cómo leer casos como Xalapa o Mapimí |
+| 5 | [05-intervencion-y-personas.md](05-intervencion-y-personas.md) | Personas en juego y tipos de intervención |
 | 6 | [06-alertas-y-contexto.md](06-alertas-y-contexto.md) | Alerta "sin casilla", zonas frías, rezago persistente, seguridad |
 | 7 | [07-limites.md](07-limites.md) | Lo que el modelo no puede decir y cómo usarlo con responsabilidad |
-| 8 | [08-decisiones.md](08-decisiones.md) | Las 26 decisiones (D1 a D26), en una tabla |
+| 8 | [08-decisiones.md](08-decisiones.md) | Las 28 decisiones (D1 a D28), en una tabla |
 | 9 | [09-reproducir.md](09-reproducir.md) | Cómo volver a generar todo y qué prueba la reproducibilidad |
 
 Documentos relacionados:
@@ -68,9 +69,10 @@ Documentos relacionados:
 | Modelo | Ensamble: promedio de una regresión robusta (Huber) y un random forest |
 | Validación (aprende de 2015, predice 2021) | Error al ordenar municipios: 5.32 pp, contra 6.03 de la regla simple. Ponderado por personas: 4.30 contra 6.80. Acierto en el 20 % de mayor riesgo: 70 % contra 67 % |
 | Validación al revés (aprende de 2021, predice 2015) | 6.16 contra 9.43 de la regla simple |
+| Nivel nacional estimado para 2027 | 51.4 %, con un modelo por calendario (error de prueba de unos 3 puntos) |
 | Semáforo 2027 | 495 municipios en rojo (23.8 millones de personas en la lista), 496 en amarillo y 1,486 en verde |
 | Dos historias del rojo | 413 sin elección municipal ese día (6.3 millones de personas) y 82 que la tienen pero votan poco siempre (17.5 millones) |
-| Escenario con intervención | Con los tres supuestos juntos (505,007 votos), salen del rojo 88 municipios (4.7 millones de personas) y quedan 407 |
+| Intervención por tipo | Retener primerizos: salen 20 rojos. Jóvenes de 20 a 29: 66. Credencialización: 5. Las tres juntas (505,007 votos): 87, con 4.7 millones de personas; 408 siguen en rojo |
 
 **Lo que más anticipa la abstención** es la historia del municipio y si elige ayuntamiento el mismo día.
 Las variables sociales y económicas se relacionan con votar menos, pero casi no agregan información que la

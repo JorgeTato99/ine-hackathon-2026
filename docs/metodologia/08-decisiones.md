@@ -1,6 +1,6 @@
 # 8 · Decisiones
 
-Todas las decisiones las tomó Sofía Ordaz a partir del análisis. El detalle, las alternativas y la
+Las 28 decisiones las tomó Sofía Ordaz a partir del análisis. El detalle, las alternativas y la
 evidencia están en [`docs/bitacora.md`](../bitacora.md).
 
 | # | Tema | Qué se decidió | Fecha |
@@ -31,3 +31,5 @@ evidencia están en [`docs/bitacora.md`](../bitacora.md).
 | D24 | Falta de casillas en la elección de entrada | Se probó tratarla como "sin dato" y **no se adopta** (mejora una validación, empeora la otra y oculta a municipios con participación muy baja y repetida) | 22 oct |
 | D25 | Escenarios nacionales | Se mantienen los tres; **"alto" (como 2021) se presenta como el más parecido a 2027** por su calendario | 22 oct |
 | D26 | Variables probadas el 22 de octubre | No se agregan (mejoran alrededor de 1 % por separado y juntas no) | 22 oct |
+| D27 | Una sola predicción | El nivel nacional de 2027 se estima con un modelo por calendario (51.4 %); el mapa muestra una sola predicción por municipio. Sustituye a D25 | 22 oct |
+| D28 | Tipos de intervención | Cada supuesto por separado (retener primerizos, jóvenes de 20 a 29, credencialización) y los tres juntos | 22 oct |

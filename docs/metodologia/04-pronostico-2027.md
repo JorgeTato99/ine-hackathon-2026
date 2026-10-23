@@ -1,45 +1,40 @@
 # 4 · Pronóstico 2027
 
-Notebooks `04` (sección 6) y `05`. Decisiones D18 y D25.
+Notebooks `04` (sección 6) y `05`. Decisiones D18, D25 y D27.
 
-## 4.1 De la desviación a la participación: escenarios nacionales (D25)
+## 4.1 Una sola predicción: nivel nacional por calendario (D27)
 
-El modelo da la **desviación prevista** de cada municipio. Para mostrar un porcentaje se suma a un nivel
-nacional **supuesto**:
+El modelo municipal da la **desviación prevista** de cada municipio frente al país. Para dar una sola
+predicción de participación, el nivel del país se estima con un **modelo nacional por calendario**: una
+recta ajustada a las tres intermedias de los CCPC, con el % de la lista que elige ayuntamiento el mismo día.
 
-| Escenario | Nivel nacional | Origen |
-| --- | ---: | --- |
-| `bajo` | 44.06 % | Intermedia de 2009 |
-| `medio` | 47.07 % | Intermedia de 2015 |
-| `alto` | 51.84 % | Intermedia de 2021 |
+| Intermedia | % de la lista con ayuntamiento ese día | Participación del país | Predicha con las otras dos | Error |
+| --- | ---: | ---: | ---: | ---: |
+| 2009 | 47.0 % | 44.1 % | 45.7 % | +1.6 |
+| 2015 | 57.9 % | 47.1 % | 45.8 % | −1.2 |
+| 2021 | 95.1 % | 51.8 % | 57.3 % | +5.4 |
+| **2027** | **91.2 %** | **51.4 % (estimado)** | | |
 
-**Fórmula:** participación del municipio = nivel + desviación prevista + ajuste. El ajuste es el mismo para
-todos los municipios y hace que el promedio ponderado por la lista de 2024 sea exactamente el nivel. **El
-color del semáforo no cambia entre escenarios:** depende del orden, no del nivel.
-
-**El escenario más parecido a 2027 es "alto" (D25).** El nivel depende mucho del calendario local:
-
-| Intermedia | % de la lista con elección de ayuntamiento el mismo día | Participación nacional |
-| --- | ---: | ---: |
-| 2015 | 58 % | 47.1 % |
-| 2021 | 95 % | 51.8 % |
-| **2027** | **91 %** | — |
-
-- **Los escenarios bajo y medio combinan el nivel de 2009 o de 2015 con el calendario de 2027,** y esa
-  combinación es poco creíble.
-- **Cuántos municipios quedan por debajo de su mínimo histórico:** con bajo, el 40 % (987); con medio, el 30 %
-  (739); con alto, el 12 % (290).
-- **Por eso se presentan los tres, pero "alto" se marca como el más comparable.** No es una predicción del
-  nivel nacional.
+- **La recta:** participación nacional = 37.43 + 0.153 × % de la lista con ayuntamiento. Su error de prueba
+  (raíz del error cuadrático medio) es de 3.3 puntos.
+- **Es una estimación con solo tres elecciones:** por eso su error se suma al rango de cada municipio.
+- **Participación del municipio** = 51.4 % + desviación prevista + ajuste. El ajuste es común a todos y hace
+  que el promedio ponderado por la lista de 2024 sea 51.4 %.
+- **El semáforo no depende del nivel nacional,** solo del orden. Con otro nivel, todos los porcentajes se
+  moverían casi lo mismo.
+- **Sensibilidad:** si el país votara como en 2009 (44.1 %) o en 2015 (47.1 %), cada municipio bajaría unos 7 o
+  4 puntos. Esas cifras quedan solo en la documentación (D27).
+- **Antecedente:** D25 marcaba el nivel de 2021 como el más comparable. D27 lo sustituye por una estimación
+  con el calendario de 2027, que da casi lo mismo (51.4 % contra 51.8 %).
 
 ### Casos que parecen raros y por qué no lo son
 
-- **Xalapa (escenario medio: 38.5 %, menos que cualquier dato suyo de 2009 a 2024).**
+- **Xalapa (predicción: 42.9 %, con un rango de 33.2 % a 53.4 %).**
   - En 2027, Veracruz tiene la elección federal y diputaciones locales, pero **no ayuntamiento**.
   - Su 51.5 % de 2021 estuvo impulsado por su elección municipal. Sin ella (2009 y 2015), quedó unos 4.5
     puntos debajo del país.
   - El modelo predice −8.9 frente al país.
-  - Con el escenario alto da 43.3 %, casi su 42.6 % de 2015.
+  - Con el nivel nacional estimado da 42.9 %, casi su 42.6 % de 2015. Con el nivel de 2015 (47.1 %) habría dado 38.5 %, menos que cualquiera de sus datos: por eso no se usa ese nivel.
   - Al predecir 2015, el modelo dio −4.7 para Xalapa y fue −4.5.
 - **Durango capital (patrón de referencia).** No tiene ayuntamiento en las intermedias. Pasó de −2.2 a
   −6.8 y luego a −11.7 frente al país (2009, 2015 y 2021), a medida que el resto del país sí elegía
@@ -54,7 +49,7 @@ color del semáforo no cambia entre escenarios:** depende del orden, no del nive
 
 ## 4.2 Incertidumbre
 
-**Intervalo de 90 % de cada municipio** (notebook 05, sección 1):
+**Rango de 90 % de cada municipio** (notebook 05, secciones 0 y 1):
 
 - Sale de los **errores reales de la validación**, de las dos direcciones: real menos previsto, quitando el
   desplazamiento general de cada elección.
@@ -62,6 +57,8 @@ color del semáforo no cambia entre escenarios:** depende del orden, no del nive
 - Va de unos −16 a +13 pp en los municipios de menos de 5 mil electores, y de −8 a +9 pp en los de 100 mil o
   más.
 - **Probado de una elección a otra, cubrió entre 85 % y 90 %**, cerca del 90 % que promete.
+- **Se le suma en cuadratura el error del nivel nacional** (1.645 × 3.3 puntos). El rango final mide de 20 a 31
+  puntos de ancho.
 - La posición de un municipio frente a los demás es más confiable que su cifra exacta.
 
 **Variabilidad del modelo** (notebook 04, sección 6): 300 reentrenamientos con muestras al azar de
@@ -105,12 +102,12 @@ intervalo de arriba.
 
 ## 4.4 Archivos
 
-`data/processed/mapa/resultados-1.3/`, con el formato de [`docs/contrato-datos.md`](../contrato-datos.md):
+`data/processed/mapa/resultados-1.4/`, con el formato de [`docs/contrato-datos.md`](../contrato-datos.md):
 
 | Archivo | Contenido |
 | --- | --- |
 | `municipios.csv` | Una fila por municipio: identidad, historia, posición de riesgo, semáforo, probabilidad de rojo, personas en juego, supuestos de intervención, alertas y contexto |
-| `escenarios_2027.csv` | 6 filas por municipio (3 niveles × sin/con intervención): participación estimada, intervalo, riesgo, efecto y votos adicionales |
+| `escenarios_2027.csv` | 5 filas por municipio, una por tipo de intervención (ninguna, retener primerizos, jóvenes de 20 a 29, credencialización y combinada), con el nivel estimado: participación esperada, rango, riesgo, efecto y votos adicionales |
 | `metadatos.json` | Unidades y significado de cada columna, reglas, fuentes y advertencias |
 
 Cifras de control y vistas del mapa: [`docs/vistas-mapa.md`](../vistas-mapa.md).

@@ -11,10 +11,12 @@
 
    No es un experimento.
 2. **Solo hay dos intermedias para aprender** (2015 y 2021), y son distintas entre sí.
-3. **No predice el nivel nacional.** El porcentaje de cada municipio depende del escenario supuesto. Con el
-   calendario de 2027, los escenarios bajo y medio son pesimistas (D25).
-4. **La cifra exacta de cada municipio es incierta:** el intervalo va de ±8 a ±15 puntos según el tamaño. Lo
-   confiable es la posición frente a los demás.
+3. **El nivel nacional es una estimación débil.** Se estima con el calendario (51.4 %), pero con solo tres
+   intermedias y un error de prueba de unos 3 puntos (D27). El rango de cada municipio lo incluye; el semáforo
+   no depende de él.
+4. **La cifra exacta de cada municipio es incierta:** su error propio va de ±8 a ±15 puntos según el tamaño y,
+   sumado al del nivel nacional, el rango mide de 20 a 31 puntos de ancho. Lo confiable es la posición frente a
+   los demás.
 5. **Parte del error es de cada elección:** 28 % se agrupa por estado y más de 40 % por distrito, pero no se
    repite de una elección a otra.
 6. **La probabilidad de rojo es optimista en los extremos:** 80 % o más se lee como "probable".

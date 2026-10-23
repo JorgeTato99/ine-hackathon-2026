@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.3"
+VERSION = "resultados-1.4"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.3"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.4"
 TEXTO = {
     "cvegeo": pl.String,
     "clave_ine_2024": pl.String,
@@ -72,8 +72,8 @@ IDENTIDAD = {
     "nombre_mpio": "nombre del municipio",
     "nombre_edo": "nombre de la entidad",
     "anio": "año de la elección (2027)",
-    "nivel_nacional": "escenario nacional: bajo (44.1 %), medio (47.1 %) o alto (51.8 %)",
-    "intervencion": "ninguna o dirigida_rojos (supuestos S1 + S2 + S3 en los municipios en rojo; decisión D22)",
+    "nivel_nacional": "estimado: nivel nacional de 2027 estimado con el calendario local (51.4 %, D27)",
+    "intervencion": "ninguna, retener_primerizos, jovenes_20_29, credencializacion o combinada (supuestos en los municipios en rojo; D22 y D28)",
     "escenario_id": "nac-<nivel>_int-<intervención>",
     "estado_estimacion": "estimado o sin_estimacion",
     "motivo": "códigos separados por '|': territorio_aproximado, antecedente_sin_casilla",
@@ -140,11 +140,12 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 - Celda vacía = sin dato o no aplica. Nunca equivale a cero.
 - Participación = votaron / (votaron + no votaron). En `historia_municipal.csv` va de 0 a 100; en los archivos
   de 2027 va de 0 a 1, como en el mapa.
-- El escenario con intervención (`dirigida_rojos`) es una cuenta con supuestos explícitos, **no un efecto
-  medido** de una campaña.
-- Los niveles nacionales de 2027 (44.06 %, 47.07 % y 51.84 %) son la participación de las intermedias de 2009,
-  2015 y 2021 en los Conteos Censales tal como vienen. `participacion_nacional` de la historia usa la
-  participación ya corregida con las actas (44.09 %, 47.06 % y 51.85 %). La diferencia es de 0.03 puntos o menos.
+- Los escenarios con intervención (`retener_primerizos`, `jovenes_20_29`, `credencializacion` y `combinada`) son
+  cuentas con supuestos explícitos, **no efectos medidos** de una campaña.
+- El nivel nacional de 2027 (51.4 %) se estima con el calendario local, con una recta ajustada a las
+  intermedias de 2009, 2015 y 2021 de los Conteos Censales tal como vienen (44.06 %, 47.07 % y 51.84 %). Su
+  error de prueba es de unos 3 puntos y está incluido en el rango de cada municipio. `participacion_nacional`
+  de la historia usa la participación ya corregida con las actas (44.09 %, 47.06 % y 51.85 %).
 
 **Fuentes:** INE (Conteos Censales de Participación Ciudadana 2009-2024 y cómputos distritales por casilla),
 INEGI, CONAPO, CONEVAL, Banxico, SESNSP, IEEPCO y calendarios de los organismos públicos locales.
