@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.4"
+VERSION = "resultados-1.5"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.4"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.5"
 TEXTO = {
     "cvegeo": pl.String,
     "clave_ine_2024": pl.String,
@@ -58,6 +58,13 @@ HISTORIA = {
     "diputacion_local_mismo_dia": "true si el estado eligió congreso local el mismo día",
     "ayuntamiento_mismo_dia": "true si el municipio eligió ayuntamiento el mismo día",
     "usos_y_costumbres": "true si el municipio elegía autoridades por sistemas normativos indígenas en esa elección (Oaxaca y, según el año, hasta 7 municipios fuera de Oaxaca)",
+}
+APORTES = {
+    "aporte_historia": "aporte de la historia de participación (desviaciones anteriores del municipio y de sus vecinos)",
+    "aporte_calendario": "aporte del calendario y los usos y costumbres (elecciones locales el mismo día)",
+    "aporte_lista": "aporte de la lista y la población (% rural, sexo, edad, crecimiento y cobertura de la lista)",
+    "aporte_social": "aporte de las condiciones sociales (censo, CONEVAL, CONAPO y homicidios)",
+    "aporte_politica": "aporte de la competencia política (margen y número efectivo de partidos)",
 }
 COLUMNAS_PANEL = {
     "AELEC": "anio",
@@ -105,6 +112,8 @@ def diccionario(tablas: dict[str, pl.DataFrame], unidades: dict[str, str]) -> pl
             return unidades["part_pred_inf, part_pred_sup"]
         if columna.startswith("part_"):
             return f"participación observada en {columna[5:]}: " + unidades["part_*"]
+        if columna.startswith("aporte_"):
+            return APORTES[columna] + ": " + unidades["aporte_*"]
         raise KeyError(f"{archivo}: {columna} no tiene descripción")
 
     filas = [
@@ -129,8 +138,8 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 | Archivo | Filas | Contenido |
 | --- | ---: | --- |
 | `historia_municipal.csv` | {n_hist:,} | Participación de cada municipio en las seis elecciones federales de 2009 a 2024 |
-| `municipios_2027.csv` | {n_mun:,} | Semáforo 2027, probabilidad de rojo, personas en juego, alertas y contexto, un municipio por fila |
-| `escenarios_2027.csv` | {n_esc:,} | Participación prevista 2027 por municipio, nivel nacional (bajo, medio, alto) y sin o con intervención |
+| `municipios_2027.csv` | {n_mun:,} | Semáforo 2027, probabilidad de rojo, qué grupo de variables empuja la predicción, personas en juego, alertas y contexto, un municipio por fila |
+| `escenarios_2027.csv` | {n_esc:,} | Participación prevista 2027 por municipio, sin intervención y con cada uno de los cuatro tipos de intervención supuesta |
 | `diccionario.csv` | {n_dic:,} | Descripción y unidad de cada columna |
 
 **Cómo leerla**
@@ -140,6 +149,8 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 - Celda vacía = sin dato o no aplica. Nunca equivale a cero.
 - Participación = votaron / (votaron + no votaron). En `historia_municipal.csv` va de 0 a 100; en los archivos
   de 2027 va de 0 a 1, como en el mapa.
+- `aporte_*` reparte la predicción de cada municipio entre cinco grupos de variables, en puntos frente al
+  país; los cinco suman la distancia al país. Es un reparto de la predicción del modelo, no causas probadas.
 - Los escenarios con intervención (`retener_primerizos`, `jovenes_20_29`, `credencializacion` y `combinada`) son
   cuentas con supuestos explícitos, **no efectos medidos** de una campaña.
 - El nivel nacional de 2027 (51.4 %) se estima con el calendario local, con una recta ajustada a las
@@ -150,7 +161,7 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 **Fuentes:** INE (Conteos Censales de Participación Ciudadana 2009-2024 y cómputos distritales por casilla),
 INEGI, CONAPO, CONEVAL, Banxico, SESNSP, IEEPCO y calendarios de los organismos públicos locales.
 
-**Versión:** {version}, generada el {generado}. Las cifras salen de los notebooks 03 a 05 del repositorio.
+**Versión:** {version}, generada el {generado}. Las cifras salen de los notebooks 03 a 05 (con el 04c) del repositorio.
 """
 
 
