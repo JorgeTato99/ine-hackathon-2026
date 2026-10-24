@@ -31,7 +31,8 @@ El detalle completo está en [`docs/variables/`](../variables/):
 | Políticas (2) | Margen y número efectivo de partidos de la presidencial anterior | casi 0 |
 
 \* Importancia por permutación: cuánto empeora la predicción de una elección no vista si se revuelve el
-bloque entre municipios (notebook 04b).
+bloque entre municipios (notebook 04b). Se calculó con la parte Huber del modelo (auditoría H006). Los
+homicidios (`homicidios_100mil_log`) son una de las 34 variables y casi no pesan.
 
 De las 28 que pasaron por la prueba de estabilidad (notebook 03b), 19 son estables. Las otras 6 (las dos
 desviaciones históricas y 4 de calendario) son la base del modelo y no se sometieron a esa prueba. Las 9

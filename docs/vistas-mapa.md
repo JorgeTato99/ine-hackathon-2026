@@ -1,8 +1,8 @@
 # Vistas del mapa
 
-Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.5/`
+Qué muestra la aplicación y de qué columnas sale cada cosa. Datos: `data/processed/mapa/resultados-1.6/`
 (formato de [contrato-datos.md](contrato-datos.md); unidades y significado de cada columna en
-`metadatos.json`). Decisiones D18, D19, D22, D23, D27, D28, D29 y D30 de la [bitácora](bitacora.md).
+`metadatos.json`). Decisiones D18, D19, D22, D23 y D27 a D33 de la [bitácora](bitacora.md).
 
 **Diseño de la pantalla:** la propuesta de rediseño para la entrega está en
 [propuesta-front.md](propuesta-front.md). Por D30, la entrega lleva dos pestañas, Pronóstico 2027 e Histórico;
@@ -10,8 +10,22 @@ las 7 vistas de indicadores se quedan aquí como referencia para una versión po
 
 ## Estado
 
-**`resultados-1.5` es la versión vigente.** Las carpetas `resultados-1.3` y `resultados-1.4` se conservan
-mientras la aplicación migra.
+**`resultados-1.6` es la versión vigente.** Las versiones anteriores se conservan mientras la aplicación migra.
+La aplicación puede pasar directo de la 1.3 a la 1.6: los cambios de la 1.4 y la 1.5 están abajo.
+
+**Respecto a la 1.5** (mismas columnas y mismos escenarios; cambian los valores):
+
+- **Modelo final Delta con guardia (D33):** el pronóstico se recalcula completo. Cambian participación,
+  rango, posición, semáforo, probabilidad de rojo, aportes y escenarios. Siguen siendo 495 rojos; frente a la 1.5, 19
+  entran al rojo y 19 salen, y en total 72 municipios cambian de color (detalle en la bitácora).
+- **Zaragoza 2012 corregido (D31):** `part_2012` de 05038 pasa de 0.7269 a 0.6113.
+- **`posicion_riesgo` y `probabilidad_rojo` con 4 decimales** (antes 1 y 3), para que el corte se lea sin
+  ambigüedad. El color sale siempre de `semaforo` o `riesgo`, nunca de redondear la posición.
+- **Nuevo código en `motivo` de `escenarios_2027.csv`: `intervencion_parcial` (D32).** En un municipio rojo,
+  algún componente del tipo de intervención no tiene dato: se suma solo lo conocido y, si falta S3, tampoco se
+  agregan personas a la lista. Hay 6 filas en `retener_primerizos`, 9 en `jovenes_20_29`, 73 en
+  `credencializacion` y 77 en `combinada`. La ficha debe decir "Intervención calculada solo con los datos
+  disponibles". `motivo` puede traer varios códigos separados por `|`.
 
 **Respecto a la 1.4** (`escenarios_2027.csv` no cambia):
 
@@ -29,7 +43,7 @@ mientras la aplicación migra.
   calendario local en **51.4 %** (`nivel_nacional = "estimado"`). El modelo, su prueba y la sensibilidad están
   en `metadatos.json` → `modelo_nacional`.
 - **El rango de cada municipio** (`part_pred_inf` a `part_pred_sup`) suma ahora el error del nivel nacional:
-  mide de 20 a 31 puntos de ancho.
+  mide de 20 a 31 puntos de ancho (en la 1.6, de 18 a 29).
 - **Cinco tipos de intervención (D28)**, una fila por municipio cada uno:
   - `ninguna`;
   - `retener_primerizos`;
@@ -42,7 +56,7 @@ mientras la aplicación migra.
 - **Ajuste para `scripts/prepare_results.py`:**
   - 5 escenarios en lugar de 6;
   - las claves `nac-medio_int-*` pasan a `nac-estimado_int-*`;
-  - con `combinada` salen del rojo **87**, no 88.
+  - con `combinada` salen del rojo **87**, no 88 (en la 1.6, 84).
 
 Historia de versiones: [`docs/metodologia/09-reproducir.md`](metodologia/09-reproducir.md).
 
@@ -61,9 +75,9 @@ Los **filtros son comunes** a las dos pestañas. Cada pestaña tiene sus propias
 
 | Valor | Color | Regla (D18) | Municipios | Lista 2024 |
 | --- | --- | --- | ---: | ---: |
-| `rojo` / `alto` | rojo | 20 % de mayor riesgo (`posicion_riesgo` ≥ 80) | 495 | 23,818,704 |
-| `amarillo` / `medio` | amarillo | el 20 % siguiente (60 a < 80) | 496 | 43,525,306 |
-| `verde` / `bajo` | verde | el resto | 1,486 | 30,986,338 |
+| `rojo` / `alto` | rojo | 20 % de mayor riesgo (`posicion_riesgo` ≥ 80) | 495 | 24,955,268 |
+| `amarillo` / `medio` | amarillo | el 20 % siguiente (60 a < 80) | 496 | 41,318,960 |
+| `verde` / `bajo` | verde | el resto | 1,486 | 32,056,120 |
 
 Mostrar también la palabra (rojo, amarillo, verde), no solo el color, para accesibilidad.
 
@@ -72,21 +86,21 @@ Mostrar también la palabra (rojo, amarillo, verde), no solo el color, para acce
 | Opción en pantalla | `intervencion` | Votos adicionales | Rojos que salen | Siguen en rojo |
 | --- | --- | ---: | ---: | ---: |
 | Sin intervención | `ninguna` | — | — | 495 |
-| Retener a quienes votaron por primera vez en 2024 | `retener_primerizos` | 80,478 | 20 | 475 |
-| Jóvenes de 20 a 29 años | `jovenes_20_29` | 294,864 | 66 | 429 |
-| Credencialización de nuevos votantes | `credencializacion` | 129,665 | 5 | 490 |
-| Las tres juntas | `combinada` | 505,007 | 87 | 408 |
+| Retener a quienes votaron por primera vez en 2024 | `retener_primerizos` | 84,789 | 19 | 476 |
+| Jóvenes de 20 a 29 años | `jovenes_20_29` | 307,818 | 68 | 427 |
+| Credencialización de nuevos votantes | `credencializacion` | 135,793 | 7 | 488 |
+| Las tres juntas | `combinada` | 528,400 | 84 | 411 |
 
 - **Solo cambian los rojos.** Fuera del rojo, `efecto_interv` = 0 y `votos_adicionales` = 0.
 - **El color con intervención** se compara contra la línea fija del semáforo sin intervención.
 - **Etiqueta obligatoria:** "Supuesto, no efecto medido".
-- **Credencialización** suma votos, pero en 200 de los 495 rojos baja un poco el porcentaje, porque las personas
+- **Credencialización** suma votos, pero en 188 de los 495 rojos baja un poco el porcentaje, porque las personas
   nuevas votan menos que el promedio. Conviene explicarlo en la ayuda: es una medida de inclusión.
 
 **Tarjetas:**
 
 - **Municipios en rojo:** conteo de `riesgo == "alto"` del escenario elegido. Sin intervención: 495.
-- **Personas en rojo:** suma de `ln_2024` en esos municipios. Sin intervención: 23.8 millones.
+- **Personas en rojo:** suma de `ln_2024` en esos municipios. Sin intervención: 25.0 millones.
 - **Con intervención:** votos adicionales (suma de `votos_adicionales`) y municipios que salen del rojo.
 - **Participación esperada del país:** 51.4 % (`niveles_nacionales_2027.estimado`). Etiqueta sugerida:
   "estimada con el calendario electoral de 2027".
@@ -114,13 +128,15 @@ Mostrar también la palabra (rojo, amarillo, verde), no solo el color, para acce
 - **¿Qué empuja esta predicción? (D29):** una barra por grupo con `aporte_historia`, `aporte_calendario`,
   `aporte_lista`, `aporte_social` y `aporte_politica`, en puntos (+ sube, − baja). Nota obligatoria: "Reparto de la
   predicción del modelo; no son causas probadas."
+- **Aviso** si `motivo` del escenario elegido trae `intervencion_parcial` (D32): "Intervención calculada solo con
+  los datos disponibles".
 - **Leyenda fija:** "El nivel del país (51.4 %) es una estimación con un error de unos 3 puntos. El rango es
-  ancho (de 20 a 31 puntos); la posición frente a los demás es más confiable que la cifra."
+  ancho (de 18 a 29 puntos) y aproximado; la posición frente a los demás es más confiable que la cifra."
 
 ## Pestaña 2 · Indicadores y contexto
 
 Selector de vista. Cada una pinta el mapa con su propia columna y tiene sus propias tarjetas. Las cifras
-son de `resultados-1.5` y sirven para comprobar que la aplicación suma bien.
+son de `resultados-1.6` y sirven para comprobar que la aplicación suma bien.
 
 ### 1. Qué se elige el 6 de junio de 2027
 
@@ -137,8 +153,8 @@ Con `es_sni` (solo Oaxaca) eran 418 y 258: los 7 municipios de fuera de Oaxaca p
 costumbres.
 
 - **Tarjeta:** 676 municipios sin elección municipal ese día.
-- **Mensaje:** de los 495 rojos, 413 no eligen ayuntamiento (6.3 M de personas) y 82 sí lo eligen pero
-  votan poco siempre (17.5 M).
+- **Mensaje:** de los 495 rojos, 404 no eligen ayuntamiento (6.2 M de personas) y 91 sí lo eligen pero
+  votan poco siempre (18.8 M).
 
 ### 2. Rezago persistente
 
@@ -163,10 +179,10 @@ Selector de grupo. Son conteos, no efectos.
 
 | Grupo | Columna | Total país | En rojos |
 | --- | --- | ---: | ---: |
-| Primerizos de 2024 (18 a 20 años que votaron) | `primerizos_votaron_2024` | 2,898,581 | 582,590 |
-| Jóvenes de 21 a 29 años que no votaron en 2024 | `jovenes_21_29_no_votaron_2024` | 9,835,966 | 2,884,632 |
-| Nuevos votantes en 2027 (18 y 19 años) | `nuevos_votantes_2027` | 4,363,455 | 1,104,131 |
-| Nuevos sin credencial si se repite 2021 | `nuevos_sin_credencial_2027_si_se_repite_2021` | 1,268,747 | 318,946 |
+| Primerizos de 2024 (18 a 20 años que votaron) | `primerizos_votaron_2024` | 2,898,581 | 618,518 |
+| Jóvenes de 21 a 29 años que no votaron en 2024 | `jovenes_21_29_no_votaron_2024` | 9,835,966 | 3,011,632 |
+| Nuevos votantes en 2027 (18 y 19 años) | `nuevos_votantes_2027` | 4,363,455 | 1,157,532 |
+| Nuevos sin credencial si se repite 2021 | `nuevos_sin_credencial_2027_si_se_repite_2021` | 1,268,747 | 332,396 |
 
 - **Complemento:** `brecha_jovenes_2024`, en puntos (participación de 20 a 29 años menos la del municipio;
   mediana −12.1).
@@ -186,12 +202,13 @@ Selector de grupo. Son conteos, no efectos.
 
 ### 6. Contexto de seguridad
 
-Es contexto: no entra al semáforo (D17). Tres capas:
+Es contexto (D17). Solo la tasa de homicidios, en logaritmo, es además una de las 34 variables del modelo y casi
+no pesa. Tres capas:
 
 - **Homicidios:** `tasa_homicidios_2022_2024`, por 100 mil habitantes al año. Usar `percentil_homicidios_2022_2024`
   para el color. Hay 7 vacíos.
 - **Quién ejerce la seguridad:** `quien_ejerce_seguridad` (10 categorías) y `tiene_policia_municipal`
-  (517 `false`, 64 vacíos). En los rojos, 277 de 495 (56 %) no tienen policía municipal.
+  (517 `false`, 64 vacíos). En los rojos, 269 de 495 (54 %) no tienen policía municipal.
 - **Aviso por estado:** `comparacion_homicidios_inegi_sesnsp`. Solo texto en la ficha o la leyenda, no color.
   - En 22 estados las dos fuentes coinciden.
   - En 5 el SESNSP cuenta más.

@@ -1,6 +1,6 @@
 # 8 · Decisiones
 
-Las 30 decisiones las tomó Sofía Ordaz a partir del análisis. El detalle, las alternativas y la
+Las 33 decisiones las tomó Sofía Ordaz a partir del análisis. El detalle, las alternativas y la
 evidencia están en [`docs/bitacora.md`](../bitacora.md).
 
 | # | Tema | Qué se decidió | Fecha |
@@ -35,3 +35,6 @@ evidencia están en [`docs/bitacora.md`](../bitacora.md).
 | D28 | Tipos de intervención | Cada supuesto por separado (retener primerizos, jóvenes de 20 a 29, credencialización) y los tres juntos | 22 oct |
 | D29 | Por qué de cada predicción | Reparto de cada predicción entre los cinco grupos de variables, en puntos frente al país (`aporte_*`); no son causas probadas | 22 oct |
 | D30 | Pantallas del explorador | Dos pestañas para la entrega: Pronóstico 2027 e Histórico; la de indicadores sale por ahora. Modifica D23 | 22 oct |
+| D31 | Zaragoza 2012 | D16 se aplica también con más de 50 % de "no sabemos" (salvo paquete perdido): Zaragoza 2012 pasa de 72.7 % a 61.1 % | 24 oct |
+| D32 | Intervención con componentes sin dato | Se suma solo lo conocido, se marca `intervencion_parcial` y, si falta S3, no se agregan personas a la lista | 24 oct |
+| D33 | Modelo final | Delta con guardia: desviación de la presidencial anterior + cambio que aprende el ensamble; si faltaron casillas o no hay dato, ensamble de nivel. Sustituye al ensamble de nivel de D21 como modelo final | 24 oct |

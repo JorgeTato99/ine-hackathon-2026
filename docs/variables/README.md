@@ -14,7 +14,7 @@ de dónde salen, cómo se transformaron, cuáles entraron al modelo y por qué l
 | | Variables |
 | --- | ---: |
 | Probadas en total | 101 |
-| En el modelo final (ensamble Huber + random forest, D21) | 34 |
+| En el modelo final (Delta con guardia con el ensamble Huber + random forest, D21 y D33) | 34 |
 | Probadas al final y no agregadas (notebook 04b, D20) | 18 |
 | Probadas el 22 de octubre con datos que ya teníamos | 39 |
 | Probadas el 22 de octubre con una base nueva (elecciones de ayuntamiento, Magar) | 3 |

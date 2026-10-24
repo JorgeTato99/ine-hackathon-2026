@@ -14,15 +14,20 @@
 3. **El nivel nacional es una estimación débil.** Se estima con el calendario (51.4 %), pero con solo tres
    intermedias y un error de prueba de unos 3 puntos (D27). El rango de cada municipio lo incluye; el semáforo
    no depende de él.
-4. **La cifra exacta de cada municipio es incierta:** su error propio va de ±8 a ±15 puntos según el tamaño y,
-   sumado al del nivel nacional, el rango mide de 20 a 31 puntos de ancho. Lo confiable es la posición frente a
-   los demás.
+4. **La cifra exacta de cada municipio es incierta:** su error propio va de unos ±7 a ±15 puntos según el tamaño
+   y, sumado al del nivel nacional, el rango mide de 18 a 29 puntos de ancho. El rango es una aproximación: probado
+   de una elección a otra cubrió 93 % y 79 %, y menos en los municipios de usos y costumbres. Lo confiable es la
+   posición frente a los demás.
 5. **Parte del error es de cada elección:** 28 % se agrupa por estado y más de 40 % por distrito, pero no se
    repite de una elección a otra.
-6. **La probabilidad de rojo es optimista en los extremos:** 80 % o más se lee como "probable".
-7. **El calendario local de 2027 puede cambiar.** Es la variable que más pesa después de la historia. Si un
-   estado cambia sus elecciones, hay que correr de nuevo los notebooks 03b, 04 y 05.
-8. **Los datos sociales de 2027 son de 2020:** censo, CONEVAL y CONAPO son los últimos publicados por
+6. **La probabilidad de rojo es una frecuencia de simulación, optimista en los extremos:** 80 % o más se lee
+   como "probable".
+7. **La validación es retrospectiva con datos revisados:** algunas fuentes se publicaron después de la elección
+   que se predice, y los modelos candidatos se propusieron con las dos validaciones a la vista. La ventaja del
+   modelo final (D33) no está garantizada para 2027.
+8. **El calendario local de 2027 puede cambiar.** Es la variable que más pesa después de la historia. Si un
+   estado cambia sus elecciones, hay que correr de nuevo los notebooks 03b, 04, 04c y 05.
+9. **Los datos sociales de 2027 son de 2020:** censo, CONEVAL y CONAPO son los últimos publicados por
    municipio.
 
 ## Advertencias sobre los datos
@@ -38,9 +43,10 @@
     participación observada, que puede ser muy baja o 0 %;
   - se probó tratarla como "sin dato": mejoró una validación y empeoró la otra, y sacaba del rojo a
     municipios con participación muy baja y repetida, como Cherán (8 %, 7 % y 7 % en 2018, 2021 y 2024);
-  - se conserva como está;
-  - en los 18 municipios con falta de casillas en 2024, el semáforo se lee junto con la alerta "sin
-    casilla".
+  - se conserva como variable de entrada;
+  - con Delta con guardia (D33), en los 18 municipios con falta de casillas en 2024 el modelo no parte de esa
+    participación: usa el ensamble de nivel. Aun así, el semáforo se lee junto con la alerta "sin casilla"; la
+    guardia evita arrastrar el dato, pero no es una estimación validada de cuánto habrían votado con casillas.
 - **Personas en juego sin dato en 15 municipios:** sus conteos de 2024 no tienen a nadie con dato, así que
   los totales en rojo quedan un poco por debajo.
 - **Villa de Pozos (24059)** tiene geometría pero no datos electorales.

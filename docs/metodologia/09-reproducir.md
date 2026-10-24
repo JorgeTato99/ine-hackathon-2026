@@ -45,14 +45,20 @@ octubre se corren aparte: `notebooks/pruebas_variables/`.
 | 03b | `data/processed/variables_transiciones.parquet`, `indicadores_mapa.parquet` | No |
 | 04 | `data/processed/riesgo_2027.parquet`, `validacion_modelo.parquet` | No |
 | 04c | `data/processed/aportes_2027.parquet` | No |
-| 05 | `data/processed/mapa/resultados-1.5/` (`municipios.csv`, `escenarios_2027.csv`, `metadatos.json`) | Sí |
-| entrega | `data/processed/entrega/base-datos-1.5/` | Sí |
+| 05 | `data/processed/mapa/resultados-1.6/` (`municipios.csv`, `escenarios_2027.csv`, `metadatos.json`) | Sí |
+| entrega | `data/processed/entrega/base-datos-1.6/` | Sí |
 
-## Prueba de reproducibilidad (20 y 22 de octubre de 2026)
+## Prueba de reproducibilidad (20, 22 y 24 de octubre de 2026)
 
 - **Los notebooks 03 a 05 y el 04b** se volvieron a correr de principio a fin, sin errores y con las mismas
   cifras.
-- **El notebook 05** produce archivos idénticos byte por byte en dos corridas seguidas.
+- **El notebook 05** produce CSV idénticos byte por byte en dos corridas seguidas, en la misma máquina y con el
+  mismo entorno (`uv.lock`). `metadatos.json` solo cambia en la fecha de generación.
+- **El 24 de octubre (1.6)**, el notebook 04 dio la misma desviación prevista en dos corridas (diferencia de
+  0.000000000000007).
+- **En otra máquina o sistema operativo** puede haber diferencias numéricas pequeñas, sin cambiar colores ni
+  totales: una auditoría externa lo comprobó (auditoría H008). La reproducibilidad se entiende como las mismas
+  decisiones y cifras publicadas, no como bytes idénticos en cualquier entorno.
 - **En los archivos intermedios del modelo** solo hay diferencias de 0.00000000000003, ruido de redondeo del
   random forest al usar varios procesadores, que no llega a los 4 decimales publicados.
 - **El azar está fijo:**
@@ -68,6 +74,8 @@ octubre se corren aparte: `notebooks/pruebas_variables/`.
 | 1.2 | Celdas sin dato vacías, nunca `NaN` (15 en `brecha_jovenes_2024`) |
 | 1.3 | En 15 municipios sin conteo por edad en 2024, las personas en juego y los supuestos S1 y S2 quedan vacíos en lugar de 0 |
 | 1.4 | Una sola predicción con el nivel nacional estimado (51.4 %, D27); el rango suma el error nacional; cinco tipos de intervención (D28). `municipios.csv` igual que en la 1.3 |
-| **1.5** (vigente) | `municipios.csv` agrega `aporte_*`, el por qué de cada predicción (D29, notebook 04c); `metadatos.json` agrega la participación del país por elección. `escenarios_2027.csv` igual que en la 1.4 |
+| 1.5 | `municipios.csv` agrega `aporte_*`, el por qué de cada predicción (D29, notebook 04c); `metadatos.json` agrega la participación del país por elección. `escenarios_2027.csv` igual que en la 1.4 |
+| **1.6** (vigente) | Zaragoza 2012 corregido (D31); intervención con componentes sin dato marcada `intervencion_parcial` (D32); modelo final Delta con guardia (D33), que recalcula todo el pronóstico; `posicion_riesgo` y `probabilidad_rojo` con 4 decimales. Mismas columnas |
 
-El semáforo no cambia desde la 1.0.
+El semáforo no cambió de la 1.0 a la 1.5. En la 1.6 cambia por el modelo Delta con guardia (D33): 19
+municipios entran al rojo y 19 salen.

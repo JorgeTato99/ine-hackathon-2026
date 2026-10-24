@@ -1,6 +1,6 @@
 # 4 · Pronóstico 2027
 
-Notebooks `04` (sección 6), `04c` y `05`. Decisiones D18, D25, D27 y D29.
+Notebooks `04` (sección 6), `04c` y `05`. Decisiones D18, D25, D27, D29, D32 y D33.
 
 ## 4.1 Una sola predicción: nivel nacional por calendario (D27)
 
@@ -29,23 +29,24 @@ recta ajustada a las tres intermedias de los CCPC, con el % de la lista que elig
 
 ### Casos que parecen raros y por qué no lo son
 
-- **Xalapa (predicción: 42.9 %, con un rango de 33.2 % a 53.4 %).**
+- **Xalapa (predicción: 43.1 %, con un rango de 34.0 % a 54.0 %).**
   - En 2027, Veracruz tiene la elección federal y diputaciones locales, pero **no ayuntamiento**.
   - Su 51.5 % de 2021 estuvo impulsado por su elección municipal. Sin ella (2009 y 2015), quedó unos 4.5
     puntos debajo del país.
-  - El modelo predice −8.9 frente al país.
-  - Con el nivel nacional estimado da 42.9 %, casi su 42.6 % de 2015. Con el nivel de 2015 (47.1 %) habría dado 38.5 %, menos que cualquiera de sus datos: por eso no se usa ese nivel.
-  - Al predecir 2015, el modelo dio −4.7 para Xalapa y fue −4.5.
+  - El modelo predice −8.3 frente al país: parte de su +3.0 de 2024 y lo baja 11 puntos porque no habrá
+    elección municipal (en su reparto, el calendario aporta −10.0).
+  - Con el nivel nacional estimado da 43.1 %, casi su 42.6 % de 2015. Con el nivel de 2015 (47.1 %) habría dado 38.8 %, menos que cualquiera de sus datos: por eso no se usa ese nivel.
+  - Al predecir 2015, el modelo dio −3.6 para Xalapa y fue −4.5.
 - **Durango capital (patrón de referencia).** No tiene ayuntamiento en las intermedias. Pasó de −2.2 a
   −6.8 y luego a −11.7 frente al país (2009, 2015 y 2021), a medida que el resto del país sí elegía
   ayuntamiento. En números absolutos votó casi lo mismo (alrededor de 40 % en 2015 y en 2021).
 - **Mapimí (Durango).**
   - Empeora frente al país en cada elección: −1.2, −4.1 y −8.8 en las presidenciales de 2012, 2018 y 2024;
     −11.1 en la intermedia de 2021.
-  - El modelo predice −13.5.
+  - El modelo predice −13.7 (37.7 %, con un rango de 24.6 % a 49.9 %).
   - Al ser un municipio chico, su rango es ancho, y su 40.7 % de 2021 cabe dentro.
-- **En general,** al predecir 2021, los municipios sin elección municipal votaron 5 puntos **menos** de lo
-  que dijo el modelo (mediana). Si hay sesgo, es optimista.
+- **En general,** al predecir 2021, los municipios sin elección municipal votaron 5.6 puntos **menos** de lo
+  que dijo el modelo (mediana; −1.2 en los que sí la tuvieron). Si hay sesgo, es optimista.
 
 ## 4.2 Incertidumbre
 
@@ -54,10 +55,12 @@ recta ajustada a las tres intermedias de los CCPC, con el % de la lista que elig
 - Sale de los **errores reales de la validación**, de las dos direcciones: real menos previsto, quitando el
   desplazamiento general de cada elección.
 - Se separan por tamaño de la lista: menos de 5 mil, 5 a 20 mil, 20 a 100 mil y 100 mil o más.
-- Va de unos −16 a +13 pp en los municipios de menos de 5 mil electores, y de −8 a +9 pp en los de 100 mil o
+- Va de unos −15 a +12 pp en los municipios de menos de 5 mil electores, y de −7 a +9 pp en los de 100 mil o
   más.
-- **Probado de una elección a otra, cubrió entre 85 % y 90 %**, cerca del 90 % que promete.
-- **Se le suma en cuadratura el error del nivel nacional** (1.645 × 3.3 puntos). El rango final mide de 20 a 31
+- **Es una aproximación condicional, no una garantía** (auditoría H004). Probado de una elección a otra cubrió
+  93 % al predecir 2021 y 79 % al predecir 2015 (la intermedia del boicot magisterial), y menos en los
+  municipios de usos y costumbres (88 % y 74 %). Por eso para 2027 se usan los errores de las dos validaciones.
+- **Se le suma en cuadratura el error del nivel nacional** (1.645 × 3.3 puntos). El rango final mide de 18 a 29
   puntos de ancho.
 - La posición de un municipio frente a los demás es más confiable que su cifra exacta.
 
@@ -69,10 +72,11 @@ intervalo de arriba.
 
 - **Cómo se calcula:** se hacen 2,000 simulaciones. En cada una, a la predicción de cada municipio se le
   suma un error tomado al azar de los errores de la validación de su mismo tamaño, y se vuelve a ordenar.
-- **Al predecir 2021 está bien calibrada en el rango medio y es optimista arriba:** cuando dice 60 %,
-  fueron rojos el 66 %; cuando dice 80 %, el 71 %; cuando dice 94 %, el 89 %.
-- **Al predecir 2015 es más optimista:** cuando dice 80 %, fue el 59 %.
-- **Cómo leerla:** con 80 % o más se lee como "probable", no como "seguro".
+- **Al predecir 2021 está razonablemente calibrada:** cuando dice 59 %, fueron rojos el 68 %; cuando dice 80 %,
+  el 77 %; cuando dice 96 %, el 94 %.
+- **Al predecir 2015 es optimista arriba:** cuando dice 80 %, fue el 59 %; cuando dice 96 %, el 80 %.
+- **Cómo leerla:** es una frecuencia de simulación con los errores del pasado, no una probabilidad garantizada.
+  Con 80 % o más se lee como "probable", no como "seguro".
 
 ## 4.3 Semáforo (D18)
 
@@ -80,25 +84,29 @@ intervalo de arriba.
   por debajo del país.
 - **Cortes:**
   - **rojo:** posición de 80 o más, el 20 % de mayor riesgo. Corresponde a una desviación prevista de
-    −6.31 pp o menos;
-  - **amarillo:** de 60 a menos de 80, el 20 % siguiente (desviación de hasta +2.35 pp);
+    −6.82 pp o menos;
+  - **amarillo:** de 60 a menos de 80, el 20 % siguiente (desviación de hasta +1.93 pp);
   - **verde:** el resto.
-- **Por qué el 20 %:** es donde el modelo se validó mejor (70 % de acierto en el 20 % de mayor riesgo al
+- **Por qué el 20 %:** es donde el modelo se validó mejor (74 % de acierto en el 20 % de mayor riesgo al
   predecir 2021).
+- **Precisión:** `posicion_riesgo` y `probabilidad_rojo` se publican con 4 decimales, para que el corte se lea
+  sin ambigüedad (auditoría H007). El color oficial es la columna `semaforo`.
 
 | Semáforo | Municipios | Personas en la lista 2024 |
 | --- | ---: | ---: |
-| Rojo | 495 | 23,818,704 |
-| Amarillo | 496 | 43,525,306 |
-| Verde | 1,486 | 30,986,338 |
+| Rojo | 495 | 24,955,268 |
+| Amarillo | 496 | 41,318,960 |
+| Verde | 1,486 | 32,056,120 |
 
-- **Firmeza del rojo:** 287 son "rojos firmes" (probabilidad de rojo de 70 % o más; 12.4 millones de
-  personas) y 208 están en el límite. Además, 126 amarillos tienen entre 30 % y 70 % de probabilidad de rojo.
+- **Firmeza del rojo:** 307 son "rojos firmes" (probabilidad de rojo de 70 % o más; 13.2 millones de
+  personas) y 188 están en el límite. Además, 103 amarillos tienen entre 30 % y 70 % de probabilidad de rojo.
 - **Dos historias del rojo:**
-  - **413 municipios sin elección municipal ese día** (6.3 millones de personas): 311 de usos y costumbres
-    en Oaxaca, 63 de Veracruz, 32 de Durango y 7 con usos y costumbres fuera de Oaxaca;
-  - **82 que sí eligen ayuntamiento** pero votan poco siempre (17.5 millones de personas): Tijuana, Juárez,
-    Mexicali, Reynosa, Hermosillo y otras ciudades, sobre todo del norte.
+  - **404 municipios sin elección municipal ese día** (6.2 millones de personas): 299 de usos y costumbres
+    en Oaxaca, 69 de Veracruz, 29 de Durango y 7 con usos y costumbres fuera de Oaxaca;
+  - **91 que sí eligen ayuntamiento** pero votan poco siempre (18.8 millones de personas): Tijuana, Juárez,
+    Mexicali, Culiacán, Hermosillo, Reynosa y otras ciudades, sobre todo del norte.
+- **Frente a la 1.5 (modelo anterior):** 19 municipios entran al rojo (7 de Veracruz) y 19 salen (13 de
+  Oaxaca); en total, 72 cambian de color. La participación prevista cambia 0.8 puntos en promedio.
 
 ## 4.4 Por qué de cada predicción (D29)
 
@@ -110,7 +118,9 @@ país**:
   - en el random forest, por contribuciones de camino: en cada pregunta de cada árbol, el cambio de la predicción
     se le atribuye a la variable de esa pregunta;
   - se promedian las dos partes, se suman por grupo y cada grupo se centra en el promedio del país ponderado por la
-    lista de 2024.
+    lista de 2024;
+  - con Delta con guardia (D33), la desviación de 2024 de la que parte el modelo cuenta completa en la historia; en
+    los 20 municipios con guardia se reparte el ensamble de nivel.
 - **Por qué así:** con los grupos centrados, los cinco aportes suman exactamente los puntos frente al país que
   muestra la ficha. Comprobado en los 2,477 municipios.
 
@@ -118,23 +128,24 @@ país**:
 
 | Rojos | Municipios | Historia | Calendario y usos y costumbres | Condiciones sociales |
 | --- | ---: | ---: | ---: | ---: |
-| Sin elección municipal el 6 de junio | 413 | −6.8 | **−13.8** | +9.2 |
-| Con elección municipal | 82 | **−11.5** | +1.9 | −0.8 |
+| Sin elección municipal el 6 de junio | 404 | −9.6 | **−12.0** | +9.0 |
+| Con elección municipal | 91 | **−11.4** | +1.4 | +0.2 |
 
-- **El grupo que más baja la predicción** es el calendario en 332 rojos y la historia en 163.
+- **El grupo que más baja la predicción** es el calendario en 250 rojos, la historia en 243 y las condiciones
+  sociales en 2.
 - **En los que no eligen ayuntamiento,** sus condiciones sociales (municipios chicos y rurales, que suelen votar
   más) los suben, pero no alcanza a compensar el calendario.
-- **Ejemplos:** Tijuana, −14.9 (historia −12.0); Xalapa, −8.5 (calendario −11.7); Cherán, −36.0 (historia −30.8 y
-  calendario −11.3).
+- **Ejemplos:** Tijuana, −14.3 (historia −12.4); Xalapa, −8.3 (calendario −10.0); Cherán, −35.8 (historia −31.2 y
+  calendario −10.3).
 - **Límites:**
   - es un reparto de la predicción, no causas probadas;
   - el reparto del random forest es una aproximación;
-  - en condiciones sociales, las dos partes del modelo coinciden menos (correlación de 0.65, contra 0.95 y 0.98
-    en historia y calendario).
+  - las dos partes del ensamble coinciden en el calendario (correlación de 0.98) y bien en condiciones sociales
+    (0.81); en la historia, lo que aprenden además de la desviación de 2024 es chico y coincide poco (0.31).
 
 ## 4.5 Archivos
 
-`data/processed/mapa/resultados-1.5/`, con el formato de [`docs/contrato-datos.md`](../contrato-datos.md):
+`data/processed/mapa/resultados-1.6/`, con el formato de [`docs/contrato-datos.md`](../contrato-datos.md):
 
 | Archivo | Contenido |
 | --- | --- |

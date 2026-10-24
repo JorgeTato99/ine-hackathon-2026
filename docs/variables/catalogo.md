@@ -38,7 +38,7 @@ Si falta un valor, el modelo usa la mediana.
 | `ayuntamiento_mismo_dia_presidencial` | Ídem | 2012 / 2018 / 2024 | Igual, en la presidencial anterior | — | — | ✅ |
 | `gobernador_mismo_dia_presidencial` | Ídem | 2012 / 2018 / 2024 | Igual | — | — | ✅ |
 | `diputacion_local_mismo_dia_presidencial` | Ídem | 2012 / 2018 / 2024 | Igual | — | — | ✅ |
-| `es_sni` | IEEPCO, catálogo 2025, y fuentes de los OPLE para 7 municipios fuera de Oaxaca | Régimen de cada año | 1 si elige por sistemas normativos indígenas | −0.08 | −0.34 | ✅ estable |
+| `es_sni` | IEEPCO, catálogo 2025 | Régimen de cada año | 1 si es municipio de Oaxaca que elige por sistemas normativos indígenas. Los 7 de fuera de Oaxaca entran al modelo como "sin ayuntamiento ese día" | −0.08 | −0.34 | ✅ estable |
 
 ### Lista nominal (INE)
 
@@ -72,7 +72,7 @@ Si falta un valor, el modelo usa la mediana.
 | `pct_pobreza_extrema` | CONEVAL | Ídem | % en pobreza extrema | 0.04 | −0.02 | ✅ (no estable) |
 | `pct_carencia_salud` | CONEVAL | Ídem | % con carencia de acceso a salud | −0.13 | −0.14 | ✅ estable |
 | `pct_rezago_educativo` | CONEVAL | Ídem | % con carencia por rezago educativo | 0.22 | 0.20 | ✅ estable |
-| `marginacion` | CONAPO, índice de marginación | 2010 / 2020 / 2020 | Índice con el signo invertido: más alto = menos marginado | 0.13 | 0.08 | ✅ estable |
+| `marginacion` | CONAPO, índice de marginación | 2010 / 2020 / 2020 | Índice de CONAPO con el signo cambiado: más alto = **más** marginado (correlación de +0.74 con pobreza) | 0.13 | 0.08 | ✅ estable |
 | `pct_localidades_menos_5000` | CONAPO | Ídem | % de la población en localidades de menos de 5,000 habitantes | 0.15 | 0.10 | ✅ estable |
 | `pct_viviendas_emigrantes` | CONAPO, intensidad migratoria | 2010 / 2020 / 2020 | % de viviendas con emigrantes a Estados Unidos | 0.17 | −0.00 | ✅ (no estable) |
 | `pct_viviendas_remesas` | CONAPO | Ídem | % de viviendas que reciben remesas | 0.25 | 0.03 | ✅ (no estable) |

@@ -611,3 +611,59 @@ idénticos a la 1.3 (diferencias de 0.00000000000003 por redondeo).
 | # | Decisión | Qué se adoptó |
 | --- | --- | --- |
 | D30 | Pantallas del explorador | Dos pestañas: **Pronóstico 2027** (cifras arriba que cambian con estado, municipio y tipo de intervención; mapa grande con colores planos; ficha a la derecha con predicción, por qué, historial e intervención) e **Histórico** (participación de 2009 a 2024 en el mapa, por año). La pestaña de indicadores y contexto (D23) **sale por ahora**; lo esencial pasa a la ficha. Se quitan los filtros avanzados. Detalle en `docs/propuesta-front.md` |
+
+---
+
+## 2026-10-24 · Auditorías externas y `resultados-1.6`
+
+Llegaron dos auditorías externas del trabajo (corte `resultados-1.5`): una revisó si el análisis se sostiene y
+otra probó alternativas para mejorar la predicción. **Cada hallazgo se verificó con nuestros datos y código antes
+de aceptarlo.**
+
+**Hallazgos confirmados y cómo se atendieron:**
+
+| Hallazgo | Qué encontraron | Verificación propia | Qué se hizo |
+| --- | --- | --- | --- |
+| H001 | Zaragoza (Coahuila) 2012 dividía votos de las actas entre una lista incompleta | Confirmado con las actas: 72.69 % publicado; 61.13 % con todas sus actas. Único caso con lista incompleta y más de 50 % de "no sabemos" | D31 |
+| H002 | En Oxchuc y San Mateo del Mar, la credencialización agregaba personas a la lista sin sus votos | Confirmado: 7 municipios con S3 sin dato y personas nuevas; 2 en rojo | D32 |
+| H003 | La validación usa fuentes publicadas después de la elección que se predice | Confirmado (por ejemplo, CONEVAL 2020) | Se describe como "evaluación retrospectiva con datos revisados" |
+| H004 | El rango de 90 % y la probabilidad de rojo no garantizan su cobertura | Confirmado: con el modelo nuevo, el rango cubrió 93 % y 79 %, y menos en usos y costumbres (88 % y 74 %) | Se describen como aproximaciones condicionales |
+| H005 | Decíamos que la violencia "no entra al semáforo", pero la tasa de homicidios es una de las 34 variables | Confirmado | Textos corregidos en metadatos, metodología y notebook 05 |
+| H006 | La importancia por permutación es de la parte Huber | Confirmado (notebook 04b) | Rotulada como Huber |
+| H007 | Con 1 decimal, 3 municipios mostraban posición 80.0 en amarillo o 60.0 en verde | Confirmado: los colores estaban bien; el redondeo confundía | `posicion_riesgo` y `probabilidad_rojo` con 4 decimales |
+| H008 | Los bytes idénticos solo se sostienen en el mismo entorno | Aceptado | Precisado en `09-reproducir.md` |
+| H009 | Recurrencia de la falta de casillas y glosas de `marginacion` y `es_sni` desactualizadas | Confirmado: recurrencia de 16.2 % contra 0.3 %; en `marginacion`, más alto = más marginado | Corregido en `06-alertas-y-contexto.md` y en el catálogo |
+
+### Decisiones (Sofía Ordaz, 24 de octubre de 2026)
+
+| # | Decisión | Qué se adoptó |
+| --- | --- | --- |
+| D31 | Zaragoza 2012 | D16 se aplica también cuando hay más de 50 % de "no sabemos" (salvo paquete perdido). Solo cambia Zaragoza 2012: de 72.7 % a 61.1 %. Corregido en el cálculo del notebook 03, no a mano |
+| D32 | Intervención con componentes sin dato | Se suma solo lo conocido y el escenario se marca `intervencion_parcial` en `motivo`. Si falta S3, tampoco se agregan personas a la lista |
+| D33 | Modelo final: Delta con guardia | Desviación prevista = desviación de la presidencial anterior + cambio que aprende el ensamble Huber + random forest (34 variables). Si en esa presidencial faltaron casillas o no hay dato, se usa el ensamble de nivel. Lo propuso la segunda auditoría; lo replicamos con nuestro código (5.317 → 4.727 al predecir 2021, 6.158 → 6.120 al predecir 2015, sin la corrección de Zaragoza) y ganó con la regla de selección de siempre |
+
+**Validación del modelo final** (con Zaragoza corregido): al predecir 2021, error centrado de 4.74 contra 5.30 del
+ensamble de nivel y 6.03 de la regla simple; ponderado por personas, 4.10; acierto en el 20 % de mayor riesgo,
+74 %. Al predecir 2015, 6.12 contra 6.15 y 9.42.
+
+**Qué cambia en `resultados-1.6` frente a la 1.5:**
+
+- **Semáforo:** siguen 495 rojos, ahora con 25.0 millones de personas. 19 municipios entran al rojo (7 de
+  Veracruz) y 19 salen (13 de Oaxaca); en total, 72 cambian de color. La participación prevista cambia 0.8
+  puntos en promedio.
+- **Firmeza:** 307 rojos firmes (13.2 millones) y 188 en el límite.
+- **Dos historias del rojo:** 404 sin elección municipal (6.2 millones) y 91 con elección (18.8 millones).
+- **Intervención:** las tres juntas suman 528,400 votos y sacan del rojo a 84 municipios (6.1 millones de
+  personas); 411 siguen en rojo.
+- **Aportes (D29):** con el modelo delta, la desviación de 2024 cuenta en la historia. En los rojos, lo que más
+  baja la predicción es el calendario en 250 y la historia en 243.
+- **Reproducibilidad:** dos corridas del notebook 04 dan la misma desviación (diferencia de 7e-15) y dos del 05
+  dan CSV idénticos. 04b se volvió a correr: sus cifras cambian solo en centésimas (por ejemplo, la ventaja del
+  ensamble sobre Huber al predecir 2021 pasa de −0.17 a −0.18 pp).
+
+**Lo que no se adoptó de las auditorías:**
+- **CORE13** (modelo lineal de 13 variables): acierta más municipios del 20 % de menor participación, pero con menos
+  personas (26.9 contra 30.2 millones).
+- **Pesos por lista, mezclar todas las elecciones y otras fuentes de datos:** empeoraron o no mejoraron de forma
+  concluyente.
+- **Cambiar el nivel nacional:** solo hay una prueba pertinente.

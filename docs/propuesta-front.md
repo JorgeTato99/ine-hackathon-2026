@@ -2,7 +2,7 @@
 
 Qué cambiar en el sitio (https://traza-civica.jorgetato.com/) para que se entienda en segundos y se vea
 sobrio y formal. Parte del recorrido del sitio publicado el 22 de octubre de 2026 (versión 0.5.1, datos
-`resultados-1.3`) y de los datos vigentes `resultados-1.5` (D27 a D30 de la [bitácora](bitacora.md)).
+`resultados-1.3`) y de los datos vigentes `resultados-1.6` (D27 a D33 de la [bitácora](bitacora.md)).
 
 **Reparto:** el equipo de datos especifica y entrega los datos; el front implementa. Las prioridades están
 en la [sección 9](#9--prioridades).
@@ -43,7 +43,7 @@ Recorrido con capturas en Chrome a 1440 × 900.
 | **Modo mapa** | Mapa a pantalla completa con panel flotante y leyenda | **Es lo más cercano a lo que queremos:** mapa grande, controles pequeños y leyenda visible |
 | **Datos del territorio** | 7 temas: elecciones locales 2027, por debajo del país, vecinos, personas y participación, falta de casillas, seguridad y participación en elecciones anteriores | Se quita por ahora (sección 5). "Participación en elecciones anteriores" ya tiene un selector de año y se reutiliza en la pestaña Histórico |
 | **Metodología · Cómo leer los resultados** | Cinco capítulos | Dice "tres porcentajes nacionales", "seis escenarios" y un rango de "8 a 15 puntos hacia cada lado": ya no es así desde la 1.4 (sección 7) |
-| **Datos y descargas** | CSV, JSON, GeoJSON y GeoPackage | Dice "seis escenarios: tres niveles nacionales"; hay que actualizarlo a la 1.5 |
+| **Datos y descargas** | CSV, JSON, GeoJSON y GeoPackage | Dice "seis escenarios: tres niveles nacionales"; hay que actualizarlo a la 1.6 |
 
 ## 3 · Nueva estructura
 
@@ -77,7 +77,7 @@ botón discreto, porque permite ordenar por riesgo.
 ├──────────────────────────────────────────────────────────────────────────────────────────┤
 │  México ›                                                       (fija al bajar)          │
 │  PARTICIPACIÓN ESPERADA   MUNICIPIOS EN ROJO   PERSONAS EN ROJO      PERSONAS EN LA LISTA  │
-│  51.4 %                   495                  23.8 millones         98.3 millones         │
+│  51.4 %                   495                  25.0 millones         98.3 millones         │
 ├──────────────────────────────────────────────────────────────────────────────────────────┤
 │ [ Estado ▾ ]  [ Municipio ▾ (se activa al elegir estado) ]                                │
 │ Intervención:  (●Ninguna) ( Retener primerizos ) ( Jóvenes 20–29 ) ( Credencialización ) ( Las tres ) │
@@ -111,7 +111,7 @@ ruta es un enlace para regresar.
 | **Personas en la lista** | Σ `ln_2024` | `ln_2024` |
 
 **Con un tipo de intervención:** las mismas cuatro cifras y, debajo de cada una, la diferencia contra "sin
-intervención" ("−87 municipios", "+0.4 puntos"). Se agrega una quinta cifra: **votos adicionales** (Σ
+intervención" ("−84 municipios", "+0.4 puntos"). Se agrega una quinta cifra: **votos adicionales** (Σ
 `votos_adicionales`), con la etiqueta "Supuesto, no efecto medido".
 
 **Participación con intervención** del país o del estado: con credencialización (o las tres) crece la lista.
@@ -119,21 +119,21 @@ La cuenta correcta es Σ (`part_pred` × (lista + nuevos)) / Σ (lista + nuevos)
 `interv_nuevos_en_lista` solo en los municipios rojos sin intervención y solo con `credencializacion` o
 `combinada`. Con esta cuenta el país da +0.35 puntos con las tres juntas, igual que la metodología.
 
-**Cifras de control** (calculadas el 22 de octubre con `resultados-1.5`; los escenarios son idénticos a los de la 1.4):
+**Cifras de control** (calculadas el 24 de octubre con `resultados-1.6`):
 
 | Ámbito | Intervención | Participación esperada | Municipios en rojo | Personas en rojo | Votos adicionales | Salen del rojo |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| País | Ninguna | 51.4 % | 495 | 23,818,704 | 0 | 0 |
-| País | Retener primerizos | 51.5 % | 475 | 22,264,222 | 80,478 | 20 |
-| País | Jóvenes 20–29 | 51.7 % | 429 | 19,756,208 | 294,864 | 66 |
-| País | Credencialización | 51.4 % | 490 | 23,757,133 | 129,665 | 5 |
-| País | Las tres | 51.8 % | 408 | 19,137,336 | 505,007 | 87 |
-| Baja California | Ninguna | 38.1 % | 6 | 3,182,648 | 0 | 0 |
-| Baja California | Las tres | 39.5 % | 6 | 3,182,648 | 57,779 | 0 |
-| Oaxaca | Ninguna | 52.2 % | 311 | 962,528 | 0 | 0 |
-| Oaxaca | Las tres | 52.6 % | 278 | 867,414 | 25,363 | 33 |
-| Veracruz | Ninguna | 45.0 % | 63 | 3,832,134 | 0 | 0 |
-| Veracruz | Las tres | 46.1 % | 30 | 2,613,756 | 88,686 | 33 |
+| País | Ninguna | 51.4 % | 495 | 24,955,268 | 0 | 0 |
+| País | Retener primerizos | 51.5 % | 476 | 23,670,302 | 84,789 | 19 |
+| País | Jóvenes 20–29 | 51.7 % | 427 | 20,254,454 | 307,818 | 68 |
+| País | Credencialización | 51.4 % | 488 | 24,870,039 | 135,793 | 7 |
+| País | Las tres | 51.8 % | 411 | 18,886,724 | 528,400 | 84 |
+| Baja California | Ninguna | 38.5 % | 6 | 3,182,648 | 0 | 0 |
+| Baja California | Las tres | 39.9 % | 6 | 3,182,648 | 57,779 | 0 |
+| Oaxaca | Ninguna | 52.0 % | 299 | 935,132 | 0 | 0 |
+| Oaxaca | Las tres | 52.4 % | 267 | 832,830 | 24,659 | 32 |
+| Veracruz | Ninguna | 44.2 % | 69 | 3,803,403 | 0 | 0 |
+| Veracruz | Las tres | 45.3 % | 47 | 3,140,463 | 88,533 | 22 |
 
 Personas en la lista del país: 98,330,348 (los 2,477 municipios con dato).
 
@@ -205,18 +205,18 @@ Ejemplo con Tijuana (`02004`), sin intervención. En el teléfono, la ficha sube
 │ ■ ROJO · entre el 20 % de mayor riesgo         │
 ├───────────────────────────────────────────────┤
 │ 1 · PREDICCIÓN 2027                           │
-│ Participación esperada        36.5 %          │
-│ Rango probable (90 %)         26.9 % – 47.1 % │
-│ Frente al país                14.9 puntos menos│
-│ Qué tan firme es el rojo      Probable (94 %) │
+│ Participación esperada        37.1 %          │
+│ Rango probable (90 %)         27.9 % – 47.9 % │
+│ Frente al país                14.3 puntos menos│
+│ Qué tan firme es el rojo      Probable (93 %) │
 ├───────────────────────────────────────────────┤
 │ 2 · ¿QUÉ EMPUJA ESTA PREDICCIÓN?              │
-│  Historia de participación  ◀▇▇▇▇▇▇  −12.0    │
-│  Calendario y usos y cost.        ▇▶  +1.9    │
-│  Lista y población                ▏    0.0    │
+│  Historia de participación  ◀▇▇▇▇▇▇  −12.4    │
+│  Calendario y usos y cost.        ▇▶  +2.5    │
+│  Lista y población                ▏   +0.4    │
 │  Condiciones sociales       ◀▇▇▇     −4.5    │
 │  Competencia política             ▏   −0.3    │
-│  Suma: 14.9 puntos menos que el país          │
+│  Suma: 14.3 puntos menos que el país          │
 │ · Votó menos que el país en 6 de 6 elecciones │
 │ · Elige ayuntamiento y gubernatura ese día    │
 ├───────────────────────────────────────────────┤
@@ -226,10 +226,10 @@ Ejemplo con Tijuana (`02004`), sin intervención. En el teléfono, la ficha sube
 ├───────────────────────────────────────────────┤
 │ 4 · ¿QUÉ HARÍA LA INTERVENCIÓN?               │
 │  Tipo              Votos   Particip.  ¿Sale?  │
-│  Retener primeriz.  5,191   36.8 %    No      │
-│  Jóvenes 20–29     17,529   37.6 %    No      │
-│  Credencialización  6,820   36.5 %    No      │
-│  Las tres          29,540   37.9 %    No      │
+│  Retener primeriz.  5,191   37.4 %    No      │
+│  Jóvenes 20–29     17,529   38.2 %    No      │
+│  Credencialización  6,820   37.1 %    No      │
+│  Las tres          29,540   38.5 %    No      │
 │  Supuesto, no efecto medido.                  │
 ├───────────────────────────────────────────────┤
 │ 5 · AVISOS (solo si hay)                      │
@@ -261,7 +261,7 @@ Ejemplo con Tijuana (`02004`), sin intervención. En el teléfono, la ficha sube
   - condiciones sociales;
   - competencia política.
 
-  **Ya están en `resultados-1.5`:** `aporte_historia`, `aporte_calendario`, `aporte_lista`, `aporte_social` y
+  **Ya están en `resultados-1.6`:** `aporte_historia`, `aporte_calendario`, `aporte_lista`, `aporte_social` y
   `aporte_politica`, en puntos (D29, notebook 04c). Los cinco suman `(part_pred − 0.5141) × 100` de la fila sin
   intervención. Barras horizontales desde un eje en 0: a la izquierda baja, a la derecha sube. Ordenadas siempre
   igual (no por tamaño), para comparar municipios. Nota obligatoria debajo: "Reparto de la predicción del
@@ -287,9 +287,11 @@ la historia de cada municipio. En 2027 se usa 0.5141.
 - **Si el municipio está en rojo sin intervención:** tabla con los cuatro tipos (filas de
   `escenarios_2027.csv`): votos adicionales, participación con intervención y si sale del rojo (`riesgo` ≠
   `"alto"`). Se resalta el tipo elegido arriba.
-  - **No siempre "las tres" es lo que más saca del rojo:** en Oaxaca, `20395` sale con jóvenes 20–29 y no
+  - **No siempre "las tres" es lo que más saca del rojo:** en Oaxaca, Mixistlán de la Reforma (`20060`) sale con jóvenes 20–29 y no
     con las tres, porque la credencialización baja un poco su porcentaje. Por eso hay que mostrar los cuatro.
-  - De los 495 rojos, **88 salen con al menos un tipo** y 407 no salen con ninguno.
+  - De los 495 rojos, **85 salen con al menos un tipo** y 410 no salen con ninguno.
+  - **Si `motivo` trae `intervencion_parcial`** (D32), avisar: "Intervención calculada solo con los datos
+    disponibles". Pasa en 77 rojos con "las tres", casi siempre porque falta la credencialización.
 - **Si no está en rojo:** una línea: "La intervención supuesta se calcula solo en los municipios en rojo."
 - **Respuesta a "¿aplica por municipio o por país?":** se calcula municipio por municipio. Las cifras del
   estado y del país son la suma.
@@ -342,7 +344,7 @@ la nota "No cambia la predicción".
 
 ## 7 · Metodología: "Cómo leer los resultados"
 
-Reescribir para que diga lo mismo que la pantalla nueva y que la 1.5.
+Reescribir para que diga lo mismo que la pantalla nueva y que la 1.6.
 
 **Lo que hoy dice y ya no es cierto:**
 
@@ -351,7 +353,7 @@ Reescribir para que diga lo mismo que la pantalla nueva y que la 1.5.
 | "Por eso se prueban tres porcentajes nacionales" | "La participación del país se estima con el calendario electoral de 2027: 51.4 %, con un error de unos 3 puntos" |
 | "La participación total del país se plantea con tres supuestos porque el modelo no la predice" | Igual que arriba |
 | "Seis escenarios permiten comparar sin y con intervención" | "Cinco opciones: sin intervención y cuatro tipos de intervención supuesta" |
-| "[El rango] suele extenderse entre 8 y 15 puntos hacia cada lado" | "El rango mide de 20 a 31 puntos de ancho: incluye el error del municipio y el del nivel del país" |
+| "[El rango] suele extenderse entre 8 y 15 puntos hacia cada lado" | "El rango mide de 18 a 29 puntos de ancho: incluye el error del municipio y el del nivel del país. Es una aproximación: en las pruebas cubrió entre 79 % y 93 %" |
 | "Cambiar el supuesto nacional no cambia estos colores" | Se quita: ya no hay supuesto nacional |
 | "Cada porcentaje nacional tiene dos opciones" | Se quita |
 | "La cuenta suma tres supuestos" | "Hay tres tipos de intervención, que se pueden ver por separado o juntos" |
@@ -376,8 +378,8 @@ Al final, enlace a los [límites](metodologia/07-limites.md) y a los detalles t�
 
 - Cambiar "Seis escenarios: tres niveles nacionales, sin y con intervención" por "Cinco escenarios: sin
   intervención y cuatro tipos de intervención supuesta, con la participación del país estimada (51.4 %)".
-- Cambiar `resultados-1.3` por `resultados-1.5` en toda la página y en el pie.
-- Agregar la base de la entrega (`data/processed/entrega/base-datos-1.5/`, CSV y Excel con diccionario) si se
+- Cambiar `resultados-1.3` por `resultados-1.6` en toda la página y en el pie.
+- Agregar la base de la entrega (`data/processed/entrega/base-datos-1.6/`, CSV y Excel con diccionario) si se
   quiere ofrecer en el sitio.
 
 ## 9 · Prioridades
@@ -386,7 +388,7 @@ Al final, enlace a los [límites](metodologia/07-limites.md) y a los detalles t�
 
 | # | Cambio | Quién |
 | --- | --- | --- |
-| 1 | Migrar a `resultados-1.5`: un solo escenario por intervención, sin nivel nacional, y las columnas `aporte_*` ([vistas-mapa.md](vistas-mapa.md#estado)) | Front |
+| 1 | Migrar a `resultados-1.6`: un solo escenario por intervención, sin nivel nacional, y las columnas `aporte_*` ([vistas-mapa.md](vistas-mapa.md#estado)) | Front |
 | 2 | Título con la pregunta y franja de aviso reducida a una línea | Front |
 | 3 | Cuatro cifras fijas arriba, por país, estado y municipio, con intervención | Front |
 | 4 | Estado → municipio; la ficha se abre a la derecha | Front |
@@ -394,7 +396,7 @@ Al final, enlace a los [límites](metodologia/07-limites.md) y a los detalles t�
 | 6 | Colores planos, leyenda visible e interactiva sobre el mapa | Front |
 | 7 | Quitar Datos del territorio, Más filtros, Consultas, Cómo explorar, Distribución, Ampliar mapa, Comparar y el filtro de color | Front |
 | 8 | Ficha en cinco partes: predicción, qué empuja la predicción (barras y hechos), historial, intervención y avisos | Front |
-| 9 | Metodología y Datos y descargas al día con la 1.5 | Front, con textos del equipo de datos |
+| 9 | Metodología y Datos y descargas al día con la 1.6 | Front, con textos del equipo de datos |
 
 **P2 · Deseable antes del 31, si da tiempo**
 
@@ -403,7 +405,7 @@ Al final, enlace a los [límites](metodologia/07-limites.md) y a los detalles t�
 | 10 | Pestaña Histórico | Front |
 | 11 | Cambio de paleta y tipografía a un estilo más sobrio | Front |
 
-**Ya entregado por el equipo de datos (22 de octubre):** `resultados-1.5` con `aporte_*` y la participación del
+**Ya entregado por el equipo de datos (24 de octubre):** `resultados-1.6` con `aporte_*` y la participación del
 país por año.
 
 **P3 · Después de la entrega**
@@ -414,13 +416,13 @@ país por año.
 
 ## 10 · Cómo saber que quedó bien
 
-- Sin intervención, en la vista del país: **51.4 %, 495, 23,818,704 y 98,330,348**.
-- Con "Las tres": **408 en rojo, 87 salen, 505,007 votos adicionales y 51.8 %**.
-- Al elegir Oaxaca: **311 rojos**; con "Las tres", 278.
-- Al elegir Tijuana, la ficha muestra **36.5 %, de 26.9 % a 47.1 %, 14.9 puntos menos que el país**; ningún
+- Sin intervención, en la vista del país: **51.4 %, 495, 24,955,268 y 98,330,348**.
+- Con "Las tres": **411 en rojo, 84 salen, 528,400 votos adicionales y 51.8 %**.
+- Al elegir Oaxaca: **299 rojos**; con "Las tres", 267.
+- Al elegir Tijuana, la ficha muestra **37.1 %, de 27.9 % a 47.9 %, 14.3 puntos menos que el país**; ningún
   tipo de intervención lo saca del rojo.
-- En `20395`, "Jóvenes 20–29" lo saca del rojo y "Las tres" no.
-- En Tijuana, las barras dicen: historia −12.0, calendario +1.9, lista 0.0, condiciones sociales −4.5 y competencia
-  política −0.3. En Xalapa, el calendario es la barra más larga (−11.7).
-- Ninguna pantalla dice "tres niveles", "seis escenarios", "47.1 %", `resultados-1.3` ni `resultados-1.4`.
+- En `20060` (Mixistlán de la Reforma), "Jóvenes 20–29" lo saca del rojo y "Las tres" no.
+- En Tijuana, las barras dicen: historia −12.4, calendario +2.5, lista +0.4, condiciones sociales −4.5 y competencia
+  política −0.3. En Xalapa, el calendario es la barra más larga (−10.0).
+- Ninguna pantalla dice "tres niveles", "seis escenarios", "47.1 %", `resultados-1.3` ni `resultados-1.4` o `1.5`.
 - Ninguna celda vacía se muestra como 0.

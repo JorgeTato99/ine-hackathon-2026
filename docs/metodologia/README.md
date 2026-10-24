@@ -36,10 +36,10 @@ Datos del INE (CCPC 2009–2024, actas por casilla)  +  INEGI, CONAPO, CONEVAL, 
 04c · Por qué de cada predicción (aportes por grupo de variables)  →  aportes_2027.parquet
       │
       ▼
-05 · Nivel nacional, semáforo, personas en juego, intervención  →  data/processed/mapa/resultados-1.5/ (lo que lee el mapa)
+05 · Nivel nacional, semáforo, personas en juego, intervención  →  data/processed/mapa/resultados-1.6/ (lo que lee el mapa)
       │
       ▼
-scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.5/ (base de la entrega)
+scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.6/ (base de la entrega)
 ```
 
 ## Índice
@@ -53,7 +53,7 @@ scripts/entrega_base_datos.py  →  data/processed/entrega/base-datos-1.5/ (base
 | 5 | [05-intervencion-y-personas.md](05-intervencion-y-personas.md) | Personas en juego y tipos de intervención |
 | 6 | [06-alertas-y-contexto.md](06-alertas-y-contexto.md) | Alerta "sin casilla", zonas frías, rezago persistente, seguridad |
 | 7 | [07-limites.md](07-limites.md) | Lo que el modelo no puede decir y cómo usarlo con responsabilidad |
-| 8 | [08-decisiones.md](08-decisiones.md) | Las 30 decisiones (D1 a D30), en una tabla |
+| 8 | [08-decisiones.md](08-decisiones.md) | Las 33 decisiones (D1 a D33), en una tabla |
 | 9 | [09-reproducir.md](09-reproducir.md) | Cómo volver a generar todo y qué prueba la reproducibilidad |
 
 Documentos relacionados:
@@ -69,13 +69,13 @@ Documentos relacionados:
 | Registros del INE analizados | 54,872,712 (Conteos Censales de Participación Ciudadana, 2009–2024) |
 | Municipios | 2,477 con historia de 2009 a 2024 (más Villa de Pozos, que tiene geometría y no tiene datos) |
 | Variables probadas | 101, de las que 34 están en el modelo |
-| Modelo | Ensamble: promedio de una regresión robusta (Huber) y un random forest |
-| Validación (aprende de 2015, predice 2021) | Error al ordenar municipios: 5.32 pp, contra 6.03 de la regla simple. Ponderado por personas: 4.30 contra 6.80. Acierto en el 20 % de mayor riesgo: 70 % contra 67 % |
-| Validación al revés (aprende de 2021, predice 2015) | 6.16 contra 9.43 de la regla simple |
+| Modelo | Delta con guardia (D33): parte de la desviación de la presidencial anterior y un ensamble (Huber + random forest) aprende cuánto cambia hacia la intermedia; si en 2024 faltaron casillas, ensamble de nivel |
+| Validación retrospectiva (aprende de 2015, predice 2021) | Error al ordenar municipios: 4.74 pp, contra 6.03 de la regla simple. Ponderado por personas: 4.10 contra 6.80. Acierto en el 20 % de mayor riesgo: 74 % contra 67 % |
+| Validación al revés (aprende de 2021, predice 2015) | 6.12 contra 9.42 de la regla simple |
 | Nivel nacional estimado para 2027 | 51.4 %, con un modelo por calendario (error de prueba de unos 3 puntos) |
-| Semáforo 2027 | 495 municipios en rojo (23.8 millones de personas en la lista), 496 en amarillo y 1,486 en verde |
-| Dos historias del rojo | 413 sin elección municipal ese día (6.3 millones de personas) y 82 que la tienen pero votan poco siempre (17.5 millones) |
-| Intervención por tipo | Retener primerizos: salen 20 rojos. Jóvenes de 20 a 29: 66. Credencialización: 5. Las tres juntas (505,007 votos): 87, con 4.7 millones de personas; 408 siguen en rojo |
+| Semáforo 2027 | 495 municipios en rojo (25.0 millones de personas en la lista), 496 en amarillo y 1,486 en verde; 307 rojos firmes |
+| Dos historias del rojo | 404 sin elección municipal ese día (6.2 millones de personas) y 91 que la tienen pero votan poco siempre (18.8 millones) |
+| Intervención por tipo | Retener primerizos: salen 19 rojos. Jóvenes de 20 a 29: 68. Credencialización: 7. Las tres juntas (528,400 votos): 84, con 6.1 millones de personas; 411 siguen en rojo |
 
 **Lo que más anticipa la abstención** es la historia del municipio y si elige ayuntamiento el mismo día.
 Las variables sociales y económicas se relacionan con votar menos, pero casi no agregan información que la

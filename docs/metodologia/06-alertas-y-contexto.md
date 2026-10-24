@@ -2,7 +2,10 @@
 
 Notebooks `03b` (secciones 3, 4, 8 y 9) y `05` (sección 4). Decisiones D12 y D17. Reportes K y L.
 
-Estas capas **no entran al semáforo**. Ayudan a entender un municipio y a planear la intervención.
+Estas capas **no entran al modelo**, con una excepción: la tasa de homicidios de 2022 a 2024 (en logaritmo) sí es
+una de las 34 variables, en el grupo de condiciones sociales, y casi no pesa (auditoría H005). La alerta "sin
+casilla", el rezago, las zonas y el resto del contexto de seguridad ayudan a entender un municipio y a planear la
+intervención.
 
 ## 6.1 Alerta "sin casilla" (D12)
 
@@ -14,8 +17,8 @@ Estas capas **no entran al semáforo**. Ayudan a entender un municipio y a plane
   - **sin antecedente:** 2,402.
 - **Por qué va aparte:**
   - una campaña no resuelve que no haya dónde votar;
-  - **el mejor predictor de que vuelva a pasar es el propio antecedente:** el 33 % de los municipios con
-    antecedente repitió en 2024, contra 0.7 % de los demás;
+  - **el mejor predictor de que vuelva a pasar es el propio antecedente:** el 16.2 % de los municipios con
+    antecedente (antes de 2024) repitió en 2024, contra 0.3 % de los demás;
   - la violencia medida por municipio no lo anticipa: acierta como adivinar al azar (reporte J).
 - **Relación con el semáforo:** en estos municipios el semáforo refleja la participación observada. Si en
   la elección de entrada faltaron casillas, esa participación baja entra al modelo (D24, ver

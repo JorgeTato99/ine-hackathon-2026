@@ -49,6 +49,7 @@ dónde votar aparecían votando más que el país.
 | **D2** | Un municipio queda "sin dato" en una elección si: (1) no hay registros; (2) no se sabe qué hizo más de la mitad de la lista y no hay actas (ver D3); (3) su lista es menor al 80 % de la de sus elecciones vecinas (ajustada: solo con elección antes y después, con media geométrica); (4) casi nadie votó (menos de 2 %), sin "no sabemos" y con participación normal en sus otras elecciones |
 | **D10** | Si en una sección los conteos marcan más de 10 % (y al menos 50) más "votó" que los votos del acta, o de menos (ajustada: en los dos sentidos), la sección queda "sin dato". Dos fuentes oficiales no coinciden |
 | **D16** | Municipios con lista incompleta en los conteos (108 en 2012): se usa la participación de todas sus actas |
+| **D31** | D16 se aplica también cuando hay más de 50 % de "no sabemos" (salvo paquete perdido). Solo cambia Zaragoza (Coahuila) en 2012: de 72.7 % a 61.1 % (auditoría H001) |
 | **D4** | Personas de 100 años o más: se quedan en los totales (0.02 % de la lista en 2024) |
 | **D5** | Participación atípica: más de 85 % y más de 15 pp sobre lo típico se marca como atípico. Yucatán se conserva: es el estado que más vota en 4 de 6 elecciones. Por separado, el notebook 04b revisa los casos atípicos del error del modelo (45 de 2,437 al predecir 2021) |
 | **D7** | Las personas de sexo no binario (105 en 2024) se incluyen en los totales |
