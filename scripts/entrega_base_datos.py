@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.5"
+VERSION = "resultados-1.6"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.5"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.6"
 TEXTO = {
     "cvegeo": pl.String,
     "clave_ine_2024": pl.String,
@@ -83,7 +83,7 @@ IDENTIDAD = {
     "intervencion": "ninguna, retener_primerizos, jovenes_20_29, credencializacion o combinada (supuestos en los municipios en rojo; D22 y D28)",
     "escenario_id": "nac-<nivel>_int-<intervención>",
     "estado_estimacion": "estimado o sin_estimacion",
-    "motivo": "códigos separados por '|': territorio_aproximado, antecedente_sin_casilla",
+    "motivo": "códigos separados por '|': territorio_aproximado, antecedente_sin_casilla, intervencion_parcial (D32)",
 }
 
 
