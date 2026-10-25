@@ -27,9 +27,9 @@ import polars as pl
 
 RAIZ = Path(__file__).resolve().parents[1]
 PROCESADOS = RAIZ / "data" / "processed"
-VERSION = "resultados-1.3"
+VERSION = "resultados-1.6"
 RESULTADOS = PROCESADOS / "mapa" / VERSION
-SALIDA = PROCESADOS / "entrega" / "base-datos-1.3"
+SALIDA = PROCESADOS / "entrega" / "base-datos-1.6"
 TEXTO = {
     "cvegeo": pl.String,
     "clave_ine_2024": pl.String,
@@ -59,6 +59,13 @@ HISTORIA = {
     "ayuntamiento_mismo_dia": "true si el municipio eligió ayuntamiento el mismo día",
     "usos_y_costumbres": "true si el municipio elegía autoridades por sistemas normativos indígenas en esa elección (Oaxaca y, según el año, hasta 7 municipios fuera de Oaxaca)",
 }
+APORTES = {
+    "aporte_historia": "aporte de la historia de participación (desviaciones anteriores del municipio y de sus vecinos)",
+    "aporte_calendario": "aporte del calendario y los usos y costumbres (elecciones locales el mismo día)",
+    "aporte_lista": "aporte de la lista y la población (% rural, sexo, edad, crecimiento y cobertura de la lista)",
+    "aporte_social": "aporte de las condiciones sociales (censo, CONEVAL, CONAPO y homicidios)",
+    "aporte_politica": "aporte de la competencia política (margen y número efectivo de partidos)",
+}
 COLUMNAS_PANEL = {
     "AELEC": "anio",
     "LN": "lista_nominal",
@@ -72,11 +79,11 @@ IDENTIDAD = {
     "nombre_mpio": "nombre del municipio",
     "nombre_edo": "nombre de la entidad",
     "anio": "año de la elección (2027)",
-    "nivel_nacional": "escenario nacional: bajo (44.1 %), medio (47.1 %) o alto (51.8 %)",
-    "intervencion": "ninguna o dirigida_rojos (supuestos S1 + S2 + S3 en los municipios en rojo; decisión D22)",
+    "nivel_nacional": "estimado: nivel nacional de 2027 estimado con el calendario local (51.4 %, D27)",
+    "intervencion": "ninguna, retener_primerizos, jovenes_20_29, credencializacion o combinada (supuestos en los municipios en rojo; D22 y D28)",
     "escenario_id": "nac-<nivel>_int-<intervención>",
     "estado_estimacion": "estimado o sin_estimacion",
-    "motivo": "códigos separados por '|': territorio_aproximado, antecedente_sin_casilla",
+    "motivo": "códigos separados por '|': territorio_aproximado, antecedente_sin_casilla, intervencion_parcial (D32)",
 }
 
 
@@ -105,6 +112,8 @@ def diccionario(tablas: dict[str, pl.DataFrame], unidades: dict[str, str]) -> pl
             return unidades["part_pred_inf, part_pred_sup"]
         if columna.startswith("part_"):
             return f"participación observada en {columna[5:]}: " + unidades["part_*"]
+        if columna.startswith("aporte_"):
+            return APORTES[columna] + ": " + unidades["aporte_*"]
         raise KeyError(f"{archivo}: {columna} no tiene descripción")
 
     filas = [
@@ -129,8 +138,8 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 | Archivo | Filas | Contenido |
 | --- | ---: | --- |
 | `historia_municipal.csv` | {n_hist:,} | Participación de cada municipio en las seis elecciones federales de 2009 a 2024 |
-| `municipios_2027.csv` | {n_mun:,} | Semáforo 2027, probabilidad de rojo, personas en juego, alertas y contexto, un municipio por fila |
-| `escenarios_2027.csv` | {n_esc:,} | Participación prevista 2027 por municipio, nivel nacional (bajo, medio, alto) y sin o con intervención |
+| `municipios_2027.csv` | {n_mun:,} | Semáforo 2027, probabilidad de rojo, qué grupo de variables empuja la predicción, personas en juego, alertas y contexto, un municipio por fila |
+| `escenarios_2027.csv` | {n_esc:,} | Participación prevista 2027 por municipio, sin intervención y con cada uno de los cuatro tipos de intervención supuesta |
 | `diccionario.csv` | {n_dic:,} | Descripción y unidad de cada columna |
 
 **Cómo leerla**
@@ -140,16 +149,19 @@ Riesgo de abstención por municipio para la elección federal intermedia del 6 d
 - Celda vacía = sin dato o no aplica. Nunca equivale a cero.
 - Participación = votaron / (votaron + no votaron). En `historia_municipal.csv` va de 0 a 100; en los archivos
   de 2027 va de 0 a 1, como en el mapa.
-- El escenario con intervención (`dirigida_rojos`) es una cuenta con supuestos explícitos, **no un efecto
-  medido** de una campaña.
-- Los niveles nacionales de 2027 (44.06 %, 47.07 % y 51.84 %) son la participación de las intermedias de 2009,
-  2015 y 2021 en los Conteos Censales tal como vienen. `participacion_nacional` de la historia usa la
-  participación ya corregida con las actas (44.09 %, 47.06 % y 51.85 %). La diferencia es de 0.03 puntos o menos.
+- `aporte_*` reparte la predicción de cada municipio entre cinco grupos de variables, en puntos frente al
+  país; los cinco suman la distancia al país. Es un reparto de la predicción del modelo, no causas probadas.
+- Los escenarios con intervención (`retener_primerizos`, `jovenes_20_29`, `credencializacion` y `combinada`) son
+  cuentas con supuestos explícitos, **no efectos medidos** de una campaña.
+- El nivel nacional de 2027 (51.4 %) se estima con el calendario local, con una recta ajustada a las
+  intermedias de 2009, 2015 y 2021 de los Conteos Censales tal como vienen (44.06 %, 47.07 % y 51.84 %). Su
+  error de prueba es de unos 3 puntos y está incluido en el rango de cada municipio. `participacion_nacional`
+  de la historia usa la participación ya corregida con las actas (44.09 %, 47.06 % y 51.85 %).
 
 **Fuentes:** INE (Conteos Censales de Participación Ciudadana 2009-2024 y cómputos distritales por casilla),
 INEGI, CONAPO, CONEVAL, Banxico, SESNSP, IEEPCO y calendarios de los organismos públicos locales.
 
-**Versión:** {version}, generada el {generado}. Las cifras salen de los notebooks 03 a 05 del repositorio.
+**Versión:** {version}, generada el {generado}. Las cifras salen de los notebooks 03 a 05 (con el 04c) del repositorio.
 """
 
 
