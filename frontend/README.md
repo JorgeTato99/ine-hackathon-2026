@@ -11,10 +11,11 @@ siempre con exportación de producción servida por Nginx.
 
 - [Sistema de diseño e identidad](docs/sistema-diseno.md).
 - [Tokens, componentes y variantes vigentes](docs/tokens-y-componentes.md).
+- [Recursos de marca, ilustraciones y footer editorial](docs/identidad-y-recursos.md).
 - [Movimiento y animaciones accesibles](docs/movimiento.md).
 - [Cartografía, fuentes y preparación](docs/cartografia.md).
-- [Explorador, filtros, tabla y modo mapa](docs/explorador.md).
-- [Consultas personales e intercambio de archivos](docs/consultas-guardadas.md).
+- [Explorador vigente: Pronóstico, Histórico, búsqueda, tabla y modo ampliado](docs/explorador.md).
+- [Antecedente de consultas personales, retiradas de la interfaz por D30](docs/consultas-guardadas.md).
 - [Comparación de publicaciones y procedencia](docs/publicaciones.md).
 - [Resultados científicos, recepción y controles](docs/resultados.md).
 - [Vista pública de desarrollo y actualizaciones](deploy/README.md).

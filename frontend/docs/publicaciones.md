@@ -1,5 +1,28 @@
 # Comparar publicaciones científicas
 
+## Comparación vigente · 2026-10-24 · 1.3 → 1.6
+
+El auxiliar registra 4,828 celdas modificadas
+en 2,477 municipios y 46 cambios de metadatos, además de las diferencias de escenarios,
+columnas y cobertura. Cambiaron modelo y definiciones; no se atribuyen las restas
+a una campaña ni se presentan como tendencia electoral. Los valores originales
+y sus huellas se conservan. La descripción 1.3 → 1.5 de abajo es antecedente.
+
+Preparar la pareja vigente con el comando de [Explorador](explorador.md#fuentes-preparación-y-entrega).
+
+## Antecedente · 2026-10-23 · 1.3 → 1.5
+
+La comparación anterior **1.3 → 1.5** registra 42 entradas de metadatos modificadas,
+se añaden cinco columnas de aportaciones y se sustituyen seis escenarios por cinco
+identificadores nuevos. No hay celdas cambiadas en las columnas municipales que
+comparten ambos cortes; esto **no** significa que los escenarios o la metodología
+sean idénticos. La cobertura de filas y las definiciones se muestran por separado.
+La preparación y el comando vigente están en [Explorador](explorador.md).
+Los JSON históricos siguen disponibles para trazabilidad. Los ejemplos siguientes
+documentan la comparación anterior y no describen el corte activo.
+
+## Antecedente · 1.2 → 1.3
+
 [Frontend](../README.md) · [Resultados](resultados.md) · [Datos y descargas](https://traza-civica.jorgetato.com/datos/#publicaciones)
 
 La sección «Cambios entre publicaciones» de Datos compara los originales 1.2 y

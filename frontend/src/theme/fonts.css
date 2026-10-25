@@ -1,0 +1,7 @@
+@import "@fontsource-variable/source-sans-3";
+@import "@fontsource-variable/newsreader/standard.css";
+
+/* El tamaño óptico acompaña al texto; nunca se anima el peso o los ejes de la fuente. */
+body {
+  font-optical-sizing: auto;
+}

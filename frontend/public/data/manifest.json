@@ -1,1 +1,324 @@
-{"version":"resultados-1.3","sample":false,"source":{"repository":"https://github.com/JorgeTato99/ine-hackathon-2026","commit":"f25d9c2709d2a93179c7ee2d6d2df985d418d6ca","directory":"data/processed/mapa/resultados-1.3"},"warnings":["El modelo ordena bien a los municipios, pero no predice el nivel nacional: por eso hay tres escenarios.","El intervalo de cada municipio es ancho (de unos ±8 a ±15 pp según su tamaño). La posición frente a los demás es más confiable que el nivel exacto.","La probabilidad de rojo es optimista en los extremos: 80 % o más se lee como \"probable\", no como \"seguro\".","El calendario local de 2027 puede cambiar; elegir ayuntamiento el mismo día es la variable que más pesa.","La violencia y la presencia de policía son contexto: no entran al semáforo porque no mejoraron la predicción.","El escenario con intervención es una cuenta con supuestos explícitos, no un efecto medido de una campaña.","No se nombran personas ni se atribuyen causas individuales a ningún municipio."],"geometryMetadata":{"source":"INEGI, Marco Geoestadístico; ver metadatos originales por entidad","captured":"2026-10-16","sourceMetadata":[{"state":"01","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"02","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"03","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"04","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"05","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"06","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"07","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"08","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"09","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"10","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"11","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"12","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"13","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"14","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"15","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"16","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"17","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"18","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"19","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"20","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"21","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"22","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"23","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"24","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"25","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"26","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"27","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"28","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"29","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"30","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"31","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}},{"state":"32","metadata":{"Fuente_informacion_vectorial":"INEGI. Marco Geoestadístico, diciembre de 2025","Fuente_informacion_estadistica":"INEGI. Censo de Población y Vivienda, 2020"}}],"transformations":"Reproyección EPSG:6365 a EPSG:4326; simplificación conjunta Mapshaper 8 % conservando partes y precisión 0.000001 grados; uso de visualización, no límites oficiales.","sourceGeometrySha256":"40716aac8df1f67b31839174beb1b73d226a412f3f2ab79c9e2f493bb210bfef","qualityControl":{"features":2478,"polygonParts":2898,"fallbackOriginal":[],"originalIsValidCoverage":false,"note":"Validez individual y partes conservadas; no se certifica cobertura topológica nacional."}},"files":{"dataset.json":{"bytes":6631292,"sha256":"eebf1a7ab28ce072e7ac6368537caaf0785380f0067a2680aa0461524176c8ef"},"municipios.geojson":{"bytes":8533167,"sha256":"57899020fa6f256bbd369729955772d43be16b08d2f8963096f7e3f41a2f2292"},"municipios.gpkg":{"bytes":7495680,"sha256":"daa0f2ba8e19569dd4072e6634a8e544881f6db6c6c398399d48d52eb96fe2b9"},"resultados-1.3/controles.json":{"bytes":268,"sha256":"c6f29edf5092fd1ee8961c17d7e0d3539bfb8deb1b6b77cf9e73bf79e86c6498"},"resultados-1.3/escenarios_2027.csv":{"bytes":1521786,"sha256":"1541015f7a27ef061f609262af2144ea54116d1a035ae2fbe6f8ead48a669fa5"},"resultados-1.3/metadatos.json":{"bytes":10393,"sha256":"11dc907fe2cc15bdc8dca290243cd4ef41ee191ad631d59f75c03cd6f1c1b000"},"resultados-1.3/municipios.csv":{"bytes":865451,"sha256":"f41125f0ed3f6210c0185f91a26d35e1010c8125eeecccd88374fdcb95f1c8a9"},"resultados-1.3/municipios.geojson":{"bytes":16169821,"sha256":"3351be2e18ea067951e9cdd66cdccb1d93c5195a2f0b2707ba12deaedec8db51"},"resultados-1.3/municipios.gpkg":{"bytes":9248768,"sha256":"22c5bdac4abfc6fd700d721e78417d4c4a9478885c76c14a635b8ab02bc72aae"}}}
+{
+  "files": {
+    "dataset.json": {
+      "bytes": 6532820,
+      "sha256": "f95f0d868e28874886c532854f48f0b046e5860eae72d503e461e3eaabeb59e9"
+    },
+    "municipios.geojson": {
+      "bytes": 8533167,
+      "sha256": "57899020fa6f256bbd369729955772d43be16b08d2f8963096f7e3f41a2f2292"
+    },
+    "municipios.gpkg": {
+      "bytes": 7495680,
+      "sha256": "daa0f2ba8e19569dd4072e6634a8e544881f6db6c6c398399d48d52eb96fe2b9"
+    },
+    "resultados-1.6/base-datos/LEEME.md": {
+      "bytes": 2328,
+      "sha256": "c51222654a3a2edab541b1b23cce627e9b309e34d7823c667b42525264976412"
+    },
+    "resultados-1.6/base-datos/base-datos-reto2-ine-2026.xlsx": {
+      "bytes": 2951543,
+      "sha256": "87d15e5d6e8516595316d0de72d211a074b8801f4248a1912cc74d4b3478110a"
+    },
+    "resultados-1.6/base-datos/diccionario.csv": {
+      "bytes": 13708,
+      "sha256": "9a5cf53d00dc3dfb406274bd7512f7ca94db285c6121befacf4c95ea01eb3f18"
+    },
+    "resultados-1.6/base-datos/escenarios_2027.csv": {
+      "bytes": 1424997,
+      "sha256": "614895aa6fc160ee27b6ebd450f5727a76539ecdb338e3ed9b99fe5e39d4fa16"
+    },
+    "resultados-1.6/base-datos/historia_municipal.csv": {
+      "bytes": 2665735,
+      "sha256": "a8a0d7d8a7fedf2a37fe9bb602bba2c28772c361cdfb9505bb47f2a4c97ad721"
+    },
+    "resultados-1.6/base-datos/municipios_2027.csv": {
+      "bytes": 940806,
+      "sha256": "51126f3dfe7c7804631b827c13c4f41d544995b3ddd520b76fc7e770257b0261"
+    },
+    "resultados-1.6/controles.json": {
+      "bytes": 664,
+      "sha256": "e7161ba1cba663e9eb4fc48ce91553cc32fd328309c6669569ce0f89fd554295"
+    },
+    "resultados-1.6/escenarios_2027.csv": {
+      "bytes": 1424997,
+      "sha256": "614895aa6fc160ee27b6ebd450f5727a76539ecdb338e3ed9b99fe5e39d4fa16"
+    },
+    "resultados-1.6/mapa-escenarios.zip": {
+      "bytes": 8973266,
+      "sha256": "34e942e58015a673f3c4a1d0d36fddf4d4b1d6b320ea3d2333617e1155ecaad9"
+    },
+    "resultados-1.6/metadatos.json": {
+      "bytes": 14359,
+      "sha256": "8f1eb45298347bcf3324364b7b19bfe16b41c067ff50c94e155295533f651ecb"
+    },
+    "resultados-1.6/municipios.csv": {
+      "bytes": 940806,
+      "sha256": "51126f3dfe7c7804631b827c13c4f41d544995b3ddd520b76fc7e770257b0261"
+    },
+    "resultados-1.6/municipios.geojson": {
+      "bytes": 17553807,
+      "sha256": "025174043eaf857f5d5475c68da90e05a308dd27c71b80c8188238acd8c6c8e7"
+    },
+    "resultados-1.6/municipios.gpkg": {
+      "bytes": 9465856,
+      "sha256": "533624617b9c2d83c5693215d2542ca5df0b26daa17297348489d7cc4b244c5e"
+    }
+  },
+  "geometryMetadata": {
+    "captured": "2026-10-16",
+    "qualityControl": {
+      "fallbackOriginal": [],
+      "features": 2478,
+      "note": "Validez individual y partes conservadas; no se certifica cobertura topológica nacional.",
+      "originalIsValidCoverage": false,
+      "polygonParts": 2898
+    },
+    "source": "INEGI, Marco Geoestadístico; ver metadatos originales por entidad",
+    "sourceGeometrySha256": "40716aac8df1f67b31839174beb1b73d226a412f3f2ab79c9e2f493bb210bfef",
+    "sourceMetadata": [
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "01"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "02"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "03"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "04"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "05"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "06"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "07"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "08"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "09"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "10"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "11"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "12"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "13"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "14"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "15"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "16"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "17"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "18"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "19"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "20"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "21"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "22"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "23"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "24"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "25"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "26"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "27"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "28"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "29"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "30"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "31"
+      },
+      {
+        "metadata": {
+          "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020",
+          "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025"
+        },
+        "state": "32"
+      }
+    ],
+    "transformations": "Reproyección EPSG:6365 a EPSG:4326; simplificación conjunta Mapshaper 8 % conservando partes y precisión 0.000001 grados; uso de visualización, no límites oficiales."
+  },
+  "sample": false,
+  "source": {
+    "commit": "7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7",
+    "directory": "data/processed/mapa/resultados-1.6",
+    "repository": "https://github.com/JorgeTato99/ine-hackathon-2026"
+  },
+  "version": "resultados-1.6",
+  "warnings": [
+    "El nivel nacional de 2027 (51.4 %) es una estimación por calendario hecha con solo tres intermedias; su error de prueba es de unos 3 puntos. El semáforo no depende de él.",
+    "El intervalo de cada municipio es ancho y aproximado: su error propio va de unos ±7 a ±15 pp según su tamaño y, con el error del nivel nacional, el rango mide de 18 a 29 puntos. No garantiza 90 % en cada grupo ni en 2027. La posición frente a los demás es más confiable que el nivel exacto.",
+    "La probabilidad de rojo es la frecuencia en simulaciones con los errores del pasado, no una probabilidad garantizada; es optimista en los extremos: 80 % o más se lee como \"probable\", no como \"seguro\".",
+    "El calendario local de 2027 puede cambiar; elegir ayuntamiento el mismo día es la variable que más pesa.",
+    "La tasa de homicidios de 2022 a 2024 (en logaritmo) es una de las 34 variables del modelo, en el grupo de condiciones sociales, y casi no pesa. Las demás columnas de seguridad (policía, justicia cívica, cifra oculta y comparación de fuentes) son solo contexto: no entran al modelo.",
+    "El escenario con intervención es una cuenta con supuestos explícitos, no un efecto medido de una campaña. Donde falta algún componente se suma solo lo conocido y se marca intervencion_parcial (D32).",
+    "La validación es retrospectiva con datos revisados: algunas fuentes (por ejemplo, CONEVAL 2020) se publicaron después de la elección que se predice.",
+    "No se nombran personas ni se atribuyen causas individuales a ningún municipio."
+  ]
+}

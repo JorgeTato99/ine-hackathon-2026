@@ -14,12 +14,20 @@ export function SectionHeading({
   id?: string;
 }) {
   return (
-    <Box {...entranceProps("heading")} sx={{ mb: 3 }}>
+    <Box
+      {...entranceProps("heading")}
+      sx={{ mb: 3, borderTop: 1, borderColor: "divider", pt: 2.5 }}
+    >
       {number && (
         <Typography
           component="span"
           variant="overline"
-          sx={{ display: "block", color: "primary.main", mb: 1 }}
+          sx={{
+            display: "block",
+            color: "primary.main",
+            mb: 1,
+            fontVariantNumeric: "tabular-nums",
+          }}
           aria-hidden="true"
         >
           {number} /

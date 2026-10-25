@@ -8,10 +8,11 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Skeleton from "@mui/material/Skeleton";
 import type { Dataset } from "@/types/dataset";
-import { parseMunicipalGeometry } from "@/utils/municipal-geometry";
+import { parseMunicipalGeometry, municipalGeometryKey } from "@/utils/municipal-geometry";
 import { radii } from "@/theme/tokens";
 import { createTerritorialMap, type TerritorialMapController } from "./leaflet-map";
 import type { MapPaint } from "@/utils/indicators";
+import { mapDockCenter, mapDockPosition } from "./map-dock-position";
 
 type Props = {
   dataset: Dataset;
@@ -54,12 +55,7 @@ export default function TerritorialMap({
     paints,
   });
   const geometry = useQuery({
-    queryKey: [
-      "municipal-geometry",
-      dataset.version,
-      dataset.geometry.path,
-      dataset.geometry.features,
-    ],
+    queryKey: municipalGeometryKey(dataset),
     staleTime: Infinity,
     queryFn: async ({ signal }) => {
       const response = await fetch(dataset.geometry.path, { signal });
@@ -196,6 +192,7 @@ export default function TerritorialMap({
         </Box>
       )}
       <Box
+        data-pw="map-navigation"
         sx={{
           position: "absolute",
           right: 12,
@@ -210,6 +207,16 @@ export default function TerritorialMap({
           p: 0.5,
           boxShadow: "0 2px 8px #00000012",
           zIndex: 2,
+          ...(mapMode
+            ? {
+                ...mapDockPosition("navigation"),
+                top: "auto",
+                right: "auto",
+                flexDirection: "row",
+                alignItems: "center",
+                "& > .MuiButton-root": { height: 40, minHeight: 40 },
+              }
+            : {}),
         }}
       >
         <Button
@@ -241,6 +248,7 @@ export default function TerritorialMap({
         </Button>
       </Box>
       <Box
+        data-pw="map-attribution"
         sx={{
           position: "absolute",
           bottom: 8,
@@ -249,15 +257,25 @@ export default function TerritorialMap({
           width: "fit-content",
           maxWidth: "calc(100% - 16px)",
           bgcolor: "background.paper",
-          px: 1,
-          py: 0.4,
+          px: 0.75,
+          py: 0.125,
           borderRadius: radii.control,
           fontSize: 11,
+          lineHeight: 1.25,
           color: "text.secondary",
           zIndex: 2,
+          ...(mapMode
+            ? {
+                bottom: 4,
+                left: mapDockCenter,
+                right: "auto",
+                transform: "translateX(-50%)",
+                textAlign: "center",
+              }
+            : {}),
         }}
       >
-        INEGI · Cartografía simplificada para visualización · captura 16 oct 2026
+        INEGI · Cartografía simplificada · Captura: 16 oct 2026
       </Box>
     </Box>
   );

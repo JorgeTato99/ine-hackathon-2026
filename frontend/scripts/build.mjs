@@ -3,10 +3,14 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { environmentFor } from "./execution-environment.ts";
+import { verifyBrandAssets } from "./prepare-brand-assets.mjs";
+import { verifyDataAssets } from "./verify-data-assets.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const [target, ...args] = process.argv.slice(2);
 if (target !== "next" && target !== "storybook") throw new Error("Build desconocido.");
+await verifyBrandAssets();
+await verifyDataAssets();
 const manifest = JSON.parse(
   readFileSync(resolve(root, "node_modules", target, "package.json"), "utf8")
 );

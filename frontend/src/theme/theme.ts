@@ -30,7 +30,7 @@ export const theme = createTheme({
     light: {
       palette: {
         primary: { main: colors.light.accent, contrastText: colors.light.surface },
-        secondary: { main: colors.light.info },
+        secondary: { main: colors.light.secondary },
         info: { main: colors.light.info, light: colors.light.infoSoft },
         warning: { main: colors.light.warning, light: colors.light.warningSoft },
         error: { main: colors.light.error, light: colors.light.errorSoft },
@@ -43,7 +43,7 @@ export const theme = createTheme({
     dark: {
       palette: {
         primary: { main: colors.dark.accent, contrastText: colors.dark.canvas },
-        secondary: { main: colors.dark.info },
+        secondary: { main: colors.dark.secondary },
         info: { main: colors.dark.info, light: colors.dark.infoSoft },
         warning: { main: colors.dark.warning, light: colors.dark.warningSoft },
         error: { main: colors.dark.error, light: colors.dark.errorSoft },

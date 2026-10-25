@@ -3,7 +3,7 @@ import { test, expect } from "../fixtures/console-guard";
 const pages = [
   {
     route: "metodologia",
-    chapters: ["recorrido", "participacion", "dimensiones", "comparar", "territorio"],
+    chapters: ["recorrido", "participacion", "dimensiones", "factores", "comparar", "territorio"],
   },
   { route: "datos", chapters: ["archivos", "importar", "fuentes", "incidencias", "publicaciones"] },
 ] as const;

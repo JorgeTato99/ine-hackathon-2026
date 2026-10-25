@@ -7,8 +7,8 @@ disociada: Sofía desarrolla el núcleo científico y Jorge el software y la car
 La base utiliza **Python 3.14, Polars y Parquet**. La aplicación React consulta
 resultados precalculados; el alcance actual no requiere API ni base de datos en
 servidor. La preparación y el explorador territorial integran el corte científico
-`resultados-1.3`: pronóstico 2027, escenarios sin/con intervención e indicadores
-de contexto. Sofía conserva la definición del modelo y de las entregas posteriores.
+`resultados-1.6`: una predicción nacional estimada, cinco intervenciones y
+explicación por grupos de variables, con vistas Pronóstico e Histórico. Sofía conserva la definición del modelo y de las entregas posteriores.
 
 La base de interfaz está en [frontend/](frontend/README.md), con Next estático, MUI,
 React Query, pruebas y Docker propios. Se instala y ejecuta independientemente de Python.
@@ -35,7 +35,7 @@ descargar los originales para esa primera exploración. Conservar las claves com
 texto para mantener sus ceros iniciales.
 
 Los tres originales de la entrega vigente están en
-`data/processed/mapa/resultados-1.3/`. Contienen 2,477 municipios y seis escenarios;
+`data/processed/mapa/resultados-1.6/`. Contienen 2,477 municipios y cinco escenarios;
 la geometría adicional de Villa de Pozos se conserva sin datos. Consultar el
 [contrato](docs/contrato-datos.md) y la [preparación del frontend](frontend/docs/resultados.md).
 

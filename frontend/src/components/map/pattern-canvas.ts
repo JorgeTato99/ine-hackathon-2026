@@ -1,5 +1,4 @@
 import * as L from "leaflet";
-import { riskTokens } from "@/theme/tokens";
 
 type CanvasInternals = L.Canvas & {
   _fillStroke(context: CanvasRenderingContext2D, layer: L.Path): void;
@@ -8,8 +7,8 @@ type CanvasInternals = L.Canvas & {
 /** Adaptación acotada a Leaflet 1.9.4; fillColor conserva un color CSS válido. */
 export function createPatternCanvas(): L.Canvas {
   const patterns = new Map<string, CanvasPattern>();
-  for (const [risk, token] of Object.entries(riskTokens)) {
-    if (risk === "bajo") continue;
+  // El semáforo usa rellenos planos. La única trama distingue falta de casillas de una tasa.
+  for (const token of [{ map: "#9B9FA5" }]) {
     const tile = document.createElement("canvas");
     tile.width = tile.height = 10;
     const context = tile.getContext("2d");
@@ -19,18 +18,10 @@ export function createPatternCanvas(): L.Canvas {
     context.strokeStyle = "#36415266";
     context.fillStyle = "#36415288";
     context.lineWidth = 0.8;
-    if (risk === "medio") {
-      context.beginPath();
-      context.arc(5, 5, 1, 0, Math.PI * 2);
-      context.fill();
-    } else {
+    {
       context.beginPath();
       context.moveTo(0, 10);
       context.lineTo(10, 0);
-      if (risk === "sin_estimacion") {
-        context.moveTo(0, 0);
-        context.lineTo(10, 10);
-      }
       context.stroke();
     }
     const pattern = context.createPattern(tile, "repeat");

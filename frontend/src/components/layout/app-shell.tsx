@@ -6,8 +6,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { brand, colors, layout } from "@/theme/tokens";
-import { resultsRelease } from "@/content/release";
+import { brand, layout, typeScale } from "@/theme/tokens";
+import { SiteFooter } from "./site-footer";
 
 const destinations = [
   ["/", "Explorar"],
@@ -57,10 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 sx={{
                   display: "block",
                   color: "text.primary",
-                  fontSize: 20,
-                  fontWeight: 700,
-                  lineHeight: 1.2,
-                  letterSpacing: "-.035em",
+                  ...typeScale.wordmark,
                 }}
               >
                 {brand.name}
@@ -116,24 +113,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         </Box>
       </Box>
       <Box
-        data-app-chrome="notice"
-        sx={(theme) => ({
-          bgcolor: colors.light.warningSoft,
-          color: colors.light.warning,
-          px: 2,
-          py: pathname === "/" ? 0.5 : 0.8,
-          textAlign: "center",
-          fontSize: 12,
-          ...theme.applyStyles("dark", {
-            bgcolor: colors.dark.warningSoft,
-            color: colors.dark.warning,
-          }),
-        })}
-      >
-        <strong>Pronóstico 2027</strong> · Son estimaciones con supuestos. La intervención no es un
-        efecto comprobado.
-      </Box>
-      <Box
         component="main"
         id="main-content"
         tabIndex={-1}
@@ -149,28 +128,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         {children}
       </Box>
-      <Box
-        component="footer"
-        data-app-chrome="footer"
-        sx={{
-          borderTop: 1,
-          borderColor: "divider",
-          px: { xs: 2, md: 4 },
-          py: 2,
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 1,
-          justifyContent: "space-between",
-          fontSize: 11,
-          color: "text.secondary",
-        }}
-      >
-        <span>Hackathon INE 2026 · Reto 2 · Proyecto del equipo</span>
-        <span>
-          {resultsRelease.version} · Datos por municipio ·{" "}
-          <a href="/metodologia/">Cómo leer los datos</a>
-        </span>
-      </Box>
+      <SiteFooter />
     </Box>
   );
 }

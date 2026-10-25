@@ -18,7 +18,7 @@ La muestra no contiene predicciones finales ni decisiones científicas para 2027
 En la muestra recibida, los valores de 2021 de Paracho (`16065`) y Parácuaro
 (`16064`) están intercambiados. Sus archivos originales se conservan para
 trazabilidad; esos valores no son referencias válidas para tests
-de la muestra. La entrega vigente `resultados-1.2` ya incorpora la historia regenerada
+de la muestra. La entrega vigente `resultados-1.6` incorpora la historia regenerada
 y no arrastra esa omisión provisional. Sus originales se conservan íntegros y la
 [preparación del frontend](../frontend/docs/resultados.md) los transforma sin reentrenar.
 

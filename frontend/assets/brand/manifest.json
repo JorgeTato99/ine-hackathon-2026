@@ -1,0 +1,397 @@
+{
+  "recipeHash": "0293e1ae65b93dffe34b20343be446ca66101b078c12335df5d50da2a42334d4",
+  "encoder": {
+    "aom": "3.15.1",
+    "archive": "3.8.9",
+    "cairo": "1.18.6",
+    "cgif": "0.5.4",
+    "exif": "0.6.26",
+    "expat": "2.8.5",
+    "ffi": "3.8.0",
+    "fontconfig": "2.18.3",
+    "freetype": "2.14.3",
+    "fribidi": "1.0.17",
+    "glib": "2.90.0",
+    "harfbuzz": "14.5.0",
+    "heif": "1.23.5",
+    "highway": "1.4.0",
+    "imagequant": "2.4.1",
+    "lcms": "2.19.1",
+    "mozjpeg": "0826579",
+    "pango": "1.58.2",
+    "pixman": "0.46.4",
+    "png": "1.6.58",
+    "proxy-libintl": "0.5",
+    "rsvg": "2.63.2",
+    "tiff": "4.7.2",
+    "uhdr": "2.0.2",
+    "vips": "8.18.7",
+    "webp": "1.6.0",
+    "xml2": "2.15.4",
+    "zlib-ng": "2.3.3",
+    "sharp": "0.35.5"
+  },
+  "assets": {
+    "symbol": {
+      "original": {
+        "bytes": 9636,
+        "width": 1254,
+        "height": 1254,
+        "hasAlpha": true
+      },
+      "crop": {
+        "left": 159,
+        "top": 204,
+        "width": 983,
+        "height": 891
+      },
+      "candidateBytes": {
+        "png": 18693
+      },
+      "selected": [
+        "png"
+      ],
+      "variants": [
+        {
+          "src": "/brand/generated/symbol-f92e9554caa5-32.png",
+          "format": "png",
+          "width": 32,
+          "height": 32,
+          "bytes": 1746
+        },
+        {
+          "src": "/brand/generated/symbol-6e2d61f1b446-64.png",
+          "format": "png",
+          "width": 64,
+          "height": 64,
+          "bytes": 2715
+        },
+        {
+          "src": "/brand/generated/symbol-6296e270d65f-128.png",
+          "format": "png",
+          "width": 128,
+          "height": 128,
+          "bytes": 4787
+        },
+        {
+          "src": "/brand/generated/symbol-c50fdb57aece-256.png",
+          "format": "png",
+          "width": 256,
+          "height": 256,
+          "bytes": 9445
+        }
+      ]
+    },
+    "banner": {
+      "original": {
+        "bytes": 41685,
+        "width": 1774,
+        "height": 887,
+        "hasAlpha": false
+      },
+      "crop": null,
+      "candidateBytes": {
+        "png": 255157,
+        "webp": 50612,
+        "avif": 34875
+      },
+      "selected": [
+        "webp",
+        "avif"
+      ],
+      "variants": [
+        {
+          "src": "/brand/generated/banner-4fb48cc8079c-320.webp",
+          "format": "webp",
+          "width": 320,
+          "height": 160,
+          "bytes": 2448
+        },
+        {
+          "src": "/brand/generated/banner-89ca88b446d5-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 320,
+          "bytes": 5654
+        },
+        {
+          "src": "/brand/generated/banner-ce8a5c668499-960.webp",
+          "format": "webp",
+          "width": 960,
+          "height": 480,
+          "bytes": 9316
+        },
+        {
+          "src": "/brand/generated/banner-66d1395d74db-1280.webp",
+          "format": "webp",
+          "width": 1280,
+          "height": 640,
+          "bytes": 13022
+        },
+        {
+          "src": "/brand/generated/banner-fcb50ee06f7b-1774.webp",
+          "format": "webp",
+          "width": 1774,
+          "height": 887,
+          "bytes": 20172
+        },
+        {
+          "src": "/brand/generated/banner-430e48c7e09f-320.avif",
+          "format": "avif",
+          "width": 320,
+          "height": 160,
+          "bytes": 1966
+        },
+        {
+          "src": "/brand/generated/banner-6d9b4b164231-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 320,
+          "bytes": 3793
+        },
+        {
+          "src": "/brand/generated/banner-704bdcf7fff0-960.avif",
+          "format": "avif",
+          "width": 960,
+          "height": 480,
+          "bytes": 5674
+        },
+        {
+          "src": "/brand/generated/banner-ccf16e81cce0-1280.avif",
+          "format": "avif",
+          "width": 1280,
+          "height": 640,
+          "bytes": 8129
+        },
+        {
+          "src": "/brand/generated/banner-2f20fa3c0d9e-1774.avif",
+          "format": "avif",
+          "width": 1774,
+          "height": 887,
+          "bytes": 15313
+        }
+      ]
+    },
+    "methodology": {
+      "original": {
+        "bytes": 73974,
+        "width": 1536,
+        "height": 1024,
+        "hasAlpha": true
+      },
+      "crop": {
+        "left": 70,
+        "top": 320,
+        "width": 1427,
+        "height": 385
+      },
+      "candidateBytes": {
+        "png": 262582,
+        "webp": 191538,
+        "avif": 101512
+      },
+      "selected": [
+        "webp",
+        "avif"
+      ],
+      "variants": [
+        {
+          "src": "/brand/generated/methodology-afd8c666998d-320.webp",
+          "format": "webp",
+          "width": 320,
+          "height": 86,
+          "bytes": 12154
+        },
+        {
+          "src": "/brand/generated/methodology-5b941d3a765f-480.webp",
+          "format": "webp",
+          "width": 480,
+          "height": 130,
+          "bytes": 19842
+        },
+        {
+          "src": "/brand/generated/methodology-79981b31dfd4-768.webp",
+          "format": "webp",
+          "width": 768,
+          "height": 207,
+          "bytes": 34744
+        },
+        {
+          "src": "/brand/generated/methodology-d27f22b2a1c3-1200.webp",
+          "format": "webp",
+          "width": 1200,
+          "height": 324,
+          "bytes": 62446
+        },
+        {
+          "src": "/brand/generated/methodology-bbc2624f75e4-1427.webp",
+          "format": "webp",
+          "width": 1427,
+          "height": 385,
+          "bytes": 62352
+        },
+        {
+          "src": "/brand/generated/methodology-e6373a6d1a1f-320.avif",
+          "format": "avif",
+          "width": 320,
+          "height": 86,
+          "bytes": 6804
+        },
+        {
+          "src": "/brand/generated/methodology-3b93a2adec5f-480.avif",
+          "format": "avif",
+          "width": 480,
+          "height": 130,
+          "bytes": 10667
+        },
+        {
+          "src": "/brand/generated/methodology-dbd6437f412c-768.avif",
+          "format": "avif",
+          "width": 768,
+          "height": 207,
+          "bytes": 18011
+        },
+        {
+          "src": "/brand/generated/methodology-9d9a7c028430-1200.avif",
+          "format": "avif",
+          "width": 1200,
+          "height": 324,
+          "bytes": 30509
+        },
+        {
+          "src": "/brand/generated/methodology-8a5e8b5ad11d-1427.avif",
+          "format": "avif",
+          "width": 1427,
+          "height": 385,
+          "bytes": 35521
+        }
+      ]
+    },
+    "downloads": {
+      "original": {
+        "bytes": 112631,
+        "width": 1536,
+        "height": 1024,
+        "hasAlpha": true
+      },
+      "crop": {
+        "left": 206,
+        "top": 104,
+        "width": 1126,
+        "height": 829
+      },
+      "candidateBytes": {
+        "png": 379621,
+        "webp": 173456,
+        "avif": 89606
+      },
+      "selected": [
+        "webp",
+        "avif"
+      ],
+      "variants": [
+        {
+          "src": "/brand/generated/downloads-0a7380a4df28-320.webp",
+          "format": "webp",
+          "width": 320,
+          "height": 236,
+          "bytes": 15466
+        },
+        {
+          "src": "/brand/generated/downloads-21b762118a6b-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 471,
+          "bytes": 36130
+        },
+        {
+          "src": "/brand/generated/downloads-fcd8ffc864eb-960.webp",
+          "format": "webp",
+          "width": 960,
+          "height": 707,
+          "bytes": 61202
+        },
+        {
+          "src": "/brand/generated/downloads-6faa4fd0e1a8-1126.webp",
+          "format": "webp",
+          "width": 1126,
+          "height": 829,
+          "bytes": 60658
+        },
+        {
+          "src": "/brand/generated/downloads-7bae4f730bd6-320.avif",
+          "format": "avif",
+          "width": 320,
+          "height": 236,
+          "bytes": 8407
+        },
+        {
+          "src": "/brand/generated/downloads-4254c0b64005-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 471,
+          "bytes": 18418
+        },
+        {
+          "src": "/brand/generated/downloads-ccad28de8d1e-960.avif",
+          "format": "avif",
+          "width": 960,
+          "height": 707,
+          "bytes": 28672
+        },
+        {
+          "src": "/brand/generated/downloads-fb87b8c7f154-1126.avif",
+          "format": "avif",
+          "width": 1126,
+          "height": 829,
+          "bytes": 34109
+        }
+      ]
+    }
+  },
+  "integrity": {
+    "assets/brand/typography.json": "061b9ca69ba3d6e1d8da733ee6e2d93ece3666f840b426ef9f56a3dbf1bb4820",
+    "assets/brand/symbol.png": "d6492da1e16e2f3ea68dd7a94de9f0d9c0e3dad608f8dcf599ef5fa94859d9a0",
+    "public/brand/generated/symbol-f92e9554caa5-32.png": "f92e9554caa580d6811f6ffe2d6cdcde832239b424ccc160aedc33913fe914ee",
+    "public/brand/generated/symbol-6e2d61f1b446-64.png": "6e2d61f1b4469700f5875d3cebd833a2249feb6083dcde672d4881086f219fc2",
+    "public/brand/generated/symbol-6296e270d65f-128.png": "6296e270d65f5d8e3d657b8b1cf341fd59e76953049986ce6fad4dd031d1aab9",
+    "public/brand/generated/symbol-c50fdb57aece-256.png": "c50fdb57aece258d7283d7eb8203cd3f96445970cd56716d3931a35f5a164bd1",
+    "assets/brand/banner.png": "9b56b66fb77ed2426516e79f41851f344339267c154f356bc720e13dc600be17",
+    "public/brand/generated/banner-4fb48cc8079c-320.webp": "4fb48cc8079c4a76c485209e4400520b7060dcb2e150b9dc17682605d6008e70",
+    "public/brand/generated/banner-89ca88b446d5-640.webp": "89ca88b446d5c68293781de6a237085c00e24618d84cd43f7c94f728c557d327",
+    "public/brand/generated/banner-ce8a5c668499-960.webp": "ce8a5c668499915c133a03b800e121523411d7630e7928bc4c0ad59ea59c1f8a",
+    "public/brand/generated/banner-66d1395d74db-1280.webp": "66d1395d74db6dca933beb04c82c7fa27ef7f8e8cd16a49aff08853a60ca9bb2",
+    "public/brand/generated/banner-fcb50ee06f7b-1774.webp": "fcb50ee06f7b0f2c654877ce939656c9135ab4490c7166b5a1515fc0536a3539",
+    "public/brand/generated/banner-430e48c7e09f-320.avif": "430e48c7e09f75675fff17ad420116f14b9040823ff5564ec17472605fcf094b",
+    "public/brand/generated/banner-6d9b4b164231-640.avif": "6d9b4b1642315c30f3bc0117fa80019c8d1bc888028b22f8f3e6f8973656d702",
+    "public/brand/generated/banner-704bdcf7fff0-960.avif": "704bdcf7fff08d877bb791f505deeea348caa5bf2134b464fc4e1385b13a6396",
+    "public/brand/generated/banner-ccf16e81cce0-1280.avif": "ccf16e81cce0fbba9faa5e93c71ed9d5aa0135c8bb6f3c990fdc9e030f11e281",
+    "public/brand/generated/banner-2f20fa3c0d9e-1774.avif": "2f20fa3c0d9e166f24618ef6759305de34926ede38f657b1af1541c59b475f49",
+    "assets/brand/methodology.png": "3dc69772f2afea8967e8db7ccd3fb1a267b3a8605eed11014a2956b6b32e411d",
+    "public/brand/generated/methodology-afd8c666998d-320.webp": "afd8c666998df7dc80740b5eba56eca9c0566dbd9a281560014ff3d4794f1aa6",
+    "public/brand/generated/methodology-5b941d3a765f-480.webp": "5b941d3a765f25dd24c8269d3889f007f110a2434c59cdf7ef82a6ef68607a21",
+    "public/brand/generated/methodology-79981b31dfd4-768.webp": "79981b31dfd4d00fd5ab0b2b3c8ecf18c41ccbada0cffb02d2c3a8e4f4c51e2d",
+    "public/brand/generated/methodology-d27f22b2a1c3-1200.webp": "d27f22b2a1c35444a0b6c6bce341d723f18e5362ade420b1d4531c4c50374ed0",
+    "public/brand/generated/methodology-bbc2624f75e4-1427.webp": "bbc2624f75e4427fc03a0961bed1bdf09aa091a76d97053e232548ec62c4b271",
+    "public/brand/generated/methodology-e6373a6d1a1f-320.avif": "e6373a6d1a1fe12f900fff3ea302b813d8222b45a85b35aeeaa4a224a056077a",
+    "public/brand/generated/methodology-3b93a2adec5f-480.avif": "3b93a2adec5f737cbad3e44745a03a18fe99cb0ba7126c3296c893608dc36b45",
+    "public/brand/generated/methodology-dbd6437f412c-768.avif": "dbd6437f412c53fc6779c418f452ca783f72352ab05527132722518c46f5dc0f",
+    "public/brand/generated/methodology-9d9a7c028430-1200.avif": "9d9a7c02843018b0a4e7f355cbd80b37df86892485d456d02e78a771838700aa",
+    "public/brand/generated/methodology-8a5e8b5ad11d-1427.avif": "8a5e8b5ad11da01c488b93cbf2032e0d4ec1f83fa109a02f26962556a5beb3e4",
+    "assets/brand/downloads.png": "4f02292332cbeec08eb0d1f98a8e3549e1f57e5ff0193377dc730a6f1b7ae7d0",
+    "public/brand/generated/downloads-0a7380a4df28-320.webp": "0a7380a4df287c8e0c661420c968b2ce1b9e97adc5612f4facea12a56edf39f3",
+    "public/brand/generated/downloads-21b762118a6b-640.webp": "21b762118a6b9206ae3fa7ad2dc3e8821cd8767a0dbc556c9dc59c30f2ba8d04",
+    "public/brand/generated/downloads-fcd8ffc864eb-960.webp": "fcd8ffc864eb8428273927df77ee564a5806ad1be1a592d465ae4c71332cf5da",
+    "public/brand/generated/downloads-6faa4fd0e1a8-1126.webp": "6faa4fd0e1a8e682c071bf53be3bd69d32fdea0522120ad696579a82f8b1f381",
+    "public/brand/generated/downloads-7bae4f730bd6-320.avif": "7bae4f730bd60f8db8df6ffd2c1c51a793eea70a8fb2cb40d5b71720f206fd17",
+    "public/brand/generated/downloads-4254c0b64005-640.avif": "4254c0b6400527b996606ff50036a2db84bb92f6d1096a540b48e4a0782461dc",
+    "public/brand/generated/downloads-ccad28de8d1e-960.avif": "ccad28de8d1eed8db8a0ae6ad3508ae487f203dae2818d9532977f4feb54c1b0",
+    "public/brand/generated/downloads-fb87b8c7f154-1126.avif": "fb87b8c7f1545f4e0f8e505307634f97bb8e94825dc99b4350671a19c4c4ae93",
+    "src/content/brand-assets.json": "d29d45a8cbded1b93162ea534dcca9f5ae7d6ef29b2c2b2349648395b336f65f",
+    "public/brand/logo.svg": "0ea0f220f803c4653eb4e8a679dff5f614a39beaaa7db06eb8c1b144d01b9df5",
+    "src/app/icon.svg": "9502e423fb3d79f31c49efdb74fafc54c755b3b14acf44777a7636fbae2d7d0a",
+    "public/brand/wordmark.svg": "2d0b6c55545619b642c19e54bab3655c8182b2a9ff14132d33ba9cd812251c0b",
+    "public/brand/banner.svg": "4b9a94f41ed7150ffea801ed06ecf583a5ee600d68d3b075e6f6c6314a8e612c",
+    "public/brand/generated/banner-social-426db06222da.png": "426db06222daf1ca59e2004e0f0ebe2cb3021852113156e3ad4493ee04d28f13"
+  }
+}

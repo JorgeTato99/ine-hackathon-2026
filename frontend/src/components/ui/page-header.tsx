@@ -28,7 +28,7 @@ export function PageHeader({
       <Typography
         component="h1"
         variant="h1"
-        sx={density === "editorial" ? typeScale.display : typeScale.title}
+        sx={density === "editorial" ? { ...typeScale.display, maxWidth: "21ch" } : typeScale.title}
       >
         {title}
       </Typography>

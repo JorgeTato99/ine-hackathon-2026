@@ -1,4 +1,8 @@
+> **Vigente · 2026-10-24:** datos1.6 y decisiones de Jorge posteriores a D30: se conserva el modo ampliado con paneles minimizables, el morado y las ayudas de dos niveles. [Explorador](explorador.md) y [Resultados](resultados.md) definen el comportamiento actual; los avisos de retirada de modo ampliado que aparecen después son antecedentes supersedidos.
+
 # Lenguaje y ayudas de lectura
+
+> **Actualización 1.17.0:** las ayudas de dos niveles vuelven a todos los KPI y a conceptos de la ficha. Los textos vigentes están en reading-guide.ts; incluyen el nivel nacional estimado, no tres supuestos. Se recuperan modo ampliado, paneles minimizables y silueta, conservando datos1.6. Las referencias antiguas a otros filtros o siete vistas son antecedentes.
 
 [Sistema de diseño](sistema-diseno.md) · [Componentes](tokens-y-componentes.md) ·
 [Testing](../test/README.md). Vigente desde el sistema de diseño **1.7.0**.
@@ -22,20 +26,20 @@ Una etiqueta humana no autoriza a cambiar el contrato científico.
 
 ## Conceptos que no se intercambian
 
-| Concepto            | Cómo explicarlo                                                                                     |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| Participación       | Personas que votaron de cada 100 con dato conocido; NS queda aparte.                                |
-| Lista electoral     | Personas registradas para votar, también llamada lista nominal; aquí es 2024, no toda la población. |
-| Pronóstico          | Estimación para 2027 que depende de supuestos; no resultado observado.                              |
-| Nivel nacional      | Participación supuesta del país; el modelo no la predice.                                           |
-| Escala de riesgo    | Orden relativo de 0 a 100; no porcentaje de abstención.                                             |
-| Posibilidad de rojo | Frecuencia en 2,000 simulaciones sin intervención; no probabilidad individual de abstenerse.        |
-| Rango del 90 %      | Incertidumbre basada en errores de validación; cobertura observada 85–90 %, sin garantía futura.    |
-| Intervención        | Cuenta hipotética, no votos conseguidos ni eficacia comprobada.                                     |
-| Puntos porcentuales | Diferencia entre porcentajes. Ejemplo ilustrativo: 60 % a 48 % son 12 puntos menos.                 |
-| Sin dato            | Información ausente, nunca cero. Gris no significa baja participación.                              |
-| Sin casilla         | No se pudo votar; no atribuir el cero a una decisión voluntaria. Puede afectar parte del municipio. |
-| Seguridad           | Contexto histórico con periodo explícito; no modifica el semáforo ni describe el presente.          |
+| Concepto            | Cómo explicarlo                                                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Participación       | Personas que votaron de cada 100 con dato conocido; NS queda aparte.                                                                 |
+| Lista electoral     | Personas registradas para votar, también llamada lista nominal; aquí es 2024, no toda la población.                                  |
+| Pronóstico          | Estimación para 2027 que depende de supuestos; no resultado observado.                                                               |
+| Nivel nacional      | Participación supuesta del país; el modelo no la predice.                                                                            |
+| Escala de riesgo    | Orden relativo de 0 a 100; no porcentaje de abstención.                                                                              |
+| Posibilidad de rojo | Frecuencia en 2,000 simulaciones sin intervención; no probabilidad individual de abstenerse.                                         |
+| Rango del 90 %      | Incertidumbre basada en errores de validación; cobertura observada 85–90 %, sin garantía futura.                                     |
+| Intervención        | Cuenta hipotética, no votos conseguidos ni eficacia comprobada.                                                                      |
+| Puntos porcentuales | Diferencia entre porcentajes. Ejemplo ilustrativo: 60 % a 48 % son 12 puntos menos.                                                  |
+| Sin dato            | Información ausente, nunca cero. Gris no significa baja participación.                                                               |
+| Sin casilla         | No se pudo votar; no atribuir el cero a una decisión voluntaria. Puede afectar parte del municipio.                                  |
+| Seguridad           | La tasa de homicidios en logaritmo es predictora; el resto es contexto histórico con periodo explícito, no seguridad en tiempo real. |
 
 Al comparar, se conserva el supuesto nacional. El filtro «Color sin intervención»
 conserva el grupo original aunque el escenario activo cambie el color del mapa.

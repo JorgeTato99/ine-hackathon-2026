@@ -19,7 +19,16 @@ export function SourceReference({
   linkLabel: string;
 }) {
   return (
-    <Surface entrance="block">
+    <Surface
+      entrance="block"
+      sx={{
+        border: 0,
+        borderLeft: 2,
+        borderColor: "divider",
+        borderRadius: 0,
+        bgcolor: "transparent",
+      }}
+    >
       <Typography component="span" variant="overline" sx={{ color: "primary.main" }}>
         {institution}
       </Typography>

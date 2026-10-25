@@ -2,10 +2,10 @@
 
 ## Alcance y estado
 
-La entrega vigente es `data/processed/mapa/resultados-1.3/`, integrada en el PR #5,
-commit `f25d9c2709d2a93179c7ee2d6d2df985d418d6ca`. Sus tres archivos UTF-8 contienen
+La entrega vigente es `data/processed/mapa/resultados-1.6/`, recibida del PR #6,
+commit `7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7`. Sus tres archivos UTF-8 contienen
 historia, indicadores y resultados precalculados del análisis de Sofía. 2027 es
-pronóstico condicionado al nivel nacional, no observación futura. La intervención
+pronóstico con nivel nacional estimado (0.5141), no observación futura. La intervención
 es un supuesto aritmético, no un efecto medido. La muestra 0.3 se conserva solo
 como antecedente y fixture; no alimenta la publicación vigente.
 
@@ -89,14 +89,21 @@ no se pudo votar» y no se dibujan como abstención voluntaria en la serie.
 
 ## Comparabilidad y recepción
 
-La entrega identifica tres parejas canónicas sin/con intervención y las comparaciones
-admisibles. Para atribuir una diferencia al supuesto de intervención deben mantenerse
-el contexto nacional y las otras condiciones pertinentes. Sin comparabilidad
-confirmada se conserva la lectura individual, sin una conclusión conjunta.
-En 1.1 cada nivel nacional tiene `ninguna` y `dirigida_rojos`; la UI conserva el
-mismo nivel al comparar. El mapa usa `riesgo` del escenario, y el filtro de color
-usa la cohorte fija de `semaforo` en municipios. La probabilidad de rojo de la ficha
-se identifica como referencia sin intervención.
+La entrega 1.6 contiene cinco escenarios `nac-estimado_int-*`: ninguna,
+retener_primerizos, jovenes_20_29, credencializacion y combinada. Hay cuatro
+parejas admisibles, cada acción frente a ninguna. Ya no hay niveles nacionales
+seleccionables. El nivel estimado y su incertidumbre se comunican sin presentarlos
+como hechos conocidos. La probabilidad de rojo es una referencia sin intervención.
+
+Las columnas aporte_historia, aporte_calendario, aporte_lista, aporte_social y
+aporte_politica son puntos frente al país y suman la distancia de la predicción
+base a 0.5141 (tolerancia 0.02 puntos). No son causas ni aportaciones de la
+intervención. La historia nacional proviene de participacion_nacional_historica.
+
+El promedio de participación con credencializacion/combinada utiliza ln_2024
+más interv_nuevos_en_lista únicamente para los municipios rojos base. No se
+promedian porcentajes sin ponderar. Las personas en rojo conservan referencia
+ln_2024. Con combinada salen 84 municipios y quedan 411; con alguna acción salen 85.
 
 La referencia histórica o elección predictora la define el modelo y se comunica
 en los artefactos científicos. La interfaz no fija 2021 como referencia automática;
@@ -124,3 +131,26 @@ Ver [vistas y cifras de control](vistas-mapa.md) y
 Las figuras, la aplicación, el reporte y la presentación utilizan el mismo corte.
 Las consultas y exportaciones conservan versión, escenarios, unidades, fuentes y
 ausencias; los cambios incompatibles no se aplican silenciosamente.
+
+## Recepción de resultados-1.6 · D31–D33
+
+La fuente científica es `7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7`, PR6 fusionado.
+El corte conserva las columnas y cinco escenarios. El modelo final es Delta con
+guardia; veinte antecedentes2027 no comparables usan el modelo de nivel. Esto
+es distinto de la marca de intervención parcial, que depende de cada acción.
+
+`motivo` admite varios códigos separados por `|`; se comprueban por token exacto.
+Cuando incluye `intervencion_parcial`, la ficha muestra **Intervención calculada
+solo con los datos disponibles**. Las cantidades conocidas se conservan; si S3
+es desconocido no se suman sus votos ni sus altas. Un cero observado no activa
+esa ausencia. País y estado usan la lista efectiva, no las altas potenciales.
+
+H010: `comparacion_homicidios_inegi_sesnsp` se presenta como comparación del
+estado2019–2024 junto a la tasa municipal INEGI2022–2024. No se atribuye esa
+diferencia estatal al municipio. El logaritmo de la tasa sí es una variable del
+modelo; los demás datos de seguridad son contexto. Los intervalos y la frecuencia
+simulada son aproximaciones, y la evaluación es retrospectiva con datos revisados.
+
+Las decisiones de producto posteriores a D30 conservan morado, ayudas de dos
+niveles, mapa normal y ampliado, paneles minimizables, anchos de ficha y silueta.
+P1 actualiza su contenido y controles; no vuelve a retirar esos componentes.

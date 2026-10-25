@@ -10,8 +10,8 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT_VERSION = "resultados-1.3"
-CURRENT_COMMIT = "f25d9c2709d2a93179c7ee2d6d2df985d418d6ca"
+CURRENT_VERSION = "resultados-1.6"
+CURRENT_COMMIT = "7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7"
 YEARS = (2009, 2012, 2015, 2018, 2021, 2024)
 TEXT = {
     "cvegeo",
@@ -179,9 +179,15 @@ def main():
         set(bucket) != set(rows) for bucket in estimates.values()
     ):
         raise ValueError("Cobertura incompleta de escenarios")
+    estimated = "estimado" in metadata["niveles_nacionales_2027"]
+    baseline = "nac-estimado_int-ninguna" if estimated else "nac-medio_int-ninguna"
+    combined = "nac-estimado_int-combinada" if estimated else "nac-medio_int-dirigida_rojos"
     pairs = [
-        [f"nac-{level}_int-ninguna", f"nac-{level}_int-dirigida_rojos"]
-        for level in metadata["niveles_nacionales_2027"]
+        [key, other]
+        for key, scenario in scenarios.items()
+        if scenario["intervention"] == "ninguna"
+        for other, candidate in scenarios.items()
+        if candidate["national"] == scenario["national"] and candidate["intervention"] != "ninguna"
     ]
     controls = {
         "normalizations": {
@@ -198,12 +204,11 @@ def main():
             row["nominal"] for row in municipalities.values() if row["baseRisk"] == "alto"
         ),
         "additionalVotesMedium": sum(
-            row["additionalVotes"] or 0
-            for row in estimates["nac-medio_int-dirigida_rojos"].values()
+            row["additionalVotes"] or 0 for row in estimates[combined].values()
         ),
         "leaveRedMedium": sum(
-            estimates["nac-medio_int-ninguna"][code]["risk"] == "alto" and result["risk"] != "alto"
-            for code, result in estimates["nac-medio_int-dirigida_rojos"].items()
+            estimates[baseline][code]["risk"] == "alto" and result["risk"] != "alto"
+            for code, result in estimates[combined].items()
         ),
     }
     if version in {"resultados-1.1", "resultados-1.2", "resultados-1.3"} and (
@@ -217,6 +222,83 @@ def main():
         or controls["missingData"] != ["24059"]
     ):
         raise ValueError(f"La entrega no coincide con los controles científicos de {version}")
+    if estimated:
+        expected_interventions = {
+            "resultados-1.5": {
+                "ninguna": {"red": 495, "additionalVotes": 0},
+                "retener_primerizos": {"red": 475, "additionalVotes": 80478},
+                "jovenes_20_29": {"red": 429, "additionalVotes": 294864},
+                "credencializacion": {"red": 490, "additionalVotes": 129665},
+                "combinada": {"red": 408, "additionalVotes": 505007},
+            },
+            "resultados-1.6": {
+                "ninguna": {"red": 495, "additionalVotes": 0},
+                "retener_primerizos": {"red": 476, "additionalVotes": 84789},
+                "jovenes_20_29": {"red": 427, "additionalVotes": 307818},
+                "credencializacion": {"red": 488, "additionalVotes": 135793},
+                "combinada": {"red": 411, "additionalVotes": 528400},
+            },
+        }
+        if version not in expected_interventions:
+            raise ValueError(f"Faltan controles científicos explícitos para {version}")
+        controls["additionalVotesCombined"] = controls.pop("additionalVotesMedium")
+        controls["leaveRedCombined"] = controls.pop("leaveRedMedium")
+        controls["interventions"] = {
+            scenario["intervention"]: {
+                "red": sum(value["risk"] == "alto" for value in estimates[key].values()),
+                "additionalVotes": sum(
+                    value["additionalVotes"] or 0 for value in estimates[key].values()
+                ),
+            }
+            for key, scenario in scenarios.items()
+        }
+        if (
+            controls["municipalities"] != 2477
+            or controls["geometries"] != 2478
+            or controls["missingData"] != ["24059"]
+            or controls["scenarios"] != 5
+            or controls["trafficLight"] != {"rojo": 495, "amarillo": 496, "verde": 1486}
+            or controls["redNominal2024"] != (24955268 if version == "resultados-1.6" else 23818704)
+            or controls["interventions"] != expected_interventions[version]
+            or controls["leaveRedCombined"] != (84 if version == "resultados-1.6" else 87)
+        ):
+            raise ValueError(f"Controles de integración {version} incorrectos")
+        if version == "resultados-1.6":
+            controls["partialInterventions"] = {
+                scenario["intervention"]: sum(
+                    "intervencion_parcial" in (result["reason"] or "").split("|")
+                    for result in estimates[key].values()
+                )
+                for key, scenario in scenarios.items()
+            }
+            if controls["partialInterventions"] != {
+                "ninguna": 0,
+                "retener_primerizos": 6,
+                "jovenes_20_29": 9,
+                "credencializacion": 73,
+                "combinada": 77,
+            }:
+                raise ValueError("Cobertura de intervención parcial incorrecta")
+        for code, municipality in municipalities.items():
+            if not municipality["hasData"]:
+                continue
+            contributions = [
+                municipality["indicators"].get("aporte_" + group)
+                for group in ("historia", "calendario", "lista", "social", "politica")
+            ]
+            if (
+                any(value is None for value in contributions)
+                or abs(
+                    sum(contributions)
+                    - (
+                        estimates[baseline][code]["participation"]
+                        - metadata["niveles_nacionales_2027"]["estimado"]
+                    )
+                    * 100
+                )
+                > 0.020001
+            ):
+                raise ValueError(f"Aportaciones incoherentes con la predicción base: {code}")
     source = {
         "repository": "https://github.com/JorgeTato99/ine-hackathon-2026",
         "commit": args.commit,
@@ -232,6 +314,7 @@ def main():
         "estimates": estimates,
         "comparisonPolicy": {"status": "confirmed", "pairs": pairs},
         "nationalLevels": metadata["niveles_nacionales_2027"],
+        "nationalHistory": metadata.get("participacion_nacional_historica", {}).get("valores", {}),
         "model": metadata["modelo"],
         "intervalDescription": metadata["intervalo"],
         "warnings": metadata["advertencias"],
@@ -247,6 +330,19 @@ def main():
     originals.mkdir(parents=True, exist_ok=True)
     for name in ("municipios.csv", "escenarios_2027.csv", "metadatos.json"):
         shutil.copyfile(args.input / name, originals / name)
+    base = ROOT / "data/processed/entrega" / version.replace("resultados-", "base-datos-")
+    if base.is_dir():
+        base_output = originals / "base-datos"
+        base_output.mkdir(exist_ok=True)
+        for name in (
+            "LEEME.md",
+            "base-datos-reto2-ine-2026.xlsx",
+            "diccionario.csv",
+            "escenarios_2027.csv",
+            "historia_municipal.csv",
+            "municipios_2027.csv",
+        ):
+            shutil.copyfile(base / name, base_output / name)
     write_json(originals / "controles.json", controls)
     enriched = []
     for feature in geometry["features"]:
@@ -268,6 +364,8 @@ def main():
                 "riesgo": "risk",
                 "votos_adicionales": "additionalVotes",
                 "efecto_interv": "interventionEffect",
+                "motivo": "reason",
+                "estado_estimacion": "state",
             }.items():
                 properties[key.replace("-", "_") + "_" + field] = result.get(internal)
         enriched.append(
@@ -298,7 +396,7 @@ def main():
         output / "dataset.json",
         output / "municipios.geojson",
         output / "municipios.gpkg",
-        *sorted(originals.iterdir()),
+        *sorted(path for path in originals.rglob("*") if path.is_file()),
     ]
     write_json(
         output / "manifest.json",

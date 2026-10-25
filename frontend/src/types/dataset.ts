@@ -35,6 +35,7 @@ export type Dataset = {
   estimates: Record<string, Record<string, Estimate>>;
   comparisonPolicy: { status: "pending" | "confirmed"; pairs: string[][] };
   nationalLevels?: Record<string, number>;
+  nationalHistory?: Record<string, number>;
   model?: string;
   intervalDescription?: string;
   source?: { repository: string; commit: string; directory: string };

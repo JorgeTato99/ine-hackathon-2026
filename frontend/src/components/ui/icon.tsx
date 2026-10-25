@@ -1,6 +1,11 @@
 import type { CSSProperties } from "react";
 
 const paths = {
+  minus: "M5 12h14",
+  plus: "M5 12h14M12 5v14",
+  check: "m5 12 4 4L19 6",
+  columns: "M3 4h18v16H3V4Zm12 0v16",
+  rows: "M3 4h18v16H3V4Zm0 10h18",
   bookmark: "M6 3h12v18l-6-4-6 4V3Z",
   map: "m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Zm6-2v16m6-14v16",
   table: "M3 4h18v16H3V4Zm0 5h18M9 4v16M3 14h18",

@@ -1,0 +1,56 @@
+{
+  "symbol": {
+    "width": 256,
+    "height": 256,
+    "src": "/brand/generated/symbol-6296e270d65f-128.png",
+    "sets": {
+      "png": "/brand/generated/symbol-f92e9554caa5-32.png 32w, /brand/generated/symbol-6e2d61f1b446-64.png 64w, /brand/generated/symbol-6296e270d65f-128.png 128w, /brand/generated/symbol-c50fdb57aece-256.png 256w"
+    },
+    "masks": [
+      {
+        "src": "/brand/generated/symbol-6e2d61f1b446-64.png",
+        "width": 64
+      },
+      {
+        "src": "/brand/generated/symbol-6296e270d65f-128.png",
+        "width": 128
+      },
+      {
+        "src": "/brand/generated/symbol-c50fdb57aece-256.png",
+        "width": 256
+      }
+    ]
+  },
+  "banner": {
+    "width": 1774,
+    "height": 887,
+    "src": "/brand/generated/banner-89ca88b446d5-640.webp",
+    "sets": {
+      "webp": "/brand/generated/banner-4fb48cc8079c-320.webp 320w, /brand/generated/banner-89ca88b446d5-640.webp 640w, /brand/generated/banner-ce8a5c668499-960.webp 960w, /brand/generated/banner-66d1395d74db-1280.webp 1280w, /brand/generated/banner-fcb50ee06f7b-1774.webp 1774w",
+      "avif": "/brand/generated/banner-430e48c7e09f-320.avif 320w, /brand/generated/banner-6d9b4b164231-640.avif 640w, /brand/generated/banner-704bdcf7fff0-960.avif 960w, /brand/generated/banner-ccf16e81cce0-1280.avif 1280w, /brand/generated/banner-2f20fa3c0d9e-1774.avif 1774w"
+    }
+  },
+  "methodology": {
+    "width": 1427,
+    "height": 385,
+    "src": "/brand/generated/methodology-79981b31dfd4-768.webp",
+    "sets": {
+      "webp": "/brand/generated/methodology-afd8c666998d-320.webp 320w, /brand/generated/methodology-5b941d3a765f-480.webp 480w, /brand/generated/methodology-79981b31dfd4-768.webp 768w, /brand/generated/methodology-d27f22b2a1c3-1200.webp 1200w, /brand/generated/methodology-bbc2624f75e4-1427.webp 1427w",
+      "avif": "/brand/generated/methodology-e6373a6d1a1f-320.avif 320w, /brand/generated/methodology-3b93a2adec5f-480.avif 480w, /brand/generated/methodology-dbd6437f412c-768.avif 768w, /brand/generated/methodology-9d9a7c028430-1200.avif 1200w, /brand/generated/methodology-8a5e8b5ad11d-1427.avif 1427w"
+    }
+  },
+  "downloads": {
+    "width": 1126,
+    "height": 829,
+    "src": "/brand/generated/downloads-21b762118a6b-640.webp",
+    "sets": {
+      "webp": "/brand/generated/downloads-0a7380a4df28-320.webp 320w, /brand/generated/downloads-21b762118a6b-640.webp 640w, /brand/generated/downloads-fcd8ffc864eb-960.webp 960w, /brand/generated/downloads-6faa4fd0e1a8-1126.webp 1126w",
+      "avif": "/brand/generated/downloads-7bae4f730bd6-320.avif 320w, /brand/generated/downloads-4254c0b64005-640.avif 640w, /brand/generated/downloads-ccad28de8d1e-960.avif 960w, /brand/generated/downloads-fb87b8c7f154-1126.avif 1126w"
+    }
+  },
+  "social": {
+    "src": "/brand/generated/banner-social-426db06222da.png",
+    "width": 1200,
+    "height": 630
+  }
+}

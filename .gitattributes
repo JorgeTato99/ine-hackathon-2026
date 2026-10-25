@@ -17,6 +17,8 @@
 *.ps1 text eol=crlf
 *.bat text eol=crlf
 *.png binary
+*.webp binary
+*.avif binary
 *.jpg binary
 *.pdf binary
 *.zip binary

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseMunicipalGeometry } from "@/utils/municipal-geometry";
+import { parseMunicipalGeometry, municipalOutline } from "@/utils/municipal-geometry";
+import type { Polygon } from "geojson";
 
 const geometry = () => ({
   type: "FeatureCollection",
@@ -20,6 +21,104 @@ const geometry = () => ({
   })),
 });
 const ids = new Set(["01001", "01002"]);
+
+describe("Contorno municipal de referencia", () => {
+  const rectangle: Polygon = {
+    type: "Polygon",
+    coordinates: [
+      [
+        [0, 0],
+        [4, 0],
+        [4, 1],
+        [0, 1],
+        [0, 0],
+      ],
+    ],
+  };
+  it("conserva orientación norte, proporciones y margen sin deformar para llenar el cuadrado", () => {
+    const path = municipalOutline(rectangle, 96, 8)!;
+    const points = [...path.matchAll(/[ML]([\d.]+),([\d.]+)/g)].map((match) => [
+      Number(match[1]),
+      Number(match[2]),
+    ]);
+    expect(points).toHaveLength(5);
+    expect(points[0]![1]).toBeGreaterThan(points[3]![1]!);
+    expect(Math.min(...points.map((point) => point[0]!))).toBe(8);
+    expect(Math.max(...points.map((point) => point[0]!))).toBe(88);
+    const height =
+      Math.max(...points.map((point) => point[1]!)) - Math.min(...points.map((point) => point[1]!));
+    expect(height).toBeCloseTo(20, 1);
+  });
+  it("conserva huecos y partes separadas en un trazado con anillos cerrados", () => {
+    const hole = [
+      [1, 0.2],
+      [2, 0.2],
+      [2, 0.4],
+      [1, 0.2],
+    ];
+    const path = municipalOutline(
+      {
+        type: "MultiPolygon",
+        coordinates: [
+          [...rectangle.coordinates, hole],
+          [
+            [
+              [6, 0],
+              [7, 0],
+              [7, 1],
+              [6, 0],
+            ],
+          ],
+        ],
+      },
+      96,
+      8
+    )!;
+    expect(path.match(/M/g)).toHaveLength(3);
+    expect(path.match(/Z/g)).toHaveLength(3);
+    expect(path).not.toMatch(/NaN|Infinity/);
+  });
+  it.each([NaN, Infinity, 86])("omite coordenadas no representables (%s)", (value) => {
+    expect(
+      municipalOutline(
+        {
+          type: "Polygon",
+          coordinates: [
+            [
+              [0, value],
+              [1, 0],
+              [1, 1],
+              [0, value],
+            ],
+          ],
+        },
+        96,
+        8
+      )
+    ).toBeNull();
+  });
+  it("omite geometrías sin extensión y dimensiones que no dejan área útil", () => {
+    expect(
+      municipalOutline(
+        {
+          type: "Polygon",
+          coordinates: [
+            [
+              [1, 0],
+              [1, 1],
+              [1, 2],
+              [1, 0],
+            ],
+          ],
+        },
+        96,
+        8
+      )
+    ).toBeNull();
+    expect(municipalOutline(rectangle, 16, 8)).toBeNull();
+    expect(municipalOutline({ type: "Polygon", coordinates: [] }, 96, 8)).toBeNull();
+  });
+});
 
 describe("Contrato de identidad de la cartografía", () => {
   it("conserva claves con ceros, propiedades y coordenadas del recurso válido", () => {

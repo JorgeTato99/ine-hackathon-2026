@@ -46,6 +46,21 @@ function memory(): QueryStorage & { raw: string | null; fail: boolean } {
   };
 }
 describe("Archivos de consultas", () => {
+  it("conserva la distribución al exportar/restaurar y normaliza la opción predeterminada", () => {
+    const params = captureQuery(dataset, new URLSearchParams("distribucion=abajo&municipio=01001"));
+    const query = newSavedQuery(dataset, params, "Lectura inferior", "");
+    const restored = parseQueryFile(JSON.stringify(queryFile([query]))).queries[0]!;
+    expect(restored.params.distribucion).toBe("abajo");
+    expect(prepareRestore(restored, dataset).params.distribucion).toBe("abajo");
+    expect(savedQuerySummary(restored, dataset)[0]).toMatch(/Mapa con ficha debajo/);
+    expect(captureQuery(dataset, new URLSearchParams("distribucion=lateral"))).not.toHaveProperty(
+      "distribucion"
+    );
+    expect(
+      captureQuery(dataset, new URLSearchParams("distribucion=desconocida"))
+    ).not.toHaveProperty("distribucion");
+    expect(() => newSavedQuery(dataset, { distribucion: "desconocida" }, "Inválida", "")).toThrow();
+  });
   it("describe la consulta y conserva claves no disponibles como referencia", () => {
     const record = entry();
     record.params = { municipio: "01001", modo: "mapa", escenario: "base" };

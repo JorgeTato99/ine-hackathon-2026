@@ -21,7 +21,12 @@ export type Presentation = {
   year: string;
 };
 export type LegendItem = { label: string; color: string };
-export type MapPaint = { color: string; label: string; value?: string | number | null };
+export type MapPaint = {
+  color: string;
+  label: string;
+  value?: string | number | null;
+  dimmed?: boolean;
+};
 export type ContextFilters = {
   tamano: string;
   ayuntamiento: string;
@@ -288,7 +293,7 @@ export function controlCards(
         detail: "Es un punto de partida, no una predicción",
       },
     ];
-    if (info?.intervention === "dirigida_rojos")
+    if (info && info.intervention !== "ninguna")
       cards.push(
         card(
           "Votos adicionales · supuesto",

@@ -97,7 +97,7 @@ test("las descargas conservan identidad, foco y acceso durante la entrada por es
 }) => {
   await page.goto("/datos/");
   const cards = page.locator('[data-entrance="card"]');
-  await expect(cards).toHaveCount(6);
+  await expect(cards).toHaveCount(10);
   const first = cards.first();
   await first.scrollIntoViewIfNeeded();
   const action = first.getByRole("link", { name: /^Descargar / });

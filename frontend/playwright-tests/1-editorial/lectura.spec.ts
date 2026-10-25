@@ -13,15 +13,15 @@ test("el archivo tiene navegación local, recursos identificables y descargas í
     page.getByRole("heading", { name: "Archivos disponibles", exact: true })
   ).toBeInViewport();
   const downloads = page.getByRole("link", { name: /^Descargar / });
-  await expect(downloads).toHaveCount(7);
+  await expect(downloads).toHaveCount(11);
   const labels = await downloads.evaluateAll((links) =>
     links.map((link) => link.getAttribute("aria-label") ?? link.textContent?.trim())
   );
   expect(labels.every(Boolean)).toBe(true);
-  expect(new Set(labels).size).toBe(7);
+  expect(new Set(labels).size).toBe(11);
   await expect(
     page.getByRole("link", { name: "Descargar comparación y procedencia (JSON)", exact: true })
-  ).toHaveAttribute("href", "/data/publicaciones/resultados-1.2__resultados-1.3.json");
+  ).toHaveAttribute("href", "/data/publicaciones/resultados-1.3__resultados-1.6.json");
   const manifest = await (await page.request.get("/data/manifest.json")).json();
   const event = page.waitForEvent("download");
   await page.getByRole("link", { name: "Descargar CSV: Historia municipal", exact: true }).click();
@@ -29,7 +29,7 @@ test("el archivo tiene navegación local, recursos identificables y descargas í
   expect(download.suggestedFilename()).toBe("municipios.csv");
   const bytes = await readFile((await download.path())!);
   expect(createHash("sha256").update(bytes).digest("hex")).toBe(
-    manifest.files["resultados-1.3/municipios.csv"].sha256
+    manifest.files["resultados-1.6/municipios.csv"].sha256
   );
   await page
     .getByRole("navigation", { name: "En esta página" })
@@ -147,17 +147,17 @@ test("los textos, anclas y archivos informativos funcionan sin JavaScript", asyn
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await page
       .getByRole("navigation", { name: "En esta página" })
-      .getByRole("link", { name: /Leer la participación/ })
+      .getByRole("link", { name: /Predicción y rango/ })
       .click();
     await expect(
-      page.getByRole("heading", { name: "Cómo leer la participación", exact: true })
+      page.getByRole("heading", { name: "La participación esperada y su rango", exact: true })
     ).toBeInViewport();
     await page.goto("/datos/");
-    await expect(page.getByRole("link", { name: /^Descargar / })).toHaveCount(7);
+    await expect(page.getByRole("link", { name: /^Descargar / })).toHaveCount(11);
     await expect(
       page.getByRole("heading", { name: "Descarga los datos y conoce sus fuentes" })
     ).toHaveCSS("opacity", "1");
-    expect((await page.request.get("/data/resultados-1.3/metadatos.json")).status()).toBe(200);
+    expect((await page.request.get("/data/resultados-1.6/metadatos.json")).status()).toBe(200);
     const size = await page.evaluate(() => ({
       width: document.documentElement.scrollWidth,
       viewport: document.documentElement.clientWidth,

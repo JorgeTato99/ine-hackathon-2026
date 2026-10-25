@@ -1,12 +1,22 @@
+> **Vigente · 2026-10-24:** datos1.6 y decisiones de Jorge posteriores a D30: se conserva el modo ampliado con paneles minimizables, el morado y las ayudas de dos niveles. [Explorador](explorador.md) y [Resultados](resultados.md) definen el comportamiento actual; los avisos de retirada de modo ampliado que aparecen después son antecedentes supersedidos.
+
 # Consultas personales
+
+> **Antecedente D30:** se retiraron consultas guardadas, filtros avanzados y tramas del semáforo. El modo ampliado se recuperó por acuerdo posterior y sigue vigente; [Explorador](explorador.md) describe su estado actual.
 
 [Explorador](explorador.md) · [Frontend](../README.md) · [Datos](resultados.md)
 
 El botón «Consultas» de la cabecera y el marcador del modo mapa abren el mismo
 gestor. Guarda los filtros efectivos, municipio, escenarios, pestaña/indicador,
-orden y página de tabla, modo y vista de regreso. Un título y una nota personal
+orden y página de tabla, modo, distribución y vista de regreso. Un título y una nota personal
 permiten recordar la lectura. Editar esos textos no modifica la consulta ni el
 análisis científico. El borrado requiere confirmación.
+
+`distribucion=abajo` conserva la ficha inferior; la lateral es el valor
+predeterminado y se omite al capturar. La preferencia también se conserva al
+pasar por móvil, tabla o modo ampliado, aunque allí no modifica la composición.
+Es un parámetro opcional: las consultas antiguas siguen siendo legibles. Versiones
+anteriores de la aplicación pueden rechazar archivos que contengan esa opción nueva.
 
 Cada tarjeta resume territorio, vista y escenario; «Otra publicación» señala un
 cambio de versión o fuente. El diálogo pide confirmar antes de descartar un

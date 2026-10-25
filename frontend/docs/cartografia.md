@@ -1,4 +1,8 @@
+> **Vigente · 2026-10-24:** datos1.6 y decisiones de Jorge posteriores a D30: se conserva el modo ampliado con paneles minimizables, el morado y las ayudas de dos niveles. [Explorador](explorador.md) y [Resultados](resultados.md) definen el comportamiento actual; los avisos de retirada de modo ampliado que aparecen después son antecedentes supersedidos.
+
 # Cartografía del explorador
+
+> **Antecedente D30:** se retiraron consultas guardadas, filtros avanzados y tramas del semáforo. El modo ampliado se recuperó por acuerdo posterior y sigue vigente; [Explorador](explorador.md) describe su estado actual.
 
 Primera implementación: 19 de octubre de 2026. Decisión vigente: 20 de octubre de 2026.
 [Volver al frontend](../README.md).

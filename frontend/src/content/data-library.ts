@@ -17,6 +17,43 @@ function resource(file: Omit<FileResource, "bytes">): FileResource {
 
 export const dataLibrary = [
   {
+    title: "Paquete del mapa y base de entrega",
+    description:
+      "Mapa portable, tablas, Excel, diccionario, metadatos y enlace al sitio. No sustituye el reporte, la presentación ni las cartas del concurso.",
+    files: [
+      resource({
+        title: "Mapa y base de datos completos",
+        description:
+          "ZIP verificado con las cinco opciones de 2027, GeoPackage y base original. Puede abrirse el mapa sin Internet con QGIS.",
+        href: `/data/${resultsRelease.version}/mapa-escenarios.zip`,
+        format: "ZIP",
+        unit: "Componente del mapa · archivos originales y manifiesto",
+      }),
+      resource({
+        title: "Base de datos en Excel",
+        description: "Libro original del equipo de datos con las tablas de la entrega.",
+        href: `/data/${resultsRelease.version}/base-datos/base-datos-reto2-ine-2026.xlsx`,
+        format: "XLSX",
+        unit: "Historia, municipios y escenarios",
+      }),
+      resource({
+        title: "Diccionario de variables",
+        description: "Nombres, unidades y significado de las columnas de la base.",
+        href: `/data/${resultsRelease.version}/base-datos/diccionario.csv`,
+        format: "CSV",
+        unit: "Definiciones de las variables",
+      }),
+      resource({
+        title: "Historia municipal en tabla larga",
+        description:
+          "Datos históricos por municipio y elección. En esta tabla la participación va de 0 a 100; en los archivos del mapa va de 0 a 1.",
+        href: `/data/${resultsRelease.version}/base-datos/historia_municipal.csv`,
+        format: "CSV",
+        unit: "Una fila por municipio y elección",
+      }),
+    ],
+  },
+  {
     title: "Tablas para consultar las cifras",
     description: "Dos tablas CSV y un archivo que explica sus datos, fuentes y límites.",
     files: [
@@ -31,7 +68,7 @@ export const dataLibrary = [
       resource({
         title: "Pronósticos y escenarios 2027",
         description:
-          "Seis escenarios: tres niveles nacionales, sin y con intervención. La intervención es un supuesto, no un efecto medido.",
+          "Cinco escenarios: sin intervención y cuatro tipos de intervención supuesta. El nivel nacional estimado es 51.4 %. No son efectos medidos.",
         href: `/data/${resultsRelease.version}/escenarios_2027.csv`,
         format: "CSV",
         unit: "Una fila por municipio y escenario",
@@ -49,7 +86,7 @@ export const dataLibrary = [
   {
     title: "Archivos para abrir el mapa",
     description:
-      "Los mismos límites municipales en dos formatos, con indicadores y resultados de los seis escenarios. Para programas de mapas como QGIS.",
+      "Los mismos límites municipales en dos formatos, con indicadores y resultados de los cinco escenarios. Para programas de mapas como QGIS.",
     files: [
       resource({
         title: "Cartografía GeoJSON",

@@ -11,6 +11,7 @@ import { ChapterNav, type Chapter } from "@/components/editorial/chapter-nav";
 import { colors, layout, radii } from "@/theme/tokens";
 import { entranceProps } from "@/theme/entrance";
 import { EntranceScope } from "@/components/motion/entrance-scope";
+import { TraceRule } from "@/components/ui/trace-rule";
 
 export function ContentPage({
   eyebrow,
@@ -34,23 +35,24 @@ export function ContentPage({
       <Box
         component="header"
         className="tc-editorial-hero"
-        sx={(theme) => ({
+        sx={{
           position: "relative",
           overflow: "hidden",
-          bgcolor: colors.light.accentSoft,
-          borderRadius: radii.feature,
-          p: { xs: 3, sm: 4, md: 5 },
+          py: { xs: 2, md: 3 },
           mt: { xs: 0, md: 1 },
           mb: { xs: 4, md: 6 },
-          ...theme.applyStyles("dark", { bgcolor: colors.dark.accentSoft }),
-        })}
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
       >
+        <TraceRule />
         <Box
           sx={{
             display: "grid",
             gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1.6fr) minmax(0, 1fr)" },
             alignItems: "center",
             gap: { xs: 4, md: 5 },
+            py: { xs: 3, md: 4 },
           }}
         >
           <Box {...entranceProps("hero")}>
@@ -73,7 +75,17 @@ export function ContentPage({
               </Box>
             </PageHeader>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "block" } }}>{aside}</Box>
+          <Box
+            sx={(theme) => ({
+              display: { xs: "none", md: "block" },
+              bgcolor: colors.light.accentSoft,
+              borderRadius: radii.feature,
+              p: 2.5,
+              ...theme.applyStyles("dark", { bgcolor: colors.dark.accentSoft }),
+            })}
+          >
+            {aside}
+          </Box>
         </Box>
       </Box>
       <Box

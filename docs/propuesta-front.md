@@ -1,5 +1,12 @@
 # Propuesta de rediseño del explorador
 
+> **Acuerdo de producto posterior a D30:** P1 conserva las decisiones que Jorge y
+> Sofía ratificaron después de esta propuesta: morado primario, ayudas de dos
+> niveles, mapa normal y ampliado, paneles minimizables, anchos y silueta municipal.
+> Las indicaciones antiguas de retirar «Ampliar mapa» o sustituir esos controles
+> quedan supersedidas por ese acuerdo. La integración1.6 actualiza datos, cifras,
+> avisos y lectura sin volver a eliminar la experiencia aprobada.
+
 Qué cambiar en el sitio (https://traza-civica.jorgetato.com/) para que se entienda en segundos y se vea
 sobrio y formal. Parte del recorrido del sitio publicado el 22 de octubre de 2026 (versión 0.5.1, datos
 `resultados-1.3`) y de los datos vigentes `resultados-1.6` (D27 a D33 de la [bitácora](bitacora.md)).
@@ -117,7 +124,7 @@ intervención" ("−84 municipios", "+0.4 puntos"). Se agrega una quinta cifra: 
 **Participación con intervención** del país o del estado: con credencialización (o las tres) crece la lista.
 La cuenta correcta es Σ (`part_pred` × (lista + nuevos)) / Σ (lista + nuevos), donde "nuevos" =
 `interv_nuevos_en_lista` solo en los municipios rojos sin intervención y solo con `credencializacion` o
-`combinada`. Con esta cuenta el país da +0.35 puntos con las tres juntas, igual que la metodología.
+`combinada`. Con esta cuenta el país da +0.36 puntos con las tres juntas en la 1.6, igual que la metodología.
 
 **Cifras de control** (calculadas el 24 de octubre con `resultados-1.6`):
 
@@ -302,8 +309,10 @@ la historia de cada municipio. En 2027 se usa 0.5141.
   `ultima_eleccion_sin_casilla`). Ese riesgo va aparte del color."
 - `historia_completa` = `false` (38 municipios): "No tiene datos de todas las elecciones."
 
-**Contexto (plegado):** brecha de jóvenes, homicidios, policía municipal y justicia cívica. Va cerrado y con
-la nota "No cambia la predicción".
+**Contexto (plegado):** brecha de jóvenes, homicidios, policía municipal y justicia cívica.
+La tasa de homicidios en logaritmo sí es una variable del modelo; las demás columnas
+de seguridad son contexto. Junto a la tasa se informa la comparación estatal de
+fuentes2019–2024, sin atribuirla al municipio (H010).
 
 **Descargar ficha:** se queda, al final.
 

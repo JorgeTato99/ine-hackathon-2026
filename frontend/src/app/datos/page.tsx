@@ -14,14 +14,16 @@ import { Surface } from "@/components/ui/surface";
 import { NotePanel } from "@/components/ui/note-panel";
 import { DataStatus } from "@/components/ui/data-status";
 import { Icon } from "@/components/ui/icon";
+import { BrandArtwork } from "@/components/ui/brand-artwork";
+import { brandImageTokens } from "@/theme/tokens";
 import { dataLibrary } from "@/content/data-library";
 import { resultsRelease } from "@/content/release";
-import comparison from "../../../public/data/publicaciones/resultados-1.2__resultados-1.3.json";
+import comparison from "../../../public/data/publicaciones/resultados-1.3__resultados-1.6.json";
 import { PublicationComparison } from "@/components/editorial/publication-comparison";
 import { entranceProps } from "@/theme/entrance";
 
 export const metadata: Metadata = { title: "Datos y descargas" };
-const comparisonHref = "/data/publicaciones/resultados-1.2__resultados-1.3.json";
+const comparisonHref = "/data/publicaciones/resultados-1.3__resultados-1.6.json";
 const comparisonBytes = readFileSync(resolve(process.cwd(), "public", comparisonHref.slice(1)));
 if (JSON.stringify(JSON.parse(comparisonBytes.toString("utf8"))) !== JSON.stringify(comparison)) {
   throw new Error("La comparación cambió durante la compilación. Vuelve a preparar y compilar.");
@@ -48,11 +50,11 @@ const incidents = [
   },
   {
     title: "Ausencias y falta de casillas",
-    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 municipios faltan algunos conteos por edad de 2024 y componentes de intervención. Las correcciones de la publicación 1.3 aparecen como vacíos; el detalle se consulta en «Cambios entre publicaciones».",
+    text: "Una celda vacía significa sin dato. Si una elección tuvo cero participación porque faltaron casillas, se muestra «sin casilla: no se pudo votar». En 15 municipios faltan algunos conteos por edad de 2024 y componentes de intervención. En la publicación vigente se conservan como vacíos; el detalle se consulta en «Cambios entre publicaciones».",
   },
   {
     title: "Qué significa comparar la intervención",
-    text: "Se conserva el mismo supuesto de participación del país al comparar sin y con intervención. Es una cuenta de qué pasaría bajo ciertas condiciones. Se etiqueta «Supuesto, no efecto medido»: no demuestra que una campaña consiga esos votos.",
+    text: "Hay una sola predicción base y cuatro opciones de intervención. Credencializar puede aumentar tanto los votos como las personas en la lista; por eso puede bajar ligeramente el porcentaje. Si falta un componente, se suma solo lo conocido y se marca «intervencion_parcial» en motivo. Si falta credencialización, ese componente no suma votos ni personas a la lista. Se etiqueta «Supuesto, no efecto medido»: no demuestra que una campaña consiga esos votos.",
   },
 ];
 
@@ -81,7 +83,7 @@ export default function DataPage() {
         />
         <NotePanel tone="warning" title="Los datos de 2027 son estimaciones y supuestos." announce>
           Los CSV conservan la entrega científica original. Los archivos del mapa incluyen los
-          indicadores y seis escenarios. Ninguno muestra resultados ya observados de 2027 ni
+          indicadores y cinco escenarios. Ninguno muestra resultados ya observados de 2027 ni
           demuestra el efecto de una intervención.
         </NotePanel>
         <Box sx={{ mt: 4, display: "grid", gap: 4 }}>
@@ -107,12 +109,7 @@ export default function DataPage() {
                 data-entrance-group
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: group.files.length === 1 ? "1fr" : "repeat(2,minmax(0,1fr))",
-                    xl: `repeat(${group.files.length},minmax(0,1fr))`,
-                  },
-                  gap: 2,
+                  gridTemplateColumns: "minmax(0,1fr)",
                 }}
               >
                 {group.files.map((resource) => (
@@ -131,22 +128,40 @@ export default function DataPage() {
           description="Si vas a abrir o combinar las tablas, cuida estos tres detalles. Un CSV puede abrirse en una hoja de cálculo; los JSON están pensados para otras herramientas."
         />
         <Surface tone="brand" density="editorial" entrance="block">
-          <Box component="ol" sx={{ m: 0, pl: 2.5, display: "grid", gap: 2.5 }}>
-            <li>
-              <strong>Importa la tabla con sus columnas.</strong> En tu hoja de cálculo, elige UTF-8
-              para conservar acentos y coma como separador. El decimal es punto; las comillas dobles
-              protegen los nombres que contienen comas.
-            </li>
-            <li>
-              <strong>Conserva los cinco dígitos de la clave municipal.</strong> La columna
-              <code> cvegeo</code> identifica cada municipio. Impórtala como texto para que
-              <code> 01001</code> conserve el cero inicial.
-            </li>
-            <li>
-              <strong>No conviertas lo que falta en cero.</strong> Una celda vacía significa que no
-              hay dato. Para combinar las tablas de escenarios usa ambas columnas:{" "}
-              <code>cvegeo</code> (municipio) y <code>escenario_id</code> (escenario).
-            </li>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, .65fr)" },
+              alignItems: "center",
+              gap: 3,
+            }}
+          >
+            <Box component="ol" sx={{ m: 0, pl: 2.5, display: "grid", gap: 2.5 }}>
+              <li>
+                <strong>Importa la tabla con sus columnas.</strong> En tu hoja de cálculo, elige
+                UTF-8 para conservar acentos y coma como separador. El decimal es punto; las
+                comillas dobles protegen los nombres que contienen comas.
+              </li>
+              <li>
+                <strong>Conserva los cinco dígitos de la clave municipal.</strong> La columna
+                <code> cvegeo</code> identifica cada municipio. Impórtala como texto para que
+                <code> 01001</code> conserve el cero inicial.
+              </li>
+              <li>
+                <strong>No conviertas lo que falta en cero.</strong> Una celda vacía significa que
+                no hay dato. Para combinar las tablas de escenarios usa ambas columnas:{" "}
+                <code>cvegeo</code> (municipio) y <code>escenario_id</code> (escenario).
+              </li>
+            </Box>
+            <Box
+              aria-hidden="true"
+              sx={{ width: "100%", maxWidth: brandImageTokens.downloadsWidth, mx: "auto" }}
+            >
+              <BrandArtwork
+                name="downloads"
+                sizes="(min-width: 1200px) 320px, (min-width: 900px) 34vw, (min-width: 386px) 320px, calc(100vw - 66px)"
+              />
+            </Box>
           </Box>
         </Surface>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>

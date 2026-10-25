@@ -13,35 +13,35 @@ import { orderMunicipalities } from "@/utils/explorer-table";
 
 const dataset = decodeDataset(JSON.parse(readFileSync("public/data/dataset.json", "utf8")));
 const presentation = (query = "") => readPresentation(new URLSearchParams(query));
-const medium = "nac-medio_int-ninguna",
-  intervention = "nac-medio_int-dirigida_rojos";
+const medium = "nac-estimado_int-ninguna",
+  intervention = "nac-estimado_int-combinada";
 const integer = (value: string) => Number(value.replace(/[^\d]/g, ""));
 
-describe("entrega científica resultados-1.3", () => {
+describe("entrega científica resultados-1.6", () => {
   it("conserva cobertura, identidad y ausencia de Villa de Pozos", () => {
-    expect(dataset.version).toBe("resultados-1.3");
+    expect(dataset.version).toBe("resultados-1.6");
     expect(dataset.sample).toBe(false);
     expect(dataset.municipalities).toHaveLength(2478);
-    expect(dataset.scenarios).toHaveLength(6);
+    expect(dataset.scenarios).toHaveLength(5);
     const villa = dataset.municipalities.find((item) => item.id === "24059")!;
     expect(villa.hasGeometry).toBe(true);
     expect(villa.hasData).toBe(false);
     expect(estimateFor(dataset, medium, villa.id).risk).toBe("sin_estimacion");
-    expect(dataset.comparisonPolicy.pairs).toHaveLength(3);
+    expect(dataset.comparisonPolicy.pairs).toHaveLength(4);
   });
   it("reproduce rojos, personas y comparación al mismo nivel nacional", () => {
     const rows = dataset.municipalities,
       baseline = controlCards(dataset, rows, medium, presentation()),
       con = controlCards(dataset, rows, intervention, presentation());
     expect(integer(baseline[0]!.value)).toBe(495);
-    expect(integer(baseline[1]!.value)).toBe(23818704);
+    expect(integer(baseline[1]!.value)).toBe(24955268);
     expect(integer(con.find((card) => card.label === "Votos adicionales · supuesto")!.value)).toBe(
-      505007
+      528400
     );
-    expect(integer(con.find((card) => card.label === "Salen del rojo")!.value)).toBe(88);
+    expect(integer(con.find((card) => card.label === "Salen del rojo")!.value)).toBe(84);
     expect(
       rows.filter((item) => estimateFor(dataset, intervention, item.id).risk === "alto")
-    ).toHaveLength(407);
+    ).toHaveLength(411);
     const redSin = filterMunicipalities(dataset, "", "", "alto", medium),
       redCon = filterMunicipalities(dataset, "", "", "alto", intervention);
     expect(redSin.map((item) => item.id)).toEqual(redCon.map((item) => item.id));
@@ -55,7 +55,7 @@ describe("entrega científica resultados-1.3", () => {
         medium,
         presentation(`pestana=contexto&indicador=${view}`)
       ).map((card) => integer(card.value));
-    expect(values("elecciones")).toEqual([676, 1125, 425, 251, 676, 413, 82]);
+    expect(values("elecciones")).toEqual([676, 1125, 425, 251, 676, 404, 91]);
     expect(values("rezago")[0]).toBe(285);
     expect(values("zonas")).toEqual([371, 337, 21, 43, 1652, 53]);
     expect(values("casillas")).toEqual([16, 59, 2402]);
@@ -73,10 +73,10 @@ describe("entrega científica resultados-1.3", () => {
         medium,
         presentation(`pestana=contexto&indicador=personas&grupo=${group}`)
       ).map((card) => integer(card.value));
-    expect(check("primerizos_votaron_2024")).toEqual([2898581, 582590, 15]);
-    expect(check("jovenes_21_29_no_votaron_2024")).toEqual([9835966, 2884632, 15]);
-    expect(check("nuevos_votantes_2027")).toEqual([4363455, 1104131, 8]);
-    expect(check("nuevos_sin_credencial_2027_si_se_repite_2021")).toEqual([1268747, 318946, 245]);
+    expect(check("primerizos_votaron_2024")).toEqual([2898581, 618518, 15]);
+    expect(check("jovenes_21_29_no_votaron_2024")).toEqual([9835966, 3011632, 15]);
+    expect(check("nuevos_votantes_2027")).toEqual([4363455, 1157532, 8]);
+    expect(check("nuevos_sin_credencial_2027_si_se_repite_2021")).toEqual([1268747, 332396, 245]);
   });
   it("distingue los 15 conteos ausentes de cero sin perder pronóstico ni S3", () => {
     const fields = [
@@ -111,7 +111,7 @@ describe("entrega científica resultados-1.3", () => {
     for (const item of missing) {
       for (const field of fields) expect(item.indicators?.[field]).toBeNull();
     }
-    expect(missing.filter((item) => item.indicators?.semaforo === "rojo")).toHaveLength(7);
+    expect(missing.filter((item) => item.indicators?.semaforo === "rojo")).toHaveLength(6);
     const chico = missing.find((item) => item.id === "07030")!;
     expect(chico.indicators?.interv_votos_credencializar).toBe(363);
     expect(estimateFor(dataset, medium, chico.id).participation).not.toBeNull();
@@ -201,6 +201,6 @@ describe("entrega científica resultados-1.3", () => {
       municipalityDocument(dataset, item, medium, "nac-alto_int-dirigida_rojos").secondReading
         ?.comparability
     ).toBe("pending");
-    expect(document.source?.commit).toBe("f25d9c2709d2a93179c7ee2d6d2df985d418d6ca");
+    expect(document.source?.commit).toBe("7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7");
   });
 });

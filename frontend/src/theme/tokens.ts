@@ -3,7 +3,42 @@ export const brand = {
   descriptor: "Participación y territorio",
 } as const;
 
-export const designSystem = { name: "Traza Cívica", version: "1.8.0" } as const;
+export const designSystem = { name: "Traza Cívica", version: "1.18.1" } as const;
+
+export const brandImageTokens = {
+  bannerWidth: 400,
+  methodologyWidth: 760,
+  downloadsWidth: 320,
+} as const;
+
+export const fontFamilies = {
+  interface: '"Source Sans 3 Variable", Arial, sans-serif',
+  editorial: '"Newsreader Variable", Georgia, serif',
+} as const;
+
+export const identityTokens = {
+  rule: "1px",
+  strongRule: "2px",
+  signatureWidth: 52,
+  signatureHeight: 16,
+  signaturePath: "M2 11 16 5 31 11 49 3",
+  signatureNodes: [
+    [2, 11],
+    [16, 5],
+    [31, 11],
+    [49, 3],
+  ],
+  territory: {
+    viewBox: 96,
+    padding: 8,
+    width: 80,
+    compactWidth: 64,
+    compactTitleSize: "1.25rem",
+    stroke: 1.25,
+    fillOpacity: 0.15,
+    titleSize: "clamp(1.5rem, 9cqi, 1.875rem)",
+  },
+} as const;
 
 // Factores MUI en unidades de 8 px; strings para usar dimensiones CSS sin multiplicarlas.
 export const space = {
@@ -23,55 +58,119 @@ export const space = {
 } as const;
 export const radii = {
   control: "6px",
-  panel: "12px",
-  feature: "20px",
+  panel: "8px",
+  feature: "12px",
   overlay: "16px",
   pill: "999px",
 } as const;
 export const layout = { app: 1600, editorial: 1240, reading: "72ch", rail: 200 } as const;
+const normalMapMinimum = 560;
+export const forecastLayout = {
+  detailWidth: 390,
+  minimumMapHeight: normalMapMinimum,
+  normalMapHeight: `var(--tc-workspace-height, max(${normalMapMinimum}px, calc(100dvh - 190px)))`,
+  mobileMapHeight: "max(460px, 70dvh)",
+  viewportGutter: 16,
+} as const;
 // Medidas en píxeles CSS; fracción de viewport para la hoja inferior.
 export const explorerLayout = {
+  sidebar: 340,
+  stickyMinimumHeight: 520,
+  stickyMapMinimum: 160,
   toolbar: 360,
   compactToolbar: 300,
   panel: 360,
   compactPanel: 320,
+  panelHeader: 44,
+  compactPanelHeader: 32,
+  detailWidths: {
+    compacta: 360,
+    normal: "clamp(400px, calc(100dvw - 800px), 480px)",
+    amplia: "clamp(480px, calc(100dvw - 720px), 600px)",
+  },
+  mapMode: {
+    toolsWidth: { md: 240, lg: 320, xl: 360 },
+    compactDetailWidth: 300,
+    summaryMaximumWidth: 760,
+    summaryMaximumHeight: 320,
+    dock: { navigationWidth: 126, actionsWidth: 190, height: 50, gap: 8, bottom: 34 },
+    // Añadir 14 % por lado al encuadre municipal deja contexto sin alejarlo demasiado.
+    municipalityContextPadding: 0.14,
+  },
   zoomReserve: 76,
   inset: 16,
   narrowInset: 8,
   sheetFraction: 0.52,
   mapHeight: {
     xs: "clamp(280px, calc(100dvh - 475px), 520px)",
-    sm: "clamp(340px, calc(100dvh - 390px), 700px)",
-    lg: "clamp(360px, calc(100dvh - 375px), 720px)",
+    sm: "clamp(420px, calc(100dvh - 180px), 900px)",
+    lg: "clamp(480px, calc(100dvh - 180px), 1000px)",
   },
 } as const;
 export const density = { compact: 2, comfortable: 3, editorial: 4 } as const;
 export const typeScale = {
-  family: "Roboto, Arial, sans-serif",
+  family: fontFamilies.interface,
+  wordmark: {
+    fontFamily: fontFamilies.editorial,
+    fontSize: "1.5rem",
+    fontWeight: 600,
+    lineHeight: 1.15,
+    letterSpacing: "-.025em",
+  },
   display: {
+    fontFamily: fontFamilies.editorial,
     fontSize: "clamp(2.125rem, 3.8vw, 3.375rem)",
     lineHeight: 1.08,
-    fontWeight: 700,
-    letterSpacing: "-.045em",
+    fontWeight: 500,
+    letterSpacing: "-.025em",
   },
   title: {
+    fontFamily: fontFamilies.editorial,
     fontSize: "clamp(1.625rem, 2.5vw, 2rem)",
     lineHeight: 1.2,
-    fontWeight: 700,
-    letterSpacing: "-.04em",
+    fontWeight: 500,
+    letterSpacing: "-.02em",
   },
   compactTitle: {
-    fontSize: "clamp(1.25rem, 2vw, 1.5rem)",
-    lineHeight: 1.25,
-    fontWeight: 700,
-    letterSpacing: "-.035em",
+    fontFamily: fontFamilies.interface,
+    fontSize: "clamp(1.375rem, 2vw, 1.75rem)",
+    lineHeight: 1.15,
+    fontWeight: 500,
+    letterSpacing: "-.02em",
   },
-  section: { fontSize: "1.5rem", lineHeight: 1.3, fontWeight: 700, letterSpacing: "-.025em" },
+  recordTitle: {
+    fontFamily: fontFamilies.interface,
+    fontSize: "1.875rem",
+    lineHeight: 1.15,
+    fontWeight: 500,
+    letterSpacing: "-.02em",
+  },
+  fileTitle: {
+    fontFamily: fontFamilies.interface,
+    fontSize: "1.5rem",
+    lineHeight: 1.2,
+    fontWeight: 500,
+    letterSpacing: "-.015em",
+  },
+  metric: {
+    fontFamily: fontFamilies.interface,
+    fontSize: "2.5rem",
+    lineHeight: 1.2,
+    fontWeight: 600,
+    fontVariantNumeric: "tabular-nums",
+  },
+  section: {
+    fontFamily: fontFamilies.interface,
+    fontSize: "1.75rem",
+    lineHeight: 1.2,
+    fontWeight: 500,
+    letterSpacing: "-.02em",
+  },
   subtitle: { fontSize: "1.125rem", lineHeight: 1.4, fontWeight: 700 },
-  body: { fontSize: "1rem", lineHeight: 1.7 },
+  body: { fontSize: "1.0625rem", lineHeight: 1.65 },
   small: { fontSize: ".875rem", lineHeight: 1.6 },
   caption: { fontSize: ".75rem", lineHeight: 1.5 },
-  label: { fontSize: ".6875rem", lineHeight: 1.6, fontWeight: 700, letterSpacing: ".11em" },
+  label: { fontSize: ".75rem", lineHeight: 1.5, fontWeight: 600, letterSpacing: ".085em" },
 } as const;
 export const motionTokens = {
   duration: { instant: 0, feedback: 120, enter: 220, emphasis: 360, mapFlight: 800 },
@@ -144,6 +243,7 @@ export const colors = {
     control: "#78818E",
     accent: "#4338CA",
     accentSoft: "#EDEBFF",
+    secondary: "#275A70",
     neutralSoft: "#ECECE8",
     info: "#245C8A",
     infoSoft: "#EAF2F8",
@@ -163,6 +263,7 @@ export const colors = {
     control: "#929BAD",
     accent: "#B8AEFF",
     accentSoft: "#302D53",
+    secondary: "#A4CDDF",
     neutralSoft: "#2C313C",
     info: "#9CCDF4",
     infoSoft: "#20394B",
@@ -175,13 +276,24 @@ export const colors = {
   },
 } as const;
 
+/** Superficie de cierre editorial, con contraste propio en ambos temas. */
+export const footerTokens = {
+  background: colors.light.ink,
+  darkBackground: colors.dark.surface,
+  ink: colors.dark.ink,
+  muted: colors.dark.muted,
+  line: colors.dark.line,
+  accent: colors.dark.accent,
+} as const;
+
 export const riskTokens = {
   bajo: {
     label: "Bajo",
     shape: "●",
     ink: "#17664B",
     fill: "#E7F2EB",
-    map: "#69AE90",
+    map: "#65A58A",
+    mapDark: "#39715D",
     darkInk: "#8DD6AF",
     darkFill: "#19392D",
   },
@@ -190,7 +302,8 @@ export const riskTokens = {
     shape: "◆",
     ink: "#805800",
     fill: "#FFF2CC",
-    map: "#DBB956",
+    map: "#D9B44A",
+    mapDark: "#A18435",
     darkInk: "#F0CF82",
     darkFill: "#3D3218",
   },
@@ -199,7 +312,8 @@ export const riskTokens = {
     shape: "■",
     ink: "#A42E35",
     fill: "#FCE9EB",
-    map: "#CB727C",
+    map: "#C74A5A",
+    mapDark: "#903545",
     darkInk: "#FFA6AD",
     darkFill: "#48242B",
   },
@@ -209,9 +323,14 @@ export const riskTokens = {
     ink: "#656D79",
     fill: "#EEF0F2",
     map: "#D8DBDE",
+    mapDark: "#69717D",
     darkInk: "#B4BBC7",
     darkFill: "#2C313C",
   },
 } as const;
 
 export type Risk = keyof typeof riskTokens;
+
+export function riskMapColor(risk: Risk, dark = false) {
+  return dark ? riskTokens[risk].mapDark : riskTokens[risk].map;
+}

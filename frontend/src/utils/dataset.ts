@@ -14,6 +14,15 @@ const percent = new Intl.NumberFormat("es-MX", {
   maximumFractionDigits: 1,
 });
 const integer = new Intl.NumberFormat("es-MX");
+const probabilityPercent = new Intl.NumberFormat("es-MX", {
+  style: "percent",
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 2,
+});
+/** Cuatro decimales de proporción requieren dos de porcentaje cerca del corte. */
+export function formatProbability(value: number | null | undefined) {
+  return value === null || value === undefined ? "Sin dato" : probabilityPercent.format(value);
+}
 export function formatPercent(value: number | null | undefined) {
   return value === null || value === undefined ? "Sin dato" : percent.format(value);
 }
@@ -56,8 +65,11 @@ export function filterMunicipalities(
 }
 export function defaultScenarios(scenarios: Scenario[]) {
   const first =
-    scenarios.find((s) => s.national === "medio" && s.intervention === "ninguna") ?? scenarios[0];
+    scenarios.find((s) => s.national === "estimado" && s.intervention === "ninguna") ??
+    scenarios.find((s) => s.national === "medio" && s.intervention === "ninguna") ??
+    scenarios[0];
   const second =
+    scenarios.find((s) => s.national === first?.national && s.intervention === "combinada") ??
     scenarios.find((s) => s.national === first?.national && s.intervention === "dirigida_rojos") ??
     scenarios.find((s) => s.national === first?.national && s.intervention === "alta") ??
     scenarios.find((s) => s.id !== first?.id) ??
@@ -94,7 +106,11 @@ export function decodeDataset(value: unknown): Dataset {
   if (
     candidate.schemaVersion === 2 &&
     (!candidate.nationalLevels ||
-      ["bajo", "medio", "alto"].some((level) => {
+      (!("estimado" in candidate.nationalLevels) &&
+        ["bajo", "medio", "alto"].some(
+          (level) => !Object.hasOwn(candidate.nationalLevels!, level)
+        )) ||
+      Object.keys(candidate.nationalLevels).some((level) => {
         const value = candidate.nationalLevels?.[level];
         return typeof value !== "number" || !Number.isFinite(value) || value < 0 || value > 1;
       }) ||
@@ -168,6 +184,43 @@ export function decodeDataset(value: unknown): Dataset {
       for (const number of [estimate.participation, estimate.lower, estimate.upper])
         if (number !== null && (!Number.isFinite(number) || number < 0 || number > 1))
           throw new Error("Estimación con proporciones inválidas.");
+    }
+  }
+  if (candidate.nationalLevels && "estimado" in candidate.nationalLevels) {
+    const kinds = [
+      "ninguna",
+      "retener_primerizos",
+      "jovenes_20_29",
+      "credencializacion",
+      "combinada",
+    ];
+    if (
+      candidate.scenarios.length !== kinds.length ||
+      kinds.some(
+        (kind) =>
+          !candidate.scenarios!.some(
+            (scenario) =>
+              scenario.id === `nac-estimado_int-${kind}` &&
+              scenario.national === "estimado" &&
+              scenario.intervention === kind
+          )
+      )
+    )
+      throw new Error("El corte estimado debe contener las cinco intervenciones declaradas.");
+    for (const year of ["2009", "2012", "2015", "2018", "2021", "2024"]) {
+      const value = candidate.nationalHistory?.[year];
+      if (typeof value !== "number" || !Number.isFinite(value) || value < 0 || value > 1)
+        throw new Error("Falta la participación histórica nacional.");
+    }
+    for (const item of candidate.municipalities.filter((item) => item.hasData)) {
+      const values = ["historia", "calendario", "lista", "social", "politica"].map(
+        (group) => item.indicators?.[`aporte_${group}`]
+      );
+      if (values.some((value) => typeof value !== "number" || !Number.isFinite(value)))
+        throw new Error("Faltan aportaciones para explicar la predicción base.");
+      for (const scenario of candidate.scenarios)
+        if (!candidate.estimates[scenario.id]?.[item.id])
+          throw new Error("Cobertura municipal incompleta en las intervenciones.");
     }
   }
   return candidate as Dataset;

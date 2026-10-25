@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 import sqlite3
 from contextlib import closing
 from pathlib import Path
@@ -34,7 +35,7 @@ Consulta interactiva: {url}
 
 ## Contenido y apertura
 
-- `mapa/municipios.gpkg`: mapa portable con 2,478 geometrías y los seis escenarios.
+- `mapa/municipios.gpkg`: mapa portable con 2,478 geometrías y los cinco escenarios.
 - `base-datos/`: los CSV, XLSX, diccionario y LEEME originales de Sofía.
 - `metadatos.json`: variables, unidades, fuentes y límites del análisis.
 - `controles.json`: cifras con las que se comprobó la publicación.
@@ -48,16 +49,16 @@ Para comparar sin y con intervención en QGIS:
 
 1. Duplicar la capa para tener dos copias del mismo territorio.
 2. En Simbología, elegir Categorizado y el campo
-   `nac_medio_int_ninguna_riesgo` en la primera copia.
-3. En la segunda, elegir `nac_medio_int_dirigida_rojos_riesgo`.
+   `nac_estimado_int_ninguna_riesgo` en la primera copia.
+3. En la segunda, elegir `nac_estimado_int_combinada_riesgo`.
 4. Usar rojo para `alto`, amarillo para `medio`, verde para `bajo` y gris para
    NULL (sin dato). Conservar ese significado en ambas capas.
 5. Consultar los campos con sufijos `part_pred`, `part_pred_inf` y
    `part_pred_sup` para la cifra central y el rango; los valores van de 0 a 1.
 
-Para otro supuesto nacional, cambiar `medio` por `bajo` o `alto` en ambas capas.
-Siempre comparar el mismo nivel nacional. La URL permite hacerlo con controles
-ya preparados, fichas municipales y lectura de contexto.
+Para otra intervención, cambiar `combinada` por `retener_primerizos`,
+`jovenes_20_29` o `credencializacion`. El nivel nacional base es único y estimado
+(51.4 %). La URL ofrece fichas municipales, pronóstico e histórico.
 
 ## Cómo interpretar los datos
 
@@ -69,13 +70,19 @@ que no se pudo votar; revisar `alerta_sin_casilla` y los metadatos.
 2027 es pronóstico condicionado a supuestos, no un resultado observado.
 La intervención es **supuesto, no efecto medido**: no demuestra eficacia de
 una campaña. El semáforo compara riesgo; no decide por sí solo la prioridad.
-La seguridad es contexto histórico y no modifica ese semáforo.
+La tasa de homicidios en logaritmo sí es una variable del modelo. Los otros datos
+de seguridad y la comparación estatal INEGI–SESNSP son contexto histórico.
+La validación es retrospectiva con datos revisados; los rangos y la frecuencia
+simulada de rojo son aproximaciones, sin garantía uniforme para 2027.
+Si `motivo` contiene `intervencion_parcial`, la acción se calculó solo con los
+componentes conocidos. Sin dato S3 no se suman votos ni personas por S3. El GPKG
+conserva motivo y estado de estimación para cada escenario.
 
 En `historia_municipal.csv` la participación va de 0 a 100; en las tablas de
 2027 y el GPKG va de 0 a 1. Leer `base-datos/LEEME.md` y el diccionario antes
 de combinar archivos. Las 15 ausencias de brecha joven están vacías, no son cero.
 En esos mismos municipios faltan los conteos por edad de 2024 y los componentes
-S1/S2; en la versión 1.3 se conservan vacíos. Los totales de personas suman solo
+S1/S2; en la versión vigente se conservan vacíos. Los totales de personas suman solo
 los datos disponibles. Esto no elimina sus pronósticos ni el componente S3.
 
 ## Alcance de este paquete
@@ -188,8 +195,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "output/entrega")
     parser.add_argument("--url", default=MAP_URL)
+    parser.add_argument(
+        "--publish", action="store_true", help="Publicar una copia y su huella en el manifiesto web"
+    )
     args = parser.parse_args()
     output = create_package(ROOT, args.output, args.url)
+    if args.publish:
+        public = ROOT / "frontend/public/data"
+        manifest_path = public / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        destination = public / manifest["version"] / "mapa-escenarios.zip"
+        shutil.copyfile(output, destination)
+        manifest["files"][destination.relative_to(public).as_posix()] = {
+            "bytes": destination.stat().st_size,
+            "sha256": hashlib.sha256(destination.read_bytes()).hexdigest(),
+        }
+        manifest_path.write_bytes(json_bytes(manifest))
     print(f"{output} ({output.stat().st_size:,} bytes)")
 
 

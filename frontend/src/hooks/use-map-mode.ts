@@ -28,6 +28,7 @@ export function useMapMode(
     if (!active) return;
     cancelAnimationFrame(restoreFrame.current);
     const root = document.documentElement;
+    const workspace = container.current;
     const previousScroll = restoreScroll.current;
     const origin = returnFocus?.current;
     const previousMode = root.getAttribute("data-map-mode");
@@ -72,6 +73,8 @@ export function useMapMode(
       // Restaurar antes de ese layout puede acotar el scroll a cero en móvil.
       const restore = (remaining: number) => {
         restoreFrame.current = 0;
+        // Una navegación o desmontaje no debe trasladar el foco a otra vista.
+        if (!workspace?.isConnected) return;
         const trigger = origin?.isConnected && visible(origin) ? origin : fallback();
         if (!trigger?.isConnected || root.getAttribute("data-map-mode") === "true") return;
         const available = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);

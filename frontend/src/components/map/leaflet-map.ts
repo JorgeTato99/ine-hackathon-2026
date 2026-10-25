@@ -1,10 +1,11 @@
 import * as L from "leaflet";
 import type { Dataset } from "@/types/dataset";
 import type { MunicipalGeometry } from "@/utils/municipal-geometry";
-import { estimateFor } from "@/utils/dataset";
-import { riskTokens, explorerLayout, motionTokens } from "@/theme/tokens";
+import { estimateFor, formatPercent } from "@/utils/dataset";
+import { riskMapColor, motionTokens, explorerLayout } from "@/theme/tokens";
 import { createPatternCanvas } from "./pattern-canvas";
 import type { MapPaint } from "@/utils/indicators";
+import { freeMapRectangle } from "@/utils/map-viewport";
 
 export type MapState = {
   visibleIds: string[];
@@ -49,11 +50,11 @@ export function createTerritorialMap(
   const style = (id: string): L.PathOptions => ({
     fillColor:
       current.paints?.[id]?.color ??
-      riskTokens[estimateFor(dataset, current.scenario, id).risk].map,
-    fillOpacity: 1,
-    color: current.dark ? "#404859" : "#586171",
+      riskMapColor(estimateFor(dataset, current.scenario, id).risk, current.dark),
+    fillOpacity: current.paints?.[id]?.dimmed ? 0.16 : 1,
+    color: current.dark ? "#687385" : "#FFFFFF",
     weight: 0.45,
-    opacity: 1,
+    opacity: current.paints?.[id]?.dimmed ? 0.25 : 0.6,
   });
   const ready = () => {
     target.dataset.mapReady = "false";
@@ -98,7 +99,7 @@ export function createTerritorialMap(
   const observer = new ResizeObserver(() => {
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(() => {
-      if (!disposed) {
+      if (!disposed && target.clientWidth > 0 && target.clientHeight > 0) {
         const resumeFlight = flying;
         stopFlight();
         const center = map.getCenter(),
@@ -139,6 +140,17 @@ export function createTerritorialMap(
       onEachFeature(feature, layer) {
         const id = feature.properties.CVEGEO;
         layers.set(id, layer as L.Polygon);
+        layer.bindTooltip(
+          () => {
+            const item = dataset.municipalities.find((municipality) => municipality.id === id);
+            const paint = current.paints?.[id];
+            const content = document.createElement("span");
+            const value = paint?.value;
+            content.textContent = `${item?.name ?? id} · ${item?.state ?? ""} · ${paint?.label ?? "Sin dato"}${typeof value === "number" ? " · " + formatPercent(value) : ""}`;
+            return content;
+          },
+          { sticky: true }
+        );
         layer.on("click", () => {
           cancelSelection();
           selectionTimer = setTimeout(() => {
@@ -173,7 +185,7 @@ export function createTerritorialMap(
           }),
           L.geoJSON(selected, {
             interactive: false,
-            style: { fill: false, color: current.dark ? "#E9E5FF" : "#32249B", weight: 3 },
+            style: { fill: false, color: current.dark ? "#D2E7F0" : "#1F2A37", weight: 2 },
           }),
         ]).addTo(map);
       }
@@ -184,32 +196,55 @@ export function createTerritorialMap(
         top = base,
         right = base,
         bottom = base;
-      if (current.mapMode && current.panelOpen) {
-        const width = target.clientWidth,
-          height = target.clientHeight;
-        const side = width >= 900 || (width >= 780 && height <= 500);
-        if (side) {
-          const compact = width <= 1100;
-          left =
-            (compact ? explorerLayout.compactToolbar : explorerLayout.toolbar) +
-            explorerLayout.inset +
-            16;
-          right =
-            (compact ? explorerLayout.compactPanel : explorerLayout.panel) +
-            explorerLayout.zoomReserve +
-            16;
-        } else {
-          bottom = height * explorerLayout.sheetFraction + explorerLayout.narrowInset + 16;
-          const toolbar = target
+      const controls = target
+        .closest('[data-pw="explorer-workspace"]')
+        ?.querySelector('[data-pw="forecast-map-controls"]');
+      if (controls) {
+        top = Math.max(
+          base,
+          Math.min(
+            controls.getBoundingClientRect().bottom - target.getBoundingClientRect().top + 16,
+            target.clientHeight * 0.45
+          )
+        );
+      }
+      const legend = target
+        .closest('[data-pw="explorer-workspace"]')
+        ?.querySelector('[aria-label="Leyenda del mapa"]');
+      if (legend) {
+        const frame = target.getBoundingClientRect(),
+          box = legend.getBoundingClientRect();
+        const beside = Math.max(left, box.right - frame.left + 12);
+        const above = Math.max(bottom, frame.bottom - box.top + 12);
+        // Reservar el rectángulo libre más amplio: a la derecha de la leyenda
+        // vertical o encima de la franja compacta. Un municipio nunca queda bajo ella.
+        const sideArea =
+          Math.max(0, frame.width - beside - right) * Math.max(0, frame.height - top - bottom);
+        const upperArea =
+          Math.max(0, frame.width - left - right) * Math.max(0, frame.height - top - above);
+        if (sideArea > upperArea) left = beside;
+        else bottom = above;
+      }
+      if (current.mapMode) {
+        const frame = target.getBoundingClientRect();
+        const elements =
+          target
             .closest('[data-pw="explorer-workspace"]')
-            ?.querySelector('[data-pw="map-mode-controls"]');
-          const toolbarBottom = toolbar
-            ? toolbar.getBoundingClientRect().bottom - target.getBoundingClientRect().top + 12
-            : selected
-              ? 240
-              : 196;
-          top = Math.min(toolbarBottom, Math.max(24, height - bottom - 64));
-        }
+            ?.querySelectorAll('[data-map-overlay], [data-pw="map-navigation"]') ?? [];
+        const boxes = [...elements]
+          .map((element) => element.getBoundingClientRect())
+          .filter((box) => box.width > 0 && box.height > 0)
+          .map((box) => ({
+            left: box.left - frame.left,
+            right: box.right - frame.left,
+            top: box.top - frame.top,
+            bottom: box.bottom - frame.top,
+          }));
+        const area = freeMapRectangle(frame.width, frame.height, boxes, base);
+        left = area.left;
+        top = area.top;
+        right = frame.width - area.right;
+        bottom = frame.height - area.bottom;
       }
       return { paddingTopLeft: L.point(left, top), paddingBottomRight: L.point(right, bottom) };
     };
@@ -220,9 +255,14 @@ export function createTerritorialMap(
       if (!selected)
         for (const id of visible) {
           const layer = layers.get(id);
-          if (layer) bounds.extend(layer.getBounds());
+          if (layer && (!current.stateFilter || id.startsWith(current.stateFilter)))
+            bounds.extend(layer.getBounds());
         }
       if (bounds.isValid()) {
+        const focusBounds =
+          selected && current.mapMode
+            ? bounds.pad(explorerLayout.mapMode.municipalityContextPadding)
+            : bounds;
         const options = {
           ...safePadding(Boolean(selected)),
           maxZoom: selected ? 10 : 12,
@@ -239,11 +279,11 @@ export function createTerritorialMap(
           target.dataset.mapReady = "false";
           // Los ensayos con 2 y 8 redibujados intermedios introdujeron pausas
           // y empeoraron la UX. Conservar el escalado nativo hasta terminar el vuelo.
-          map.flyToBounds(bounds, {
+          map.flyToBounds(focusBounds, {
             ...options,
             duration: motionTokens.duration.mapFlight / 1000,
           });
-        } else map.fitBounds(bounds, { ...options, animate: false });
+        } else map.fitBounds(focusBounds, { ...options, animate: false });
       }
     };
     const background = () => {
@@ -266,7 +306,12 @@ export function createTerritorialMap(
           current.mapMode !== next.mapMode || current.panelOpen !== next.panelOpen;
         const panelOpening =
           next.mapMode && next.panelOpen && (!current.panelOpen || !current.mapMode);
-        const refit = maskChanged || selectionChanged || current.stateFilter !== next.stateFilter;
+        const refit =
+          maskChanged ||
+          selectionChanged ||
+          current.stateFilter !== next.stateFilter ||
+          current.mapMode !== next.mapMode ||
+          (current.mapMode && current.panelOpen && !next.panelOpen);
         const repaint =
           current.scenario !== next.scenario ||
           current.dark !== next.dark ||

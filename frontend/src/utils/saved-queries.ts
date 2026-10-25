@@ -1,4 +1,5 @@
 import type { Dataset } from "@/types/dataset";
+import { readExplorerDistribution } from "./explorer-distribution";
 import { defaultScenarios, filterMunicipalities, scenarioLabel } from "./dataset";
 import { riskTokens } from "@/theme/tokens";
 import { applyAdvancedFilters, nominalRangeError, readAdvancedFilters } from "./explorer-filters";
@@ -38,7 +39,9 @@ export function savedQuerySummary(query: SavedQuery, dataset: Dataset) {
       ? "Modo mapa"
       : params.get("vista") === "tabla"
         ? "Tabla"
-        : "Mapa";
+        : readExplorerDistribution(params) === "abajo"
+          ? "Mapa con ficha debajo"
+          : "Mapa";
   return [
     `${view} · ${presentation.tab === "contexto" ? contextViews[presentation.view] : "Pronóstico 2027"}`,
     municipality
@@ -57,6 +60,7 @@ const enums: Record<string, readonly string[]> = {
   riesgo: Object.keys(riskTokens),
   modo: ["mapa"],
   vista: ["tabla", "mapa"],
+  distribucion: ["lateral", "abajo"],
   comparar: ["1"],
   pestana: ["pronostico", "contexto"],
   indicador: Object.keys(contextViews),
@@ -226,6 +230,7 @@ export function captureQuery(dataset: Dataset, input: URLSearchParams, returnVie
   );
   set("riesgo", Object.hasOwn(riskTokens, input.get("riesgo") ?? "") ? input.get("riesgo") : null);
   set("modo", input.get("modo") === "mapa" ? "mapa" : null);
+  set("distribucion", readExplorerDistribution(input) === "abajo" ? "abajo" : null);
   set(
     "vista",
     input.get("modo") === "mapa" ? returnView : input.get("vista") === "tabla" ? "tabla" : "mapa"

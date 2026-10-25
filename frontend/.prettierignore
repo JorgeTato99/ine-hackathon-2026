@@ -1,5 +1,13 @@
 node_modules/
 public/data/
+# Generados y verificados por scripts/prepare-brand-assets.mjs.
+assets/brand/manifest.json
+assets/brand/typography.json
+src/content/brand-assets.json
+public/brand/logo.svg
+public/brand/wordmark.svg
+public/brand/banner.svg
+src/app/icon.svg
 .next/
 out/
 coverage/

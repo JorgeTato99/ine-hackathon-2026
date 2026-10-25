@@ -1,165 +1,109 @@
-# Explorador territorial
+# Explorador territorial · resultados-1.6
 
-Actualizado el 21 de octubre de 2026. [Frontend](../README.md) ·
-[Diseño](sistema-diseno.md) · [Cartografía](cartografia.md).
+Actualizado el 2026-10-24. [Frontend](../README.md) · [Diseño](sistema-diseno.md) · [Contrato de datos](../../docs/contrato-datos.md).
 
-## Composición y consulta
+## Experiencia vigente (D30)
 
-La entrada es una herramienta de consulta: título compacto, contexto indispensable,
-búsqueda y filtros frecuentes. La guía de tres pasos está en «Cómo explorar».
-El aviso de pronóstico condicionado permanece visible. Las páginas de metodología y descargas
-conservan su composición editorial.
+`ForecastExplorer`, exportado como `Explorer`, presenta **Pronóstico 2027** e **Histórico**. El mapa es grande desde el inicio, con controles flotantes en escritorio y altura adaptada al viewport: ofrece mapa normal más alto y **Modo mapa ampliado**. Siguen fuera la distribución alternativa, consultas guardadas, filtros avanzados y comparación binaria. La tabla conserva ordenación, paginación y exportación. Los componentes de las vistas retiradas se conservan con copia verificada fuera del código activo, en `temp/migracion-resultados-1.5/componentes-retirados/`.
 
-«Consultas» guarda filtros y notas personales en este navegador. Permite recuperar,
-editar, eliminar e intercambiar archivos JSON, con advertencia al cambiar el corte
-de datos. No guarda una copia de los resultados. Ver [consultas personales](consultas-guardadas.md).
+El recorrido es México → estado → municipio. Los selectores aceptan nombre o clave y el buscador permite encontrar directamente un municipio sin escoger estado. Los nombres repetidos se distinguen por CVEGEO. La ficha recupera la silueta real del municipio desde la geometría en caché, sin otra descarga. Se abre inmediatamente a la derecha; en móvil es una hoja inferior con cierre y gestión de foco de MUI. El botón MX elimina tanto municipio como estado de la URL.
 
-Buscar municipio o clave, Estado y Color sin intervención son los filtros principales. En móvil, entidad y
-riesgo están en «Filtros»; en escritorio, «Más filtros» despliega los adicionales:
+Cuatro cifras permanecen visibles al desplazar la página: participación, rojos, personas en rojos y lista. El resumen está fuera del encabezado corto para que sticky acompañe todo el workspace. Al seleccionar municipio se sustituyen dos por color y distancia al país. Con intervención se añaden diferencias y votos adicionales supuestos. La lista base es la de 2024; credencialización y combinada amplían el denominador únicamente en los rojos base con S3 conocido.
 
-- Historia disponible: presencia en seis elecciones, parcial o sin registros.
-  La entrega real utiliza su marca `historia_completa`; los ceros sin casilla se
-  distinguen al leer la serie. Esta clasificación no acredita comparabilidad territorial
-  ni calidad del modelo.
-- Cartografía disponible: con o sin geometría, independiente del resultado.
-- Lista nominal 2024: límites enteros, no negativos e inclusivos. Un límite activo
-  excluye los valores sin ese dato; cero sigue siendo válido.
-- Tamaño de lista nominal, ayuntamiento el mismo día en 2027, usos y costumbres
-  y antecedente sin casilla. Se comparten entre las dos pestañas.
+## Leyenda y mapa
 
-Los filtros se aplican al cambiar. El diálogo informa el total; «Ver resultados»
-lo cierra. Los chips permiten quitar criterios y «Restablecer» limpia la consulta,
-sin cambiar los escenarios. Los rangos inválidos producen una advertencia y un
-universo vacío hasta corregirlos; no se intercambian extremos silenciosamente.
+El semáforo usa rellenos planos: rojo `#C74A5A`, amarillo `#D9B44A`, verde `#65A58A` y gris sin datos en claro. En oscuro usa `#903545`, `#A18435`, `#39715D` y `#69717D` respectivamente; los datos y clases se conservan. Siempre hay etiquetas de texto en leyenda, ficha, tabla y tooltip. La leyenda se mantiene dentro del mapa; pulsarla atenúa las otras clases sin cambiar el ámbito de las cifras. El estado atenúa el resto del país sin borrar geometrías. La tabla y el CSV de selección sí siguen la clase resaltada. Los conteos de leyenda corresponden al país o estado, incluso al abrir una ficha.
 
-Los escenarios viven en el lateral de escritorio y en un panel accesible en móvil.
-La comparación sin/con intervención conserva el mismo nivel nacional; no permite
-atribuir a la intervención un cambio del supuesto nacional. La ficha y los controles
-la identifican como «Supuesto, no efecto medido».
+Histórico usa seis años y cinco cortes constantes: <40, 40–50, 50–60, 60–70 y ≥70 %. Solo falta de casillas lleva rayado gris; las ausencias tienen gris claro. La ficha histórica abre primero el historial. La referencia histórica estatal se rotula explícitamente como ponderada con la lista de 2024: no se hace pasar por una tasa observada calculada con conteos de otro año. La línea municipal deja huecos en ausencias y falta de casillas; los valores también están disponibles como tabla HTML.
 
-«Pronóstico 2027» usa el riesgo del escenario activo para el mapa y la cohorte
-sin intervención para el filtro de semáforo. «Datos del territorio» ofrece siete
-vistas con unidades, leyendas y cifras de control propias. La historia identifica
-falta de casillas; Villa de Pozos conserva geometría gris y resultados ausentes.
-Ver [reglas y reproducción de resultados](resultados.md).
+Leaflet Canvas conserva el vuelo nativo de 800 ms, sin redibujados intermedios. No cambia el motor cartográfico ni se añaden servicios de mapas externos.
 
-## Tabla y exportación
+## Predicciones e intervenciones
 
-La tabla comparte búsqueda, filtros y selección con el mapa. Permite ordenar por
-municipio, CVEGEO, entidad, participación, riesgo o estado del registro. Se comparan
-valores numéricos originales, no porcentajes formateados. Ausencias al final en
-ambas direcciones; los empates se resuelven por CVEGEO como orden estable. Ordenar
-por riesgo no representa una priorización institucional.
+Identificadores `nac-estimado_int-ninguna`, `retener_primerizos`, `jovenes_20_29`, `credencializacion` y `combinada` (los últimos con el mismo prefijo). El nivel nacional estimado es 0.5141. Los rangos y los colores se consumen de los archivos; el front no entrena ni recalcula el modelo.
 
-Tamaños: 10, 25, 50 y 100 filas; 25 por defecto. Los controles de primera/anterior/
-siguiente/última página están arriba y el encabezado permanece visible al desplazar
-el cuerpo. Cambiar filtros, escenario, orden o tamaño reinicia la página cuando
-corresponde; una página fuera del universo se acota al intervalo válido.
+Las cinco barras aporte_* explican siempre la predicción base. Se rotulan como reparto del modelo, no causas. La tabla de intervención compara las cuatro acciones por municipio; no presupone que combinada sea la mejor. En 20060 jóvenes lo saca del rojo y combinada no. Con combinada salen 84; con al menos una opción, 85.
 
-El CSV incluye **toda la consulta filtrada, en el orden elegido**, no sólo la página.
-Mantiene versión, procedencia, intervalos y advertencia del pronóstico y los
-supuestos. CVEGEO conserva cinco dígitos. En contexto, la tabla ordena por el
-indicador seleccionado y el CSV añade la vista y su valor.
-La ordenación no cambia el orden canónico de IDs usado por el mapa ni lo reencuadra.
+## URL y compatibilidad
 
-Las activaciones consecutivas de ordenación se calculan desde la URL vigente,
-incluso si Next todavía no publica el cambio anterior en el render. La misma
-normalización de columnas se aplica al mostrar y al alternar la tabla de contexto.
+Se conservan entidad, municipio, escenario, pestaña, año, leyenda, estado de tabla y `modo=mapa`. Los enlaces antiguos de dirigida_rojos pasan a combinada; los de sin intervención pasan a ninguna. Contexto/historia pasa a Histórico. Se eliminan parámetros de controles retirados. Los valores desconocidos reciben opciones seguras.
 
-Los controles leen una instantánea de la URL con `useSyncExternalStore`. El
-actualizador notifica después de `replaceState`, para que las teclas no se
-pierdan mientras Next prepara su transición. `popstate` y la señal del router
-conservan navegación externa. El servidor usa una consulta vacía consistente
-con la exportación estática; al hidratar se lee la URL real. No se almacenan
-borradores paralelos. El filtrado de búsqueda sigue usando `useDeferredValue`.
+## Fuentes, preparación y entrega
 
-Leaflet carga su CSS desde el layout inicial, antes de los estilos propios; el
-JavaScript del mapa sigue diferido. En el build se reprodujo que una hoja de
-estilo tardía podía retener el commit de React y perder teclas aunque la URL ya
-estuviera notificada. La carga inicial evita esa dependencia durante la edición.
-Storybook importa el mismo CSS en su preview. `query-resources.spec.ts` comprueba
-la hoja inicial y la escritura de cada prefijo con el código del mapa retenido.
+Fuente técnica: PR #6 fusionado, commit científico `7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7`. La recepción de artefactos no sustituye la validez científica; Sofía cerró las decisiones D31–D33 y el software conserva su versión y límites.
 
-La altura normal se define en `explorerLayout.mapHeight`: en 1440×900 son 525 px
-(70 más que antes) y en 1280×800, 425 px. Los mínimos/máximos por breakpoint
-mantienen el mapa utilizable en pantallas pequeñas y acotan su crecimiento.
-El botón **Ampliar mapa** está dentro del mapa normal, con texto e icono; comparte
-la acción de la cabecera y no crea otro renderer.
+Desde la raíz:
 
-## Modo mapa
+```console
+uv run python scripts/prepare_results.py
+uv run python -m scripts.compare_publications --before data/processed/mapa/resultados-1.3 --before-commit f25d9c2709d2a93179c7ee2d6d2df985d418d6ca --after data/processed/mapa/resultados-1.6 --after-commit 7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7 --output frontend/public/data/publicaciones/resultados-1.3__resultados-1.6.json
+uv run python scripts/package_map_delivery.py --publish
+```
 
-Las opciones Pronóstico / Datos del territorio permanecen en la barra ampliada,
-con estado seleccionado. «Configurar escenarios» o «Cambiar tema del mapa» abre los controles propios
-y muestra el nombre completo de la vista. En pronóstico identifica el porcentaje
-nacional supuesto, la intervención del escenario que colorea el mapa y si la
-comparación está activa; en contexto conserva el tema y su subselector. Los controles se reutilizan,
-sin formularios duplicados ni un estado distinto del de la URL. En el panel de
-vistas aparecen primero los selectores, luego escenarios y después las cifras
-compactas en dos columnas, con un único desplazamiento de contenido.
-
-Filtros muestra los mismos criterios y chips eliminables que la consulta normal.
-Restablecer, total y Ver resultados permanecen fuera del cuerpo desplazable. El
-contador de Filtros cuenta criterios distintos de la búsqueda, que tiene su propio
-campo visible. La barra y el panel reparten su altura disponible, sin suponer una
-altura fija para la barra; en horizontal corto el panel pasa al lateral. La ficha
-se conserva al cambiar de modo, y el retorno a tabla conserva sus ajustes.
-
-«Modo mapa» ocupa el viewport mediante composición CSS, sin exigir la API nativa
-de pantalla completa. Es la misma instancia de Leaflet y conserva consulta y
-selección. Cambiar el tamaño mantiene centro y zoom; una selección nueva reserva
-espacio para los paneles. Al abrir una ficha puede haber un desplazamiento mínimo
-para no ocultarla, conservando el zoom.
-
-Los controles flotantes permiten buscar, cambiar filtros y escenarios, exportar,
-volver a tabla y alternar tema. La ficha es lateral en escritorio y un panel debajo de la barra
-en móvil; el horizontal corto usa lateral. Los paneles y la leyenda pueden plegarse. La leyenda comparte la columna de
-controles y se oculta completamente cuando un panel ocupa ese espacio; al cerrar
-el panel conserva la preferencia de leyenda abierta o plegada.
-No hay arrastre libre de ventanas. Una búsqueda con un único resultado ofrece abrir
-su ficha directamente, también si no tiene geometría.
-
-El fondo queda inerte mientras está activo el modo; se bloquea scroll del documento
-y se mantiene scroll local en los paneles. No se abre el teclado móvil automáticamente.
-Escape cierra primero el menú o panel activo; después permite salir. Se restaura
-foco al acceso utilizado y desplazamiento al regresar, y si se entró desde tabla se recupera esa vista.
-El botón «Tabla» dentro del modo vuelve directamente a los resultados.
-
-La implementación del aislamiento usa [inert](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert).
-Los paneles flotantes no son modales; los menús y diálogos de MUI conservan su
-gestión de foco y Escape. La tabla sigue siendo la alternativa accesible al Canvas.
-
-## Estado compartible y mantenimiento
-
-| Parámetro                                        | Uso                                        |
-| ------------------------------------------------ | ------------------------------------------ |
-| `buscar`, `entidad`, `riesgo`                    | Consulta principal                         |
-| `historia`, `cartografia`                        | Cobertura de registros y geometría         |
-| `ln_min`, `ln_max`                               | Límites inclusivos de lista nominal 2024   |
-| `municipio`                                      | Selección por CVEGEO                       |
-| `escenario`, `segundo`, `comparar=1`             | Escenarios recibidos y lectura A/B         |
-| `vista=tabla`                                    | Vista de resultados                        |
-| `orden`, `direccion`                             | Columna y sentido de ordenación            |
-| `filas`, `pagina`                                | Tamaño y página; página pública desde 1    |
-| `modo=mapa`                                      | Composición ampliada                       |
-| `pestana`, `indicador`                           | Pronóstico o vista de contexto             |
-| `grupo`, `seguridad`, `anio`                     | Subvista de personas, seguridad o historia |
-| `tamano`, `ayuntamiento`, `costumbres`, `alerta` | Filtros adicionales compartidos            |
-
-Los valores categóricos o de paginación desconocidos usan valores seguros. La URL
-es la fuente de la consulta; los paneles abiertos son estado de interfaz. No hay
-backend ni cambios a los archivos científicos.
-
-Lógica pura: `utils/explorer-filters.ts` y `utils/explorer-table.ts`. Composición:
-`components/explorer/`. Aislamiento del modo: `hooks/use-map-mode.ts`. Renderer y
-reservas de espacio: [cartografía](cartografia.md). Tokens de medidas en píxeles CSS:
-`explorerLayout`; no pasarlos como factores numéricos de espaciado de MUI.
+Repetir el empaquetado después de preparar datos. El build comprueba los archivos publicados y sus huellas. El ZIP incorpora URL, GPKG, base CSV/XLSX, diccionario, metadatos, controles y manifiesto. No es la entrega completa del concurso. La preparación conserva CSV/JSON originales byte por byte.
 
 ## Verificación
 
-Las unitarias comprueban ceros, ausencias, rangos, orden numérico, empates y páginas.
-Integración comprueba consultas, paneles, foco y recuperación de tabla. E2E comprueba
-la exportación real, Canvas compartido, una descarga de geometría, selección, CSV
-completo, teclado y accesibilidad automática en escritorio/móvil emulado.
-Las pruebas no acreditan dispositivos físicos, el modelo ni eficacia de intervenciones.
+Las pruebas de `forecast.test.ts`, integración de Explorer y E2E cubren cifras nacionales y estatales, denominador, barras, 20060, vacíos, navegación, enlaces anteriores, leyenda, histórico, descargas y reflow. Las pruebas del diseño anterior se archivaron en `temp/migracion-resultados-1.5/pruebas-anteriores/` al sustituir sus contratos de UI; no se ocultaron con skips. Se conserva la batería editorial adaptada a los nuevos capítulos y descargas. Evidencia y cierre en esa carpeta temporal.
 
-Las etiquetas y ayudas siguen la [política de lenguaje](lenguaje-y-ayudas.md).
+## Modo ampliado y ayudas · diseño 1.18.1
+
+Se entra con **Modo mapa** en la cabecera o **Ampliar mapa** dentro del mapa normal.
+El workspace ocupa 100dvh y el ancho completo, conservando el mismo Canvas y caché.
+`useMapMode` aísla el marco normal con inert, bloquea scroll, mueve el foco al mapa
+y restaura foco y posición al salir. Escape sale del modo, salvo cuando debe cerrar
+antes una ayuda o un desplegable. La selección, filtros, año e intervención se conservan.
+
+Herramientas, cifras, leyenda y ficha tienen cabecera persistente y controles −/+.
+**Despejar** reduce todos; **Restaurar** vuelve a abrirlos. Zoom y MX siempre quedan
+visibles. En móvil se abre un cuerpo cada vez para evitar superposiciones. La ficha
+admite Compacta, Normal (predeterminada) y Amplia en escritorio; mantiene esa anchura entre municipios
+y entradas al modo. La cámara reserva el rectángulo libre más amplio entre los paneles.
+Normal corresponde a la anterior Amplia (400–480 px); Compacta conserva los 360 px
+y Amplia corresponde a la anterior Extendida (480–600 px).
+
+En escritorio, **Resumen del territorio** queda arriba al centro y **Ficha municipal**
+ocupa sola la columna derecha, desde el margen superior de 16 px hasta el inferior
+de 34 px. Zoom, MX, Despejar, tema y Salir se agrupan abajo en el centro libre entre
+paneles: una fila desde 1200 px y dos filas en ventanas menores. Ninguno ocupa ya
+la esquina derecha. El resumen muestra cuatro columnas cuando su ancho llega a 600 px y dos
+en espacios menores, con scroll propio si hace falta. Las anchuras laterales se
+adaptan sin solaparse; en móvil se conserva el recorrido de un panel abierto cada vez.
+La atribución INEGI queda debajo de los controles, alineada al mismo centro y a
+4 px del borde inferior. Conserva letra de 11 px, con texto y márgenes compactos.
+Al enfocar un municipio en este modo se amplía su encuadre un 14 % por lado: queda
+algo más de contexto alrededor. No cambia el zoom del modo normal ni el vuelo de 800 ms.
+
+Las cabeceras tienen fondo tenue; una línea morada identifica la ficha y un bloque
+suave destaca la predicción. Se conservan la tipografía, los colores de riesgo y
+las ayudas. Las cifras describen el color como comparación entre municipios, sin
+rotular como mayor riesgo a un municipio verde.
+
+El mapa normal tiene un mínimo de 560 px en escritorio y 460 px / 70dvh en móvil.
+Se acepta desplazamiento inicial para darle más altura; no se reduce para meter toda
+la página en el primer viewport. La ficha normal conserva scroll independiente.
+
+Todos los KPI, incluido votos adicionales y los cuatro históricos, usan ContextHelp:
+resumen al apuntar/enfocar y explicación completa al pulsar, tocar o usar Enter.
+También se explican intervalo, probabilidad, factores e historial en la ficha. Los
+textos están centralizados en reading-guide.ts y actualizados para la versión 1.6.
+
+## Estados y comprobaciones de 1.6
+
+El resumen informa cuántas intervenciones son parciales en el ámbito elegido.
+La ficha identifica la acción seleccionada y cada fila de su tabla; los motivos
+originales se conservan al descargar. El SIG incluye motivo y estado de cada
+escenario, sin presentar un componente ausente como cero observado.
+
+Oxchuc y San Mateo del Mar conservan componentes conocidos; credencialización sin
+dato no aumenta su lista. Las altas efectivas del país son 330,309, no 332,396.
+El ejemplo no monótono ahora es Mixistlán de la Reforma20060; los modelos y las
+clases no se alteran para hacer que combinada parezca siempre superior.
+
+El contexto plegado muestra H010 con el estado y periodo de comparación. Su ayuda
+aclara diferencias de registro y el uso predictivo del homicidio transformado.
+La paleta, fuentes, animación nativa de 800ms y los controles aprobados permanecen.
+
+La probabilidad admite hasta dos decimales de porcentaje para respetar los cuatro
+decimales de proporción del archivo. Así79.95% no aparece como80.0% mientras su
+etiqueta sigue por debajo del corte. La presentación no cambia probabilidades.

@@ -8,7 +8,17 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { BrandMark } from "./brand-mark";
 import { RiskBadge } from "./risk-badge";
-import { colors, riskTokens, brand, designSystem, typeScale, space, radii } from "@/theme/tokens";
+import {
+  colors,
+  riskTokens,
+  brand,
+  designSystem,
+  typeScale,
+  space,
+  radii,
+  fontFamilies,
+} from "@/theme/tokens";
+import { TraceRule } from "./trace-rule";
 
 const meta = { title: "Sistema de diseño/Fundamentos", tags: ["autodocs"] } satisfies Meta;
 export default meta;
@@ -18,7 +28,7 @@ export const Identidad: Story = {
     <Box sx={{ p: 4, display: "flex", alignItems: "center", gap: 2, color: "primary.main" }}>
       <BrandMark size={64} />
       <Box>
-        <Typography variant="h1">{brand.name}</Typography>
+        <Typography sx={typeScale.wordmark}>{brand.name}</Typography>
         <Typography color="text.secondary">{brand.descriptor}</Typography>
         <Typography variant="caption">Sistema visual {designSystem.version}</Typography>
       </Box>
@@ -76,13 +86,19 @@ export const Tipografia: Story = {
         .map(([role, styles]) => (
           <Box key={role}>
             <Typography variant="caption" color="text.secondary">
-              {role} · Roboto local
+              {role} ·{" "}
+              {typeof styles !== "string" &&
+              "fontFamily" in styles &&
+              styles.fontFamily === fontFamilies.editorial
+                ? "Newsreader"
+                : "Source Sans 3"}
             </Typography>
             <Typography sx={typeof styles === "string" ? {} : styles}>
               El territorio, en contexto
             </Typography>
           </Box>
         ))}
+      <TraceRule />
     </Stack>
   ),
 };

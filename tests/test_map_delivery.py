@@ -62,10 +62,17 @@ def test_package_matches_real_originals_and_repeats_identically(tmp_path):
     archive = create_package(root, tmp_path)
     first = archive.read_bytes()
     assert create_package(root, tmp_path).read_bytes() == first
-    version = "resultados-1.3"
+    version = "resultados-1.6"
     published = root / "frontend/public/data"
     controls = json.loads((published / version / "controles.json").read_text(encoding="utf-8"))
     assert controls["normalizations"]["brecha_jovenes_2024_NaN_to_null"] == 0
+    assert controls["partialInterventions"]["combinada"] == 77
+    with closing(sqlite3.connect(published / version / "municipios.gpkg")) as connection:
+        reason = connection.execute(
+            "SELECT nac_estimado_int_combinada_motivo FROM resultados_2027 WHERE cvegeo = ?",
+            ("07064",),
+        ).fetchone()[0]
+        assert "intervencion_parcial" in reason.split("|")
     dataset = json.loads((published / "dataset.json").read_text(encoding="utf-8"))
     indicators = {row["id"]: row["indicators"] for row in dataset["municipalities"]}
     with (published / version / "municipios.csv").open(encoding="utf-8", newline="") as stream:
@@ -93,13 +100,13 @@ def test_package_matches_real_originals_and_repeats_identically(tmp_path):
         assert len(package.namelist()) == 12
         manifest = json.loads(package.read(prefix + "MANIFIESTO.json"))
         assert manifest["version_resultados"] == version
-        assert manifest["source"]["commit"] == "f25d9c2709d2a93179c7ee2d6d2df985d418d6ca"
+        assert manifest["source"]["commit"] == "7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7"
         for name, metadata in manifest["files"].items():
             content = package.read(prefix + name)
             assert len(content) == metadata["bytes"]
             assert hashlib.sha256(content).hexdigest() == metadata["sha256"]
         for name in BASE_FILES:
-            original = root / "data/processed/entrega/base-datos-1.3" / name
+            original = root / "data/processed/entrega/base-datos-1.6" / name
             assert package.read(prefix + "base-datos/" + name) == original.read_bytes()
         assert b"https://traza-civica.jorgetato.com/" in package.read(prefix + "ENLACE.txt")
         assert not any(".." in name or name.startswith("/") for name in package.namelist())

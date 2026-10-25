@@ -1,0 +1,153 @@
+{
+  "version_resultados": "resultados-1.6",
+  "generado": "2026-10-24T17:03:08",
+  "tipo": "resultados del análisis (reemplaza a resultados-1.5, 1.4, 1.3, 1.2, 1.1, 1.0 y muestra-0.3)",
+  "pregunta": "¿Qué zonas podrían presentar mayor abstención en el futuro si no se interviene? Intermedia del 6 de junio de 2027.",
+  "clave": "cvegeo (INEGI, 5 caracteres con ceros) es la clave estable y de unión con la geometría. clave_ine_2024 es solo referencia.",
+  "lectura": "Leer cvegeo, clave_ine_2024 y motivo como texto. Celda vacía = sin dato o no aplica; nunca equivale a cero.",
+  "sin_conteo_2024": "En 15 municipios los conteos de 2024 no tienen a nadie con dato (su participación sale de las actas): n_jov_2024, nv_jov_2024, peso_jov_2024, primerizos_votaron_2024, jovenes_21_29_no_votaron_2024, brecha_jovenes_2024, interv_votos_retener_primerizos e interv_votos_brecha_joven van vacíos.",
+  "archivos": [
+    "municipios.csv",
+    "escenarios_2027.csv",
+    "metadatos.json"
+  ],
+  "niveles_nacionales_2027": {
+    "estimado": 0.5141
+  },
+  "modelo_nacional": {
+    "decision": "D27: una sola predicción por municipio; el nivel nacional se estima con el calendario local",
+    "recta": "participación nacional (%) = 37.4337 + 0.1533 × % de la lista que elige ayuntamiento el mismo día",
+    "datos": "intermedias 2009, 2015 y 2021 de los CCPC: 2009: 44.06 % con 47.0 % de la lista con ayuntamiento, 2015: 47.07 % con 57.9 % de la lista con ayuntamiento, 2021: 51.84 % con 95.1 % de la lista con ayuntamiento",
+    "pct_lista_ayuntamiento_2027": 91.2,
+    "nivel_2027": 51.41,
+    "prueba": "cada intermedia predicha con las otras dos; errores (pp): 2009: +1.6, 2015: -1.2, 2021: +5.4",
+    "error_nacional_pp": 3.32,
+    "sensibilidad": "el semáforo no depende del nivel; con otro nivel N, la participación de cada municipio se mueve casi lo mismo que N − nivel_2027. Niveles de referencia: como 2009 44.06 %, como 2015 47.07 %, como 2021 51.84 %"
+  },
+  "participacion_nacional_historica": {
+    "valores": {
+      "2009": 0.4409,
+      "2012": 0.621,
+      "2015": 0.4706,
+      "2018": 0.6238,
+      "2021": 0.5185,
+      "2024": 0.5968
+    },
+    "unidad": "proporción de 0 a 1 sobre votaron + no votaron, con las mismas correcciones que la historia de cada municipio (notebook 03)",
+    "nota": "El modelo nacional (D27) usa las intermedias de los CCPC sin esas correcciones (44.06, 47.07 y 51.84 %); la diferencia es de 0.03 puntos o menos"
+  },
+  "aportes": "D29: aporte_* reparte la predicción de cada municipio entre cinco grupos de variables (Huber exacto y random forest por contribuciones de camino, promediados), centrados en el promedio del país ponderado por la lista de 2024. Con Delta con guardia (D33), la desviación de 2024 de la que parte el modelo cuenta en aporte_historia. Notebook 04c",
+  "formula": "part_pred = nivel nacional estimado + desviación prevista + ajuste; el ajuste hace que el promedio ponderado por ln_2024 sea el nivel",
+  "semaforo": {
+    "regla": "posición de riesgo = 100 − percentil de la desviación prevista; rojo si ≥ 80, amarillo si ≥ 60, verde en otro caso (D18)",
+    "umbral_rojo_desviacion_pp": -6.8164,
+    "umbral_amarillo_desviacion_pp": 1.9332,
+    "equivalencia_contrato": {
+      "rojo": "alto",
+      "amarillo": "medio",
+      "verde": "bajo"
+    },
+    "validacion": "aprendiendo de 2015 y prediciendo 2021, el 70 % de los municipios del 20 % de mayor riesgo previsto quedaron en el 20 % real (regla simple: 67 %)"
+  },
+  "intervalo": "errores de la validación (las dos direcciones), centrados, cuantiles 5 y 95 por tamaño de lista (<5 mil, 5-20 mil, 20-100 mil, 100 mil+), sumados en cuadratura con 1.645 × el error del nivel nacional. Es una aproximación condicional: sin la parte nacional, probado de una elección a otra cubrió 93 % (2021) y 79 % (2015), y menos en los municipios de usos y costumbres (88 % y 74 %)",
+  "intervencion": {
+    "ninguna": "pronóstico sin intervención",
+    "retener_primerizos": "S1, supuesto, no efecto medido: la generación de 18 a 20 años de 2024 no cae más que su municipio (columna interv_votos_retener_primerizos)",
+    "jovenes_20_29": "S2, supuesto, no efecto medido: los de 20 a 29 años recortan a la mitad su brecha con el municipio (interv_votos_brecha_joven)",
+    "credencializacion": "S3, supuesto, no efecto medido: los nuevos sin credencial la tramitan y votan como los de 18 y 19 años de su municipio en 2021; también suman personas a la lista (interv_votos_credencializar, interv_nuevos_en_lista)",
+    "combinada": "S1 + S2 + S3 juntos",
+    "alcance": "solo en los municipios en rojo; fuera del rojo no cambia nada. No se estima el efecto de una campaña (D19, D22, D28)",
+    "comparacion": "comparar nac-estimado_int-ninguna con nac-estimado_int-<tipo>",
+    "formula": "part_pred con = (part_pred sin × ln_2024 + votos_adicionales) / (ln_2024 + interv_nuevos_en_lista)"
+  },
+  "escenarios": [
+    "nac-estimado_int-combinada",
+    "nac-estimado_int-credencializacion",
+    "nac-estimado_int-jovenes_20_29",
+    "nac-estimado_int-ninguna",
+    "nac-estimado_int-retener_primerizos"
+  ],
+  "motivos": {
+    "territorio_aproximado": "territorio reconstruido de forma aproximada en algún año (D13)",
+    "antecedente_sin_casilla": "parte de su lista se quedó sin casilla en alguna elección de 2009 a 2024 (D12): revisar aparte del semáforo",
+    "intervencion_parcial": "municipio en rojo donde algún componente del tipo de intervención no tiene dato (S1 y S2 sin conteo de 2024; S3 sin participación de 18 y 19 años en 2021): se suma solo lo conocido y, si falta S3, tampoco se agregan personas a la lista (D32)"
+  },
+  "motivo_formato": "uno o varios códigos separados por '|'",
+  "unidades": {
+    "part_*": "proporción de 0 a 1 sobre votaron + no votaron (sin NS), 4 decimales; territorio de 2024",
+    "ln_2024": "personas en la lista nominal de 2024",
+    "ns_2024": "proporción de la lista nominal de 2024 con dato \"no sabemos\"",
+    "historia_completa": "true si hay participación en las seis elecciones",
+    "territorio_aproximado_2024": "true si el territorio del municipio no se pudo reconstruir completo en algún año (D13)",
+    "posicion_riesgo": "de 0 a 100; 100 = el municipio que se prevé más por debajo del país en 2027",
+    "semaforo": "rojo (posición ≥ 80), amarillo (60 a < 80), verde (< 60) (D18)",
+    "probabilidad_rojo": "proporción de 2,000 simulaciones en que el municipio queda en rojo, sumando errores de la validación del modelo",
+    "aporte_*": "puntos porcentuales (2 decimales): cuánto sube (+) o baja (−) cada grupo de variables la predicción del municipio frente al país (D29, notebook 04c). Los cinco suman (part_pred sin intervención − nivel nacional) × 100. Grupos: historia de participación, calendario y usos y costumbres, lista y población, condiciones sociales, competencia política. Es un reparto de la predicción, no causas probadas",
+    "peso_jov_2024": "proporción de la lista 2024 de 18 a 34 años que votó o no votó (mismo concepto que la muestra 0.3)",
+    "n_jov_2024": "personas de 18 a 34 años que votaron o no votaron en 2024",
+    "nv_jov_2024": "personas de 18 a 34 años que no votaron en 2024",
+    "primerizos_votaron_2024": "personas de 18 a 20 años que votaron en 2024 (su primera elección federal)",
+    "jovenes_21_29_lista_2024": "personas de 21 a 29 años en la lista nominal de 2024",
+    "jovenes_21_29_no_votaron_2024": "personas de 21 a 29 años que no votaron en 2024",
+    "nuevos_votantes_2027": "personas que tendrán 18 o 19 años el 6 de junio de 2027, estimadas con el censo 2020 (0.25 × edad 10 + edad 11 + 0.75 × edad 12)",
+    "credencializacion_18_19_2021": "proporción de la generación de 18 y 19 años en la lista nominal de 2021 (puede pasar de 1)",
+    "nuevos_sin_credencial_2027_si_se_repite_2021": "personas; escenario aritmético: nuevos_votantes_2027 × (1 − credencialización 2021, tope 1)",
+    "alerta_sin_casilla": "recurrente (2 o más elecciones con parte de la lista sin casilla), antecedente (1) o sin antecedente (D12); va aparte del modelo",
+    "ultima_eleccion_sin_casilla": "año",
+    "elecciones_por_debajo_del_pais": "número de elecciones de 2009 a 2024 con participación menor a la nacional",
+    "zona_participacion_2024": "agrupamiento territorial de la participación 2024 (LISA, vecindad Queen)",
+    "brecha_jovenes_2024": "puntos porcentuales: participación de 20 a 29 años menos la del municipio, 2024",
+    "ayuntamiento_mismo_dia_2027": "true si el municipio elige ayuntamiento el 6 de junio de 2027 (calendario a octubre de 2026)",
+    "gobernador_mismo_dia_2027": "true si el estado elige gubernatura ese día",
+    "es_sni": "true si es municipio de Oaxaca que elige autoridades por sistemas normativos indígenas (IEEPCO 2025)",
+    "usos_y_costumbres": "true si el municipio elige autoridades por sistemas normativos indígenas: los de es_sni más 7 fuera de Oaxaca que en 2027 no eligen ayuntamiento por partidos (data/reference/municipios_sni_fuera_oaxaca.csv)",
+    "interv_votos_retener_primerizos": "votos; supuesto S1 (D22): generación de 18 a 20 años de 2024 que votó o no votó × 6.1 % (caída extra típica de la generación primeriza 2018 → 2021)",
+    "interv_votos_brecha_joven": "votos; supuesto S2 (D22): personas de 20 a 29 años de 2024 que votaron o no votaron × la mitad de su brecha con el municipio en 2021 (0 si no había brecha); vacío sin dato de 2021",
+    "interv_votos_credencializar": "votos; supuesto S3 (D22): nuevos_sin_credencial_2027_si_se_repite_2021 × participación de 18 y 19 años del municipio en 2021; vacío sin dato",
+    "interv_nuevos_en_lista": "personas que S3 suma a la lista (igual a nuevos_sin_credencial_2027_si_se_repite_2021); vacío sin dato",
+    "homicidios_2022_2024": "defunciones por homicidio, INEGI, por municipio de ocurrencia; vacío si la clave falta algún año",
+    "tasa_homicidios_2022_2024": "homicidios por 100 mil habitantes al año (población CONAPO 2023)",
+    "percentil_homicidios_2022_2024": "de 0 a 100; 100 = la tasa más alta",
+    "comparacion_homicidios_inegi_sesnsp": "etiqueta del estado (D17): qué fuente cuenta más homicidios de 2019 a 2024",
+    "cifra_oculta_estatal_2025": "porcentaje de delitos no denunciados o sin carpeta en el estado, ENVIPE 2026",
+    "quien_ejerce_seguridad": "categoría del INEGI (CNGMD 2025, situación al 31 de diciembre de 2024)",
+    "tiene_policia_municipal": "true / false; vacío si no aplica o no identificado",
+    "policias_municipales_por_10mil_habitantes": "policías municipales (incluye titular) por 10 mil habitantes (CONAPO 2024)",
+    "justicia_civica": "categoría del INEGI (CNGMD 2025)",
+    "desv_base": "proporción; participación prevista menos el nivel nacional del escenario",
+    "efecto_interv": "proporción; participación con intervención menos sin intervención. 0 en intervencion = \"ninguna\" y fuera del rojo",
+    "part_pred": "proporción de 0 a 1; nivel nacional + desviación prevista, ajustada para que el promedio ponderado por la lista sea el nivel",
+    "part_pred_inf, part_pred_sup": "proporción; intervalo de 90 %: errores de la validación por tamaño de municipio sumados en cuadratura con el error del nivel nacional (D27)",
+    "riesgo": "alto = rojo, medio = amarillo, bajo = verde. Con intervención se compara contra la línea fija del semáforo sin intervención",
+    "votos_adicionales": "votos que suma el tipo de intervención en los municipios en rojo; 0 fuera del rojo; vacío sin intervención"
+  },
+  "fuentes": [
+    "INE, Conteos Censales de Participación Ciudadana 2009-2024",
+    "INE, cómputos distritales por casilla 2009-2024",
+    "INEGI: Censos 2010 y 2020, Encuesta Intercensal 2015, Estadísticas de Defunciones Registradas, CNGMD 2025, ENVIPE 2026",
+    "CONAPO: proyecciones de población base 2020, marginación",
+    "CONEVAL: pobreza municipal y rezago social",
+    "SESNSP: incidencia delictiva",
+    "IEEPCO: municipios por sistemas normativos indígenas 2025",
+    "Organismos públicos locales: calendario de elecciones 2027"
+  ],
+  "advertencias": [
+    "El nivel nacional de 2027 (51.4 %) es una estimación por calendario hecha con solo tres intermedias; su error de prueba es de unos 3 puntos. El semáforo no depende de él.",
+    "El intervalo de cada municipio es ancho y aproximado: su error propio va de unos ±7 a ±15 pp según su tamaño y, con el error del nivel nacional, el rango mide de 18 a 29 puntos. No garantiza 90 % en cada grupo ni en 2027. La posición frente a los demás es más confiable que el nivel exacto.",
+    "La probabilidad de rojo es la frecuencia en simulaciones con los errores del pasado, no una probabilidad garantizada; es optimista en los extremos: 80 % o más se lee como \"probable\", no como \"seguro\".",
+    "El calendario local de 2027 puede cambiar; elegir ayuntamiento el mismo día es la variable que más pesa.",
+    "La tasa de homicidios de 2022 a 2024 (en logaritmo) es una de las 34 variables del modelo, en el grupo de condiciones sociales, y casi no pesa. Las demás columnas de seguridad (policía, justicia cívica, cifra oculta y comparación de fuentes) son solo contexto: no entran al modelo.",
+    "El escenario con intervención es una cuenta con supuestos explícitos, no un efecto medido de una campaña. Donde falta algún componente se suma solo lo conocido y se marca intervencion_parcial (D32).",
+    "La validación es retrospectiva con datos revisados: algunas fuentes (por ejemplo, CONEVAL 2020) se publicaron después de la elección que se predice.",
+    "No se nombran personas ni se atribuyen causas individuales a ningún municipio."
+  ],
+  "modelo": "Delta con guardia (D33): desviación de la presidencial anterior + cambio que aprende un ensamble (promedio de Huber y random forest, D21) con 34 variables; si en esa presidencial faltaron casillas o no hay dato, ensamble de nivel. Evaluación retrospectiva con datos revisados: aprende de una transición presidencial-intermedia y predice la otra",
+  "notebooks": [
+    "03_historia_y_variables",
+    "03b_variables_externas_y_patrones",
+    "04_modelo_riesgo_2027",
+    "04b_fuentes_adicionales_e_importancia",
+    "04c_por_que_cada_municipio",
+    "05_semaforo_y_mapa"
+  ]
+}
