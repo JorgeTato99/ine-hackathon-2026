@@ -213,7 +213,7 @@ Ejemplo con Tijuana (`02004`), sin intervención. En el teléfono, la ficha sube
 ├───────────────────────────────────────────────┤
 │ 1 · PREDICCIÓN 2027                           │
 │ Participación esperada        37.1 %          │
-│ Rango probable (90 %)         27.9 % – 47.9 % │
+│ Rango probable (90 %)         28.0 % – 47.9 % │
 │ Frente al país                14.3 puntos menos│
 │ Qué tan firme es el rojo      Probable (93 %) │
 ├───────────────────────────────────────────────┤
@@ -428,7 +428,7 @@ país por año.
 - Sin intervención, en la vista del país: **51.4 %, 495, 24,955,268 y 98,330,348**.
 - Con "Las tres": **411 en rojo, 84 salen, 528,400 votos adicionales y 51.8 %**.
 - Al elegir Oaxaca: **299 rojos**; con "Las tres", 267.
-- Al elegir Tijuana, la ficha muestra **37.1 %, de 27.9 % a 47.9 %, 14.3 puntos menos que el país**; ningún
+- Al elegir Tijuana, la ficha muestra **37.1 %, de 28.0 % a 47.9 %, 14.3 puntos menos que el país**; ningún
   tipo de intervención lo saca del rojo.
 - En `20060` (Mixistlán de la Reforma), "Jóvenes 20–29" lo saca del rojo y "Las tres" no.
 - En Tijuana, las barras dicen: historia −12.4, calendario +2.5, lista +0.4, condiciones sociales −4.5 y competencia
