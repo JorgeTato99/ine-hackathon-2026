@@ -48,6 +48,92 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-24 - Pronóstico 1.6 y experiencia territorial
+
+### 🎯 Resumen
+
+Integrar resultados-1.6 con Delta con guardia, cinco intervenciones y estados
+parciales explícitos. Completar P1 conservando el morado, la identidad gráfica,
+las ayudas y el mapa ampliado aprobados. El navegador consume resultados
+precalculados; los escenarios siguen siendo supuestos, no efectos medidos.
+
+### Added
+
+- Identificar intervención parcial por municipio y acción, con aviso visible en
+  ficha, resumen territorial y descargas; conservar motivos en GeoJSON y GPKG.
+- Mostrar la comparación estatal INEGI–SESNSP junto a homicidios y una ayuda que
+  distingue ese contexto del predictor municipal transformado.
+
+- Recuperar el modo mapa ampliado con cuatro paneles minimizables, anchuras de ficha,
+  acción Despejar, acceso dentro del mapa y retorno de foco/scroll sin recargar la cartografía.
+- Reincorporar ayudas de dos niveles en todos los KPI y conceptos de la ficha, y
+  la silueta real municipal reutilizando geometría en caché.
+
+- Incorporar resultados-1.6: una predicción nacional estimada, cinco tipos de
+  intervención, explicación base con cinco grupos de variables e historial
+  municipal frente al país, con intervalos de 2027.
+- Ofrecer las pestañas Pronóstico e Histórico, búsqueda por estado/municipio,
+  cifras por ámbito y una leyenda que resalta clases sin alterar los totales.
+- Publicar el ZIP portable 1.6, la base Excel y el diccionario; verificar
+  integridad de los archivos y coherencia de versión antes de compilar.
+
+### Changed
+
+- Usar el ancho intermedio como predeterminado de la ficha ampliada y renombrar
+  las opciones a Compacta, Normal y Amplia, conservando las tres medidas.
+- Centrar la atribución INEGI debajo de los controles inferiores del mapa ampliado;
+  compactar el texto y los márgenes conservando el tamaño de letra.
+- Agrupar zoom, MX, Despejar, tema y Salir abajo al centro en modo ampliado;
+  liberar la esquina derecha para extender la ficha desde el margen superior al inferior.
+- Dar toda la altura disponible a la ficha derecha del mapa ampliado y mover el
+  resumen al centro superior, sin solapar los paneles al ajustar la anchura.
+  Abrir ligeramente el encuadre municipal en ese modo y reforzar la jerarquía
+  visual con cabeceras suaves y acentos morados discretos (diseño 1.18.0).
+- Centrar el explorador en un mapa grande con controles flotantes de escritorio,
+  ficha derecha con scroll propio y hoja inferior en móvil. Adaptar altura y
+  leyenda a ventanas bajas; conservar tabla, ordenación, paginación y descargas.
+- Calcular agregados con la lista ampliada cuando se supone credencialización.
+  Mostrar diferencias frente a ninguna intervención y distinguir 84 salidas del
+  rojo con combinada de las 85 que salen con alguna de las acciones.
+- Actualizar Metodología, Datos y descargas y el contrato de integración;
+  comparar los metadatos y la cobertura de las publicaciones 1.3 y 1.6.
+- Recuperar el morado primario y conservar azul tinta como secundario; aumentar
+  la altura normal y definir rellenos claros/oscuros con rojo sin naranja en diseño 1.17.0;
+  conservar palabras, etiquetas y alternativas HTML. Reservar el rayado histórico
+  exclusivamente para falta de casillas, distinta de baja participación.
+- Integrar el símbolo, banner e ilustraciones aprobados en cabecera, favicon,
+  footer, metodología y uso de archivos; servir variantes por tamaño y formato,
+  con carga diferida y caché. Conservar las animaciones editoriales accesibles.
+- Consolidar la identidad con Source Sans 3 y Newsreader locales y tokens centrales;
+  rediseñar el footer con navegación, fuentes, alcance y versión de datos, y
+  presentar las descargas como registros de archivo con tamaño y acción clara.
+
+### Removed
+
+- Retirar de la interfaz el selector de nivel nacional, las siete vistas de
+  contexto, filtros avanzados, consultas guardadas, distribución y comparación binaria. Migrar enlaces antiguos al formato vigente;
+  conservar patrones y componentes anteriores como antecedentes reutilizables.
+
+### Fixed
+
+- No sumar altas al denominador cuando falta el componente S3, sin convertir
+  desconocidos en cero ni perder componentes conocidos de una intervención parcial.
+- Mantener las cuatro cifras visibles al desplazar el mapa normal; evitar que
+  el contenedor corto del encabezado anule su posición persistente.
+- Actualizar controles, explicaciones, rangos y comparación de publicaciones a1.6,
+  incluida la distinción entre usos predictivo y descriptivo de homicidios.
+
+- Evitar que el resumen de un municipio verde se describa como de mayor riesgo;
+  aclarar que el color es una comparación entre municipios.
+- Reservar el área libre al enfocar el mapa para que los controles y la leyenda
+  no oculten el municipio ni intercepten su selección. Conservar el vuelo nativo
+  de 800 ms, sin redibujados intermedios.
+
+### Security
+
+- Actualizar filelock4.2.0 a4.2.1 para resolver los avisos de seguridad del CI;
+  conservar las demás dependencias científicas fijadas.
+
 ## [0.5.1] - 2026-10-21 - Nombre accesible del escenario activo
 
 ### 🎯 Resumen

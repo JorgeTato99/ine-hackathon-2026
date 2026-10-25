@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "ine-hackathon-2026"
-version = "0.5.1"
+version = "0.6.0"
 description = "Preparación de datos agregados y análisis territorial para el Reto 2 del INE"
 readme = "README.md"
 license = "MIT"
