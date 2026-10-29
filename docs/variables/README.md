@@ -27,7 +27,8 @@ de elecciones de ayuntamiento (Magar, ITAM).
 ## Qué predice el modelo
 
 La **desviación** de cada municipio: su participación menos la nacional, en puntos porcentuales, en una
-intermedia. El nivel nacional de 2027 no se predice: se plantea en tres escenarios.
+intermedia. El nivel nacional de 2027 se estima aparte, con el calendario electoral (51.4 %, D27). El modelo
+final, Delta con guardia (D33), parte de la desviación de la presidencial anterior y aprende cuánto cambia.
 
 ## Las tres reglas que deciden si una variable entra
 
