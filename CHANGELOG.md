@@ -68,6 +68,11 @@ científicos intactos.
 - Actualizar arquitectura y entrega del mapa a 1.6 y retirar los nombres de la
   nota del acuerdo de producto. Incorporar la corrección documental del PR #15.
 
+### Security
+
+- Actualizar Tornado 6.5.10 a 6.6 para resolver los tres avisos que bloqueaban
+  la auditoría del entorno de notebooks, sin cambiar las librerías del modelo.
+
 ## [0.6.0] - 2026-10-24 - Pronóstico 1.6 y experiencia territorial
 
 ### 🎯 Resumen
