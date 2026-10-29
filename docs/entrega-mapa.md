@@ -10,9 +10,9 @@ presentación y las cartas firmadas, que se coordinan por separado.
 
 ## Preparación
 
-Se utiliza la entrega científica `resultados-1.3`, commit
-`f25d9c2709d2a93179c7ee2d6d2df985d418d6ca`, y
-`data/processed/entrega/base-datos-1.3/`. La base incluye CSV y XLSX proporcionados
+Se utiliza la entrega científica `resultados-1.6`, commit
+`7ff4ca3cfbdc0b4f90d1df44be4b4acf00e61fd7`, y
+`data/processed/entrega/base-datos-1.6/`. La base incluye CSV y XLSX proporcionados
 por el análisis. No se recalculan modelos ni se reescribe ese libro para empaquetar.
 
 Primero preparar los recursos web con el entorno de datos y la geometría ligera
@@ -24,7 +24,7 @@ uv run python -m scripts.package_map_delivery
 ```
 
 Resultado:
-`output/entrega/TrazaCivica_Reto2_Mapa_resultados-1.3.zip`.
+`output/entrega/TrazaCivica_Reto2_Mapa_resultados-1.6.zip`.
 `output/` no se sube a Git. Los comandos aceptan `--help`; el paquete permite
 `--output` para otra carpeta y `--url` para una dirección HTTP/HTTPS sin credenciales.
 
@@ -37,7 +37,7 @@ renombrar el ZIP ni mezclar una base nueva con un mapa anterior.
 | Recurso                | Uso                                                                 |
 | ---------------------- | ------------------------------------------------------------------- |
 | `ENLACE.txt`           | Dirección del explorador interactivo.                               |
-| `mapa/municipios.gpkg` | Capa `resultados_2027`, EPSG:4326, indicadores y seis escenarios.   |
+| `mapa/municipios.gpkg` | Capa `resultados_2027`, EPSG:4326, indicadores y cinco escenarios.   |
 | `base-datos/`          | Cuatro CSV, diccionario incluido, XLSX y LEEME originales.          |
 | `metadatos.json`       | Unidades, modelo, fuentes, supuestos y límites científicos.         |
 | `controles.json`       | Cifras comprobadas al preparar la publicación.                      |
@@ -46,7 +46,11 @@ renombrar el ZIP ni mezclar una base nueva con un mapa anterior.
 
 GeoPackage permite consultar el mapa con un programa SIG compatible sin
 depender de la web. El LEEME explica cómo duplicar la capa y categorizarla por
-`nac_medio_int_ninguna_riesgo` y `nac_medio_int_dirigida_rojos_riesgo`.
+`nac_estimado_int_ninguna_riesgo` y `nac_estimado_int_combinada_riesgo`.
+El nivel nacional base es único y estimado (51.4 %); las otras acciones son
+retener primerizos, jóvenes de 20–29 y credencialización. Los campos de motivo
+identifican la intervención parcial: los componentes desconocidos no se presentan
+como completos y S3 sin dato tampoco agrega personas a la lista.
 GeoJSON sigue disponible en el sitio como alternativa; no se duplica en el ZIP.
 
 ## Comprobaciones

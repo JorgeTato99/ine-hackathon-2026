@@ -88,7 +88,7 @@ export const helpTopics = {
     label: "posibilidad de quedar en rojo",
     summary: "Resume cuántas simulaciones del modelo dejaron al municipio en rojo.",
     detail:
-      "Se simularon 2,000 resultados posibles incorporando errores del modelo. El porcentaje indica en cuántos el municipio quedó rojo. Corresponde al escenario sin intervención. No es la posibilidad de que una persona deje de votar; incluso un porcentaje alto debe leerse como probable, no seguro.",
+      "Se simularon 2,000 resultados posibles incorporando errores del modelo. El porcentaje indica en cuántos el municipio quedó rojo y se muestra redondeado al entero. La etiqueta probable usa el valor original, desde 80 %, antes de redondear. Corresponde al escenario sin intervención. No es la posibilidad de que una persona deje de votar; incluso un porcentaje alto debe leerse como probable, no seguro. Las descargas conservan la precisión original.",
   },
   gap: {
     label: "diferencia de participación joven",

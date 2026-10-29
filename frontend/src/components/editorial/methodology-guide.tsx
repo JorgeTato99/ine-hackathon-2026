@@ -63,7 +63,7 @@ const content = [
     description:
       "Cinco opciones: ninguna, tres acciones por separado y las tres juntas. Supuesto, no efecto medido.",
     paragraphs: [
-      "Retener primerizos: quienes tenían entre 18 y 20 años y votaron en 2024 mantienen su participación respecto del municipio. Jóvenes 20–29: ese grupo recorta a la mitad su distancia con la participación municipal. Credencialización: nuevos votantes tramitan su credencial y participan como los jóvenes de su municipio en 2021.",
+      "Retener primerizos: toda la generación que tenía entre 18 y 20 años en 2024, haya votado o no, mantiene su participación respecto del municipio. Jóvenes 20–29: ese grupo recorta a la mitad su distancia con la participación municipal. Credencialización: nuevos votantes tramitan su credencial y participan como los jóvenes de su municipio en 2021.",
       "Las acciones se calculan solo en los 495 municipios rojos sin intervención. Las cifras estatales y nacionales son la suma de las cuentas municipales. No se está midiendo ni demostrando la eficacia de una campaña.",
       "Credencializar suma votos y personas a la lista: puede bajar ligeramente el porcentaje si las nuevas personas participan menos que el promedio. Es una medida de inclusión. Por eso las tres acciones juntas no siempre producen el mayor porcentaje o sacan del rojo a cada municipio.",
       "Con las tres acciones se calculan 528,400 votos adicionales y 84 municipios que salen del rojo; quedan 411. Si falta un componente, se suma solo lo conocido y se muestra Intervención calculada solo con los datos disponibles. Si falta credencialización, ese componente tampoco agrega personas a la lista.",

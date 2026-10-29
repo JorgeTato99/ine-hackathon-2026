@@ -16,10 +16,10 @@ const percent = new Intl.NumberFormat("es-MX", {
 const integer = new Intl.NumberFormat("es-MX");
 const probabilityPercent = new Intl.NumberFormat("es-MX", {
   style: "percent",
-  minimumFractionDigits: 1,
-  maximumFractionDigits: 2,
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });
-/** Cuatro decimales de proporción requieren dos de porcentaje cerca del corte. */
+/** Redondeo de lectura; los datos y los umbrales conservan su precisión original. */
 export function formatProbability(value: number | null | undefined) {
   return value === null || value === undefined ? "Sin dato" : probabilityPercent.format(value);
 }
@@ -32,7 +32,8 @@ export function formatInteger(value: number | null | undefined) {
 export function formatPointDifference(value: number | null) {
   if (value === null) return "Sin dato";
   if (value === 0) return "Misma participación";
-  return `${Math.abs(value).toLocaleString("es-MX", { maximumFractionDigits: 2 })} puntos ${value < 0 ? "menos" : "más"}`;
+  if (Math.round(Math.abs(value) * 10) === 0) return "Misma participación al redondear";
+  return `${Math.abs(value).toLocaleString("es-MX", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} puntos ${value < 0 ? "menos" : "más"}`;
 }
 export function normalized(value: string) {
   return value

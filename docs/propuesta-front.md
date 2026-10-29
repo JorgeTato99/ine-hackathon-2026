@@ -1,10 +1,10 @@
 # Propuesta de rediseño del explorador
 
-> **Acuerdo de producto posterior a D30:** P1 conserva las decisiones que Jorge y
-> Sofía ratificaron después de esta propuesta: morado primario, ayudas de dos
+> **Acuerdo de producto posterior a D30:** P1 conserva las decisiones que el
+> equipo ratificó después de esta propuesta: morado primario, ayudas de dos
 > niveles, mapa normal y ampliado, paneles minimizables, anchos y silueta municipal.
 > Las indicaciones antiguas de retirar «Ampliar mapa» o sustituir esos controles
-> quedan supersedidas por ese acuerdo. La integración1.6 actualiza datos, cifras,
+> quedan supersedidas por ese acuerdo. La integración 1.6 actualiza datos, cifras,
 > avisos y lectura sin volver a eliminar la experiencia aprobada.
 
 Qué cambiar en el sitio (https://traza-civica.jorgetato.com/) para que se entienda en segundos y se vea
@@ -166,7 +166,7 @@ Personas en la lista del país: 98,330,348 (los 2,477 municipios con dato).
 | Botón | `intervencion` | Ayuda al pasar el cursor |
 | --- | --- | --- |
 | Ninguna | `ninguna` | Predicción sin acciones adicionales |
-| Retener primerizos | `retener_primerizos` | Quienes votaron por primera vez en 2024 (18 a 20 años) no dejan de votar más que su municipio |
+| Retener primerizos | `retener_primerizos` | Toda la generación de 18 a 20 años de 2024, haya votado o no, mantiene su participación respecto del municipio |
 | Jóvenes 20–29 | `jovenes_20_29` | Las personas de 20 a 29 años recortan a la mitad su distancia con el resto de su municipio |
 | Credencialización | `credencializacion` | Quienes cumplen 18 o 19 años tramitan su credencial y votan como los jóvenes de su municipio en 2021. Suma votos y personas a la lista, así que el porcentaje casi no sube: es una medida de inclusión |
 | Las tres | `combinada` | Las tres acciones juntas |

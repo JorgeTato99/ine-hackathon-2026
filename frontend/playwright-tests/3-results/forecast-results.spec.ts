@@ -2,6 +2,15 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { test, expect } from "../fixtures/console-guard";
 
+test("Oxchuc: probabilidad entera y diferencia con un decimal", async ({ page }) => {
+  await page.goto("/?municipio=07064");
+  const detail = page.getByLabel("Ficha municipal", { exact: true }).last();
+  await expect(detail).toContainText("probable (93%)");
+  await expect(detail).toContainText("14.9 puntos menos");
+  await expect(detail).not.toContainText("92.65%");
+  await expect(detail).not.toContainText("14.87 puntos");
+});
+
 test("Tijuana: rango, cinco grupos, historia, intervenciones y descarga de ficha", async ({
   page,
 }) => {

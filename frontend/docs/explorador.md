@@ -104,6 +104,7 @@ El contexto plegado muestra H010 con el estado y periodo de comparación. Su ayu
 aclara diferencias de registro y el uso predictivo del homicidio transformado.
 La paleta, fuentes, animación nativa de 800ms y los controles aprobados permanecen.
 
-La probabilidad admite hasta dos decimales de porcentaje para respetar los cuatro
-decimales de proporción del archivo. Así79.95% no aparece como80.0% mientras su
-etiqueta sigue por debajo del corte. La presentación no cambia probabilidades.
+La ficha presenta diferencias en puntos con un decimal y probabilidades en
+porcentaje entero. Los criterios de clasificación usan el valor original antes
+de redondear; las descargas conservan sus cuatro decimales. Si una diferencia
+no nula se redondea a cero, se identifica expresamente ese redondeo.

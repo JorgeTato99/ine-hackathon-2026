@@ -18,9 +18,11 @@ const dataset = decodeDataset(JSON.parse(readFileSync("public/data/dataset.json"
 const rows = dataset.municipalities;
 const find = (id: string) => rows.find((item) => item.id === id)!;
 describe("integración de producto 1.6 (sin evaluar el modelo científico)", () => {
-  it("muestra la precisión necesaria sin redondear un caso bajo80% como si cruzara el corte", () => {
-    expect(formatProbability(0.7995)).toBe("79.95%");
-    expect(formatProbability(0.8)).toBe("80.0%");
+  it("redondea la probabilidad al entero y distingue la ausencia", () => {
+    expect(formatProbability(0.9265)).toBe("93%");
+    expect(formatProbability(0)).toBe("0%");
+    expect(formatProbability(0.7995)).toBe("80%");
+    expect(formatProbability(0.8)).toBe("80%");
     expect(formatProbability(null)).toBe("Sin dato");
   });
   it("bloquea cortes incompletos o sin contexto histórico antes de dibujar", () => {

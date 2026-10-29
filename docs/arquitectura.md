@@ -5,8 +5,9 @@
 La preparación de datos, la base Python y el explorador frontend están implementados.
 El frontend usa Next App Router con exportación estática, MUI y React Query en
 `frontend/`, con dependencias y contenedores propios. La integración vigente consume
-`resultados-1.3`: dos pestañas, siete vistas de contexto, comparación sin/con
-intervención y descargas con resultados. El modelo se entrega precalculado por
+`resultados-1.6`: pestañas Pronóstico 2027 e Histórico, una predicción nacional
+estimada y cinco escenarios (ninguna intervención y cuatro acciones supuestas),
+ficha municipal y descargas. Delta con guardia se entrega precalculado por
 Sofía y no se ejecuta desde el navegador.
 
 ```text
@@ -28,7 +29,9 @@ Python / Polars -> Parquet y tablas municipales -> análisis científico
 La ciencia se ejecuta antes de publicar los resultados. Las interacciones del
 navegador seleccionan datos existentes; no ejecutan el modelo ni inventan nuevos
 supuestos. No se requiere un backend de negocio ni una base de datos en servidor.
-Un servidor HTTP en contenedor puede servir los archivos de la aplicación.
+Nginx en contenedor sirve los archivos de la aplicación en modo producción.
+Detrás del túnel HTTPS, las redirecciones relativas conservan el origen público
+sin exponer el esquema HTTP ni el puerto interno 8080.
 
 El mapa vigente utiliza Leaflet 1.9.4 con Canvas y GeoJSON preparado por el equipo.
 No consulta un servicio cartográfico externo. La [documentación cartográfica](../frontend/docs/cartografia.md)
@@ -41,20 +44,21 @@ precalculados; no ejecutan el modelo ni modifican la priorización científica.
 
 ## Orden de construcción
 
-Primero se completa el núcleo: mapa con semáforo, comparación sin/con intervención,
-ficha municipal, descargas y cartografía abierta en GeoJSON/GPKG. Las consultas
-guardadas, las funciones avanzadas de comparación entre versiones y EXT-ACT se
-abordan después del núcleo. Los controles básicos de integridad y procedencia de
-datos se mantienen desde la preparación; no dependen de esa ampliación de interfaz.
+El núcleo está implementado: semáforo, cinco escenarios, ficha municipal,
+descargas y cartografía abierta GeoJSON/GPKG. La interfaz conserva el modo normal
+y el ampliado con paneles minimizables. Las consultas guardadas y los filtros
+avanzados se retiraron del recorrido activo al simplificarlo. EXT-ACT permanece
+condicionado a una fuente territorial utilizable. Los controles de integridad
+y procedencia se ejecutan desde la preparación.
 
 ## Capacidades del producto
 
 Este es el alcance acordado. El estado implementado se detalla al inicio y en la
 [guía del explorador](../frontend/docs/explorador.md). Las
-[consultas personales](../frontend/docs/consultas-guardadas.md) y la
-[comparación de publicaciones](../frontend/docs/publicaciones.md) amplían el núcleo
-sin servidor de negocio. EXT-ACT requiere una fuente territorial utilizable antes
-de incorporarse al producto.
+[consultas personales](../frontend/docs/consultas-guardadas.md) documentan un
+antecedente retirado; la [comparación de publicaciones](../frontend/docs/publicaciones.md)
+sí está disponible en Datos y descargas, actualmente 1.3→1.6. EXT-ACT requiere
+una fuente territorial utilizable antes de incorporarse al producto.
 
 1. **Exploración territorial:** mapa y tabla sincronizados, búsqueda, filtros e
    historia electoral, con cobertura y ausencias visibles.
@@ -64,8 +68,8 @@ de incorporarse al producto.
    mostrando por separado la calidad de la estimación.
 4. **Ficha municipal:** identidad, historia, resultado, semáforo, calidad, fuentes,
    versión y recomendaciones con su alcance, límites y condiciones.
-5. **Consultas y exportaciones:** guardar, recuperar y transferir selección,
-   escenarios y observaciones, conservando la versión de resultados utilizada.
+5. **Consulta y exportaciones:** compartir la selección por URL y descargarla,
+   conservando escenarios, motivos y versión de resultados utilizada.
 6. **Transparencia y evaluación:** método, variables, supuestos, validación recibida
    y límites; conservar el pronóstico y el protocolo de evaluación futura.
 7. **Calidad y versiones:** verificar claves, universos, unidades y cambios de datos
@@ -94,10 +98,9 @@ método, semáforo y recomendaciones, con revisión conjunta.
 
 ## Persistencia y entrega
 
-La consulta actual se comparte por URL y exporta datos con versión. Las consultas
-guardadas utilizan persistencia local e intercambio por archivos, sin
-sincronización multiusuario; una consulta anterior advierte si cambia el
-corte. Las observaciones personales se distinguen del contenido científico.
+La consulta actual se comparte por URL y exporta datos con versión. La persistencia
+local y las observaciones personales pertenecen al antecedente de consultas
+guardadas, no a una capacidad activa de la interfaz 1.6.
 
 La modalidad de despliegue y el paquete de cartografía/datos se verifican en los
 artefactos reales. Una compilación web no se considera compatible con doble clic

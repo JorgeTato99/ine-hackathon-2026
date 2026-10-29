@@ -8,7 +8,7 @@ export const interventions = [
   {
     id: "retener_primerizos",
     label: "Retener primerizos",
-    help: "Quienes votaron por primera vez en 2024, con 18 a 20 años, mantienen su participación respecto de su municipio.",
+    help: "La generación que tenía de 18 a 20 años en 2024, haya votado o no, mantiene su participación respecto de su municipio.",
   },
   {
     id: "jovenes_20_29",

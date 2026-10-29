@@ -64,6 +64,9 @@ describe("páginas editoriales y marco del producto", () => {
     ).toHaveLength(6);
     expect(screen.getByRole("main")).toHaveTextContent("51.4");
     expect(screen.getByRole("main")).toHaveTextContent("no son causas probadas");
+    expect(screen.getByRole("main")).toHaveTextContent(
+      "toda la generación que tenía entre 18 y 20 años en 2024, haya votado o no"
+    );
     await userEvent.click(screen.getByText("Modelo y validación: detalles técnicos"));
     expect(screen.getByText(/Delta con guardia \(D33\): desviación/)).toBeVisible();
   });
