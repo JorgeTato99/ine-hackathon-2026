@@ -3,7 +3,7 @@
 [Diseño](sistema-diseno.md) · [Frontend](../README.md) · [Recursos visuales](identidad-y-recursos.md).
 
 Fuente central: [tokens.ts](../src/theme/tokens.ts), aplicada por [theme.ts](../src/theme/theme.ts).
-La versión visual es independiente de software 0.6.0 y datos resultados-1.6.
+La versión visual es independiente de software 0.6.1 y datos resultados-1.6.
 
 ## Espaciado, densidad y estructura
 

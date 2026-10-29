@@ -13,7 +13,7 @@ INE ni se presenta el sitio como publicación oficial.
 
 El diseño, la versión de software y el corte científico son independientes.
 Sus fuentes son `src/theme/tokens.ts`, `package.json` y `public/data/manifest.json`.
-El corte actual es resultados-1.6; el software es 0.6.0. Se conservan morado,
+El corte actual es resultados-1.6; el software es 0.6.1. Se conservan morado,
 tipografías locales y los modos normal/ampliado aprobados. Las ayudas y avisos
 usan las mismas superficies, tokens y controles del sistema.
 

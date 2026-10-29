@@ -48,6 +48,26 @@ El historial debe reflejar sus propias entregas, con fecha ISO 8601.
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-10-28 - Enlaces seguros y lectura de la ficha
+
+### 🎯 Resumen
+
+Corregir las rutas sin diagonal final detrás del túnel HTTPS y simplificar la
+lectura de probabilidades y diferencias. Mantener resultados-1.6 y sus archivos
+científicos intactos.
+
+### Fixed
+
+- Conservar esquema y origen públicos al redirigir `/datos` y `/metodologia`;
+  evitar que Nginx exponga HTTP y el puerto interno 8080. Comprobarlo en el
+  contenedor real durante CI.
+- Mostrar un decimal en las diferencias y probabilidades en entero, manteniendo
+  los criterios con precisión original y explicando el redondeo.
+- Aclarar que retener primerizos aplica a toda la generación de 18–20 de 2024, haya
+  votado o no, en metodología y ayuda del control.
+- Actualizar arquitectura y entrega del mapa a 1.6 y retirar los nombres de la
+  nota del acuerdo de producto. Incorporar la corrección documental del PR #15.
+
 ## [0.6.0] - 2026-10-24 - Pronóstico 1.6 y experiencia territorial
 
 ### 🎯 Resumen
@@ -120,7 +140,7 @@ precalculados; los escenarios siguen siendo supuestos, no efectos medidos.
   desconocidos en cero ni perder componentes conocidos de una intervención parcial.
 - Mantener las cuatro cifras visibles al desplazar el mapa normal; evitar que
   el contenedor corto del encabezado anule su posición persistente.
-- Actualizar controles, explicaciones, rangos y comparación de publicaciones a1.6,
+- Actualizar controles, explicaciones, rangos y comparación de publicaciones a 1.6,
   incluida la distinción entre usos predictivo y descriptivo de homicidios.
 
 - Evitar que el resumen de un municipio verde se describa como de mayor riesgo;
